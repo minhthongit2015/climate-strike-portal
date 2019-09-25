@@ -1,0 +1,55 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "No Webpack",
+      "runtimeExecutable": "nodemon",
+      "program": "${workspaceFolder}/src/server/server.js",
+      "args": ["--exclude", "${workspaceFolder}/src/client", "-w", "${workspaceFolder}/src/server"],
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "DEBUG": "cloud:*",
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Test",
+      "runtimeExecutable": "nodemon",
+      "program": "${workspaceFolder}/src/test/test.js",
+      "args": [
+        "--exclude", "${workspaceFolder}/src/client", "${workspaceFolder}/src/server",
+        "-w", "${workspaceFolder}/src/test"
+      ],
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "DEBUG": "cloud:*",
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Webpack",
+      "runtimeExecutable": "nodemon",
+      "program": "${workspaceFolder}/dist/build/server-bundle.js",
+      "args": ["-w", "${workspaceFolder}/dist/build/server-bundle.js"],
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "DEBUG": "app:server"
+      }
+    }
+  ]
+}
