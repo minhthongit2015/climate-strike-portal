@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import './sidenav.scss';
-import SignIn from '../../../components/signin/SignIn';
+// import SignIn from '../../../components/signin/SignIn';
 
 import RouteConstants from '../../../utils/RouteConstants';
 import {
@@ -19,27 +19,27 @@ export default class SideNav extends Component {
     super(props);
     this.links = [
       {
-        type: 'nav', link: RouteConstants.aiCloudLink, text: 'AI Cloud', iconSrc: AICloudSrc
+        type: 'nav', link: RouteConstants.earthPictureLink, text: 'Bức Tranh\r\nTrái Đất', iconSrc: AICloudSrc
       },
       {
-        type: 'nav', link: RouteConstants.userGardensLink, text: 'My Garden', iconSrc: MyGardenSrc
+        type: 'nav', link: RouteConstants.theRealWorldLink, text: 'Thế Giới\r\nThực', iconSrc: MyGardenSrc
       },
       {
-        type: 'nav', link: RouteConstants.userNetworkLink, text: 'Smile City', iconSrc: SmileCitySrc
+        type: 'nav', link: RouteConstants.whatYouCanDoLink, text: 'Điều Bạn\r\nCó Thể Làm', iconSrc: SmileCitySrc
       },
       {
-        type: 'nav', link: '/top-wanted', text: 'Top Wanted', iconSrc: AICloudSrc
+        type: 'nav', link: RouteConstants.yourQuestionLink, text: 'Điều Bạn\r\nMuốn Biết', iconSrc: AICloudSrc
       }
     ];
   }
 
   static renderHomeNav() {
     return (
-      <div className="w-100 p-3">
+      <div className="w-100">
         <NavLink
           key="home"
           to={RouteConstants.homeLink}
-          title="Home"
+          title="Điểm khởi đầu"
           className="border-bottom border-light pb-2 w-100"
           draggable={false}
         >
@@ -69,9 +69,9 @@ export default class SideNav extends Component {
           )
         }
       >
-        <div className="signin-button text-center">
+        {/* <div className="signin-button text-center">
           <SignIn />
-        </div>
+        </div> */}
         {SideNav.renderHomeNav()}
         {
           this.links.map((link) => {

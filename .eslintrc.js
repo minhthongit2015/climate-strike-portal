@@ -1,3 +1,14 @@
+
+const WebpackDev = require('./webpack/webpack.dev');
+const path = require('path');
+
+const map = Object.entries(WebpackDev.resolve.alias).map(entry => [
+  entry[0],
+  path.relative(__filename, entry[1]).slice(1).replace(/\\/g, '/')
+]);
+
+console.log(map);
+
 module.exports = {
   env: {
     "browser": true,
@@ -15,6 +26,17 @@ module.exports = {
     "sourceType": "module"
   },
   plugins: ["react"],
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: './webpack/webpack.dev.js'
+      },
+      alias: {
+        map,
+        extensions: ['.webpack.js', '.web.js', '.js', '.json', '.jsx']
+      }
+    }
+  },
   rules: {
     "indent": ["error", 2],
     "linebreak-style": ["error", "windows"],

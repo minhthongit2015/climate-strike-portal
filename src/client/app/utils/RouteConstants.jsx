@@ -2,39 +2,38 @@
 const homePath = '/';
 const homeLink = '/';
 
-const aiCloudPath = '/ai-cloud';
-const aiCloudLink = '/ai-cloud';
-const aiProjectsPath = `${aiCloudPath}/projects`;
-const aiProjectsLink = `${aiCloudLink}/projects`;
-const aiExperimentsPath = `${aiCloudPath}/experiments`;
-const aiExperimentsLink = `${aiCloudPath}/experiments`;
-const aiModelsPath = `${aiCloudPath}/models`;
-const aiModelsLink = `${aiCloudPath}/models`;
-const aiDatasetsPath = `${aiCloudPath}/datasets`;
-const aiDatasetsLink = `${aiCloudPath}/datasets`;
+const earthPicturePath = '/buc-tranh-trai-dat';
+const earthPictureLink = '/buc-tranh-trai-dat';
+const epOrganismsPath = `${earthPicturePath}/sinh-vat`;
+const epOrganismsLink = `${earthPicturePath}/sinh-vat`;
+const epClimatePath = `${earthPicturePath}/khi-hau`;
+const epClimateLink = `${earthPicturePath}/khi-hau`;
+const epPollutionPath = `${earthPicturePath}/o-nhiem`;
+const epPollutionLink = `${earthPicturePath}/o-nhiem`;
 
-const userGardensPath = '/my-garden';
-const userGardensLink = '/my-garden';
-
-const userNetworkPath = '/smile-city';
-const userNetworkLink = '/smile-city';
+const theRealWorldPath = '/the-gioi-thuc';
+const theRealWorldLink = '/the-gioi-thuc';
+const whatYouCanDoPath = '/dieu-ban-co-the-lam';
+const whatYouCanDoLink = '/dieu-ban-co-the-lam';
+const yourQuestionPath = '/dieu-ban-muon-biet';
+const yourQuestionLink = '/dieu-ban-muon-biet';
 
 
 export default {
   homePath,
   homeLink,
-  aiCloudPath,
-  aiCloudLink,
-  userGardensPath,
-  userGardensLink,
-  userNetworkPath,
-  userNetworkLink,
-  aiProjectsPath,
-  aiProjectsLink,
-  aiExperimentsPath,
-  aiExperimentsLink,
-  aiModelsPath,
-  aiModelsLink,
-  aiDatasetsPath,
-  aiDatasetsLink
+  earthPicturePath,
+  earthPictureLink,
+  epOrganismsPath,
+  epOrganismsLink,
+  epClimatePath,
+  epClimateLink,
+  epPollutionPath,
+  epPollutionLink,
+  theRealWorldPath,
+  theRealWorldLink,
+  whatYouCanDoPath,
+  whatYouCanDoLink,
+  yourQuestionPath,
+  yourQuestionLink
 };

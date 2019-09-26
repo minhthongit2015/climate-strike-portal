@@ -17,20 +17,23 @@ export default class HomePage extends BasePage {
     this.title = 'Home';
     this.links = [
       {
-        type: 'nav', link: RouteConstants.aiCloudLink, text: 'AI Cloud', iconSrc: AICloudSrc
+        type: 'nav', link: RouteConstants.earthPictureLink, text: 'Bức Tranh\r\nTrái Đất', iconSrc: AICloudSrc
       },
       {
-        type: 'nav', link: RouteConstants.userGardensLink, text: 'My Garden', iconSrc: MyGardenSrc
+        type: 'nav', link: RouteConstants.theRealWorldLink, text: 'Thế Giới Thực', iconSrc: MyGardenSrc
       },
       {
-        type: 'nav', link: RouteConstants.userNetworkLink, text: 'Smile City', iconSrc: SmileCitySrc
+        type: 'nav', link: RouteConstants.whatYouCanDoLink, text: 'Điều Bạn\r\nCó Thể Làm', iconSrc: SmileCitySrc
+      },
+      {
+        type: 'nav', link: RouteConstants.yourQuestionLink, text: 'Điều Bạn\r\nMuốn Biết', iconSrc: AICloudSrc
       }
     ];
   }
 
   static renderNav(nav) {
     return (
-      <div className="col-4" key={nav.link}>
+      <div className="col-3" key={nav.link}>
         <NavIconLink nav={nav} ratio={1} />
       </div>
     );
@@ -41,7 +44,7 @@ export default class HomePage extends BasePage {
     return (
       <React.Fragment>
         <div className="h-100 d-flex justify-content-center align-items-center">
-          <div className="d-flex col-lg-6 col-md-8 col-sm-10 col-xs-12 col-12">
+          <div className="d-flex col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12">
             {
               this.links.map((link) => {
                 if (link.type === 'nav') {
