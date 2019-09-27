@@ -8,7 +8,7 @@ class TabAICloud extends Component {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-dark text-center mb-5">ở đây không có gì ngoài sự thật</div>
+          <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật</div>
         </SectionHeader>
         <SectionBody>
           <NewPost />

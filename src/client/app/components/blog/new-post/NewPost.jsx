@@ -1,69 +1,113 @@
 import React from 'react';
 import {
   MDBInput, MDBCard, MDBCardHeader, MDBCardBody,
-  Button
+  Button,
+  Row, Col
 } from 'mdbreact';
-import FroalaEditorComponent from 'react-froala-wysiwyg';
-import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
-// eslint-disable-next-line import/extensions
-import 'froala-editor/js/plugins.pkgd.min.js';
 
+import { Editor } from '@toast-ui/react-editor';
+
+import superrequest from '../../../utils/superrequest';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
 
-    this.config = {
-      placeholderText: 'Edit Your Content Here!',
-      charCounterCount: false,
-      toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'help', 'html', '|', 'undo', 'redo']
-    };
+    this.contentRef = React.createRef();
 
-    this.handleModelChange1 = this.handleModelChange1.bind(this);
-    this.handleModelChange2 = this.handleModelChange2.bind(this);
+    this.handlePostSubmit = this.handlePostSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {
-      model1: { src: 'path/to/image.jpg' }
+      title: '',
+      description: '',
+      content: ''
+    };
+
+    this.contentConfig = {
+      previewStyle: 'tab',
+      height: '350px',
+      initialEditType: 'wysiwyg',
+      useCommandShortcut: true,
+      exts: [
+        {
+          name: 'chart',
+          minWidth: 100,
+          maxWidth: 600,
+          minHeight: 100,
+          maxHeight: 300
+        },
+        'scrollSync',
+        'colorSyntax',
+        'uml',
+        'mark',
+        'table'
+      ]
     };
   }
 
-  handleModelChange1(model1) {
-    this.setState({
-      model1
+  handlePostSubmit(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    const { title, content, description } = this.state;
+    superrequest.post('/api/blog', {
+      body: { title, content, description }
     });
   }
 
+  handleInputChange(event) {
+    if (!event.source) {
+      const { target } = event;
+      const { name, value } = target;
+      this.setState({
+        [name]: value
+      });
+    } else {
+      const inst = this.contentRef.current.getInstance();
+      this.setState({
+        content: inst.getValue()
+      });
+    }
+  }
+
   render() {
+    const { title, description, content } = this.state;
     return (
       <MDBCard className="new-post">
         <MDBCardHeader className="d-flex justify-content-between py-0">
           <div className="flex-fill d-flex align-items-center">Đăng bài mới</div>
-          <Button color="link" className="p-2"><i className="far fa-window-close" /></Button>
+          <Button color="gray" className="rounded-circle p-2" tabIndex="-1">
+            <i className="far fa-window-close" />
+          </Button>
         </MDBCardHeader>
         <MDBCardBody>
-          <MDBInput
-            type="text"
-            name="title"
-            label="Title"
-          />
-          <FroalaEditorComponent
-            tag="textarea"
-            config={this.config}
-            model={this.state.model1}
-            onModelChange={this.handleModelChange1}
-          />
-          <FroalaEditorView
-            model={this.state.model1}
-          />
-          {/* <FroalaEditorComponent
-            tag="textarea"
-            config={this.config}
-            model={this.state.model2}
-            onModelChange={this.handleModelChange2}
-          />
-          <FroalaEditorView
-            model={this.state.model2}
-          /> */}
+          <form onSubmit={this.handlePostSubmit}>
+            <MDBInput
+              label="Tiêu đề"
+              name="title"
+              value={title}
+              onChange={this.handleInputChange}
+            />
+            <MDBInput
+              label="Mô tả"
+              name="description"
+              value={description}
+              onChange={this.handleInputChange}
+            />
+            <Editor
+              ref={this.contentRef}
+              {...this.contentConfig}
+              name="content"
+              initialValue={content}
+              onChange={this.handleInputChange}
+            />
+            <Row>
+              <Col className="text-right">
+                <Button type="submit" size="sm">Đăng Bài</Button>
+              </Col>
+            </Row>
+          </form>
         </MDBCardBody>
       </MDBCard>
     );
