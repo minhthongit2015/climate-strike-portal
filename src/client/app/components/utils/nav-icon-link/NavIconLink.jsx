@@ -34,7 +34,7 @@ export default class extends Component {
         key={nav.text}
         activeClassName="active"
         className={`nav-icon-link ${className || ''}`}
-        title={nav.text}
+        title={nav.title}
         onMouseDown={this.handleClick}
         onTouchStart={this.handleClick}
       >

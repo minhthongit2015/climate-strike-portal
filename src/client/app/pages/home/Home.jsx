@@ -13,8 +13,7 @@ import NavIconLink from '../../components/utils/nav-icon-link/NavIconLink';
 
 export default class HomePage extends BasePage {
   constructor(props) {
-    super(props);
-    this.title = 'Home';
+    super(props, 'Climate Strike Viet Nam', true);
     this.links = [
       {
         type: 'nav', link: RouteConstants.earthPictureLink, text: 'Bức Tranh\r\nTrái Đất', iconSrc: AICloudSrc
@@ -26,7 +25,7 @@ export default class HomePage extends BasePage {
         type: 'nav', link: RouteConstants.whatYouCanDoLink, text: 'Điều Bạn\r\nCó Thể Làm', iconSrc: SmileCitySrc
       },
       {
-        type: 'nav', link: RouteConstants.yourQuestionLink, text: 'Điều Bạn\r\nMuốn Biết', iconSrc: AICloudSrc
+        type: 'nav', link: RouteConstants.yourQuestionLink, text: 'Điều Bạn\r\nMuốn Biết?', iconSrc: AICloudSrc
       }
     ];
   }
@@ -44,15 +43,20 @@ export default class HomePage extends BasePage {
     return (
       <React.Fragment>
         <div className="h-100 d-flex justify-content-center align-items-center">
-          <div className="d-flex col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12">
-            {
-              this.links.map((link) => {
-                if (link.type === 'nav') {
-                  return HomePage.renderNav(link);
-                }
-                return null;
-              })
-            }
+          <div className="d-flex flex-column col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12">
+            <div className="text-center text-light">
+              hãy thử xem nếu mình có thể thuyết phục bạn tin vào điều này
+            </div>
+            <div className="d-flex">
+              {
+                this.links.map((link) => {
+                  if (link.type === 'nav') {
+                    return HomePage.renderNav(link);
+                  }
+                  return null;
+                })
+              }
+            </div>
           </div>
         </div>
       </React.Fragment>
