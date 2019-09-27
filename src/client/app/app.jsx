@@ -7,6 +7,8 @@ import '../styles/main.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import 'froala-editor/css/froala_style.min.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
 
 import SimplestLayout from './layouts/simplest/simplest';
 import DummyTheRealWorldPage from './pages/smile-city/DummySmileCity';

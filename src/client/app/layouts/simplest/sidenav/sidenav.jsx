@@ -11,8 +11,8 @@ import {
   SmileCitySrc
 } from '../../../../assets/icons';
 
-import NavIconLink from '../../../components/nav-icon-link/NavIconLink';
-import FixedRatioImage from '../../../components/fixed-ratio-image/FixedRatioImage';
+import NavIconLink from '../../../components/utils/nav-icon-link/NavIconLink';
+import FixedRatioImage from '../../../components/utils/fixed-ratio-image/FixedRatioImage';
 
 export default class SideNav extends Component {
   constructor(props) {

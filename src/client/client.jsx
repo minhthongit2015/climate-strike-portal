@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import LeafLoading from './app/components/loadings/LeafLoading';
+import LeafLoading from './app/components/utils/loadings/LeafLoading';
 
 const App = React.lazy(() => import('./app/app'));
 

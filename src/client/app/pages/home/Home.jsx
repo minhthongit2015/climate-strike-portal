@@ -9,7 +9,7 @@ import {
   SmileCitySrc
 } from '../../../assets/icons';
 
-import NavIconLink from '../../components/nav-icon-link/NavIconLink';
+import NavIconLink from '../../components/utils/nav-icon-link/NavIconLink';
 
 export default class HomePage extends BasePage {
   constructor(props) {

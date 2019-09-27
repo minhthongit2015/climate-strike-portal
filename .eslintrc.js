@@ -7,8 +7,6 @@ const map = Object.entries(WebpackDev.resolve.alias).map(entry => [
   path.relative(__filename, entry[1]).slice(1).replace(/\\/g, '/')
 ]);
 
-console.log(map);
-
 module.exports = {
   env: {
     "browser": true,

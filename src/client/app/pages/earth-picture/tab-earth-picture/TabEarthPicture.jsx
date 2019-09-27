@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
+import EarthPicturePosts from './sub-comps/EarthPicturePosts';
+import NewPost from '../../../components/blog/new-post/NewPost';
 
 class TabAICloud extends Component {
   render() {
     return (
       <Section>
-        <SectionHeader>AI CLoud ~ Sharing your Knowledge..</SectionHeader>
+        <SectionHeader>
+          <div className="text-dark text-center mb-5">ở đây không có gì ngoài sự thật</div>
+        </SectionHeader>
         <SectionBody>
-          <ul>
-            <li>Danh sách Projects</li>
-            <li>Danh sách Experiments</li>
-            <li>Danh sách Trained Models</li>
-            <li>Danh sách Dataset</li>
-            <li>Danh sách Trained Models được chia sẻ</li>
-          </ul>
+          <NewPost />
+          <br />
+          <EarthPicturePosts />
         </SectionBody>
       </Section>
     );

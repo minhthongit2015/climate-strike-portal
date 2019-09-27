@@ -6,7 +6,7 @@ import {
 } from 'mdbreact';
 import './SignIn.scss';
 
-import UserService from '../../services/UserService';
+import UserService from '../../../services/UserService';
 
 
 class SignIn extends Component {
