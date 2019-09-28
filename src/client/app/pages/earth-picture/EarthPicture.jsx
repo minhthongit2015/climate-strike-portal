@@ -11,7 +11,6 @@ import TabEarthPicture from './tab-earth-picture/TabEarthPicture';
 import TabOrganisms from './tab-organisms/TabOrganisms';
 import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
-import Test from '../../components/test';
 
 export default class extends BasePage {
   constructor(props) {
@@ -51,7 +50,6 @@ export default class extends BasePage {
           ))}
           <Route path="/" component={TabEarthPicture} />
         </Switch>
-        <Test>hello</Test>
       </SidebarLayout>
     );
   }

@@ -2,6 +2,7 @@ import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import GlobalState from './utils/GlobalState';
+import LeafLoading from './components/utils/loadings/LeafLoading';
 
 import '../styles/main.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -43,7 +44,7 @@ class App extends Component {
 
   render() {
     const routes = (
-      <React.Fragment>
+      <React.Suspense fallback={<LeafLoading overlaping />}>
         <Switch>
           <Route exact path={RouteConstants.homePath}><HomePage /></Route>
           <Route path={RouteConstants.earthPicturePath}><EarthPicturePage /></Route>
@@ -53,7 +54,7 @@ class App extends Component {
           <Redirect to={RouteConstants.homeLink} />
         </Switch>
         {(this.isTheRealWorldPage || window.myGoogleMap) && <TheRealWorldPage />}
-      </React.Fragment>
+      </React.Suspense>
     );
     return (
       <SimplestLayout routes={routes} />

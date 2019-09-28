@@ -2,4 +2,39 @@
 
 .post {
   box-shadow: 0 .125em .25em rgba(0,0,0,.075);
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 .125em .5em rgba(0, 0, 0, 0.247);
+  }
+
+  .card-header {
+    font-size: 1.2em;
+    padding-top: .5rem;
+    padding-bottom: .4rem;
+    background-color: #f38181;
+    color: #eaffd0;
+
+    &.Climate {
+      background-color: #f38181;
+      color: #eaffd0;
+    }
+    &.Organisms {
+      
+    }
+    &.Pollution {
+
+    }
+  }
+
+  &__preview, &__preview > .view, &__title {
+    cursor: pointer;
+  }
+
+  &__summary {
+    font-style: italic;
+    color: gray;
+    border-left: 2px solid lightgray;
+    padding-left: .5rem;
+  }
 }

@@ -1,8 +1,9 @@
 
 const ApiHelper = require('../utils/ApiHelper');
 const ConverterFactory = require('../models/converters/converter-factory');
+const { isNotSet } = require('../utils');
 
-module.exports = class CRUDBase {
+module.exports = class CRUDService {
   static set model(model) {
     this._model = model;
   }
@@ -14,6 +15,13 @@ module.exports = class CRUDBase {
   static async create(doc) {
     const newDoc = await this.model.create(doc);
     return newDoc;
+  }
+
+  static async getOrList(id, opts = ApiHelper.listParams) {
+    if (isNotSet(id)) {
+      return this.list(opts);
+    }
+    return this.get(id);
   }
 
   static async get(id) {

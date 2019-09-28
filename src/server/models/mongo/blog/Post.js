@@ -6,11 +6,14 @@ const { ObjectId } = mongoose.Schema.Types;
 const PostSchema = new mongoose.Schema({
   category: [{ type: ObjectId, ref: 'Category' }],
   title: String,
-  preview: String,
   content: String,
   summary: String,
+  preview: String,
   author: [{ type: ObjectId, ref: 'User' }],
-  vote: Number,
+  vote: {
+    type: Number,
+    default: 0
+  },
   createdAt: {
     type: Date,
     default: Date.now

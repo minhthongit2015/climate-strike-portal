@@ -30,35 +30,40 @@ export default class extends React.Component {
         uploading: false,
         preview: event1.target.result
       });
+      this.triggerUploadedEvent(event1.target.result);
     };
 
     const newFile = event.target.files[0];
     reader.readAsDataURL(newFile);
-
-    this.triggerUploadedEvent();
   }
 
-  triggerUploadedEvent() {
-    if (this.props.onFileUploaded) {
-      this.props.onFileUploaded();
+  triggerUploadedEvent(imgUrlBase64) {
+    if (this.props.onChange) {
+      this.props.onChange({
+        target: {
+          name: this.props.name || 'file',
+          value: imgUrlBase64
+        },
+        preventDefault: () => {}
+      });
     }
   }
 
   render() {
     const {
-      className, wrapperProps, innerClass, ...restProps
+      className, wrapperProps, innerClass, label, value, ...restProps
     } = this.props;
     const { uploading, preview } = this.state;
     return (
       <div className={classnames('drop-uploader', className)} {...wrapperProps}>
         <label
-          className={classnames('drop-uploader__drop-zone rounded', innerClass)}
-          style={{ backgroundImage: `url(${preview})` }}
+          className={classnames('drop-uploader__drop-zone rounded text-center', innerClass)}
+          style={{ backgroundImage: `url(${preview || value || ''})` }}
           {...restProps}
         >
           {uploading
             ? <span>đang tải ảnh lên...</span>
-            : !preview && <span>tải ảnh lên</span>}
+            : !preview && <span>{label || 'tải ảnh lên'}</span>}
           <input
             type="file"
             accept="image/*"

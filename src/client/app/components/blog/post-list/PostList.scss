@@ -1,0 +1,26 @@
+
+.post-wrapper {
+  box-sizing: border-box;
+
+  &.w1 {
+    width: 25%;
+  }
+  &.w2 {
+    width: 50%;
+  }
+  &.w3 {
+    width: 75%;
+  }
+  &.w4 {
+    width: 100%;
+  }
+}
+.sizer-element {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  width: 25%;
+}
+.shuffle {
+  overflow: visible !important;
+}
