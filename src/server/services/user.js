@@ -1,9 +1,10 @@
-// const { User } = require('../models/sequelize');
+const { User } = require('../models/mongo');
+const CRUDService = require('./CRUDService');
 const { isNone } = require('../utils');
 const ConverterFactory = require('../models/converters/converter-factory');
 const { isBlank, isNotSet } = require('../utils');
 
-module.exports = class {
+module.exports = class extends CRUDService {
   static async createUser({
     username, password, name, email
   }) {
