@@ -35,6 +35,9 @@ const Config = require('./config');
 
 class Server {
   static start() {
+    Debugger.log(colors.rainbow(`\r\n\r\n${new Array(60).fill('▬').join('')}\r\n`));
+    Debugger.log(`${''.padStart(12, ' ')}${colors.rainbow('START')} ${colors.yellow('CLIMATE STRIKE VIET NAM SERVER')}\r\n`);
+    Debugger.log(colors.rainbow(`${new Array(60).fill('▬').join('')}\r\n`));
     Server.setupErrorTrap();
     Server.setupDatabase();
     Server.createServer();
@@ -139,10 +142,9 @@ class Server {
   static listen() {
     this.server.listen(Config.port);
     this.server.on('listening', () => {
-      Debugger.log(colors.rainbow(`\r\n\r\n${new Array(30).fill(' -').join('')}\r\n`));
       const address = this.server.address();
       if (typeof address === 'string') {
-        Debugger.server(`Server running at pipe: ${address}`);
+        Debugger.server(`\r\n[Server running at] > pipe: ${address}`);
       } else {
         SystemInfo.showServerPorts(address.port, Debugger.server);
       }

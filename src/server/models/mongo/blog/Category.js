@@ -8,6 +8,7 @@ const CategorySchema = new mongoose.Schema({
     { type: ObjectId, ref: 'Category' }
   ],
   name: String,
+  type: String,
   description: String,
   createdAt: {
     type: Date,

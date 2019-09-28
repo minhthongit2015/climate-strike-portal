@@ -37,9 +37,9 @@ export default class extends React.Component {
   render() {
     const { initialValue } = this.props;
     const onChangeProp = {};
-    if (!this.inputRef.current) {
-      onChangeProp.onChange = this.rerender;
-    }
+    // if (!this.inputRef.current) {
+    //   onChangeProp.onChange = this.rerender;
+    // }
     return (
       <Editor
         ref={this.inputRef}

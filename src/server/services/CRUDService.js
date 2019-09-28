@@ -12,7 +12,7 @@ module.exports = class CRUDBase {
   }
 
   static async create(doc) {
-    const newDoc = await this.model.create(doc).exec();
+    const newDoc = await this.model.create(doc);
     return newDoc;
   }
 

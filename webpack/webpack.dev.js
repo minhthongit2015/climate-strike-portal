@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const { CLIENT_ENTRY, ENTRY_FILENAME } = require('./webpack.config');
@@ -29,5 +30,10 @@ module.exports = merge(common, {
     // lazy: true,
     filename: ENTRY_FILENAME,
     writeToDisk: false
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    })
+  ]
 });

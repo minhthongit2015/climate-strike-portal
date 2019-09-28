@@ -16,7 +16,7 @@ const development = {
 const production = {
   ...common,
   wsPort: process.env.PORT || 80,
-  wsEndpoint: 'wss://yoth-garden.herokuapp.com'
+  wsEndpoint: 'wss://climate-strike-vietnam.herokuapp.com'
 };
 
 const currentConfig = process.env.NODE_ENV === 'development'

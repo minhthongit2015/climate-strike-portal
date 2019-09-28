@@ -10,9 +10,9 @@ export default class extends React.Component {
     this.state = {
       posts: [
         { title: 'Post 1', description: 'post 1', preview: '123' },
-        { title: 'Post 1', description: 'post 1', preview: '123' },
-        { title: 'Post 1', description: 'post 1', preview: '123' },
-        { title: 'Post 1', description: 'post 1', preview: '123' }
+        { title: 'Post 2', description: 'post 2', preview: '123' },
+        { title: 'Post 3', description: 'post 3', preview: '123' },
+        { title: 'Post 4', description: 'post 4', preview: '123' }
       ]
     };
   }
@@ -22,7 +22,7 @@ export default class extends React.Component {
 
     return (
       <PostList>
-        {posts.map(post => <Post post={post} />)}
+        {posts.map(post => <Post key={post.title} post={post} />)}
       </PostList>
     );
   }

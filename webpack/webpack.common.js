@@ -76,9 +76,7 @@ const webpackConfig = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
-    }),
+    new webpack.DefinePlugin({}),
     new CopyPlugin([
       { from: CLIENT_PUBLIC_DIR, to: PUBLIC_DIR }
     ]),

@@ -47,9 +47,9 @@ class App extends Component {
         <Switch>
           <Route exact path={RouteConstants.homePath}><HomePage /></Route>
           <Route path={RouteConstants.earthPicturePath}><EarthPicturePage /></Route>
+          <Route exact path={RouteConstants.theRealWorldPath}><DummyTheRealWorldPage /></Route>
           <Route exact path={RouteConstants.whatYouCanDoPath}><UserGardenPage /></Route>
           <Route exact path={RouteConstants.yourQuestionPath}><UserGardenPage /></Route>
-          <Route exact path={RouteConstants.theRealWorldPath}><DummyTheRealWorldPage /></Route>
           <Redirect to={RouteConstants.homeLink} />
         </Switch>
         {(this.isTheRealWorldPage || window.myGoogleMap) && <TheRealWorldPage />}

@@ -21,7 +21,7 @@ export default class PostList extends React.Component {
     return (
       <Row>
         {posts && posts.map(post => (
-          <Col col="4" className="post-wrapper">{post}</Col>
+          <Col key={post.key} col="4" className="post-wrapper">{post}</Col>
         ))}
       </Row>
     );

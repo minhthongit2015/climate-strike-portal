@@ -23,8 +23,13 @@ export default class SuperWebsocket {
   }
 
   static async emit(...args) {
-    return new Promise((resolve) => {
-      this.socket.emit(...args, res => resolve(res));
+    return new Promise((resolve, reject) => {
+      this.socket.emit(...args, (res) => {
+        if (res.ok === false && res.error) {
+          return reject(res);
+        }
+        return resolve(res);
+      });
     });
   }
 

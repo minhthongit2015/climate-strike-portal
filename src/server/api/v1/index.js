@@ -6,7 +6,7 @@ const SessionsRoute = require('./sessions');
 
 const MapRoute = require('./map');
 const UsersRoute = require('./users');
-const BlogRouter = require('./blog');
+const BlogRoute = require('./blog');
 
 router.use('/server-status', ServerStatusRoute);
 router.use('/api-info', ApiInfoRoute);
@@ -14,6 +14,6 @@ router.use('/sessions', SessionsRoute);
 
 router.use('/map', MapRoute);
 router.use('/users', UsersRoute);
-router.use('/blog', BlogRouter);
+router.use('/blog', BlogRoute);
 
 module.exports = router;

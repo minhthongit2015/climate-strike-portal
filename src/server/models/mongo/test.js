@@ -70,16 +70,20 @@ generateId(users, 100);
 
 const categories = [
   {
-    name: 'Bức tranh Trái Đất'
+    name: 'Bức tranh Trái Đất',
+    type: 'EarthPicture'
   },
   {
-    name: 'Khí hậu'
+    name: 'Khí hậu',
+    type: 'Climate'
   },
   {
-    name: 'Sinh vật'
+    name: 'Sinh vật',
+    type: 'Organisms'
   },
   {
-    name: 'Ô nhiễm'
+    name: 'Ô nhiễm',
+    type: 'Pollution'
   }
 ];
 generateId(categories, 200);

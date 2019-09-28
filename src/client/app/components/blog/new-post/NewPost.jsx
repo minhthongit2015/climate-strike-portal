@@ -39,7 +39,7 @@ export default class extends React.Component {
     });
     const { title, description } = this.state;
     const content = this.contentRef.current.value;
-    superrequest.post('/api/blog', {
+    superrequest.post('/api/v1/blog/posts', {
       body: { title, content, description }
     }).finally(() => {
       this.setState({
@@ -78,7 +78,7 @@ export default class extends React.Component {
                   name="title"
                   value={title}
                   onChange={this.handleInputChange}
-                  autocomplete="off"
+                  autoComplete="off"
                   autofill="off"
                 />
                 <MDBInput
@@ -88,7 +88,7 @@ export default class extends React.Component {
                   name="description"
                   value={description}
                   onChange={this.handleInputChange}
-                  autocomplete="off"
+                  autoComplete="off"
                   autofill="off"
                 />
               </Col>

@@ -10,6 +10,7 @@ const PostSchema = new mongoose.Schema({
   content: String,
   summary: String,
   author: [{ type: ObjectId, ref: 'User' }],
+  vote: Number,
   createdAt: {
     type: Date,
     default: Date.now

@@ -2,8 +2,8 @@ const router = require('express').Router();
 // const Debugger = require('../../../services/Debugger');
 // const Logger = require('../../../services/Logger');
 
-const PostRoute = require('./post');
+const PostsRoute = require('./posts');
 
-router.use('/post', PostRoute);
+router.use('/posts', PostsRoute);
 
 module.exports = router;

@@ -3,7 +3,7 @@ import { Section, SectionHeader, SectionBody } from '../../../layouts/base/secti
 import EarthPicturePosts from './sub-comps/EarthPicturePosts';
 import NewPost from '../../../components/blog/new-post/NewPost';
 
-class TabAICloud extends Component {
+class TabEarthPicture extends Component {
   render() {
     return (
       <Section>
@@ -20,4 +20,4 @@ class TabAICloud extends Component {
   }
 }
 
-export default TabAICloud;
+export default TabEarthPicture;
