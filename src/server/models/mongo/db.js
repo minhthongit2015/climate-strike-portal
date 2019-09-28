@@ -24,10 +24,18 @@ class MongoDB {
   }
 }
 
-const PostModel = require('./Post');
+const User = require('./User');
+const Marker = require('./markers/Marker');
+const Strike = require('./markers/Strike');
+const Category = require('./blog/Category');
+const Post = require('./blog/Post');
 
 module.exports = {
   db: MongoDB.db,
   setup: MongoDB.setup,
-  PostModel
+  User,
+  Marker,
+  Strike,
+  Category,
+  Post
 };

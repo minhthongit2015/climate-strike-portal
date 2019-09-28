@@ -162,6 +162,7 @@ class Server {
   }
 
   static setupErrorTrap() {
+    Debugger.server(`${colors.yellow('Process Protection Enabled')}`);
     process.on('unhandledRejection', (reason) => {
       Logger.error(
         `${colors.yellow('<!>')} Unhandled Rejection: \t ${colors.red(reason.message)}`,

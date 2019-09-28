@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
 
 const PostSchema = new mongoose.Schema({
-  category: [
-    { type: ObjectId, ref: 'Category' }
-  ],
+  category: [{ type: ObjectId, ref: 'Category' }],
   title: String,
   preview: String,
   content: String,

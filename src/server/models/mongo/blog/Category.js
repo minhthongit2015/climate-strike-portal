@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
 
 const CategorySchema = new mongoose.Schema({
-  parent: [
+  parents: [
     { type: ObjectId, ref: 'Category' }
   ],
   name: String,
-  summary: String,
+  description: String,
   createdAt: {
     type: Date,
     default: Date.now
@@ -19,5 +19,5 @@ const CategorySchema = new mongoose.Schema({
   }
 });
 
-const CategoryModel = mongoose.model('Post', CategorySchema);
+const CategoryModel = mongoose.model('Category', CategorySchema);
 module.exports = CategoryModel;

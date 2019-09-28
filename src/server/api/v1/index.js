@@ -14,6 +14,6 @@ router.use('/sessions', SessionsRoute);
 
 router.use('/map', MapRoute);
 router.use('/users', UsersRoute);
-router.use('/gardens', BlogRouter);
+router.use('/blog', BlogRouter);
 
 module.exports = router;
