@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Shuffle from 'shufflejs';
 import Post from '../post/Post';
 import './PostList.scss';
-import LeafLoading from '../../utils/loadings/LeafLoading';
 
 
 export default class PostList extends React.Component {
@@ -16,13 +15,15 @@ export default class PostList extends React.Component {
 
   componentDidMount() {
     this.shuffle = new Shuffle(this.containerRef.current, '.post-wrapper', {
-      sizer: this.sizerElementRef.current
+      sizer: this.sizerElementRef.current,
+      speed: 0,
+      throttleTime: 0,
+      roundTransforms: true
     });
   }
 
   componentDidUpdate() {
     this.shuffle.resetItems();
-    this.shuffle.update();
   }
 
   componentWillUnmount() {
@@ -39,7 +40,6 @@ export default class PostList extends React.Component {
     return willUpdate;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   mapPreviews(posts) {
     return Promise.all(posts.map(post => new Promise((resolve) => {
       if (post.previewClass) {
@@ -47,7 +47,7 @@ export default class PostList extends React.Component {
         return;
       }
       if (!post.preview) {
-        post.previewClass = this.smartSize(null, post);
+        post.previewClass = PostList.smartSize(null, post);
         resolve(post);
         return;
       }
@@ -56,19 +56,18 @@ export default class PostList extends React.Component {
       image.src = post.preview;
 
       if (image.naturalWidth > 0 || image.complete) {
-        post.previewClass = this.smartSize(image, post);
+        post.previewClass = PostList.smartSize(image, post);
         resolve(post);
       } else {
         image.onload = () => {
-          post.previewClass = this.smartSize(image, post);
+          post.previewClass = PostList.smartSize(image, post);
           resolve(post);
         };
       }
     })));
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  smartSize(image, post) {
+  static smartSize(image, post) {
     const contentLength = post.title.length + post.summary.length;
     if (image == null) {
       if (contentLength > 200) {
@@ -112,14 +111,13 @@ export default class PostList extends React.Component {
     return 'w1';
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  renderPost(key, content, post) {
+  static renderPost(key, content, post) {
     return (
       <div
         key={key}
         className={`post-wrapper p-0 ${post.previewClass || ''}`}
       >
-        <div className="p-2">
+        <div className="p-3">
           {content}
         </div>
       </div>
@@ -127,32 +125,27 @@ export default class PostList extends React.Component {
   }
 
   render() {
-    const { children, posts = [], loadingText } = this.props;
+    const { children, posts = [] } = this.props;
     if (this.processing) return null;
     if (posts.length > 0 && this.processing === null) {
       this.mapPreviews(posts).then(() => {
         this.processing = false;
         this.forceUpdate(() => {
           this.shuffle.resetItems();
-          this.shuffle.update();
+          this.shuffle.layout();
         });
       });
     }
     return (
       <React.Fragment>
-        {(!posts || !posts.length) && (
-          <div className="overlapable" style={{ width: '100%', height: '200px' }}>
-            <LeafLoading text={loadingText} overlaping />
-          </div>
-        )}
         <div ref={this.containerRef}>
           <div className="sizer-element" ref={this.sizerElementRef} />
           <div className="post-wrapper w4 p-0" />
           {(posts && posts.map(post => (
-            this.renderPost(post._id, <Post post={post} />, post)
+            PostList.renderPost(post._id, <Post post={post} />, post)
           )))
           || (children && children.map(post => (
-            this.renderPost(post.key, post, post.props.post)
+            PostList.renderPost(post.key, post, post.props.post)
           )))
           }
         </div>

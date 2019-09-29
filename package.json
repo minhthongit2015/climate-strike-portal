@@ -70,6 +70,7 @@
     "react-beautiful-dnd": "^11.0.5",
     "react-epic-spinners": "^0.3.0",
     "react-i18next": "^10.11.4",
+    "react-infinite-scroll-component": "^4.5.3",
     "react-markdown": "^4.2.2",
     "semver": "^6.3.0",
     "sequelize": "^6.0.0",

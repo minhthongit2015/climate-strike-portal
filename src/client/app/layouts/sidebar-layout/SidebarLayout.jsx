@@ -5,7 +5,7 @@ import Sidebar from './sidebar/Sidebar';
 
 export default class SidebarLayout extends Component {
   render() {
-    console.log('render "Layouts/simplest/Simplest.jsx"');
+    console.log('render "Layouts/SidebarLayout.jsx"');
     return (
       <div className="sidebar-layout d-flex h-100">
         <Sidebar navItems={this.props.navItems} brand={this.props.brand} />

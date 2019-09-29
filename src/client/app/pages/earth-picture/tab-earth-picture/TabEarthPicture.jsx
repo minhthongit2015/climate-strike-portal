@@ -12,8 +12,9 @@ export default class TabEarthPicture extends BasePage {
     this.handlePostPosted = this.handlePostPosted.bind(this);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   handlePostPosted() {
-    this.postListRef.current.refresh();
+    // this.postListRef.current.refresh();
   }
 
   render() {
