@@ -1,7 +1,18 @@
 
+@function linear-gradient-background($angle, $opacity) {
+  @return linear-gradient($angle, rgba(222, 252, 249, $opacity), rgba(202, 222, 252, $opacity), rgba(195, 190, 240, $opacity), rgba(204, 168, 233, $opacity));
+}
+
+@function radial-gradient-background($opacity) {
+  @return radial-gradient(rgba(222, 252, 249, $opacity), rgba(202, 222, 252, $opacity), rgba(195, 190, 240, $opacity), rgba(204, 168, 233, $opacity));
+}
+
+$loading-background: radial-gradient-background(.5);
+$spiner-background: linear-gradient-background(120deg, .9);
+
 .loading {
   pointer-events: none;
-  background: rgba(184, 255, 208, 0.4);
+  background: $loading-background;
   transition: opacity .3s ease-in-out;
   opacity: 0;
   position: absolute;
@@ -10,11 +21,38 @@
   top: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: 'Segoe UI', Tahoma, Courier, monospace, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  letter-spacing: .1em;
+  font-weight: 500;
+  font-size: 1.5em;
+  text-align: center;
 
   &.overlaping {
     pointer-events: all;
     opacity: 1;
+  }
+
+  & > div > div {
+    background: $spiner-background !important;
+  }
+
+  .loading-text {
+    position: absolute;
+    width: 100%;
+    bottom: calc(50% - 90px);
+    left: 0;
+
+    span {
+      opacity: .5;
+    }
+    @for $i from 1 through 20 {
+      span:nth-child(#{$i}) {
+        animation: fadeIn 1s ease-in-out ($i * 50ms) infinite alternate both;
+      }
+    }
   }
 }
