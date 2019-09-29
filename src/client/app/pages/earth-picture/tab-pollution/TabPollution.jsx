@@ -1,19 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
+import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
+import PollutionPosts from './PollutionPosts';
+import NewPost from '../../../components/blog/new-post/NewPost';
 
-export default class TabTrainedModels extends Component {
+
+export default class TabPollution extends BasePage {
+  constructor(props) {
+    super(props, 'Bức Tranh Ô Nhiễm');
+    this.postListRef = React.createRef();
+    this.handlePostPosted = this.handlePostPosted.bind(this);
+  }
+
+  handlePostPosted() {
+    this.postListRef.current.refresh();
+  }
+
   render() {
     return (
       <Section>
-        <SectionHeader>Trained Models</SectionHeader>
+        <SectionHeader>
+          <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
+        </SectionHeader>
         <SectionBody>
-          <ul>
-            <li>Danh sách Trained Models</li>
-            <li>Xem thông tin chi tiết model (layers, algorithm...)</li>
-            <li>Lựa chọn model vào các Model Set</li>
-            <li>(Model Set là bộ các model đầy đủ cho một vườn)</li>
-            <li>Đặt số hiệu phiên bản và quản lý xuất bản các model lên mạng lưới chia sẻ</li>
-          </ul>
+          <NewPost onPosted={this.handlePostPosted} />
+          <PollutionPosts
+            ref={this.postListRef}
+          />
         </SectionBody>
       </Section>
     );

@@ -15,9 +15,12 @@ function generateId(array, start = 100) {
 
 function mapParent(array, info = []) {
   info.forEach((subInfo) => {
+    const parent = array[subInfo[2] - 1];
+    parent.children = [];
     array.slice(subInfo[0] - 1, subInfo[1])
       .forEach((element) => {
-        element.parent = array[subInfo[2] - 1].id;
+        element.parent = parent.id;
+        parent.children.push(element.id);
       });
   });
 }

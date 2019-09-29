@@ -1,6 +1,7 @@
 import React from 'react';
-import PostList from '../../../../components/blog/post-list/PostList';
-import supperrequest from '../../../../utils/superrequest';
+import PostList from '../../../components/blog/post-list/PostList';
+import supperrequest from '../../../utils/superrequest';
+
 
 export default class extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class extends React.Component {
     this.state = {
       posts: []
     };
+    this.category = 'EarthPicture';
   }
 
   componentDidMount() {
@@ -16,7 +18,7 @@ export default class extends React.Component {
   }
 
   fetchPosts() {
-    return supperrequest.get('/api/v1/blog/posts')
+    return supperrequest.get(`/api/v1/blog/posts?category=${this.category}`)
       .then((res) => {
         if (!res.ok) {
           return;

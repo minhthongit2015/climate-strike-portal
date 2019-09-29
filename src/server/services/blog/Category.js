@@ -6,4 +6,8 @@ module.exports = class extends CRUDService {
   static get model() {
     return Category;
   }
+
+  static get populate() {
+    return ['children'];
+  }
 };

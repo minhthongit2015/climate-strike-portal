@@ -16,6 +16,10 @@ module.exports = class CRUDService {
     return [];
   }
 
+  static resolveListOptions(opts = ApiHelper.listParams) {
+    return opts;
+  }
+
   static async create(doc) {
     const newDoc = await this.model.create(doc);
     return newDoc;
@@ -39,7 +43,7 @@ module.exports = class CRUDService {
   }
 
   static async list(opts = ApiHelper.listParams) {
-    let query = ApiHelper.findWithModel(this.model, opts);
+    let query = ApiHelper.findWithModel(this.model, await this.resolveListOptions(opts));
     query = this.populate.reduce(
       (prevQuery, relatedColection) => prevQuery.populate(relatedColection),
       query

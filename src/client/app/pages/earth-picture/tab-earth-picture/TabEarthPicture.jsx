@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
+import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
-import EarthPicturePosts from './sub-comps/EarthPicturePosts';
+import EarthPicturePosts from './EarthPicturePosts';
 import NewPost from '../../../components/blog/new-post/NewPost';
 
-class TabEarthPicture extends Component {
+
+export default class TabEarthPicture extends BasePage {
   constructor(props) {
-    super(props);
+    super(props, 'Bức Tranh Trái Đất');
     this.postListRef = React.createRef();
     this.handlePostPosted = this.handlePostPosted.bind(this);
   }
@@ -30,5 +32,3 @@ class TabEarthPicture extends Component {
     );
   }
 }
-
-export default TabEarthPicture;

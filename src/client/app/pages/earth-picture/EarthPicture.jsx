@@ -1,8 +1,5 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import BasePage from '../_base/BasePage';
 import './EarthPicture.scss';
 
 import SidebarLayout from '../../layouts/sidebar-layout/SidebarLayout';
@@ -12,25 +9,25 @@ import TabOrganisms from './tab-organisms/TabOrganisms';
 import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
 
-export default class extends BasePage {
+export default class extends React.Component {
   constructor(props) {
-    super(props, 'Bức Tranh Trái Đất');
+    super(props);
     this.brand = {
       name: 'Bức Tranh Trái Đất',
       link: RouteConstants.earthPictureLink
     };
     this.tabs = [
       {
-        name: 'Sinh vật',
-        path: RouteConstants.epOrganismsPath,
-        link: RouteConstants.epOrganismsLink,
-        component: TabOrganisms
-      },
-      {
         name: 'Khí hậu',
         path: RouteConstants.epClimatePath,
         link: RouteConstants.epClimateLink,
         component: TabClimate
+      },
+      {
+        name: 'Sinh vật',
+        path: RouteConstants.epOrganismsPath,
+        link: RouteConstants.epOrganismsLink,
+        component: TabOrganisms
       },
       {
         name: 'Ô nhiễm',

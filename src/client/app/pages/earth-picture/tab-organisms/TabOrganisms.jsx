@@ -1,17 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
+import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
+import OrganismsPosts from './OrganismsPosts';
+import NewPost from '../../../components/blog/new-post/NewPost';
 
-export default class TabProjects extends Component {
+
+export default class TabOrganisms extends BasePage {
+  constructor(props) {
+    super(props, 'Bức Tranh Sinh Vật');
+    this.postListRef = React.createRef();
+    this.handlePostPosted = this.handlePostPosted.bind(this);
+  }
+
+  handlePostPosted() {
+    this.postListRef.current.refresh();
+  }
+
   render() {
     return (
       <Section>
-        <SectionHeader>Projects</SectionHeader>
+        <SectionHeader>
+          <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
+        </SectionHeader>
         <SectionBody>
-          <ul>
-            <li>Quản lý các dự án nghiên cứu</li>
-            <li>Trong mỗi dự án sẽ đi kèm một số Model và Experiment</li>
-            <li>Sử dụng như thư mục quản lý các Experiment và Model</li>
-          </ul>
+          <NewPost onPosted={this.handlePostPosted} />
+          <OrganismsPosts
+            ref={this.postListRef}
+          />
         </SectionBody>
       </Section>
     );
