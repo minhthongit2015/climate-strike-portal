@@ -18,7 +18,7 @@ class TabEarthPicture extends Component {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5">ở đây không có gì ngoài những gì đang diễn ra...</div>
+          <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
         </SectionHeader>
         <SectionBody>
           <NewPost onPosted={this.handlePostPosted} />

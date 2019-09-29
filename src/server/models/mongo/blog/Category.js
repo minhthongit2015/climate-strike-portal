@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
 
 const CategorySchema = new mongoose.Schema({
-  parents: [
-    { type: ObjectId, ref: 'Category' }
-  ],
+  parent: { type: ObjectId, ref: 'Category' },
   name: String,
   type: String,
   description: String,

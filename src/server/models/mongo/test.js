@@ -17,7 +17,7 @@ function mapParent(array, info = []) {
   info.forEach((subInfo) => {
     array.slice(subInfo[0] - 1, subInfo[1])
       .forEach((element) => {
-        element.parents = [array[subInfo[2] - 1].id];
+        element.parent = array[subInfo[2] - 1].id;
       });
   });
 }

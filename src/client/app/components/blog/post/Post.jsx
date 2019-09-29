@@ -48,6 +48,7 @@ export default class extends React.Component {
         </MDBPopover>
         <CardBody>
           {preview && <div className="post__title"><b>{title}</b></div>}
+          {!preview && <div className="post__summary">{summary}</div>}
         </CardBody>
         <CardFooter>
           <TimeAgo time={createdAt} />

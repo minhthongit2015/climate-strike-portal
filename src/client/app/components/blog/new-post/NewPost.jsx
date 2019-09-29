@@ -5,19 +5,24 @@ import {
   Row, Col
 } from 'mdbreact';
 import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 import classnames from 'classnames';
 import DropUploader from '../../utils/drop-uploader/DropUploader';
 import superrequest from '../../../utils/superrequest';
 import LeafLoading from '../../utils/loadings/LeafLoading';
 import Composer from '../composer/Composer';
 
+const animatedComponents = makeAnimated();
 
 export default class extends React.Component {
   get post() {
-    const { title, summary, preview } = this.state;
+    const {
+      title, summary, preview, categories
+    } = this.state;
     const content = this.contentRef.current.value;
+    const categoryIds = categories.map(category => category.value);
     return {
-      title, summary, content, preview
+      title, summary, content, preview, categories: categoryIds
     };
   }
 
@@ -26,6 +31,7 @@ export default class extends React.Component {
     this.contentRef = React.createRef();
     this.handlePostSubmit = this.handlePostSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
 
     this.categories = [
       // {
@@ -33,16 +39,16 @@ export default class extends React.Component {
       //   type: 'EarthPicture'
       // },
       {
-        name: 'Khí hậu',
-        type: 'Climate'
+        label: 'Khí hậu',
+        value: 'Climate'
       },
       {
-        name: 'Sinh vật',
-        type: 'Organisms'
+        label: 'Sinh vật',
+        value: 'Organisms'
       },
       {
-        name: 'Ô nhiễm',
-        type: 'Pollution'
+        label: 'Ô nhiễm',
+        value: 'Pollution'
       }
     ];
 
@@ -50,6 +56,7 @@ export default class extends React.Component {
       title: '',
       summary: '',
       preview: '',
+      categories: [],
       disabled: false
     };
   }
@@ -78,6 +85,12 @@ export default class extends React.Component {
     });
   }
 
+  handleCategoryChange(value) {
+    this.setState({
+      categories: value
+    });
+  }
+
   triggerPostPosted(postedPost) {
     if (this.props.onPosted) {
       this.props.onPosted(postedPost);
@@ -93,7 +106,7 @@ export default class extends React.Component {
   render() {
     console.log('render "components/blog/new-post"');
     const {
-      title, summary, preview, disabled
+      title, summary, preview, categories, disabled
     } = this.state;
     return (
       <MDBCard className={classnames('new-post overlapable', { disabled })}>
@@ -112,11 +125,12 @@ export default class extends React.Component {
                   name="category"
                   options={this.categories}
                   isMulti
-                  value={summary}
-                  onChange={this.handleInputChange}
+                  value={categories}
+                  onChange={this.handleCategoryChange}
                   required
                   autoComplete="off"
                   autofill="off"
+                  components={animatedComponents}
                 />
                 <MDBInput
                   label="Tiêu đề"
@@ -144,7 +158,7 @@ export default class extends React.Component {
                   name="preview"
                   value={preview}
                   onChange={this.handleInputChange}
-                  className="px-2 py-4"
+                  className="px-2 pb-4 pt-1"
                 />
               </Col>
             </Row>
