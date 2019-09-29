@@ -12,6 +12,10 @@ module.exports = class CRUDService {
     return this._model;
   }
 
+  static get populate() {
+    return [];
+  }
+
   static async create(doc) {
     const newDoc = await this.model.create(doc);
     return newDoc;
@@ -25,12 +29,22 @@ module.exports = class CRUDService {
   }
 
   static async get(id) {
-    const doc = await this.model.findById(id).exec();
+    let query = this.model.findById(id);
+    query = this.populate.reduce(
+      (prevQuery, relatedColection) => prevQuery.populate(relatedColection),
+      query
+    );
+    const doc = await query.exec();
     return ConverterFactory.get(this.model.name).convert(doc);
   }
 
   static async list(opts = ApiHelper.listParams) {
-    const docs = await ApiHelper.findWithModel(this.model, opts);
+    let query = ApiHelper.findWithModel(this.model, opts);
+    query = this.populate.reduce(
+      (prevQuery, relatedColection) => prevQuery.populate(relatedColection),
+      query
+    );
+    const docs = await query.exec();
     return ConverterFactory.get(this.model.name).convertCollection(docs);
   }
 

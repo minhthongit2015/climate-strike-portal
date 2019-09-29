@@ -33,7 +33,7 @@ export default class extends React.Component {
           <span className="post__preview">
             {preview
               ? <MDBCardImage className="img-fluid" src={preview} />
-              : <CardHeader>{title}</CardHeader>}
+              : <CardHeader className={post.categories[0].type}>{title}</CardHeader>}
           </span>
           <MDBPopoverBody>
             <div className="post__content">

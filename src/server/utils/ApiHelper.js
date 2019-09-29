@@ -22,21 +22,20 @@ function parseListParams(opts = listParams) {
   return parsedOption;
 }
 
-async function find(queryObject, opts = listParams) {
+function find(queryObject, opts = listParams) {
   opts = parseListParams(opts);
   return queryObject // model.find()...
     .sort(opts.sort)
     .skip(opts.offset)
-    .limit(opts.limit)
-    .exec();
+    .limit(opts.limit);
 }
 
-async function findWithModel(model, opts = listParams) {
+function findWithModel(model, opts = listParams) {
   opts = parseListParams(opts);
   return find(model.find(opts.where), opts);
 }
 
-async function findWithFunc(findFunc, opts = listParams) {
+function findWithFunc(findFunc, opts = listParams) {
   opts = parseListParams(opts);
   return find(findFunc(opts.where), opts);
 }

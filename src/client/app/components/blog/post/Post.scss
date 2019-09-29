@@ -12,18 +12,20 @@
     font-size: 1.2em;
     padding-top: .5rem;
     padding-bottom: .4rem;
-    background-color: #f38181;
-    color: #eaffd0;
+    background-color: #ffb3b3;
+    color: #fff;
 
     &.Climate {
-      background-color: #f38181;
-      color: #eaffd0;
+      background-color: #ffb3b3;
+      color: #fff;
     }
     &.Organisms {
-      
+      background-color: #fbb185;
+      color: #fff;
     }
     &.Pollution {
-
+      background-color: #ad85fb;
+      color: #fff;
     }
   }
 
