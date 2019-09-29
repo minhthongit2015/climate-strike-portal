@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose');
+const { MongooseAutoIncrementID } = require('mongoose-auto-increment-reworked');
 
 const { ObjectId } = mongoose.Schema.Types;
 
@@ -23,6 +24,8 @@ const PostSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+PostSchema.plugin(MongooseAutoIncrementID.plugin, { modelName: 'Post', field: 'baseOrder' });
 
 const PostModel = mongoose.model('Post', PostSchema);
 module.exports = PostModel;

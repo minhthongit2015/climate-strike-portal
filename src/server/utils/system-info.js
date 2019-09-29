@@ -27,7 +27,7 @@ module.exports = class SystemInfo {
 
   static showServerPorts(port, serverDebug) {
     const interfaces = SystemInfo.listInterfaces();
-    serverDebug(colors.underline('\r\n[Server running at] > '));
+    serverDebug(colors.underline(colors.red('\r\n[Server running at] > ')));
     Object.keys(interfaces).forEach((interfaceName) => {
       let alias = 0;
       interfaces[interfaceName].forEach((iface) => {

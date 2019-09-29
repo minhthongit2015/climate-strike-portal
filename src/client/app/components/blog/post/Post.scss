@@ -1,5 +1,9 @@
 
 
+$climate-color: #ffb3b3;
+$organisms-color: #fbb185;
+$pollution-color: #ad85fb;
+
 .post {
   box-shadow: 0 .125em .25em rgba(0,0,0,.075);
   transition: all .3s ease-in-out;
@@ -12,25 +16,37 @@
     font-size: 1.2em;
     padding-top: .5rem;
     padding-bottom: .4rem;
-    background-color: #ffb3b3;
+    background-color: $climate-color;
     color: #fff;
 
     &.Climate {
-      background-color: #ffb3b3;
+      background-color: $climate-color;
       color: #fff;
     }
     &.Organisms {
-      background-color: #fbb185;
+      background-color: $organisms-color;
       color: #fff;
     }
     &.Pollution {
-      background-color: #ad85fb;
+      background-color: $pollution-color;
       color: #fff;
     }
   }
 
   &__preview, &__preview > .view {
     cursor: pointer;
+  }
+
+  &__preview {
+    &.Climate {
+      border-top: 4px solid $climate-color;
+    }
+    &.Organisms {
+      border-top: 4px solid $organisms-color;
+    }
+    &.Pollution {
+      border-top: 4px solid $pollution-color;
+    }
   }
 
   &__summary {

@@ -29,6 +29,7 @@ const Marker = require('./markers/Marker');
 const Strike = require('./markers/Strike');
 const Category = require('./blog/Category');
 const Post = require('./blog/Post');
+const EarthPost = require('./blog/EarthPost');
 
 module.exports = {
   db: MongoDB.db,
@@ -37,5 +38,6 @@ module.exports = {
   Marker,
   Strike,
   Category,
-  Post
+  Post,
+  EarthPost
 };

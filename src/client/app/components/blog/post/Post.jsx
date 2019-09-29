@@ -17,6 +17,7 @@ export default class extends React.Component {
       title = post.title,
       summary = post.summary,
       content = post.content,
+      category = post.categories[0].type,
       createdAt = post.createdAt
     } = this.props;
 
@@ -24,16 +25,15 @@ export default class extends React.Component {
       <Card className="post mt-3">
         <MDBPopover
           placement="top"
-          trigger="focus"
           clickable={false}
           domElement
           popover
           id={_id}
         >
-          <span className="post__preview">
+          <span className={`post__preview ${preview ? category : ''}`}>
             {preview
               ? <MDBCardImage className="img-fluid" src={preview} />
-              : <CardHeader className={post.categories[0].type}>{title}</CardHeader>}
+              : <CardHeader className={category}>{title}</CardHeader>}
           </span>
           <MDBPopoverBody>
             <div className="post__content">
@@ -42,13 +42,12 @@ export default class extends React.Component {
                 source={content}
                 escapeHtml={false}
               />
-              <div className="post__summary">{summary}</div>
             </div>
           </MDBPopoverBody>
         </MDBPopover>
         <CardBody>
           {preview && <div className="post__title"><b>{title}</b></div>}
-          {!preview && <div className="post__summary">{summary}</div>}
+          <div className="post__summary">{summary}</div>
         </CardBody>
         <CardFooter>
           <TimeAgo time={createdAt} />

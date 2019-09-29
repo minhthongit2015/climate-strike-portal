@@ -69,7 +69,7 @@ export default class PostList extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   smartSize(image, post) {
-    const contentLength = post.content.length + post.summary.length;
+    const contentLength = post.title.length + post.summary.length;
     if (image == null) {
       if (contentLength > 200) {
         return 'w2';
@@ -81,6 +81,13 @@ export default class PostList extends React.Component {
     const height = image.naturalHeight;
     const ratio = width / height;
     if (ratio > 1) { // width > height
+      if (contentLength > 300) {
+        return 'w4';
+      } if (contentLength > 200) {
+        return 'w3';
+      } if (contentLength > 100) {
+        return 'w2';
+      }
       if (ratio > 4) {
         return 'w4';
       } if (ratio > 3) {
@@ -120,7 +127,7 @@ export default class PostList extends React.Component {
   }
 
   render() {
-    const { children, posts = [] } = this.props;
+    const { children, posts = [], loadingText } = this.props;
     if (this.processing) return null;
     if (posts.length > 0 && this.processing === null) {
       this.mapPreviews(posts).then(() => {
@@ -135,7 +142,7 @@ export default class PostList extends React.Component {
       <React.Fragment>
         {(!posts || !posts.length) && (
           <div className="overlapable" style={{ width: '100%', height: '200px' }}>
-            <LeafLoading overlaping />
+            <LeafLoading text={loadingText} overlaping />
           </div>
         )}
         <div ref={this.containerRef}>

@@ -35,7 +35,7 @@ export default class extends React.Component {
     const { posts } = this.state;
 
     return (
-      <PostList {...this.props} posts={posts} />
+      <PostList {...this.props} posts={posts} loadingText="đang tải các bài viết..." />
     );
   }
 }

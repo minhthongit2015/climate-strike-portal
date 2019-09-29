@@ -121,7 +121,7 @@ export default class extends React.Component {
             <Row>
               <Col>
                 <Select
-                  label="Chuyên mục"
+                  placeholder="Chuyên mục"
                   name="category"
                   options={this.categories}
                   isMulti
@@ -172,7 +172,7 @@ export default class extends React.Component {
             </Row>
           </form>
         </MDBCardBody>
-        <LeafLoading overlaping={disabled} />
+        <LeafLoading text="đang đăng bài..." overlaping={disabled} />
       </MDBCard>
     );
   }
