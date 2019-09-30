@@ -29,7 +29,9 @@ const Marker = require('./markers/Marker');
 const Strike = require('./markers/Strike');
 const Category = require('./blog/Category');
 const Post = require('./blog/Post');
-const EarthPost = require('./blog/EarthPost');
+const EarthPicturePost = require('./blog/EarthPicturePost');
+const WhatYouCanDoPost = require('./blog/WhatYouCanDoPost');
+const YourQuestionPost = require('./blog/YourQuestionPost');
 
 module.exports = {
   db: MongoDB.db,
@@ -39,5 +41,7 @@ module.exports = {
   Strike,
   Category,
   Post,
-  EarthPost
+  EarthPicturePost,
+  WhatYouCanDoPost,
+  YourQuestionPost
 };
