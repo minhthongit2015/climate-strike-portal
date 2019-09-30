@@ -56,11 +56,14 @@ export default class InfinitePostList extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   renderEnd() {
+    const knowAllMsg = 'bạn đã biết tất cả những gì mình biết...';
+    const noPostMsg = 'chưa có bài viết nào được đăng...';
+    const isNoPost = this.state.posts.length === 0;
     return (
       <div className="text-center">
         <hr className="w-75 mt-5" />
         <div className="my-5 text-monospace text-black-50 font-weight-bold">
-          bạn đã biết tất cả những gì mình biết...
+          {isNoPost ? noPostMsg : knowAllMsg}
         </div>
       </div>
     );
