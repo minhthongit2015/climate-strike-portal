@@ -7,10 +7,12 @@ import {
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import classnames from 'classnames';
+import './NewPost.scss';
 import DropUploader from '../../utils/drop-uploader/DropUploader';
 import superrequest from '../../../utils/superrequest';
 import LeafLoading from '../../utils/loadings/LeafLoading';
 import Composer from '../composer/Composer';
+import ButtonBar from '../../dialog/ButtonBar';
 
 const animatedComponents = makeAnimated();
 
@@ -32,6 +34,7 @@ export default class extends React.Component {
     this.handlePostSubmit = this.handlePostSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
 
     this.categories = [
       // {
@@ -57,7 +60,8 @@ export default class extends React.Component {
       summary: '',
       preview: '',
       categories: [],
-      disabled: false
+      disabled: false,
+      expanded: false
     };
   }
 
@@ -70,7 +74,7 @@ export default class extends React.Component {
     superrequest.post(`/api/v1/blog/posts?draft=${isDraft}`, this.post)
       .then((res) => {
         if (res.ok) {
-          this.triggerPostPosted(res.data);
+          this.dispatchPostPosted(res.data);
         }
       }).finally(() => {
         this.setLoadingState(false);
@@ -91,7 +95,29 @@ export default class extends React.Component {
     });
   }
 
-  triggerPostPosted(postedPost) {
+  handleButtonClick(event) {
+    if (event.target.name === 'close') {
+      this.resetForm();
+    }
+    this.toggleExpand();
+  }
+
+  resetForm() {
+    this.setState({
+      title: '',
+      summary: '',
+      preview: '',
+      categories: []
+    });
+  }
+
+  toggleExpand() {
+    this.setState(prevState => ({
+      expanded: !prevState.expanded
+    }));
+  }
+
+  dispatchPostPosted(postedPost) {
     if (this.props.onPosted) {
       this.props.onPosted(postedPost);
     }
@@ -106,15 +132,17 @@ export default class extends React.Component {
   render() {
     console.log('render "components/blog/new-post"');
     const {
-      title, summary, preview, categories, disabled
+      title, summary, preview, categories, disabled, expanded
     } = this.state;
     return (
-      <MDBCard className={classnames('new-post overlapable', { disabled })}>
+      <MDBCard className={classnames('new-post overlapable flex-fill', { disabled, expanded })}>
         <MDBCardHeader className="d-flex justify-content-between py-0">
           <div className="flex-fill d-flex align-items-center">Đăng bài mới</div>
-          <Button color="" className="px-3 py-2" tabIndex="-1">
-            <i className="far fa-window-close" />
-          </Button>
+          <ButtonBar
+            onClick={this.handleButtonClick}
+            closeState={expanded ? 1 : 2}
+            minimizeState={expanded ? 1 : 2}
+          />
         </MDBCardHeader>
         <MDBCardBody>
           <form onSubmit={this.handlePostSubmit}>

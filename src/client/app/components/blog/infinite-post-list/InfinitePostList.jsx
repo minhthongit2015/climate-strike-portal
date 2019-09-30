@@ -15,6 +15,10 @@ export default class InfinitePostList extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchPosts();
+  }
+
   fetchPosts() {
     const { category, postsPerPage = 4 } = this.props;
     const limit = postsPerPage;
