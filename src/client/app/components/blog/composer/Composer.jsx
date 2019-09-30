@@ -9,6 +9,10 @@ export default class extends React.Component {
     return '';
   }
 
+  set value(value) {
+    this.inputRef.current.getInstance().setValue(value);
+  }
+
   constructor(props) {
     super(props);
     this.inputRef = React.createRef();

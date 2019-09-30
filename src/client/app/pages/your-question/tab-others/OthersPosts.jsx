@@ -1,9 +1,9 @@
 import EarthPicturePosts from '../tab-your-question/YourQuestionPosts';
 
 
-export default class ClimatePosts extends EarthPicturePosts {
+export default class extends EarthPicturePosts {
   constructor(props) {
     super(props);
-    this.category = 'AskForClimate';
+    this.category = 'AskForOthers';
   }
 }

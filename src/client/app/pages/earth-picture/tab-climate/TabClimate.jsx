@@ -2,7 +2,7 @@ import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
 import ClimatePosts from './ClimatePosts';
-import NewPost from '../../../components/blog/new-post/NewPost';
+import NewPostRow from '../../../components/blog/new-post/NewPostRow';
 
 
 export default class TabClimate extends BasePage {
@@ -23,7 +23,7 @@ export default class TabClimate extends BasePage {
           <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
         </SectionHeader>
         <SectionBody>
-          <NewPost onPosted={this.handlePostPosted} />
+          <NewPostRow onPosted={this.handlePostPosted} />
           <ClimatePosts
             ref={this.postListRef}
           />

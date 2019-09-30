@@ -1,13 +1,13 @@
 import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
+import OthersPosts from './OthersPosts';
 import NewPostRow from '../../../components/blog/new-post/NewPostRow';
-import OrganismsPosts from './OrganismsPosts';
 
 
 export default class extends BasePage {
   constructor(props) {
-    super(props, 'Bức Tranh Sinh Vật');
+    super(props, 'Hỏi về Chủ đề khác');
     this.postListRef = React.createRef();
     this.handlePostPosted = this.handlePostPosted.bind(this);
   }
@@ -24,7 +24,7 @@ export default class extends BasePage {
         </SectionHeader>
         <SectionBody>
           <NewPostRow onPosted={this.handlePostPosted} />
-          <OrganismsPosts
+          <OthersPosts
             ref={this.postListRef}
           />
         </SectionBody>

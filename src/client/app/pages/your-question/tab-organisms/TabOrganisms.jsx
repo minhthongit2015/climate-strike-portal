@@ -2,12 +2,12 @@ import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
 import OrganismsPosts from './OrganismsPosts';
-import NewPost from '../../../components/blog/new-post/NewPost';
+import NewPostRow from '../../../components/blog/new-post/NewPostRow';
 
 
 export default class TabOrganisms extends BasePage {
   constructor(props) {
-    super(props, 'Bức Tranh Sinh Vật');
+    super(props, 'Hỏi về Sinh Vật');
     this.postListRef = React.createRef();
     this.handlePostPosted = this.handlePostPosted.bind(this);
   }
@@ -23,7 +23,7 @@ export default class TabOrganisms extends BasePage {
           <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
         </SectionHeader>
         <SectionBody>
-          <NewPost onPosted={this.handlePostPosted} />
+          <NewPostRow onPosted={this.handlePostPosted} />
           <OrganismsPosts
             ref={this.postListRef}
           />

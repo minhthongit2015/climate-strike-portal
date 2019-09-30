@@ -7,6 +7,7 @@ import TabYourQuestion from './tab-your-question/TabYourQuestion';
 import TabOrganisms from './tab-organisms/TabOrganisms';
 import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
+import TabOthers from './tab-others/TabOthers';
 
 export default class extends React.Component {
   constructor(props) {
@@ -17,22 +18,28 @@ export default class extends React.Component {
     };
     this.tabs = [
       {
-        name: 'Khí hậu',
-        path: RouteConstants.epClimatePath,
-        link: RouteConstants.epClimateLink,
+        name: 'Về khí hậu',
+        path: RouteConstants.askForClimatePath,
+        link: RouteConstants.askForClimateLink,
         component: TabClimate
       },
       {
-        name: 'Sinh vật',
-        path: RouteConstants.epOrganismsPath,
-        link: RouteConstants.epOrganismsLink,
+        name: 'Về sinh vật',
+        path: RouteConstants.askForOrganismsPath,
+        link: RouteConstants.askForOrganismsLink,
         component: TabOrganisms
       },
       {
-        name: 'Ô nhiễm',
-        path: RouteConstants.epPollutionPath,
-        link: RouteConstants.epPollutionLink,
+        name: 'Về ô nhiễm',
+        path: RouteConstants.askForPollutionPath,
+        link: RouteConstants.askForPollutionLink,
         component: TabPollution
+      },
+      {
+        name: 'Chủ đề khác',
+        path: RouteConstants.askForOthersPath,
+        link: RouteConstants.askForOthersPath,
+        component: TabOthers
       }
     ];
   }

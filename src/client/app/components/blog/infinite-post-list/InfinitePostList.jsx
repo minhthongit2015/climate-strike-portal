@@ -30,7 +30,7 @@ export default class InfinitePostList extends React.Component {
           // If it has some error, then try to fetch again after 3s
           setTimeout(() => {
             this.fetchPosts();
-          }, 3000);
+          }, 2000);
           return;
         }
         if (this.state.hasMore) {

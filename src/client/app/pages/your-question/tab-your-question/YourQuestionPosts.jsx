@@ -5,7 +5,7 @@ import InfinitePostList from '../../../components/blog/infinite-post-list/Infini
 export default class extends React.Component {
   constructor(props) {
     super(props);
-    this.category = 'EarthPicture';
+    this.category = 'YourQuestion';
   }
 
   render() {

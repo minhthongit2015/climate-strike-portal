@@ -43,7 +43,11 @@ module.exports = class CRUDService {
   }
 
   static async list(opts = ApiHelper.listParams) {
-    let query = ApiHelper.findWithModel(this.model, await this.resolveListOptions(opts));
+    const listOptions = await this.resolveListOptions(opts);
+    if (!listOptions) {
+      return [];
+    }
+    let query = ApiHelper.findWithModel(this.model, listOptions);
     query = this.populate.reduce(
       (prevQuery, relatedColection) => prevQuery.populate(relatedColection),
       query

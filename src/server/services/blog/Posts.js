@@ -21,11 +21,14 @@ module.exports = class extends CRUDService {
           type: opts.category
         }
       });
+      if (parentCategory.length <= 0) {
+        return null;
+      }
       const categories = [
         parentCategory[0]._id,
         ...parentCategory[0].children.map(category => category._id)
       ];
-      if (typeof categories === 'object' && categories.length > 0) {
+      if (categories && typeof categories === 'object' && categories.length > 0) {
         opts.where = {
           categories: {
             $elemMatch: {

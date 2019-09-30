@@ -28,7 +28,7 @@ export default class extends React.Component {
     const {
       size = 30,
       minimizeState = 1, closeState = 1,
-      minimizeTitle = 'Mở rộng', closeTitle = 'Tạo mới',
+      minimizeTitle = 'Mở rộng', closeTitle = 'Bài viết mới',
       minimizeTitle2 = 'Thu gọn', closeTitle2 = 'Đóng'
     } = this.props;
     const btnStyle = {

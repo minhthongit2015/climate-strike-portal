@@ -22,7 +22,7 @@ export default class extends React.Component {
     } = this.props;
 
     return (
-      <Card className="post mt-3">
+      <Card className="post">
         <MDBPopover
           placement="top"
           clickable={false}

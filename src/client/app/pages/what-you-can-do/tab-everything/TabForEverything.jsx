@@ -2,7 +2,7 @@ import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
 import NewPostRow from '../../../components/blog/new-post/NewPostRow';
-import OrganismsPosts from './OrganismsPosts';
+import ForEverythingPosts from './ForEverythingPosts';
 
 
 export default class extends BasePage {
@@ -24,7 +24,7 @@ export default class extends BasePage {
         </SectionHeader>
         <SectionBody>
           <NewPostRow onPosted={this.handlePostPosted} />
-          <OrganismsPosts
+          <ForEverythingPosts
             ref={this.postListRef}
           />
         </SectionBody>

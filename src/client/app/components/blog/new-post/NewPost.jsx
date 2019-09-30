@@ -109,6 +109,7 @@ export default class extends React.Component {
       preview: '',
       categories: []
     });
+    this.contentRef.current.value = '';
   }
 
   toggleExpand() {

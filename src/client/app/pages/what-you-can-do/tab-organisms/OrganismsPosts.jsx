@@ -1,9 +1,9 @@
 import EarthPicturePosts from '../tab-what-you-can-do/WhatYouCanDoPosts';
 
 
-export default class ClimatePosts extends EarthPicturePosts {
+export default class extends EarthPicturePosts {
   constructor(props) {
     super(props);
-    this.category = 'Organisms';
+    this.category = 'DoForOrganisms';
   }
 }

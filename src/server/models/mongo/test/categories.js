@@ -23,16 +23,20 @@ const categories = [
     type: 'WhatYouCanDo'
   },
   {
+    name: 'Tất cả',
+    type: 'DoForEverything'
+  },
+  {
     name: 'Khí hậu',
-    type: 'ForClimate'
+    type: 'DoForClimate'
   },
   {
     name: 'Sinh vật',
-    type: 'ForOrganisms'
+    type: 'DoForOrganisms'
   },
   {
     name: 'Ô nhiễm',
-    type: 'ForPollution'
+    type: 'DoForPollution'
   },
 
   {
@@ -41,15 +45,19 @@ const categories = [
   },
   {
     name: 'Khí hậu',
-    type: 'QClimate'
+    type: 'AskForClimate'
   },
   {
     name: 'Sinh vật',
-    type: 'QOrganisms'
+    type: 'AskForOrganisms'
   },
   {
     name: 'Ô nhiễm',
-    type: 'QPollution'
+    type: 'AskForPollution'
+  },
+  {
+    name: 'Chủ đề khác',
+    type: 'AskForOthers'
   }
 ];
 generateId(categories, 200);

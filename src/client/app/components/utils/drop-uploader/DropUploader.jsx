@@ -10,8 +10,7 @@ export default class extends React.Component {
     this.handleStartUpload = this.handleStartUpload.bind(this);
     this.inputRef = React.createRef();
     this.state = {
-      uploading: false,
-      preview: null
+      uploading: false
     };
   }
 
@@ -27,8 +26,7 @@ export default class extends React.Component {
     reader.onerror = () => console.log('file reading has failed');
     reader.onload = (event1) => {
       this.setState({
-        uploading: false,
-        preview: event1.target.result
+        uploading: false
       });
       this.triggerUploadedEvent(event1.target.result);
     };
@@ -53,17 +51,17 @@ export default class extends React.Component {
     const {
       className, wrapperProps, innerClass, label, value, ...restProps
     } = this.props;
-    const { uploading, preview } = this.state;
+    const { uploading } = this.state;
     return (
       <div className={classnames('drop-uploader', className)} {...wrapperProps}>
         <label
           className={classnames('drop-uploader__drop-zone rounded text-center', innerClass)}
-          style={{ backgroundImage: `url(${preview || value || ''})` }}
+          style={{ backgroundImage: `url(${value || ''})` }}
           {...restProps}
         >
           {uploading
             ? <span>đang tải ảnh lên...</span>
-            : !preview && <span>{label || 'tải ảnh lên'}</span>}
+            : !value && <span>{label || 'tải ảnh lên'}</span>}
           <input
             type="file"
             accept="image/*"
