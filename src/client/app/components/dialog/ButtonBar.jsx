@@ -25,7 +25,12 @@ export default class extends React.Component {
   }
 
   render() {
-    const { size = 30, minimizeState = 1, closeState = 1 } = this.props;
+    const {
+      size = 30,
+      minimizeState = 1, closeState = 1,
+      minimizeTitle = 'Mở rộng', closeTitle = 'Tạo mới',
+      minimizeTitle2 = 'Thu gọn', closeTitle2 = 'Đóng'
+    } = this.props;
     const btnStyle = {
       width: `${size}px`,
       height: `${size}px`,
@@ -37,6 +42,7 @@ export default class extends React.Component {
       <div className="btn-bar my-2">
         <MDBBtn
           name="minimize"
+          title={minimizeState === 2 ? minimizeTitle : minimizeTitle2}
           onClick={this.dispatchEvent}
           className={classnames(
             'btn-bar__btn rounded mr-2',
@@ -48,6 +54,7 @@ export default class extends React.Component {
         </MDBBtn>
         <MDBBtn
           name="close"
+          title={closeState === 2 ? closeTitle : closeTitle2}
           onClick={this.dispatchEvent}
           className={classnames(
             'btn-bar__btn rounded',

@@ -12,9 +12,9 @@ $expandSpeed: .5s;
     opacity: .5;
   }
 
-  // & .placeholder {
-  //   white-space: pre;
-  // }
+  & .placeholder {
+    white-space: pre;
+  }
 
   .card-header {
     transition: all $expandSpeed ease-in-out;
