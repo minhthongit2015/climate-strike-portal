@@ -15,9 +15,10 @@ function generateId(array, start = 100) {
 
 function mapParent(array, info = []) {
   info.forEach((subInfo) => {
-    const parent = array[subInfo[2] - 1];
+    const [parentIndex, start, end] = subInfo;
+    const parent = array[parentIndex - 1];
     parent.children = [];
-    array.slice(subInfo[0] - 1, subInfo[1])
+    array.slice(start - 1, end)
       .forEach((element) => {
         element.parent = parent.id;
         parent.children.push(element.id);
@@ -87,11 +88,51 @@ const categories = [
   {
     name: 'Ô nhiễm',
     type: 'Pollution'
+  },
+
+  {
+    name: 'Điều bạn có thể làm',
+    type: 'WhatYouCanDo'
+  },
+  {
+    name: 'Khí hậu',
+    type: 'ForClimate'
+  },
+  {
+    name: 'Sinh vật',
+    type: 'ForOrganisms'
+  },
+  {
+    name: 'Ô nhiễm',
+    type: 'ForPollution'
+  },
+
+  {
+    name: 'Điều bạn muốn biết?',
+    type: 'YourQuestion'
+  },
+  {
+    name: 'Khí hậu',
+    type: 'QClimate'
+  },
+  {
+    name: 'Sinh vật',
+    type: 'QOrganisms'
+  },
+  {
+    name: 'Ô nhiễm',
+    type: 'QPollution'
   }
 ];
 generateId(categories, 200);
 mapParent(categories, [
-  [2, 4, 1]
+  [1, 2, 4]
+]);
+mapParent(categories, [
+  [5, 6, 8]
+]);
+mapParent(categories, [
+  [9, 10, 12]
 ]);
 
 module.exports = async () => {

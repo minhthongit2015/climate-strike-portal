@@ -32,8 +32,8 @@ export default class PostList extends React.Component {
   }
 
   shouldComponentUpdate(newProps) {
-    const willUpdate = !(this.props && newProps.posts
-      && newProps.posts.length === this.props.length);
+    const willUpdate = !(this.props.posts && newProps.posts
+      && newProps.posts.length === this.props.posts.length);
     if (willUpdate) {
       this.processing = null;
     }

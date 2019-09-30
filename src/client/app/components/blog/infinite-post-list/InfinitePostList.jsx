@@ -15,10 +15,6 @@ export default class InfinitePostList extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.fetchPosts();
-  // }
-
   fetchPosts() {
     const { category, postsPerPage = 4 } = this.props;
     const limit = postsPerPage;
@@ -39,7 +35,7 @@ export default class InfinitePostList extends React.Component {
         if (res.data.length > 0) {
           this.setState(prevState => ({
             posts: prevState.posts.concat(res.data),
-            hasMore: true
+            hasMore: res.data.length >= limit
           }));
         } else {
           this.setState({

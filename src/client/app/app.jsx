@@ -14,7 +14,7 @@ import 'tui-editor/dist/tui-editor.min.css';
 import 'tui-editor/dist/tui-editor-contents.min.css';
 
 import SimplestLayout from './layouts/simplest/simplest';
-import DummyTheRealWorldPage from './pages/smile-city/DummySmileCity';
+import DummyTheRealWorldPage from './pages/the-real-world/DummyTheRealWorld';
 
 import superws from './utils/superws';
 
@@ -25,8 +25,9 @@ import KeyTracker from './utils/KeyTracker';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
-const UserGardenPage = React.lazy(() => import('./pages/my-garden/MyGarden'));
-const TheRealWorldPage = React.lazy(() => import('./pages/smile-city/SmileCity'));
+const WhatYouCanDoPage = React.lazy(() => import('./pages/what-you-can-do/WhatYouCanDo'));
+const YourQuestionPage = React.lazy(() => import('./pages/your-question/YourQuestion'));
+const TheRealWorldPage = React.lazy(() => import('./pages/the-real-world/TheRealWorld'));
 
 class App extends Component {
   // eslint-disable-next-line class-methods-use-this
@@ -49,8 +50,8 @@ class App extends Component {
           <Route exact path={RouteConstants.homePath}><HomePage /></Route>
           <Route path={RouteConstants.earthPicturePath}><EarthPicturePage /></Route>
           <Route exact path={RouteConstants.theRealWorldPath}><DummyTheRealWorldPage /></Route>
-          <Route exact path={RouteConstants.whatYouCanDoPath}><UserGardenPage /></Route>
-          <Route exact path={RouteConstants.yourQuestionPath}><UserGardenPage /></Route>
+          <Route exact path={RouteConstants.whatYouCanDoPath}><WhatYouCanDoPage /></Route>
+          <Route exact path={RouteConstants.yourQuestionPath}><YourQuestionPage /></Route>
           <Redirect to={RouteConstants.homeLink} />
         </Switch>
         {(this.isTheRealWorldPage || window.myGoogleMap) && <TheRealWorldPage />}

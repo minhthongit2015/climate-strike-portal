@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 import BasePage from '../_base/BasePage';
-import './SmileCity.scss';
 
 import GGMap from '../../components/map/Map';
 import MarkerWithInfo from '../../components/map/marker-with-info/MarkerWithInfo';
@@ -12,7 +11,7 @@ import FarmMarker from '../../components/map/farm-marker/FarmMarker';
 import Polyline from '../../components/map/polyline/Polyline';
 import MapService from '../../services/MapService';
 
-export default class SmileCity extends BasePage {
+export default class TheRealWorld extends BasePage {
   constructor(props) {
     super(props);
     this.title = 'Smile City';
