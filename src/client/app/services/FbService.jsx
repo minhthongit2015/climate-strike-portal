@@ -63,8 +63,6 @@ export default class {
       this.FB.logout((response) => {
         resolve(response);
       });
-    }).then(() => {
-      this.dumpLoginStatus();
     });
   }
 
@@ -100,11 +98,5 @@ export default class {
       js.src = 'https://connect.facebook.net/en_US/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-  }
-
-  static dumpLoginStatus() {
-    this.FB.getLoginStatus((response) => {
-      console.log(response);
-    });
   }
 }
