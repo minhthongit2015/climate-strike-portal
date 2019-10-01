@@ -7,6 +7,9 @@ import {
 import './SignIn.scss';
 
 import UserService from '../../../services/UserService';
+import AuthService from '../../../services/Auth';
+import GlobalState from '../../../utils/GlobalState';
+import FBService from '../../../services/FbService';
 
 
 class SignIn extends Component {
@@ -14,26 +17,63 @@ class SignIn extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isShowLoginModal: false,
-      username: 'thongtran',
-      password: 'alphateam',
-      user: {},
-      cursorPos: {}
-    };
     this.open = this.open.bind(this);
     this.toggle = this.toggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleSigninWithFacebook = this.handleSigninWithFacebook.bind(this);
+    this.state = {
+      isShowLoginModal: false,
+      email: 'thongtran',
+      password: 'alphateam',
+      cursorPos: {},
+      disabled: false
+    };
+    GlobalState.useState('user', null, this);
+    GlobalState.useState('profile', null, this);
   }
 
-  componentDidMount() {
-    const user = UserService.loadUser();
+  handleInputChange(event) {
     this.setState({
-      user
+      [event.target.name]: event.target.value
     });
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    const res = await UserService.signIn(this.state.email, this.state.password);
+    if (!res.ok) {
+      return alert('Invalid email or password');
+    }
+    if (res.data.user) {
+      this.props.actions.saveUser(res.data.user);
+      return this.close();
+    }
+    return alert('Invalid email or password');
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  handleSigninWithFacebook() {
+    this.setState({
+      disabled: true
+    }, () => {
+      AuthService.fbLogin()
+        .then((ok) => {
+          this.setState({
+            disabled: false
+          });
+          if (ok) {
+            this.close();
+          }
+        });
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  handleSignOut() {
+    AuthService.signout();
   }
 
   handleClick = (e) => {
@@ -58,59 +98,58 @@ class SignIn extends Component {
   }
 
   toggle = () => {
+    if (this.state.disabled) {
+      return;
+    }
     this.setState({
       isShowLoginModal: !this.isOpen
     });
   }
 
-  handleInputChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault();
-    const res = await UserService.signIn(this.state.username, this.state.password);
-    if (!res.ok) {
-      return alert('Invalid username or password');
-    }
-    if (res.data.user) {
-      this.props.actions.saveUser(res.data.user);
-      return this.close();
-    }
-    return alert('Invalid username or password');
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  handleSignOut() {
-    this.props.actions.clearUser();
-  }
-
   render() {
     console.log('render "Comps/signin/SignIn.jsx"');
     const {
-      isShowLoginModal, username, password, user
+      isShowLoginModal, email, password, disabled
     } = this.state;
+    const { user, profile } = GlobalState;
 
     return (
       <React.Fragment>
-        <div>{ user ? user.name : '' }</div>
-        {user && user.name
+        {user
           ? (
+            // <MDBBtn
+            //   onClick={this.handleSignOut}
+            //   color="none"
+            //   className="px-2 py-1 my-2 btn-paper quiet-style"
+            //   disabled={disabled}
+            // >
+            //   đăng xuất
+            // </MDBBtn>
             <MDBBtn
+              floating
+              color="link"
+              className="p-0 btn-paper rounded-circle shadow-style highlight-style"
+              style={{ width: '35px', height: '35px' }}
               onClick={this.handleSignOut}
-              size="sm"
             >
-              Sign Out
+              <img
+                alt="(^_^)!"
+                src={FBService.getUserAvatar()}
+                title={profile ? `Hi, ${profile.name}!` : ''}
+                width="100%"
+                height="100%"
+                className="img-fluid z-depth-1 rounded-circle"
+              />
             </MDBBtn>
           )
           : (
             <MDBBtn
               onClick={this.open}
               size="sm"
+              className="px-2 py-1 my-2 shadow-none"
+              disabled={disabled}
             >
-              ❝Sign In❞
+              ❝ Đăng Nhập ❞
             </MDBBtn>
           )}
         <MDBModal
@@ -118,13 +157,14 @@ class SignIn extends Component {
           toggle={this.toggle}
           className="login-modal"
           style={{ position: 'relative' }}
+          disabled={disabled}
         >
           <div
             className="modal-header peach-gradient justify-content-center mb-3 p-4 waves-effect"
             onMouseDown={this.handleClick}
             onTouchStart={this.handleClick}
           >
-            <h5 className="white-text font-weight-bolder m-0">Sign In to ❝Yoth Garden❞</h5>
+            <h5 className="white-text font-weight-bolder m-0">❝Climate Strike Vietnam❞</h5>
             <MDBWaves
               cursorPos={this.state.cursorPos}
             />
@@ -134,15 +174,16 @@ class SignIn extends Component {
               <MDBInput
                 style={{ boxSizing: 'border-box' }}
                 className="px-3"
-                label="Username"
-                name="username"
-                value={username}
+                label="Email"
+                name="email"
+                value={email}
                 required
                 onChange={this.handleInputChange}
-                type="text"
-                validate
+                type="email"
                 error="wrong"
                 success="right"
+                autoComplete="email"
+                // validate
               />
               <MDBInput
                 style={{ boxSizing: 'border-box' }}
@@ -153,10 +194,26 @@ class SignIn extends Component {
                 required
                 onChange={this.handleInputChange}
                 type="password"
-                validate
+                autoComplete="current-password"
+                // validate
               />
+              <div>
+                <MDBBtn
+                  color="none"
+                  className="btn-paper shadow-style mb-3 px-4 py-2"
+                  onClick={this.handleSigninWithFacebook}
+                >
+                  đăng nhập với Facebook
+                </MDBBtn>
+              </div>
               <div className="text-center mb-3">
-                <MDBBtn gradient="peach" type="submit" form="signin-form">Sign In</MDBBtn>
+                <MDBBtn
+                  gradient="peach"
+                  type="submit"
+                  form="signin-form"
+                  className="shadow-sm px-5 py-3"
+                >Đăng Nhập
+                </MDBBtn>
               </div>
             </form>
           </MDBModalBody>

@@ -13,7 +13,7 @@ export default class TabOrganisms extends BasePage {
   }
 
   handlePostPosted() {
-    this.postListRef.current.refresh();
+    this.postListRef.current.innerRef.current.refresh();
   }
 
   render() {

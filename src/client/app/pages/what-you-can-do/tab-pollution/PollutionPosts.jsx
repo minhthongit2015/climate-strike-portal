@@ -1,7 +1,7 @@
-import EarthPicturePosts from '../tab-what-you-can-do/WhatYouCanDoPosts';
+import WhatYouCanDoPosts from '../tab-what-you-can-do/WhatYouCanDoPosts';
 
 
-export default class PollutionPosts extends EarthPicturePosts {
+export default class extends WhatYouCanDoPosts {
   constructor(props) {
     super(props);
     this.category = 'DoForPollution';

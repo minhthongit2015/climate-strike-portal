@@ -21,7 +21,7 @@ import superws from './utils/superws';
 import RouteConstants from './utils/RouteConstants';
 
 import KeyTracker from './utils/KeyTracker';
-
+import FbService from './services/FbService';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
@@ -40,6 +40,7 @@ class App extends Component {
     GlobalState.init();
     GlobalState.loadState();
     superws.setup();
+    FbService.init();
     KeyTracker();
   }
 

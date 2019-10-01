@@ -8,41 +8,42 @@ import TabForEverything from './tab-everything/TabForEverything';
 import TabOrganisms from './tab-organisms/TabOrganisms';
 import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
+import t from '../../languages';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.brand = {
-      name: 'Điều Bạn Có Thể Làm',
+      name: t('pages.whatYouCanDo.title.main'),
       link: RouteConstants.whatYouCanDoLink
     };
     this.tabs = [
       {
-        name: 'Cho tất cả',
+        name: t('pages.whatYouCanDo.nav.everything'),
         path: RouteConstants.doForEverythingPath,
         link: RouteConstants.doForEverythingLink,
         component: TabForEverything
       },
       {
-        name: 'Cho khí hậu',
+        name: t('pages.whatYouCanDo.nav.climate'),
         path: RouteConstants.doForClimatePath,
         link: RouteConstants.doForClimateLink,
         component: TabClimate
       },
       {
-        name: 'Cho sinh vật',
+        name: t('pages.whatYouCanDo.nav.organisms'),
         path: RouteConstants.doForOrganismsPath,
         link: RouteConstants.doForOrganismsLink,
         component: TabOrganisms
       },
       {
-        name: 'Cho ô nhiễm',
+        name: t('pages.whatYouCanDo.nav.pollution'),
         path: RouteConstants.doForPollutionPath,
         link: RouteConstants.doForPollutionLink,
         component: TabPollution
       },
       {
-        name: 'Tin tức Thế Giới',
+        name: t('pages.whatYouCanDo.nav.worldActions'),
         path: RouteConstants.worldActionsPath,
         link: RouteConstants.worldActionsLink,
         component: TabPollution

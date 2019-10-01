@@ -6,16 +6,36 @@ class Global {
     this.listeners = {};
   }
 
-  static useState(name, initialValue) {
-    const [newState, newSetState] = React.useState(this.state[name] || initialValue);
+  static useState(name, initialValue, classComponent) {
+    let newState;
+    let newSetState;
+    if (classComponent) {
+      newState = this.state[name] || initialValue;
+      newSetState = value => classComponent.setState({
+        [name]: value
+      });
+    } else {
+      [newState, newSetState] = React.useState(this.state[name] || initialValue);
+    }
     const isNewState = !(name in this);
     if (isNewState) {
       this.listeners[name] = new Set();
     }
-    React.useEffect(() => {
-      this.listeners[name].add(newSetState);
-      return () => this.listeners[name].delete(newSetState);
-    }, []);
+
+    if (classComponent) {
+      classComponent.componentDidMount = () => {
+        this.listeners[name].add(newSetState);
+      };
+      classComponent.componentWillUnmount = () => {
+        this.listeners[name].delete(newSetState);
+      };
+    } else {
+      React.useEffect(() => {
+        this.listeners[name].add(newSetState);
+        return () => this.listeners[name].delete(newSetState);
+      }, []);
+    }
+
     if (!isNewState) {
       return this.state[name];
     }
@@ -35,11 +55,13 @@ class Global {
   }
 
   static setState(name, value) {
-    if (!(name in this.state)) {
-      return;
-    }
+    // if (!(name in this.state)) {
+    //   return;
+    // }
     this.state[name] = value;
-    this.listeners[name].forEach(listener => listener(value));
+    if (this.listeners[name]) {
+      this.listeners[name].forEach(listener => listener(value));
+    }
     this.saveState();
   }
 

@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import LeafLoading from '../../utils/loadings/LeafLoading';
 import PostList from '../post-list/PostList';
 import superrequest from '../../../utils/superrequest';
+import t from '../../../languages';
 
 export default class InfinitePostList extends React.Component {
   constructor(props) {
@@ -16,6 +17,10 @@ export default class InfinitePostList extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchPosts();
+  }
+
+  refresh() {
     this.fetchPosts();
   }
 
@@ -50,7 +55,7 @@ export default class InfinitePostList extends React.Component {
   }
 
   renderLoading() {
-    const { loadingText = 'đang tải các bài viết...' } = this.props;
+    const { loadingText = t('components.blog.infinitePostList.loadingText') } = this.props;
     return (
       <div className="overlapable mt-5" style={{ width: '100%', height: '200px' }}>
         <LeafLoading text={loadingText} overlaping />
@@ -60,8 +65,8 @@ export default class InfinitePostList extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   renderEnd() {
-    const knowAllMsg = 'bạn đã biết tất cả những gì mình biết...';
-    const noPostMsg = 'chưa có bài viết nào được đăng...';
+    const knowAllMsg = t('components.blog.infinitePostList.knowAllMsg');
+    const noPostMsg = t('components.blog.infinitePostList.noPostMsg');
     const isNoPost = this.state.posts.length === 0;
     return (
       <div className="text-center">

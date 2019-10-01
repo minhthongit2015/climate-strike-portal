@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import './sidenav.scss';
-// import SignIn from '../../../components/signin/SignIn';
+import SignIn from '../../../components/user/signin/SignIn';
 
 import RouteConstants from '../../../utils/RouteConstants';
 import {
@@ -12,7 +12,7 @@ import {
 } from '../../../../assets/icons';
 
 import NavIconLink from '../../../components/utils/nav-icon-link/NavIconLink';
-import FixedRatioImage from '../../../components/utils/fixed-ratio-image/FixedRatioImage';
+
 
 export default class SideNav extends Component {
   constructor(props) {
@@ -35,19 +35,14 @@ export default class SideNav extends Component {
 
   static renderHomeNav() {
     return (
-      <div className="w-100">
+      <div className="w-100 text-center mb-2">
         <NavLink
           key="home"
           to={RouteConstants.homeLink}
-          title="Điểm khởi đầu"
           className="border-bottom border-light pb-2 w-100"
           draggable={false}
         >
-          <div className="d-flex waves-effect waves-light border border-info rounded m-2">
-            <div key="ai" className="col-4 px-0"><FixedRatioImage src={AICloudSrc} /></div>
-            <div key="garden" className="col-4 px-0"><FixedRatioImage src={MyGardenSrc} /></div>
-            <div key="city" className="col-4 px-0"><FixedRatioImage src={SmileCitySrc} /></div>
-          </div>
+          Trang Chủ
         </NavLink>
       </div>
     );
@@ -69,9 +64,9 @@ export default class SideNav extends Component {
           )
         }
       >
-        {/* <div className="signin-button text-center">
+        <div className="signin-button text-center">
           <SignIn />
-        </div> */}
+        </div>
         {SideNav.renderHomeNav()}
         {
           this.links.map((link) => {

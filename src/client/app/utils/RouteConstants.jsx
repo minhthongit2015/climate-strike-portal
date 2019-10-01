@@ -24,8 +24,8 @@ const doForOrganismsPath = `${whatYouCanDoPath}/sinh-vat`;
 const doForOrganismsLink = `${whatYouCanDoPath}/sinh-vat`;
 const doForPollutionPath = `${whatYouCanDoPath}/o-nhiem`;
 const doForPollutionLink = `${whatYouCanDoPath}/o-nhiem`;
-const worldActionsPath = `${whatYouCanDoPath}/tin-tuc-the-gioi`;
-const worldActionsLink = `${whatYouCanDoPath}/tin-tuc-the-gioi`;
+const worldActionsPath = `${whatYouCanDoPath}/the-gioi-dang-lam`;
+const worldActionsLink = `${whatYouCanDoPath}/the-gioi-dang-lam`;
 
 const yourQuestionPath = '/dieu-ban-muon-biet';
 const yourQuestionLink = '/dieu-ban-muon-biet';

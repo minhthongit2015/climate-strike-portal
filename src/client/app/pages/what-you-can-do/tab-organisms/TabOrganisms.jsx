@@ -3,24 +3,25 @@ import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
 import NewPostRow from '../../../components/blog/new-post/NewPostRow';
 import OrganismsPosts from './OrganismsPosts';
+import t from '../../../languages';
 
 
 export default class extends BasePage {
   constructor(props) {
-    super(props, 'Bức Tranh Sinh Vật');
+    super(props, t('pages.whatYouCanDo.title.organisms'));
     this.postListRef = React.createRef();
     this.handlePostPosted = this.handlePostPosted.bind(this);
   }
 
   handlePostPosted() {
-    this.postListRef.current.refresh();
+    this.postListRef.current.innerRef.current.refresh();
   }
 
   render() {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
+          <div className="text-light text-center mb-5">{t('pages.whatYouCanDo.mainMessage')}</div>
         </SectionHeader>
         <SectionBody>
           <NewPostRow onPosted={this.handlePostPosted} />
