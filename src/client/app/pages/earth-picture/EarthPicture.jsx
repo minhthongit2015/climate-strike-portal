@@ -8,29 +8,30 @@ import TabEarthPicture from './tab-earth-picture/TabEarthPicture';
 import TabOrganisms from './tab-organisms/TabOrganisms';
 import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
+import t from '../../languages';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.brand = {
-      name: 'Bức Tranh Trái Đất',
+      name: t('pages.earthPicture.title.main'),
       link: RouteConstants.earthPictureLink
     };
     this.tabs = [
       {
-        name: 'Khí hậu',
+        name: t('pages.earthPicture.nav.climate'),
         path: RouteConstants.epClimatePath,
         link: RouteConstants.epClimateLink,
         component: TabClimate
       },
       {
-        name: 'Sinh vật',
+        name: t('pages.earthPicture.nav.organisms'),
         path: RouteConstants.epOrganismsPath,
         link: RouteConstants.epOrganismsLink,
         component: TabOrganisms
       },
       {
-        name: 'Ô nhiễm',
+        name: t('pages.earthPicture.nav.pollution'),
         path: RouteConstants.epPollutionPath,
         link: RouteConstants.epPollutionLink,
         component: TabPollution

@@ -3,11 +3,12 @@ import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
 import EarthPicturePosts from './EarthPicturePosts';
 import NewPostRow from '../../../components/blog/new-post/NewPostRow';
+import t from '../../../languages';
 
 
 export default class TabEarthPicture extends BasePage {
   constructor(props) {
-    super(props, 'Bức Tranh Trái Đất');
+    super(props, t('pages.earthPicture.title.main'));
     this.postListRef = React.createRef();
     this.handlePostPosted = this.handlePostPosted.bind(this);
   }
@@ -21,7 +22,7 @@ export default class TabEarthPicture extends BasePage {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
+          <div className="text-light text-center mb-5">{t('pages.earthPicture.mainMessage')}</div>
         </SectionHeader>
         <SectionBody>
           <NewPostRow onPosted={this.handlePostPosted} />
