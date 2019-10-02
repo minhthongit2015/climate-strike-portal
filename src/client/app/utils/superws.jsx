@@ -14,7 +14,7 @@ export default class SuperWebsocket {
   static get connected() { return this.socket.connected; }
 
   static setup() {
-    this.socket = io(Config.currentConfig.wsEndpoint, {
+    this.socket = io(Config.wsEndpoint, {
       transports: ['websocket']
     });
     this.socket.on('connect', () => {

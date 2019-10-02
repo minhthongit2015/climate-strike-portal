@@ -20,6 +20,9 @@ export default {
       },
       mainMessage: 'ở đây không có gì ngoài sự thật...'
     },
+    theRealWorld: {
+      loadingText: 'đang cập nhập tình hình thế giới...'
+    },
     whatYouCanDo: {
       title: {
         main: 'Điều Bạn Có Thể Làm',

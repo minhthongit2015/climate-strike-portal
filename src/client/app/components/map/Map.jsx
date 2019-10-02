@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Map.scss';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
-
+import Config from '../../config';
+import LeafLoading from '../utils/loadings/LeafLoading';
+import t from '../../languages';
 
 export class MapContainer extends Component {
   render() {
@@ -76,12 +78,12 @@ MapContainer.defaultProps = {
 function MapLoadingContainer() {
   return (
     <React.Fragment>
-      <div style={{ position: 'relative' }}>Fancy loading container!</div>
+      <LeafLoading overlaping text={t('pages.theRealWorld.loadingText')} />
     </React.Fragment>
   );
 }
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBX6w7iRulNSx3ufzcF3fdDc2a_uGPcBMs', // My Key
+  apiKey: Config.GOOGLE_CLOUD_API_KEY, // My Key
   // apiKey: 'AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM', // Google Key
   LoadingContainer: MapLoadingContainer
 })(MapContainer);

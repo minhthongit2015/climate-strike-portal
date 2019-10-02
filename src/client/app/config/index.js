@@ -1,6 +1,7 @@
-let wsEndpoint = 'ws://localhost:5000';
-if (!window.location.hostname.includes('localhost')) {
-  wsEndpoint = `ws://${window.location.host}`;
+let wsEndpoint = `ws://${window.location.host}`;
+const isRunningLocal = window.location.hostname.includes('localhost');
+if (isRunningLocal) {
+  wsEndpoint = 'ws://localhost:5000';
 }
 
 
@@ -9,18 +10,17 @@ const aiCloudEndpoint = `${apiEndpoint}/AI-Cloud`;
 
 const common = {
   apiEndpoint,
-  aiCloudEndpoint
+  aiCloudEndpoint,
+  GOOGLE_CLOUD_API_KEY: 'AIzaSyADxVggO7uEHn1jKcEKKajCsEUPlKVtct8'
 };
 
 const development = {
   ...common,
-  wsPort: 5000,
   wsEndpoint
 };
 
 const production = {
   ...common,
-  wsPort: process.env.PORT || 80,
   wsEndpoint
 };
 
@@ -29,8 +29,6 @@ const currentConfig = process.env.NODE_ENV === 'development'
   : production;
 
 export default {
-  common,
-  development,
-  production,
-  currentConfig
+  ...common,
+  ...currentConfig
 };

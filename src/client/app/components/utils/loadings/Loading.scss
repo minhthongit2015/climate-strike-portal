@@ -13,10 +13,7 @@ $spiner-background: linear-gradient-background(120deg, .9);
 $text-color: #add9f3;
 
 .loading {
-  pointer-events: none;
   background: $loading-background;
-  transition: opacity .3s ease-in-out;
-  opacity: 0;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -32,6 +29,9 @@ $text-color: #add9f3;
   font-weight: 500;
   font-size: 1.5em;
   text-align: center;
+  transition: opacity .3s ease-in-out;
+  pointer-events: none;
+  opacity: 0;
 
   &.overlaping {
     pointer-events: all;
@@ -51,7 +51,7 @@ $text-color: #add9f3;
     span {
       opacity: .5;
     }
-    @for $i from 1 through 30 {
+    @for $i from 1 through 50 {
       span:nth-child(#{$i}) {
         animation: fadeIn 1s ease-in-out ($i * 50ms) infinite alternate both;
       }
