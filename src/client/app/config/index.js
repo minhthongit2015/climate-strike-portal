@@ -1,3 +1,8 @@
+let wsEndpoint = 'ws://localhost:5000';
+if (!window.location.hostname.includes('localhost')) {
+  wsEndpoint = `ws://${window.location.host}`;
+}
+
 
 const apiEndpoint = '/api';
 const aiCloudEndpoint = `${apiEndpoint}/AI-Cloud`;
@@ -10,13 +15,13 @@ const common = {
 const development = {
   ...common,
   wsPort: 5000,
-  wsEndpoint: 'ws://localhost:5000/'
+  wsEndpoint
 };
 
 const production = {
   ...common,
   wsPort: process.env.PORT || 80,
-  wsEndpoint: 'wss://climate-strike-vietnam.herokuapp.com'
+  wsEndpoint
 };
 
 const currentConfig = process.env.NODE_ENV === 'development'

@@ -21,7 +21,7 @@ export default class TabWhatYouCanDo extends BasePage {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5">{t('pages.whatYouCanDo.mainMessage')}</div>
+          <div className="text-light text-center mb-5 white-space-pre">{t('pages.whatYouCanDo.mainMessage')}</div>
         </SectionHeader>
         <SectionBody>
           <NewPostRow onPosted={this.handlePostPosted} />

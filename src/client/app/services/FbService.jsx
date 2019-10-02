@@ -1,4 +1,5 @@
 import GlobalState from '../utils/GlobalState';
+import superrequest from '../utils/superrequest';
 
 export default class {
   static get FB() { return window.FB; }
@@ -36,7 +37,9 @@ export default class {
   static resolveLoginStatus(response) {
     if (response.status === 'connected') {
       GlobalState.setState('user', response);
+      superrequest.accessToken = response.authResponse.accessToken;
     } else if (response.status === 'unauthorized') {
+      superrequest.accessToken = '';
       GlobalState.setState('user', null);
     }
   }
@@ -60,6 +63,7 @@ export default class {
     return new Promise((resolve) => {
       GlobalState.setState('user', null);
       GlobalState.setState('profile', null);
+      superrequest.accessToken = '';
       this.FB.logout((response) => {
         resolve(response);
       });

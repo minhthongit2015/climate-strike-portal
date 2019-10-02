@@ -61,7 +61,7 @@ export default class HomePage extends BasePage {
         <div className="h-100 d-flex justify-content-center align-items-center">
           <div className="d-flex flex-column col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12">
             <div className="text-center text-light">
-              đây là những gì đang diễn ra, và bạn có thể không tin vào điều đó
+              đây là những gì đang diễn ra, và bạn có thể chọn tin vào điều đó hay không
             </div>
             <div className="d-flex">
               {

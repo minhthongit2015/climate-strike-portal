@@ -33,9 +33,9 @@ export default {
         climate: 'Bảo vệ khí hậu',
         organisms: 'Bảo vệ sinh vật',
         pollution: 'Giảm ô nhiễm',
-        worldActions: 'Thế giới đang làm'
+        worldActions: 'Thế giới đang hành động'
       },
-      mainMessage: '7.7 triệu người trên thế giới đang cùng thực hiện những việc này...'
+      mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\nmọi người không thể chờ thêm nữa... chúng ta đang dần cạn kiệt thời gian...'
     }
   },
   components: {
