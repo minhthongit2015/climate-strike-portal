@@ -4,7 +4,7 @@ const SignoutRoute = require('./signout');
 const SignupRoute = require('./signup');
 const ProfileRoute = require('./profile');
 
-const UserService = require('../../../services/user');
+const UserService = require('../../../services/user/User');
 const APIResponse = require('../../../models/api-models');
 const Logger = require('../../../services/Logger');
 
@@ -23,6 +23,12 @@ router.get('/list', async (req, res) => {
       new APIResponse().setError({ message: error.message, stack: error.stack })
     );
   }
+});
+
+router.get('/fbLogin', (req, res) => {
+  Logger.catch(() => res.send(
+    new APIResponse().setData(req.session.user || null)
+  ));
 });
 
 router.get('/:userId', async (req, res) => {

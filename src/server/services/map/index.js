@@ -1,4 +1,4 @@
-const EntityService = require('../../services/Entity');
+const EntityService = require('../../services/map/Entity');
 const ApiHelper = require('../../utils/ApiHelper');
 const CRUDService = require('../CRUDService');
 

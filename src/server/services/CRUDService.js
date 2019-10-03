@@ -39,7 +39,7 @@ module.exports = class CRUDService {
       query
     );
     const doc = await query.exec();
-    return ConverterFactory.get(this.model.name).convert(doc);
+    return ConverterFactory.get(this.model.modelName).convert(doc);
   }
 
   static async list(opts = ApiHelper.listParams) {
@@ -53,12 +53,12 @@ module.exports = class CRUDService {
       query
     );
     const docs = await query.exec();
-    return ConverterFactory.get(this.model.name).convertCollection(docs);
+    return ConverterFactory.get(this.model.modelName).convertCollection(docs);
   }
 
   static async update(id, props) {
     const updatedDoc = await this.model.findByIdAndUpdate(id, props).exec();
-    return ConverterFactory.get(this.model.name).convert(updatedDoc);
+    return ConverterFactory.get(this.model.modelName).convert(updatedDoc);
   }
 
   static async delete(id) {

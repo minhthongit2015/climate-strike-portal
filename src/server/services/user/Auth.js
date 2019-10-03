@@ -1,5 +1,5 @@
-const { User } = require('../models/mongo');
-const ConverterFactory = require('../models/converters/converter-factory');
+const { User } = require('../../models/mongo');
+const ConverterFactory = require('../../models/converters/converter-factory');
 
 module.exports = class {
   static async authenticate(username, password) {

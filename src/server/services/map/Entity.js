@@ -1,7 +1,7 @@
 
-const { Entity } = require('../models/mongo');
-const ApiHelper = require('../utils/ApiHelper');
-const ConverterFactory = require('../models/converters/converter-factory');
+const { Entity } = require('../../models/mongo');
+const ApiHelper = require('../../utils/ApiHelper');
+const ConverterFactory = require('../../models/converters/converter-factory');
 
 
 module.exports = class {

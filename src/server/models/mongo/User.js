@@ -6,7 +6,7 @@ const { ObjectId } = mongoose.Schema.Types;
 const UserSchema = new mongoose.Schema({
   username: String,
   password: String,
-  type: Number,
+  role: String,
   name: String,
   email: String,
   picture: String,
@@ -22,7 +22,11 @@ const UserSchema = new mongoose.Schema({
   favorite_foods: [{ type: String }],
   favorite_songs: [{ type: String }],
   personality: [{ type: String }],
-  socials: Object
+  socials: {
+    facebook: String,
+    twitter: String,
+    instagram: String
+  }
 });
 const UserModel = mongoose.model('User', UserSchema);
 

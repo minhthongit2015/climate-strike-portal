@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const UserService = require('../../../services/user');
+const UserService = require('../../../services/user/User');
 const APIResponse = require('../../../models/api-models');
 const { isNone, isBlank, isOwner } = require('../../../utils');
 const Logger = require('../../../services/Logger');

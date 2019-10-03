@@ -16,11 +16,15 @@ export default class {
     this.FB.getLoginStatus((response) => {
       this.resolveLoginStatus(response);
       this.fetchUserProfile();
+      this.getLoggedUser();
     });
   }
 
   static async fetchUserProfile() {
     const { user } = GlobalState;
+    if (!user || !user.authResponse) {
+      return null;
+    }
     return new Promise((resolve, reject) => this.FB.api(
       user.authResponse.userID,
       (response) => {
@@ -34,13 +38,30 @@ export default class {
     ));
   }
 
+  static getLoggedUser() {
+    const { user } = GlobalState;
+    if (!user) {
+      return GlobalState.setState('user2', null);
+    }
+    return superrequest.get('/api/v1/users/fbLogin')
+      .then((foundUser) => {
+        if (!GlobalState.user) {
+          GlobalState.setState('user2', null);
+          return;
+        }
+        if (GlobalState.user && foundUser && foundUser.ok) {
+          GlobalState.setState('user2', foundUser.data);
+        }
+      });
+  }
+
   static resolveLoginStatus(response) {
     if (response.status === 'connected') {
       GlobalState.setState('user', response);
       superrequest.accessToken = response.authResponse.accessToken;
     } else if (response.status === 'unauthorized') {
-      superrequest.accessToken = '';
       GlobalState.setState('user', null);
+      superrequest.accessToken = '';
     }
   }
 
@@ -49,12 +70,13 @@ export default class {
     return new Promise((resolve) => {
       this.FB.login((response) => {
         if (response.status === 'connected') {
+          this.fetchUserProfile();
+          this.getLoggedUser();
           resolve(true);
         } else {
           resolve(false);
         }
         this.resolveLoginStatus(response);
-        this.fetchUserProfile();
       }, additionalPermissions);
     });
   }
@@ -62,6 +84,7 @@ export default class {
   static async logout() {
     return new Promise((resolve) => {
       GlobalState.setState('user', null);
+      GlobalState.setState('user2', null);
       GlobalState.setState('profile', null);
       superrequest.accessToken = '';
       this.FB.logout((response) => {
