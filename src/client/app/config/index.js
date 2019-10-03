@@ -1,4 +1,4 @@
-let wsEndpoint = `ws://${window.location.host}`;
+let wsEndpoint = `wss://${window.location.host}`;
 const isRunningLocal = window.location.hostname.includes('localhost');
 if (isRunningLocal) {
   wsEndpoint = 'ws://localhost:5000';
