@@ -14,7 +14,7 @@ import NavIconLink from '../../components/utils/nav-icon-link/NavIconLink';
 
 export default class HomePage extends BasePage {
   constructor(props) {
-    super(props, 'Climate Strike Viet Nam', true);
+    super(props, 'Climate Strike Vietnam', true);
     this.links = [
       {
         type: 'nav', link: RouteConstants.earthPictureLink, text: 'Bức Tranh\r\nTrái Đất', iconSrc: AICloudSrc

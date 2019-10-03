@@ -46,7 +46,7 @@ class App extends Component {
 
   render() {
     const routes = (
-      <React.Suspense fallback={<LeafLoading overlaping text="Climate Strike Viet Nam" />}>
+      <React.Suspense fallback={<LeafLoading overlaping text="Climate Strike Vietnam" />}>
         <Switch>
           <Route exact path={RouteConstants.homePath}><HomePage /></Route>
           <Route path={RouteConstants.earthPicturePath}><EarthPicturePage /></Route>

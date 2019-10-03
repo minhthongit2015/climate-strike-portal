@@ -37,7 +37,7 @@ const Config = require('./config');
 class Server {
   static start() {
     Debugger.log(colors.rainbow(`\r\n\r\n${new Array(60).fill('▬').join('')}\r\n`));
-    Debugger.log(`${''.padStart(12, ' ')}${colors.rainbow('START')} ${colors.yellow('CLIMATE STRIKE VIET NAM SERVER')}\r\n`);
+    Debugger.log(`${''.padStart(12, ' ')}${colors.rainbow('START')} ${colors.yellow('CLIMATE STRIKE VIETNAM SERVER')}\r\n`);
     Debugger.log(colors.rainbow(`${new Array(60).fill('▬').join('')}\r\n`));
     Server.setupErrorTrap();
     Server.setupDatabase();
