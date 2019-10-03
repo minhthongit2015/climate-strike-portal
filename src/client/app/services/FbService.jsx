@@ -1,5 +1,6 @@
 import GlobalState from '../utils/GlobalState';
 import superrequest from '../utils/superrequest';
+import Config from '../config';
 
 export default class {
   static get FB() { return window.FB; }
@@ -97,7 +98,7 @@ export default class {
     window.fbAsyncInit = () => {
       const { FB } = window;
       FB.init({
-        appId: '556670908405905',
+        appId: Config.FACEBOOK_APP_ID,
         autoLogAppEvents: true,
         status: true,
         xfbml: true,

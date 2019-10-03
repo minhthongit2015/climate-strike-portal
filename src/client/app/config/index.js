@@ -1,5 +1,7 @@
-let wsEndpoint = `wss://${window.location.host}`;
+const isDevelopment = process.env.NODE_ENV === 'development';
 const isRunningLocal = window.location.hostname.includes('localhost');
+
+let wsEndpoint = `wss://${window.location.host}`;
 if (isRunningLocal) {
   wsEndpoint = 'ws://localhost:5000';
 }
@@ -21,17 +23,26 @@ const common = {
   GOOGLE_CLOUD_API_KEY: 'AIzaSyADxVggO7uEHn1jKcEKKajCsEUPlKVtct8'
 };
 
-const development = {
-  ...common
+const developmentLocal = {
+  FACEBOOK_APP_ID: '556670908405905'
+};
+
+const developmentStaging = {
+  FACEBOOK_APP_ID: '2467127226704927'
 };
 
 const production = {
-  ...common
+  FACEBOOK_APP_ID: '415534815831116'
 };
 
-const currentConfig = process.env.NODE_ENV === 'development'
-  ? development
-  : production;
+let currentConfig;
+if (isDevelopment) {
+  currentConfig = isRunningLocal
+    ? developmentLocal
+    : developmentStaging;
+} else {
+  currentConfig = production;
+}
 
 export default {
   ...common,
