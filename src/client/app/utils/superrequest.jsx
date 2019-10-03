@@ -1,6 +1,7 @@
 
 import superagent from 'superagent';
 import superws from './superws';
+import Config from '../config';
 
 export default class {
   static set accessToken(token) {
@@ -20,31 +21,31 @@ export default class {
   static get agent() { return superagent; }
 
   static async emit(...args) {
-    if (superws.connected) return this.socket.emit(...args);
+    if (superws.connected) return this.socket.volative.emit(...args);
     return null;
   }
 
   static async get(url) {
     if (superws.connected) return superws.get(url, this.baseHeaders);
-    return superagent.get(`http://localhost:5000${url}`).withCredentials()
+    return superagent.get(`${Config.httpEndpoint}${url}`).withCredentials()
       .set('AccessToken', this.accessToken).then(res => res.body);
   }
 
   static async post(url, body) {
     if (superws.connected) return superws.post(url, body, this.baseHeaders);
-    return superagent.post(url).withCredentials()
+    return superagent.post(`${Config.httpEndpoint}${url}`).withCredentials()
       .set('AccessToken', this.accessToken).send(body);
   }
 
   static async put(url, body) {
     if (superws.connected) return superws.put(url, body, this.baseHeaders);
-    return superagent.put(url).withCredentials()
+    return superagent.put(`${Config.httpEndpoint}${url}`).withCredentials()
       .set('AccessToken', this.accessToken).send(body);
   }
 
   static async delete(url) {
     if (superws.connected) return superws.delete(url, this.baseHeaders);
-    return superagent.delete(url).withCredentials()
+    return superagent.delete(`${Config.httpEndpoint}${url}`).withCredentials()
       .set('AccessToken', this.accessToken).then(res => res.body);
   }
 }
