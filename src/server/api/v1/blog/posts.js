@@ -3,12 +3,19 @@ const router = require('express').Router();
 const Logger = require('../../../services/Logger');
 const PostsService = require('../../../services/blog/Posts');
 const APIResponse = require('../../../models/api-models');
+const ImgurService = require('../../../services/thirt-party/imgur');
 
 
 router.post('/', (req, res) => {
   Logger.catch(async () => {
+    const { preview } = req.body;
+    const album = await ImgurService.createAlbum();
+    const img = await ImgurService.create(preview, album.body.data.deletehash);
+    if (img && true) {
+      return res.send('ok');
+    }
     const post = await PostsService.create(req.body);
-    res.send(new APIResponse().setData(post));
+    return res.send(new APIResponse().setData(post));
   }, { req, res });
 });
 

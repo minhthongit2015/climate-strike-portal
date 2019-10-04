@@ -1,21 +1,21 @@
 import React from 'react';
 import NewPostRow from '../new-post/NewPostRow';
-import GlobalState from '../../../utils/GlobalState';
+import UserService from '../../../services/UserService';
 
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
-    GlobalState.useState('user2', null, this);
+    UserService.useUserState(this);
   }
 
   render() {
     const { children } = this.props;
-    const { user2 } = GlobalState;
+    const { user } = UserService;
 
     return (
       <React.Fragment>
-        {user2 && (
+        {user && (
           <NewPostRow onPosted={this.handlePostPosted} />
         )}
         {children}

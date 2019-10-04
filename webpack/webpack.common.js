@@ -82,8 +82,8 @@ const webpackConfig = {
     ]),
     new SWPrecacheWebpackPlugin(
       {
-        cacheId: 'beyond-garden.com',
-        dontCacheBustUrlsMatching: /\.\w{8}\./,
+        cacheId: 'climate-strike-vietnam',
+        dontCacheBustUrlsMatching: /(\.\w{8}\.)|(\/api\/v1\/.+)/,
         filename: 'service-worker.js',
         minify: true,
         navigateFallback: '/index.html',

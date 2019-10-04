@@ -11,12 +11,13 @@ const MAP_ENTITIES = `${MAP}/entities`;
 const DATASET = `${AI}/datasets`;
 const EXPERIMENT = `${AI}/experiments`;
 
-export const apiEndpoints = {
+export const ApiEndpoints = {
   END_POINT,
   user: {
     SIGN_IN: `${USER}/signin`,
     SIGN_OUT: `${USER}/signout`,
-    GET_SESSION: `${USER}/get-session`
+    GET_SESSION: `${USER}/get-session`,
+    FB_LOGIN: `${USER}/fb-auth`
   },
   GARDENS,
   gardens: {
@@ -47,5 +48,5 @@ export const apiEndpoints = {
 };
 
 export default {
-  apiEndpoints
+  ApiEndpoints
 };

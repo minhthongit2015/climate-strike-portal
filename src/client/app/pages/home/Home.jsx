@@ -11,22 +11,23 @@ import {
 } from '../../../assets/icons';
 
 import NavIconLink from '../../components/utils/nav-icon-link/NavIconLink';
+import t from '../../languages';
 
 export default class HomePage extends BasePage {
   constructor(props) {
     super(props, 'Climate Strike Vietnam', true);
     this.links = [
       {
-        type: 'nav', link: RouteConstants.earthPictureLink, text: 'Bức Tranh\r\nTrái Đất', iconSrc: AICloudSrc
+        type: 'nav', link: RouteConstants.earthPictureLink, text: t('pages.home.nav.earthPicture'), iconSrc: AICloudSrc
       },
       {
-        type: 'nav', link: RouteConstants.theRealWorldLink, text: 'Thế Giới Thực', iconSrc: MyGardenSrc
+        type: 'nav', link: RouteConstants.theRealWorldLink, text: t('pages.home.nav.theRealWorld'), iconSrc: MyGardenSrc
       },
       {
-        type: 'nav', link: RouteConstants.whatYouCanDoLink, text: 'Điều Bạn\r\nCó Thể Làm', iconSrc: SmileCitySrc
+        type: 'nav', link: RouteConstants.whatYouCanDoLink, text: t('pages.home.nav.whatYouCanDo'), iconSrc: SmileCitySrc
       },
       {
-        type: 'nav', link: RouteConstants.yourQuestionLink, text: 'Điều Bạn\r\nMuốn Biết?', iconSrc: AICloudSrc
+        type: 'nav', link: RouteConstants.yourQuestionLink, text: t('pages.home.nav.yourQuestion'), iconSrc: AICloudSrc
       }
     ];
 
@@ -45,10 +46,10 @@ export default class HomePage extends BasePage {
   getRandomQuote(name) {
     const now = new Date();
     if (now.getHours() >= 1 && now.getHours() <= 9) {
-      return `Chào buổi sáng ${name}! Chúc một ngày vui vẻ!`;
+      return `Chào buổi sáng ${name}! Chúc một ngày mới vui vẻ!`;
     } if (now.getHours() >= 15 && now.getHours() <= 17) {
       return `Chào buổi chiều ${name}`;
-    } if (now.getHours() >= 18 && now.getHours() <= 20) {
+    } if (now.getHours() >= 18 && now.getHours() <= 23) {
       return `Chào buổi tối ${name}`;
     }
     return '';
@@ -61,7 +62,7 @@ export default class HomePage extends BasePage {
         <div className="h-100 d-flex justify-content-center align-items-center">
           <div className="d-flex flex-column col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12">
             <div className="text-center text-light">
-              đây là những gì đang diễn ra, và bạn có thể chọn tin vào điều đó hay không
+              {t('pages.home.mainMessage')}
             </div>
             <div className="d-flex">
               {

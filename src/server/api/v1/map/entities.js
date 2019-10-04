@@ -1,10 +1,10 @@
 const router = require('express').Router();
+const Logger = require('../../../services/Logger');
 const APIResponse = require('../../../models/api-models');
-const ErrorService = require('../../../services/Error');
 const MapService = require('../../../services/map');
 
-router.get('/list', async (req, res) => {
-  try {
+router.get('/list', (req, res) => {
+  Logger.catch(async () => {
     const { limit, offset, sort } = req.query;
     const entities = await MapService.list({
       limit, offset, sort
@@ -17,9 +17,7 @@ router.get('/list', async (req, res) => {
         });
     }
     return res.send(new APIResponse().setData({ entities }));
-  } catch (error) {
-    return ErrorService.defaultAPIErrorHandler(error, res);
-  }
+  }, { req, res });
 });
 
 module.exports = router;

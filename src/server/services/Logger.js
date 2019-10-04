@@ -24,7 +24,7 @@ const Logger = createLogger({
   exitOnError: false
 });
 
-Logger.catch = async function _catch(func, handler) {
+Logger.catch = async function _catch(func, handler = () => {}) {
   try {
     await func();
   } catch (error) {

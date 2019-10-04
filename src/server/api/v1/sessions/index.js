@@ -1,6 +1,6 @@
 
 const router = require('express').Router();
-const SessionService = require('../../../services/Session');
+const SessionService = require('../../../services/user/Session');
 
 router.get('/', async (req, res) => {
   const fullSessionId = SessionService.getFullSessionId(req.sessionID);

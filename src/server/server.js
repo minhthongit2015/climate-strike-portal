@@ -78,7 +78,7 @@ class Server {
 
   static _staticFileMiddleware() {
     const PUBLIC_FOLDER = path.resolve(process.cwd(), Config.publicFolder);
-    this.app.get('*.*', express.static(PUBLIC_FOLDER));
+    this.app.get(/.*\..*/, express.static(PUBLIC_FOLDER));
   }
 
   static _corsMiddleware() {

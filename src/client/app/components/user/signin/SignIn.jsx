@@ -8,8 +8,6 @@ import './SignIn.scss';
 
 import UserService from '../../../services/UserService';
 import AuthService from '../../../services/Auth';
-import GlobalState from '../../../utils/GlobalState';
-import FBService from '../../../services/FbService';
 
 
 class SignIn extends Component {
@@ -26,13 +24,13 @@ class SignIn extends Component {
     this.handleSigninWithFacebook = this.handleSigninWithFacebook.bind(this);
     this.state = {
       isShowLoginModal: false,
-      email: 'thongtran',
-      password: 'alphateam',
+      email: '',
+      password: '',
       cursorPos: {},
       disabled: false
     };
-    GlobalState.useState('user', null, this);
-    GlobalState.useState('profile', null, this);
+    UserService.useFbUserState(this);
+    UserService.useFbProfileState(this);
   }
 
   handleInputChange(event) {
@@ -73,7 +71,7 @@ class SignIn extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleSignOut() {
-    AuthService.signout();
+    AuthService.logout();
   }
 
   handleClick = (e) => {
@@ -111,11 +109,11 @@ class SignIn extends Component {
     const {
       isShowLoginModal, email, password, disabled
     } = this.state;
-    const { user, profile } = GlobalState;
+    const { fbUser, fbProfile } = UserService;
 
     return (
       <React.Fragment>
-        {user
+        {fbUser
           ? (
             // <MDBBtn
             //   onClick={this.handleSignOut}
@@ -134,8 +132,8 @@ class SignIn extends Component {
             >
               <img
                 alt="(^_^)!"
-                src={FBService.getUserAvatar()}
-                title={profile ? `Hi, ${profile.name}!` : ''}
+                src={UserService.fbAvatarSrc}
+                title={fbProfile ? `Hi, ${fbProfile.name}!` : ''}
                 width="100%"
                 height="100%"
                 className="img-fluid z-depth-1 rounded-circle"
@@ -197,7 +195,7 @@ class SignIn extends Component {
                 autoComplete="current-password"
                 // validate
               />
-              <div>
+              <div className="text-center">
                 <MDBBtn
                   color="none"
                   className="btn-paper shadow-style mb-3 px-4 py-2"

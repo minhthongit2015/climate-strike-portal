@@ -13,7 +13,7 @@ export default class SuperWebsocket {
 
   static get connected() { return this.socket.connected; }
 
-  static setup() {
+  static init() {
     this.socket = io(Config.wsEndpoint, {
       transports: ['websocket']
     });

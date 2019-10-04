@@ -1,7 +1,7 @@
 
 import superagent from 'superagent';
 import superws from '../utils/superws';
-import { apiEndpoints } from '../utils/Constants';
+import { ApiEndpoints } from '../utils/Constants';
 
 import MarkerWithInfo from '../components/map/marker-with-info/MarkerWithInfo';
 import StoreMarker from '../components/map/store-marker/StoreMarker';
@@ -27,7 +27,7 @@ function getMarkerByType(type) {
 export default class MapService {
   static fetchEntities() {
     let requestPromise;
-    const endpoint = `${apiEndpoints.map.entities.LIST}?sort=[["_id", 1]]`;
+    const endpoint = `${ApiEndpoints.map.entities.LIST}?sort=[["_id", 1]]`;
     if (superws.connected) {
       requestPromise = superws.get(endpoint);
     } else {

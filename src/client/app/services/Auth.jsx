@@ -1,15 +1,20 @@
 import superagent from 'superagent';
-import { apiEndpoints } from '../utils/Constants';
+import { ApiEndpoints } from '../utils/Constants';
 import FbService from './FbService';
+import UserService from './UserService';
 
 export default class Auth {
-  static signin(username, password) {
-    return superagent.post(apiEndpoints.user.SIGN_IN).withCredentials()
-      .send({ username, password });
+  static async init() {
+    await FbService.init();
+    await this.checkLoginStatus();
   }
 
-  static async signout() {
-    return this.fbLogout();
+  static async checkLoginStatus() {
+    await FbService.fetchLoginStatus(); // For Access_Token
+    await Promise.all([
+      FbService.fetchProfile(), // For name, email, age...
+      UserService.fetchUser() // For permissions
+    ]);
   }
 
   static async fbLogin() {
@@ -18,5 +23,17 @@ export default class Auth {
 
   static async fbLogout() {
     return FbService.logout();
+  }
+
+  static signin(username, password) {
+    return superagent.post(ApiEndpoints.user.SIGN_IN).withCredentials()
+      .send({ username, password });
+  }
+
+  static async logout() {
+    await Promise.all([
+      FbService.logout(),
+      UserService.logout()
+    ]);
   }
 }

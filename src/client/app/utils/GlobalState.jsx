@@ -10,7 +10,9 @@ class Global {
     let newState;
     let newSetState;
     if (classComponent) {
-      newState = this.state[name] || initialValue;
+      newState = this.state[name]
+        || (classComponent.state ? classComponent.state[name] : null)
+        || initialValue;
       newSetState = value => classComponent.setState({
         [name]: value
       });

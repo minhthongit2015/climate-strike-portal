@@ -6,6 +6,15 @@ export default {
     }
   },
   pages: {
+    home: {
+      mainMessage: 'đây là những gì đang diễn ra, và bạn có quyền không tin vào điều đó...',
+      nav: {
+        earthPicture: 'Bức Tranh\r\nTrái Đất',
+        theRealWorld: 'Thế Giới Thực',
+        whatYouCanDo: 'Điều Bạn\r\nCó Thể Làm',
+        yourQuestion: 'Điều Bạn\r\nMuốn Biết?'
+      }
+    },
     earthPicture: {
       title: {
         main: 'Bức Tranh Trái Đất',

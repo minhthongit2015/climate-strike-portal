@@ -29,7 +29,7 @@
   &.highlight-style {
     filter: brightness(1.05);
     &:hover {
-      transform: scale(1.14);
+      filter: brightness(1.1);
     }
   }
 }
