@@ -20,6 +20,12 @@ export default class PostList extends React.Component {
       throttleTime: 0,
       roundTransforms: true
     });
+    this._isMounted = true;
+    [350, 650, 1000].forEach((timeout) => {
+      setTimeout(() => {
+        this.shuffle.update();
+      }, timeout);
+    });
   }
 
   componentDidUpdate() {
@@ -29,6 +35,7 @@ export default class PostList extends React.Component {
   componentWillUnmount() {
     this.shuffle.destroy();
     this.shuffle = null;
+    this._isMounted = false;
   }
 
   shouldComponentUpdate(newProps) {
@@ -117,7 +124,7 @@ export default class PostList extends React.Component {
         key={key}
         className={`post-wrapper p-0 ${post.previewClass || ''}`}
       >
-        <div className="p-3">
+        <div className="p-2">
           {content}
         </div>
       </div>
@@ -130,10 +137,15 @@ export default class PostList extends React.Component {
     if (posts.length > 0 && this.processing === null) {
       this.mapPreviews(posts).then(() => {
         this.processing = false;
-        this.forceUpdate(() => {
-          this.shuffle.resetItems();
-          this.shuffle.layout();
-        });
+        if (this._isMounted) {
+          this.forceUpdate(() => {
+            this.shuffle.resetItems();
+            this.shuffle.layout();
+          });
+          setTimeout(() => {
+            this.shuffle.layout();
+          }, 1000);
+        }
       });
     }
     return (

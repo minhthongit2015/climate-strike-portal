@@ -19,13 +19,18 @@ export default class InfinitePostList extends React.Component {
 
   componentDidMount() {
     this.fetchPosts();
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
   }
 
   refresh() {
     this.fetchPosts();
   }
 
-  fetchPosts() {
+  async fetchPosts() {
     const { category, postsPerPage = 4 } = this.props;
     const limit = postsPerPage;
     const offset = this.page * limit;
@@ -33,18 +38,21 @@ export default class InfinitePostList extends React.Component {
     return superrequest.get(`/api/v1/blog/posts?category=${category}&limit=${limit}&offset=${offset}`)
       .then((res) => {
         if (!res || !res.ok) {
-          // If it has some error, then try to fetch again after 3s
-          setTimeout(() => {
-            this.fetchPosts();
-          }, 2000);
+          // If it has some error, then try to fetch again after 2s
+          if (this._ismounted) {
+            setTimeout(() => {
+              this.fetchPosts();
+            }, 2000);
+          }
           return;
         }
         if (this.state.hasMore) {
           this.page++;
         }
         if (res.data.length > 0) {
+          const newPosts = res.data.filter(post => this.state.posts.every(p => p._id !== post._id));
           this.setState(prevState => ({
-            posts: prevState.posts.concat(res.data),
+            posts: prevState.posts.concat(newPosts),
             hasMore: res.data.length >= limit
           }));
         } else {

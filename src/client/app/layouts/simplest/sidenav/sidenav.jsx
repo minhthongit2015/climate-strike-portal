@@ -7,7 +7,7 @@ import SignIn from '../../../components/user/signin/SignIn';
 import RouteConstants from '../../../utils/RouteConstants';
 import {
   AICloudSrc,
-  MyGardenSrc,
+  // MyGardenSrc,
   SmileCitySrc
 } from '../../../../assets/icons';
 
@@ -19,16 +19,28 @@ export default class SideNav extends Component {
     super(props);
     this.links = [
       {
-        type: 'nav', link: RouteConstants.earthPictureLink, text: 'Bức Tranh\r\nTrái Đất', iconSrc: AICloudSrc
+        type: 'nav',
+        link: RouteConstants.earthPictureLink,
+        text: 'Bức Tranh\r\nTrái Đất',
+        iconSrc: AICloudSrc
+      },
+      // {
+      //   type: 'nav',
+      //   link: RouteConstants.theRealWorldLink,
+      //   text: 'Thế Giới\r\nThực',
+      //   iconSrc: MyGardenSrc
+      // },
+      {
+        type: 'nav',
+        link: RouteConstants.whatYouCanDoLink,
+        text: 'Điều Bạn\r\nCó Thể Làm',
+        iconSrc: SmileCitySrc
       },
       {
-        type: 'nav', link: RouteConstants.theRealWorldLink, text: 'Thế Giới\r\nThực', iconSrc: MyGardenSrc
-      },
-      {
-        type: 'nav', link: RouteConstants.whatYouCanDoLink, text: 'Điều Bạn\r\nCó Thể Làm', iconSrc: SmileCitySrc
-      },
-      {
-        type: 'nav', link: RouteConstants.yourQuestionLink, text: 'Điều Bạn\r\nMuốn Biết?', iconSrc: AICloudSrc
+        type: 'nav',
+        link: RouteConstants.yourQuestionLink,
+        text: 'Điều Bạn\r\nMuốn Biết?',
+        iconSrc: AICloudSrc
       }
     ];
   }

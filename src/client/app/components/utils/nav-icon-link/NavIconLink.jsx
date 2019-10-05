@@ -39,6 +39,7 @@ export default class extends Component {
         onTouchStart={this.handleClick}
       >
         <FixedRatioImage
+          icon={nav.icon}
           src={nav.iconSrc}
           ratio={ratio || 0.65}
           type={type || 'contain'}

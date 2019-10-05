@@ -5,9 +5,10 @@ import './Home.scss';
 import UserService from '../../services/UserService';
 import RouteConstants from '../../utils/RouteConstants';
 import {
-  MyGardenSrc,
+  // MyGardenSrc,
   AICloudSrc,
-  SmileCitySrc
+  SmileCitySrc,
+  PlanetEarth
 } from '../../../assets/icons';
 
 import NavIconLink from '../../components/utils/nav-icon-link/NavIconLink';
@@ -18,16 +19,28 @@ export default class HomePage extends BasePage {
     super(props, 'Climate Strike Vietnam', true);
     this.links = [
       {
-        type: 'nav', link: RouteConstants.earthPictureLink, text: t('pages.home.nav.earthPicture'), iconSrc: AICloudSrc
+        type: 'nav',
+        link: RouteConstants.earthPictureLink,
+        text: t('pages.home.nav.earthPicture'),
+        icon: PlanetEarth
+      },
+      // {
+      //   type: 'nav',
+      //   link: RouteConstants.theRealWorldLink,
+      //   text: t('pages.home.nav.theRealWorld'),
+      //   iconSrc: MyGardenSrc
+      // },
+      {
+        type: 'nav',
+        link: RouteConstants.whatYouCanDoLink,
+        text: t('pages.home.nav.whatYouCanDo'),
+        iconSrc: SmileCitySrc
       },
       {
-        type: 'nav', link: RouteConstants.theRealWorldLink, text: t('pages.home.nav.theRealWorld'), iconSrc: MyGardenSrc
-      },
-      {
-        type: 'nav', link: RouteConstants.whatYouCanDoLink, text: t('pages.home.nav.whatYouCanDo'), iconSrc: SmileCitySrc
-      },
-      {
-        type: 'nav', link: RouteConstants.yourQuestionLink, text: t('pages.home.nav.yourQuestion'), iconSrc: AICloudSrc
+        type: 'nav',
+        link: RouteConstants.yourQuestionLink,
+        text: t('pages.home.nav.yourQuestion'),
+        iconSrc: AICloudSrc
       }
     ];
 
@@ -36,7 +49,7 @@ export default class HomePage extends BasePage {
 
   static renderNav(nav) {
     return (
-      <div className="col-3" key={nav.link}>
+      <div className="col-4" key={nav.link}>
         <NavIconLink nav={nav} ratio={1} />
       </div>
     );
