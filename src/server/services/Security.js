@@ -37,7 +37,7 @@ module.exports = class {
   static onlyModOrAdmin(req) {
     this.onlyRoleUser(req);
     if (req.session.user.role !== UserRole.MODERATOR
-      || req.session.user.role !== UserRole.ADMIN) {
+      && req.session.user.role !== UserRole.ADMIN) {
       throw noStack(HttpErrors.Unauthorized());
     }
   }

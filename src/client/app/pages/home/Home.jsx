@@ -59,11 +59,11 @@ export default class HomePage extends BasePage {
   getRandomQuote(name) {
     const now = new Date();
     if (now.getHours() >= 1 && now.getHours() <= 11) {
-      return `Chào buổi sáng ${name}! Chúc một ngày mới vui vẻ!`;
+      return `Chào buổi sáng... ${name}! Chúc một ngày mới vui vẻ!`;
     } if (now.getHours() >= 13 && now.getHours() <= 17) {
-      return `Chào buổi chiều ${name}`;
+      return `Chào buổi chiều... ${name}`;
     } if (now.getHours() >= 18 && now.getHours() <= 23) {
-      return `Chào buổi tối ${name}`;
+      return `Chào buổi tối... ${name}`;
     }
     return '';
   }
