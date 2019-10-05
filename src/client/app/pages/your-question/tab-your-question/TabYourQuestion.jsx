@@ -9,7 +9,7 @@ import t from '../../../languages';
 
 export default class TabEarthPicture extends BasePage {
   constructor(props) {
-    super(props,);
+    super(props, t('pages.yourQuestion.title.main'));
     this.category = 'YourQuestion';
   }
 

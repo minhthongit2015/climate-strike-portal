@@ -1,32 +1,28 @@
 import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
+import PostsModule from '../../../components/blog/posts-module/PostsModule';
+import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
 import OthersPosts from './OthersPosts';
-import NewPostRow from '../../../components/blog/new-post/NewPostRow';
+import t from '../../../languages';
 
 
 export default class extends BasePage {
   constructor(props) {
-    super(props, 'Hỏi về Chủ đề khác');
-    this.postListRef = React.createRef();
-    this.handlePostPosted = this.handlePostPosted.bind(this);
-  }
-
-  handlePostPosted() {
-    this.postListRef.current.innerRef.current.refresh();
+    super(props, t('pages.yourQuestion.title.orthers'));
+    this.category = ['AskForOthers'];
   }
 
   render() {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
+          <DeepMessage>{t('pages.yourQuestion.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <NewPostRow onPosted={this.handlePostPosted} />
-          <OthersPosts
-            ref={this.postListRef}
-          />
+          <PostsModule categories={this.category}>
+            <OthersPosts />
+          </PostsModule>
         </SectionBody>
       </Section>
     );

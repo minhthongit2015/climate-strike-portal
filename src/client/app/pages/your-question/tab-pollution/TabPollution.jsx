@@ -10,7 +10,7 @@ import t from '../../../languages';
 export default class TabPollution extends BasePage {
   constructor(props) {
     super(props, t('pages.yourQuestion.title.pollution'));
-    this.category = 'AskForPollution';
+    this.category = ['AskForPollution'];
   }
 
   render() {
@@ -20,7 +20,7 @@ export default class TabPollution extends BasePage {
           <DeepMessage>{t('pages.yourQuestion.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule>
+          <PostsModule categories={this.category}>
             <PollutionPosts />
           </PostsModule>
         </SectionBody>

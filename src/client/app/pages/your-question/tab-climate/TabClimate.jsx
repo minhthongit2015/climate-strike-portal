@@ -1,32 +1,28 @@
 import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
+import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
+import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import ClimatePosts from './ClimatePosts';
-import NewPostRow from '../../../components/blog/new-post/NewPostRow';
+import t from '../../../languages';
 
 
 export default class TabClimate extends BasePage {
   constructor(props) {
-    super(props, 'Hỏi về Khí Hậu');
-    this.postListRef = React.createRef();
-    this.handlePostPosted = this.handlePostPosted.bind(this);
-  }
-
-  handlePostPosted() {
-    this.postListRef.current.innerRef.current.refresh();
+    super(props, t('pages.yourQuestion.title.climate'));
+    this.category = ['AskForClimate'];
   }
 
   render() {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5">ở đây không có gì ngoài sự thật...</div>
+          <DeepMessage>{t('pages.yourQuestion.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <NewPostRow onPosted={this.handlePostPosted} />
-          <ClimatePosts
-            ref={this.postListRef}
-          />
+          <PostsModule categories={this.category}>
+            <ClimatePosts />
+          </PostsModule>
         </SectionBody>
       </Section>
     );
