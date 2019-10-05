@@ -19,12 +19,6 @@ export default class extends React.Component {
     };
     this.tabs = [
       {
-        name: t('pages.whatYouCanDo.nav.everything'),
-        path: RouteConstants.doForEverythingPath,
-        link: RouteConstants.doForEverythingLink,
-        component: TabForEverything
-      },
-      {
         name: t('pages.whatYouCanDo.nav.climate'),
         path: RouteConstants.doForClimatePath,
         link: RouteConstants.doForClimateLink,
@@ -41,6 +35,12 @@ export default class extends React.Component {
         path: RouteConstants.doForPollutionPath,
         link: RouteConstants.doForPollutionLink,
         component: TabPollution
+      },
+      {
+        name: t('pages.whatYouCanDo.nav.everything'),
+        path: RouteConstants.doForEverythingPath,
+        link: RouteConstants.doForEverythingLink,
+        component: TabForEverything
       },
       {
         name: t('pages.whatYouCanDo.nav.worldActions'),

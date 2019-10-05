@@ -58,12 +58,12 @@ module.exports = class extends CRUDService {
         title: doc.title
       });
     }
-    doc.content = await this.postContentImageReplacer(doc.content);
+    doc.content = await this.replaceImageBase64ToUrl(doc.content);
     const newDoc = super.create(doc);
     return newDoc;
   }
 
-  static async postContentImageReplacer(content) {
+  static async replaceImageBase64ToUrl(content) {
     const imgRegexp = /!\[(.+?)\]\((.+?)\)/g;
     const promises = [];
     async function replacer(match, imageName, imageBase64) {

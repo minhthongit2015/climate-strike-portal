@@ -7,10 +7,11 @@ const categories = [
   { type: 'Pollution', name: 'Ô nhiễm' },
 
   { type: 'WhatYouCanDo', name: 'Điều bạn có thể làm' },
-  { type: 'DoForEverything', name: 'Cho tất cả' },
   { type: 'DoForClimate', name: 'Cho khí hậu' },
   { type: 'DoForOrganisms', name: 'Cho sinh vật' },
   { type: 'DoForPollution', name: 'Giảm Ô nhiễm' },
+  { type: 'DoForEverything', name: 'Hỗ trợ phong trào' },
+  { type: 'WorldActions', name: 'Thế giới đang hành động' },
 
   { type: 'YourQuestion', name: 'Điều bạn muốn biết?' },
   { type: 'AskForClimate', name: 'Về khí hậu' },
@@ -24,10 +25,10 @@ mapParent(categories, [
   [1, 2, 4]
 ]);
 mapParent(categories, [
-  [5, 6, 9]
+  [5, 6, 10]
 ]);
 mapParent(categories, [
-  [10, 11, 14]
+  [11, 12, 15]
 ]);
 
 module.exports = categories;

@@ -1,33 +1,28 @@
 import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
+import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
+import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import WhatYouCanDoPosts from './WhatYouCanDoPosts';
-import NewPostRow from '../../../components/blog/new-post/NewPostRow';
 import t from '../../../languages';
 
 
 export default class TabWhatYouCanDo extends BasePage {
   constructor(props) {
     super(props, t('pages.whatYouCanDo.title.main'));
-    this.postListRef = React.createRef();
-    this.handlePostPosted = this.handlePostPosted.bind(this);
-  }
-
-  handlePostPosted() {
-    this.postListRef.current.innerRef.current.refresh();
+    this.category = 'WhatYouCanDo';
   }
 
   render() {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5 white-space-pre">{t('pages.whatYouCanDo.mainMessage')}</div>
+          <DeepMessage>{t('pages.whatYouCanDo.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <NewPostRow onPosted={this.handlePostPosted} />
-          <WhatYouCanDoPosts
-            ref={this.postListRef}
-          />
+          <PostsModule rootCategory={this.category}>
+            <WhatYouCanDoPosts />
+          </PostsModule>
         </SectionBody>
       </Section>
     );

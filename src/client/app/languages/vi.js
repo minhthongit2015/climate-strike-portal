@@ -20,7 +20,7 @@ export default {
         main: 'Bức Tranh Trái Đất',
         climate: 'Bức Tranh Khí Hậu',
         organisms: 'Bức Tranh Sinh Vật',
-        pollution: 'Bức Tranh ô Nhiễm'
+        pollution: 'Bức Tranh Ô Nhiễm'
       },
       nav: {
         climate: 'Khí hậu',
@@ -36,16 +36,17 @@ export default {
     whatYouCanDo: {
       title: {
         main: 'Điều Bạn Có Thể Làm',
-        everything: 'Bảo Vệ Tất Cả',
-        climate: 'Bảo Vệ Khí Hậu',
-        organisms: 'Bảo Vệ Sinh Vật',
-        pollution: 'Giảm Ô Nhiễm'
+        climate: 'Cho Khí Hậu',
+        organisms: 'Cho Sinh Vật',
+        pollution: 'Giảm Ô Nhiễm',
+        everything: 'Hỗ Trợ Phong Trào',
+        worldActions: 'Thế giới đang hành động'
       },
       nav: {
-        everything: 'Cho tất cả',
         climate: 'Cho khí hậu',
         organisms: 'Cho sinh vật',
         pollution: 'Giảm ô nhiễm',
+        everything: 'Hỗ trợ phong trào',
         worldActions: 'Thế giới đang hành động'
       },
       mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\ntại sao mọi người lại phải cố gắng như vậy...'

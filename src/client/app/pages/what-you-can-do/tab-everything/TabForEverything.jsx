@@ -1,7 +1,8 @@
 import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
-import NewPostRow from '../../../components/blog/new-post/NewPostRow';
+import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
+import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import ForEverythingPosts from './ForEverythingPosts';
 import t from '../../../languages';
 
@@ -9,25 +10,19 @@ import t from '../../../languages';
 export default class extends BasePage {
   constructor(props) {
     super(props, t('pages.whatYouCanDo.title.everything'));
-    this.postListRef = React.createRef();
-    this.handlePostPosted = this.handlePostPosted.bind(this);
-  }
-
-  handlePostPosted() {
-    this.postListRef.current.innerRef.current.refresh();
+    this.category = ['DoForEverything'];
   }
 
   render() {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5">{t('pages.whatYouCanDo.mainMessage')}</div>
+          <DeepMessage>{t('pages.whatYouCanDo.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <NewPostRow onPosted={this.handlePostPosted} />
-          <ForEverythingPosts
-            ref={this.postListRef}
-          />
+          <PostsModule categories={this.category}>
+            <ForEverythingPosts />
+          </PostsModule>
         </SectionBody>
       </Section>
     );

@@ -53,9 +53,14 @@ export default class extends React.Component {
     if (event) {
       event.preventDefault();
     }
+    const postData = this.post;
+    if (postData.categories.length <= 0) {
+      alert('Vui lòng chọn "Chuyên mục" cho bài viết');
+      return;
+    }
     const isDraft = document.activeElement.value === 'draft';
     this.setLoadingState(true);
-    superrequest.post(`/api/v1/blog/posts?draft=${isDraft}`, this.post)
+    superrequest.post(`/api/v1/blog/posts?draft=${isDraft}`, postData)
       .then((res) => {
         if (res.ok) {
           this.dispatchPostPosted(res.data);
@@ -148,7 +153,7 @@ export default class extends React.Component {
                   options={categoryOptions}
                   isMulti
                   value={category}
-                  defaultValue={categoryOptions[0]}
+                  // defaultValue={categoryOptions[0]}
                   onChange={this.handleCategoryChange}
                   required
                   autoComplete="off"

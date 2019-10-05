@@ -51,6 +51,11 @@ class Server {
 
   static createServer() {
     this.app = express();
+    this.app.disable('x-powered-by');
+    this.app.use((req, res, next) => {
+      res.removeHeader('X-Powered-By');
+      next();
+    });
     this.server = http.createServer(this.app);
   }
 
