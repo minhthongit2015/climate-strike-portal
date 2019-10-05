@@ -25,12 +25,26 @@ class Global {
     }
 
     if (classComponent) {
-      classComponent.componentDidMount = () => {
+      if (!classComponent._componentDidMount) {
+        classComponent._componentDidMount = new Set();
+        classComponent.componentDidMount = (...args) => {
+          classComponent._componentDidMount.forEach(
+            callback => callback.apply(classComponent, args)
+          );
+        };
+        classComponent._componentWillUnmount = new Set();
+        classComponent.componentWillUnmount = (...args) => {
+          classComponent._componentWillUnmount.forEach(
+            callback => callback.apply(classComponent, args)
+          );
+        };
+      }
+      classComponent._componentDidMount.add(() => {
         this.listeners[name].add(newSetState);
-      };
-      classComponent.componentWillUnmount = () => {
+      });
+      classComponent._componentWillUnmount.add(() => {
         this.listeners[name].delete(newSetState);
-      };
+      });
     } else {
       React.useEffect(() => {
         this.listeners[name].add(newSetState);

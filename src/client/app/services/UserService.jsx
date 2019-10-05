@@ -9,65 +9,8 @@ export const UserObjectKeys = {
 };
 
 export default class UserService {
-  static get fbUserId() {
-    return this.fbUser ? this.fbUser.authResponse.userID : null;
-  }
-
-  static get fbAccessToken() {
-    return this.fbUser ? this.fbUser.authResponse.accessToken : null;
-  }
-
-  static get fbAvatarSrc() {
-    let fbId = null;
-    if (this.user) {
-      fbId = this.user.socials.facebook;
-    }
-    if (this.fbUser) {
-      fbId = this.fbUser.authResponse.userID;
-    }
-    return fbId
-      ? `https://graph.facebook.com/${fbId}/picture?type=square&width=200&height=200`
-      : '/images/default-avatar.jpg';
-  }
-
-  // ---
-
-  static setFbUser(fbUser) {
-    this.fbUser = fbUser;
-    GlobalState.setState(UserObjectKeys.fbUser, fbUser);
-  }
-
-  static clearFbUser() {
-    this.fbUser = null;
-    GlobalState.setState(UserObjectKeys.fbUser, null);
-    this.fbProfile = null;
-    GlobalState.setState(UserObjectKeys.fbProfile, null);
-  }
-
-  static useFbUserState(component) {
-    GlobalState.useState(UserObjectKeys.fbUser, null, component);
-  }
-
-  // ---
-
-  static setFbProfile(fbProfile) {
-    this.fbProfile = fbProfile;
-    GlobalState.setState(UserObjectKeys.fbProfile, fbProfile);
-  }
-
-  static clearFbProfile() {
-    this.fbProfile = null;
-    GlobalState.setState(UserObjectKeys.fbProfile, null);
-  }
-
-  static useFbProfileState(component) {
-    GlobalState.useState(UserObjectKeys.fbProfile, null, component);
-  }
-
-  // ---
-
   static async fetchUser() {
-    if (this.fbUser) {
+    if (!this.fbUser) {
       return this.clearUser();
     }
     return superrequest.get(ApiEndpoints.user.FB_LOGIN)
@@ -99,6 +42,65 @@ export default class UserService {
       .then(() => {
         this.clearUser();
       });
+  }
+
+  // ---
+
+  static get fbUserId() {
+    return this.fbUser ? this.fbUser.authResponse.userID : null;
+  }
+
+  static get fbAccessToken() {
+    return this.fbUser ? this.fbUser.authResponse.accessToken : null;
+  }
+
+  static get fbAvatarSrc() {
+    let fbId = null;
+    if (this.user) {
+      fbId = this.user.socials.facebook;
+    }
+    if (this.fbUser) {
+      fbId = this.fbUser.authResponse.userID;
+    }
+    return fbId
+      ? `https://graph.facebook.com/${fbId}/picture?type=square&width=200&height=200`
+      : '/images/default-avatar.jpg';
+  }
+
+  // ---
+
+  static setFbUser(fbUser) {
+    this.fbUser = fbUser;
+    superrequest.setAccessToken(fbUser.authResponse.access_token);
+    GlobalState.setState(UserObjectKeys.fbUser, fbUser);
+  }
+
+  static clearFbUser() {
+    this.fbUser = null;
+    GlobalState.setState(UserObjectKeys.fbUser, null);
+    this.fbProfile = null;
+    GlobalState.setState(UserObjectKeys.fbProfile, null);
+    superrequest.setAccessToken(null);
+  }
+
+  static useFbUserState(component) {
+    GlobalState.useState(UserObjectKeys.fbUser, null, component);
+  }
+
+  // ---
+
+  static setFbProfile(fbProfile) {
+    this.fbProfile = fbProfile;
+    GlobalState.setState(UserObjectKeys.fbProfile, fbProfile);
+  }
+
+  static clearFbProfile() {
+    this.fbProfile = null;
+    GlobalState.setState(UserObjectKeys.fbProfile, null);
+  }
+
+  static useFbProfileState(component) {
+    GlobalState.useState(UserObjectKeys.fbProfile, null, component);
   }
 
   // ---

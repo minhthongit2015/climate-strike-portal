@@ -106,9 +106,9 @@ export default class {
       return null;
     }
     return new Promise((resolve) => {
+      UserService.clearFbUser();
+      UserService.clearFbProfile();
       this.FB.logout((response) => {
-        UserService.clearFbUser();
-        UserService.clearFbProfile();
         resolve(response);
       });
     });

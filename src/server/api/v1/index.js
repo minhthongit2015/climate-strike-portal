@@ -14,8 +14,8 @@ router.use('/api-info', ApiInfoRoute);
 router.use('/sessions', SessionsRoute);
 router.use('/admin', AdminRoute);
 
-router.use('/map', MapRoute);
 router.use('/users', UsersRoute);
+router.use('/map', MapRoute);
 router.use('/blog', BlogRoute);
 
 module.exports = router;
