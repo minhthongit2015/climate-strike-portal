@@ -18,7 +18,11 @@ export default class Auth {
   }
 
   static async fbLogin() {
-    return FbService.login();
+    await FbService.login();
+    await Promise.all([
+      FbService.fetchProfile(),
+      UserService.fetchUser()
+    ]);
   }
 
   static async fbLogout() {

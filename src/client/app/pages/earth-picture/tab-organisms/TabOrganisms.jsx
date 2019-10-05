@@ -1,33 +1,28 @@
 import React from 'react';
 import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
+import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import OrganismsPosts from './OrganismsPosts';
-import NewPostRow from '../../../components/blog/new-post/NewPostRow';
 import t from '../../../languages';
+import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
 
 
 export default class TabOrganisms extends BasePage {
   constructor(props) {
     super(props, t('pages.earthPicture.title.organisms'));
-    this.postListRef = React.createRef();
-    this.handlePostPosted = this.handlePostPosted.bind(this);
-  }
-
-  handlePostPosted() {
-    this.postListRef.current.innerRef.current.refresh();
+    this.category = ['Organisms'];
   }
 
   render() {
     return (
       <Section>
         <SectionHeader>
-          <div className="text-light text-center mb-5">{t('pages.earthPicture.mainMessage')}</div>
+          <DeepMessage>{t('pages.earthPicture.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <NewPostRow onPosted={this.handlePostPosted} />
-          <OrganismsPosts
-            ref={this.postListRef}
-          />
+          <PostsModule categories={this.category}>
+            <OrganismsPosts />
+          </PostsModule>
         </SectionBody>
       </Section>
     );

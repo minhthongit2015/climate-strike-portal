@@ -1,11 +1,11 @@
 
 import React from 'react';
 import BasePage from '../_base/BasePage';
+import t from '../../languages';
 
 export default class extends BasePage {
   constructor(props) {
-    super(props);
-    this.title = 'Smile City';
+    super(props, t('pages.theRealWorld.title'));
   }
 
   render() {

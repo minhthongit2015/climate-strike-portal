@@ -10,11 +10,11 @@ import UserMarker from '../../components/map/user-marker/UserMarker';
 import FarmMarker from '../../components/map/farm-marker/FarmMarker';
 import Polyline from '../../components/map/polyline/Polyline';
 import MapService from '../../services/MapService';
+import t from '../../languages';
 
 export default class TheRealWorld extends BasePage {
   constructor(props) {
-    super(props);
-    this.title = 'Smile City';
+    super(props, t('pages.theRealWorld.title'));
     this.state = {
       dirty: false,
       mapEntities: [],

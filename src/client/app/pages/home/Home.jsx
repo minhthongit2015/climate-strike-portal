@@ -2,7 +2,7 @@ import React from 'react';
 import BasePage from '../_base/BasePage';
 import './Home.scss';
 
-import GlobalState from '../../utils/GlobalState';
+import UserService from '../../services/UserService';
 import RouteConstants from '../../utils/RouteConstants';
 import {
   MyGardenSrc,
@@ -31,7 +31,7 @@ export default class HomePage extends BasePage {
       }
     ];
 
-    GlobalState.useState('profile', null, this);
+    UserService.useFbProfileState(this);
   }
 
   static renderNav(nav) {
@@ -45,9 +45,9 @@ export default class HomePage extends BasePage {
   // eslint-disable-next-line class-methods-use-this
   getRandomQuote(name) {
     const now = new Date();
-    if (now.getHours() >= 1 && now.getHours() <= 9) {
+    if (now.getHours() >= 1 && now.getHours() <= 11) {
       return `Chào buổi sáng ${name}! Chúc một ngày mới vui vẻ!`;
-    } if (now.getHours() >= 15 && now.getHours() <= 17) {
+    } if (now.getHours() >= 13 && now.getHours() <= 17) {
       return `Chào buổi chiều ${name}`;
     } if (now.getHours() >= 18 && now.getHours() <= 23) {
       return `Chào buổi tối ${name}`;
@@ -56,6 +56,7 @@ export default class HomePage extends BasePage {
   }
 
   render() {
+    const { fbProfile } = UserService;
     console.log('render "Pages/home/Home.jsx"');
     return (
       <React.Fragment>
@@ -74,9 +75,9 @@ export default class HomePage extends BasePage {
                 })
               }
             </div>
-            {GlobalState.profile && (
+            {fbProfile && (
               <div className="text-center text-light mt-5">
-                {this.getRandomQuote(GlobalState.profile.name)}
+                {this.getRandomQuote(fbProfile.name)}
               </div>
             )}
           </div>

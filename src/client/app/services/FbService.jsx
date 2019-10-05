@@ -69,7 +69,7 @@ export default class {
   }
 
   static async fetchProfile() {
-    if (UserService.fbUser) {
+    if (!UserService.fbUser) {
       return null;
     }
     return new Promise((resolve, reject) => this.FB.api(

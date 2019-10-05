@@ -17,6 +17,10 @@ img {
   }
 }
 
+.text-pre-wrap {
+  white-space: pre-wrap;
+}
+
 .modern-scrollbar {
   &::-webkit-scrollbar {
     background: #E2E5E8;

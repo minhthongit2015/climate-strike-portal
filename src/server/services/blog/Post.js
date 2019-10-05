@@ -3,6 +3,7 @@ const { Post } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
 const CategoryService = require('./Category');
 const ApiHelper = require('../../utils/ApiHelper');
+const ImgurService = require('../../services/thirt-party/imgur');
 
 module.exports = class extends CRUDService {
   static get model() {
@@ -52,7 +53,28 @@ module.exports = class extends CRUDService {
         }
       }
     }).then(categories => categories.map(category => category._id));
+    if (doc.preview) {
+      doc.preview = await ImgurService.create(doc.preview, {
+        title: doc.title
+      });
+    }
+    doc.content = await this.postContentImageReplacer(doc.content);
     const newDoc = super.create(doc);
     return newDoc;
+  }
+
+  static async postContentImageReplacer(content) {
+    const imgRegexp = /!\[(.+?)\]\((.+?)\)/g;
+    const promises = [];
+    async function replacer(match, imageName, imageBase64) {
+      const promise = ImgurService.create(imageBase64, {
+        name: imageName,
+        title: imageName
+      }).then(imageUrl => `![${imageName}](${imageUrl})`);
+      promises.push(promise);
+    }
+    content.replace(imgRegexp, replacer);
+    const data = await Promise.all(promises);
+    return content.replace(imgRegexp, () => data.shift());
   }
 };

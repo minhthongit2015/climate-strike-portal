@@ -1,5 +1,6 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import RandomItem from 'random-item';
 import LeafLoading from '../../utils/loadings/LeafLoading';
 import PostList from '../post-list/PostList';
 import superrequest from '../../../utils/superrequest';
@@ -64,8 +65,31 @@ export default class InfinitePostList extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  getRandomEndMessage() {
+    return RandomItem([
+      t('components.blog.infinitePostList.knowAllMsg'),
+      t('components.blog.infinitePostList.knowAllMsg1'),
+      t('components.blog.infinitePostList.knowAllMsg2'),
+      t('components.blog.infinitePostList.knowAllMsg3'),
+      t('components.blog.infinitePostList.knowAllMsg4'),
+      t('components.blog.infinitePostList.knowAllMsg5'),
+      t('components.blog.infinitePostList.knowAllMsg6'),
+      t('components.blog.infinitePostList.knowAllMsg7'),
+      t('components.blog.infinitePostList.knowAllMsg8'),
+      t('components.blog.infinitePostList.knowAllMsg9'),
+      t('components.blog.infinitePostList.knowAllMsg10'),
+      t('components.blog.infinitePostList.knowAllMsg11'),
+      t('components.blog.infinitePostList.knowAllMsg12'),
+      t('components.blog.infinitePostList.knowAllMsg13'),
+      t('components.blog.infinitePostList.knowAllMsg14'),
+      t('components.blog.infinitePostList.knowAllMsg15'),
+      t('components.blog.infinitePostList.knowAllMsg16'),
+      t('components.blog.infinitePostList.knowAllMsg17')
+    ]);
+  }
+
   renderEnd() {
-    const knowAllMsg = t('components.blog.infinitePostList.knowAllMsg');
+    const knowAllMsg = this.getRandomEndMessage();
     const noPostMsg = t('components.blog.infinitePostList.noPostMsg');
     const isNoPost = this.state.posts.length === 0;
     return (

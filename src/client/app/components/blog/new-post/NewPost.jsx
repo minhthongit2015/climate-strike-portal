@@ -13,16 +13,17 @@ import superrequest from '../../../utils/superrequest';
 import LeafLoading from '../../utils/loadings/LeafLoading';
 import Composer from '../composer/Composer';
 import ButtonBar from '../../dialog/ButtonBar';
+import CategoryHelper from '../../../utils/CategoryHelper';
 
 const animatedComponents = makeAnimated();
 
 export default class extends React.Component {
   get post() {
     const {
-      title, summary, preview, categories
+      title, summary, preview, category
     } = this.state;
     const content = this.contentRef.current.value;
-    const categoryIds = categories.map(category => category.value);
+    const categoryIds = category.map(cate => cate.value);
     return {
       title, summary, content, preview, categories: categoryIds
     };
@@ -36,33 +37,16 @@ export default class extends React.Component {
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
 
-    this.categories = [
-      // {
-      //   name: 'Bức tranh Trái Đất',
-      //   type: 'EarthPicture'
-      // },
-      {
-        label: 'Khí hậu',
-        value: 'Climate'
-      },
-      {
-        label: 'Sinh vật',
-        value: 'Organisms'
-      },
-      {
-        label: 'Ô nhiễm',
-        value: 'Pollution'
-      }
-    ];
-
     this.state = {
       title: '',
       summary: '',
       preview: '',
-      categories: [],
+      category: [],
       disabled: false,
       expanded: false
     };
+
+    CategoryHelper.useCategoriesState(this);
   }
 
   handlePostSubmit(event) {
@@ -91,7 +75,7 @@ export default class extends React.Component {
 
   handleCategoryChange(value) {
     this.setState({
-      categories: value
+      category: value
     });
   }
 
@@ -107,7 +91,7 @@ export default class extends React.Component {
       title: '',
       summary: '',
       preview: '',
-      categories: []
+      category: []
     });
     this.contentRef.current.value = '';
   }
@@ -133,8 +117,17 @@ export default class extends React.Component {
   render() {
     console.log('render "components/blog/new-post"');
     const {
-      title, summary, preview, categories, disabled, expanded
+      title, summary, preview, category, disabled, expanded
     } = this.state;
+    const { categories, rootCategory } = this.props;
+    let categoryOptions = [];
+    if (rootCategory) {
+      categoryOptions = CategoryHelper.getLeafCategoriesAsOptions(rootCategory);
+    }
+    if (categories) {
+      categoryOptions = CategoryHelper.getCategoriesAsOptions(categories);
+    }
+
     return (
       <MDBCard className={classnames('new-post overlapable flex-fill', { disabled, expanded })}>
         <MDBCardHeader className="d-flex justify-content-between py-0">
@@ -152,9 +145,10 @@ export default class extends React.Component {
                 <Select
                   placeholder="Chuyên mục"
                   name="category"
-                  options={this.categories}
+                  options={categoryOptions}
                   isMulti
-                  value={categories}
+                  value={category}
+                  defaultValue={categoryOptions[0]}
                   onChange={this.handleCategoryChange}
                   required
                   autoComplete="off"

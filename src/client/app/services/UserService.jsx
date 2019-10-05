@@ -13,7 +13,7 @@ export default class UserService {
     if (!this.fbUser) {
       return this.clearUser();
     }
-    return superrequest.get(ApiEndpoints.user.FB_LOGIN)
+    return superrequest.agentGet(ApiEndpoints.user.FB_LOGIN)
       .then((response) => {
         if (this.fbUser && response && response.ok) {
           this.setUser(response.data);
@@ -38,7 +38,7 @@ export default class UserService {
   }
 
   static async logout() {
-    superrequest.get(ApiEndpoints.user.SIGN_OUT)
+    superrequest.agentGet(ApiEndpoints.user.SIGN_OUT)
       .then(() => {
         this.clearUser();
       });
@@ -71,7 +71,7 @@ export default class UserService {
 
   static setFbUser(fbUser) {
     this.fbUser = fbUser;
-    superrequest.setAccessToken(fbUser.authResponse.access_token);
+    superrequest.setAccessToken(fbUser.authResponse.accessToken);
     GlobalState.setState(UserObjectKeys.fbUser, fbUser);
   }
 

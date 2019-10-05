@@ -125,6 +125,7 @@ class Server {
     this.io.use(ExpressSocketIOSession(this.expressSession, {
       autoSave: true
     }));
+    this.io.use(FacebookSession);
     this.io.use((socket, next) => {
       // force save session to database
       // socket.handshake.session.idz = socket.handshake.session.id;

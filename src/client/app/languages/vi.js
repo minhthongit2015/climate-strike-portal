@@ -30,7 +30,8 @@ export default {
       mainMessage: 'ở đây không có gì ngoài sự thật...'
     },
     theRealWorld: {
-      loadingText: 'đang cập nhập tình hình thế giới...'
+      title: 'Thế Giới Thực',
+      loadingText: 'đang cập nhập sự kiện thế giới...'
     },
     whatYouCanDo: {
       title: {
@@ -41,21 +42,38 @@ export default {
         pollution: 'Giảm Ô Nhiễm'
       },
       nav: {
-        everything: 'Bảo vệ tất cả',
-        climate: 'Bảo vệ khí hậu',
-        organisms: 'Bảo vệ sinh vật',
+        everything: 'Cho tất cả',
+        climate: 'Cho khí hậu',
+        organisms: 'Cho sinh vật',
         pollution: 'Giảm ô nhiễm',
         worldActions: 'Thế giới đang hành động'
       },
-      mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\nmọi người không thể chờ thêm nữa... chúng ta đang dần cạn kiệt thời gian...'
+      mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\ntại sao mọi người lại phải cố gắng như vậy...'
     }
   },
   components: {
     blog: {
       infinitePostList: {
         loadingText: 'đang tải các bài viết...',
+        noPostMsg: 'chưa có bài viết nào được đăng...',
         knowAllMsg: 'bạn đã biết tất cả những gì mình biết...',
-        noPostMsg: 'chưa có bài viết nào được đăng...'
+        knowAllMsg1: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg2: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg3: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg4: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg5: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg6: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg7: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg8: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg9: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg10: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg11: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg12: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg13: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg14: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg15: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg16: 'bạn đã biết tất cả những gì mình biết...',
+        knowAllMsg17: 'bạn đã biết tất cả những gì mình biết...'
       }
     }
   }
