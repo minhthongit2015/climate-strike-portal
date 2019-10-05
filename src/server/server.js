@@ -20,6 +20,7 @@ const ExpressSession = require('./middleware/express-session');
 const SocketIOQuerySession = require('./middleware/io-query-session');
 const SocketIORequestParser = require('./middleware/io-request-parser');
 const FacebookSession = require('./middleware/facebook-session');
+const RegisterFacebookUser = require('./middleware/register-facebook-user');
 
 const routes = require('./routes');
 const api = require('./api');
@@ -76,6 +77,7 @@ class Server {
     this._cookieParserMiddleware();
     this._expressSessionMiddleware();
     this._facebookSessionMiddleware();
+    this._registerFacebookUserMiddleware();
     this._queryParserMiddleware();
     this._bodyParserMiddleware();
     this._socketIOMiddleware();
@@ -108,6 +110,10 @@ class Server {
     this.app.use(FacebookSession);
   }
 
+  static _registerFacebookUserMiddleware() {
+    this.app.use(RegisterFacebookUser);
+  }
+
   static _queryParserMiddleware() {
     this.app.use(
       expressQueryParser({
@@ -131,6 +137,7 @@ class Server {
       autoSave: true
     }));
     this.io.use(FacebookSession);
+    this.io.use(RegisterFacebookUser);
     this.io.use((socket, next) => {
       // force save session to database
       // socket.handshake.session.idz = socket.handshake.session.id;

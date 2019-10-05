@@ -8,7 +8,7 @@ const SecurityService = require('../../../services/Security');
 
 router.post('/', (req, res) => {
   Logger.catch(async () => {
-    SecurityService.onlyModerator(req);
+    SecurityService.onlyModOrAdmin(req);
     const post = await PostService.create(req.body);
     return res.send(new APIResponse().setData(post));
   }, { req, res });
@@ -24,6 +24,7 @@ router.get('/:postId?', (req, res) => {
 
 router.delete('/:postId', (req, res) => {
   Logger.catch(async () => {
+    SecurityService.onlyModOrAdmin(req);
     const { postId } = req.params;
     const deleteResult = await PostService.delete(postId);
     return res.send(new APIResponse().setData(deleteResult));

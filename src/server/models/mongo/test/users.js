@@ -1,11 +1,12 @@
 const { generateId } = require('./utils');
+const { UserRole } = require('../../../utils/Constants');
 
 const users = [
   {
     name: 'Trần Huyền Diệu',
     username: 'huyendieu',
     password: 'alphateam',
-    role: 'moderator',
+    role: UserRole.MODERATOR,
     socials: { facebook: '100010123869389' }
   },
   {
@@ -24,7 +25,7 @@ const users = [
     name: 'Trần Nguyễn Diễm Linh',
     username: 'linhtran',
     password: 'alphateam',
-    role: 'moderator',
+    role: UserRole.MODERATOR,
     socials: { facebook: '100011207474424' }
   },
   {
@@ -37,6 +38,7 @@ const users = [
     name: 'Trần Nguyễn Minh Thông',
     username: 'thongtran',
     password: 'alphateam',
+    role: UserRole.ADMIN,
     socials: { facebook: '948337288852312' }
   },
   {

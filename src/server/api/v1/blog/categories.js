@@ -4,10 +4,12 @@ const Logger = require('../../../services/Logger');
 const CategoryService = require('../../../services/blog/Category');
 const APIResponse = require('../../../models/api-models');
 const ImgurService = require('../../../services/thirt-party/imgur');
+const SecurityService = require('../../../services/Security');
 
 
 router.post('/', (req, res) => {
   Logger.catch(async () => {
+    SecurityService.onlyModOrAdmin(req);
     const { preview } = req.body;
     const album = await ImgurService.createAlbum();
     const img = await ImgurService.create(preview, album.body.data.deletehash);
@@ -29,6 +31,7 @@ router.get('/:categoryId?', (req, res) => {
 
 router.delete('/:categoryId', (req, res) => {
   Logger.catch(async () => {
+    SecurityService.onlyModOrAdmin(req);
     const { categoryId } = req.params;
     const deleteResult = await CategoryService.delete(categoryId);
     return res.send(new APIResponse().setData(deleteResult));

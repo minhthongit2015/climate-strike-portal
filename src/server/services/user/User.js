@@ -9,16 +9,27 @@ module.exports = class extends CRUDService {
   }
 
   static async create({
-    email, password, name, ...rest
+    email, password, name, socials, ...rest
   }) {
-    if (isBlank(email) || isBlank(password) || isBlank(name)) {
+    // eslint-disable-next-line no-bitwise
+    if ((!email) ^ (!password)) {
       return null;
     }
     const userToSave = {
-      email, password, name, ...rest
+      email, password, name, socials, ...rest
     };
-    const newUser = await User.findOne({ email })
-      .then(user => user || user.create({ userToSave })).exec();
+    const newUser = await User.findOne({
+      $or: [
+        {
+          $and: [
+            { email: { $ne: null } },
+            { email }
+          ]
+        },
+        { 'socials.facebook': socials.facebook }
+      ]
+    })
+      .then(user => user || User.create(userToSave));
     return ConverterFactory.get('user').convert(newUser);
   }
 
