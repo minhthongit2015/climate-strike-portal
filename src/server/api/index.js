@@ -5,10 +5,11 @@ const APIResponse = require('../models/api-models');
 
 router.use((req, res, next) => {
   req.api = true;
+  const route = `${Debugger.colors.green(req.method)} ${req.path}`;
   if (req.websocket) {
-    Debugger.wsRouting(req.path);
+    Debugger.wsRouting(route);
   } else {
-    Debugger.apiRouting(req.path);
+    Debugger.apiRouting(route);
   }
   next();
 });

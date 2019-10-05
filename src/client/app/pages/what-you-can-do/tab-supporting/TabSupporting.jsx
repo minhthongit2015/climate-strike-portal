@@ -3,14 +3,14 @@ import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
 import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
 import PostsModule from '../../../components/blog/posts-module/PostsModule';
-import PollutionPosts from './PollutionPosts';
+import SupportingPosts from './SupportingPosts';
 import t from '../../../languages';
 
 
-export default class TabPollution extends BasePage {
+export default class extends BasePage {
   constructor(props) {
-    super(props, t('pages.whatYouCanDo.title.pollution'));
-    this.category = ['DoForPollution'];
+    super(props, t('pages.whatYouCanDo.title.everything'));
+    this.category = ['DoSupporting'];
   }
 
   render() {
@@ -21,7 +21,7 @@ export default class TabPollution extends BasePage {
         </SectionHeader>
         <SectionBody>
           <PostsModule categories={this.category}>
-            <PollutionPosts />
+            <SupportingPosts />
           </PostsModule>
         </SectionBody>
       </Section>

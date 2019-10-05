@@ -1,20 +1,21 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import SidebarLayout from '../../layouts/sidebar-layout/SidebarLayout';
 import RouteConstants from '../../utils/RouteConstants';
 import TabWhatYouCanDo from './tab-what-you-can-do/TabWhatYouCanDo';
-import TabForEverything from './tab-everything/TabForEverything';
 import TabOrganisms from './tab-organisms/TabOrganisms';
 import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
+import TabSupporting from './tab-supporting/TabSupporting';
+import TabWorldActions from './tab-world-actions/TabWorldActions';
 import t from '../../languages';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.brand = {
-      name: t('pages.whatYouCanDo.title.main'),
+      name: t('pages.whatYouCanDo.nav.main'),
       link: RouteConstants.whatYouCanDoLink
     };
     this.tabs = [
@@ -37,16 +38,16 @@ export default class extends React.Component {
         component: TabPollution
       },
       {
-        name: t('pages.whatYouCanDo.nav.everything'),
-        path: RouteConstants.doForEverythingPath,
-        link: RouteConstants.doForEverythingLink,
-        component: TabForEverything
+        name: t('pages.whatYouCanDo.nav.supporting'),
+        path: RouteConstants.doSupportingPath,
+        link: RouteConstants.doSupportingLink,
+        component: TabSupporting
       },
       {
         name: t('pages.whatYouCanDo.nav.worldActions'),
         path: RouteConstants.worldActionsPath,
         link: RouteConstants.worldActionsLink,
-        component: TabPollution
+        component: TabWorldActions
       }
     ];
   }
@@ -58,7 +59,8 @@ export default class extends React.Component {
           {this.tabs.map(tab => (
             <Route key={tab.name} exact path={tab.path} component={tab.component} />
           ))}
-          <Route path="/" component={TabWhatYouCanDo} />
+          <Route exact path={RouteConstants.whatYouCanDoPath} component={TabWhatYouCanDo} />
+          <Redirect to={RouteConstants.whatYouCanDoLink} />
         </Switch>
       </SidebarLayout>
     );

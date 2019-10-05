@@ -18,11 +18,12 @@ export default class Auth {
   }
 
   static async fbLogin() {
-    await FbService.login();
+    const isOk = await FbService.login();
     await Promise.all([
       FbService.fetchProfile(),
       UserService.fetchUser()
     ]);
+    return isOk;
   }
 
   static async fbLogout() {

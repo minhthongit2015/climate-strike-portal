@@ -16,16 +16,16 @@ const theRealWorldLink = '/the-gioi-thuc';
 
 const whatYouCanDoPath = '/dieu-ban-co-the-lam';
 const whatYouCanDoLink = '/dieu-ban-co-the-lam';
-const doForEverythingPath = `${whatYouCanDoPath}/tat-ca`;
-const doForEverythingLink = `${whatYouCanDoPath}/tat-ca`;
+const doSupportingPath = `${whatYouCanDoPath}/ho-tro-cac-phong-trao`;
+const doSupportingLink = `${whatYouCanDoPath}/ho-tro-cac-phong-trao`;
 const doForClimatePath = `${whatYouCanDoPath}/khi-hau`;
 const doForClimateLink = `${whatYouCanDoPath}/khi-hau`;
 const doForOrganismsPath = `${whatYouCanDoPath}/sinh-vat`;
 const doForOrganismsLink = `${whatYouCanDoPath}/sinh-vat`;
-const doForPollutionPath = `${whatYouCanDoPath}/o-nhiem`;
-const doForPollutionLink = `${whatYouCanDoPath}/o-nhiem`;
-const worldActionsPath = `${whatYouCanDoPath}/the-gioi-dang-lam`;
-const worldActionsLink = `${whatYouCanDoPath}/the-gioi-dang-lam`;
+const doForPollutionPath = `${whatYouCanDoPath}/giam-o-nhiem`;
+const doForPollutionLink = `${whatYouCanDoPath}/giam-o-nhiem`;
+const worldActionsPath = `${whatYouCanDoPath}/the-gioi-dang-hanh-dong`;
+const worldActionsLink = `${whatYouCanDoPath}/the-gioi-dang-hanh-dong`;
 
 const yourQuestionPath = '/dieu-ban-muon-biet';
 const yourQuestionLink = '/dieu-ban-muon-biet';
@@ -57,14 +57,14 @@ export default {
 
   whatYouCanDoPath,
   whatYouCanDoLink,
-  doForEverythingPath,
-  doForEverythingLink,
   doForClimatePath,
   doForClimateLink,
   doForOrganismsPath,
   doForOrganismsLink,
   doForPollutionPath,
   doForPollutionLink,
+  doSupportingPath,
+  doSupportingLink,
   worldActionsPath,
   worldActionsLink,
 

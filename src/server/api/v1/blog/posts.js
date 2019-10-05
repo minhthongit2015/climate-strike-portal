@@ -3,10 +3,12 @@ const router = require('express').Router();
 const Logger = require('../../../services/Logger');
 const PostService = require('../../../services/blog/Post');
 const APIResponse = require('../../../models/api-models');
+const SecurityService = require('../../../services/Security');
 
 
 router.post('/', (req, res) => {
   Logger.catch(async () => {
+    SecurityService.onlyModerator(req);
     const post = await PostService.create(req.body);
     return res.send(new APIResponse().setData(post));
   }, { req, res });

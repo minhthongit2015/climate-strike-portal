@@ -8,23 +8,27 @@ function FacebookSession(req, res, next) {
     next = res;
   }
   Logger.catch(async () => {
-    if (req.session && !req.session.fbUser && req.headers) {
-      const accessToken = req.headers.accesstoken;
-      const fbUser = await FaceBookService.getUserByToken(accessToken);
-      if (fbUser) {
-        req.session.fbUser = fbUser;
-      }
-    }
-    if (req.session && req.session.fbUser && !req.session.user) {
-      const users = await UserService.list({
-        limit: 1,
-        where: {
-          socials: { facebook: req.session.fbUser.id }
+    try {
+      if (req.session && !req.session.fbUser && req.headers) {
+        const accessToken = req.headers.accesstoken;
+        const fbUser = await FaceBookService.getUserByToken(accessToken);
+        if (fbUser) {
+          req.session.fbUser = fbUser;
         }
-      });
-      if (users && users[0]) {
-        [req.session.user] = users;
       }
+      if (req.session && req.session.fbUser && !req.session.user) {
+        const users = await UserService.list({
+          limit: 1,
+          where: {
+            socials: { facebook: req.session.fbUser.id }
+          }
+        });
+        if (users && users[0]) {
+          [req.session.user] = users;
+        }
+      }
+    } catch (error) {
+      // Just let it get through
     }
     next();
   });

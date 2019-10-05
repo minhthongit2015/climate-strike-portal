@@ -10,14 +10,14 @@ const categories = [
   { type: 'DoForClimate', name: 'Cho khí hậu' },
   { type: 'DoForOrganisms', name: 'Cho sinh vật' },
   { type: 'DoForPollution', name: 'Giảm Ô nhiễm' },
-  { type: 'DoForEverything', name: 'Hỗ trợ phong trào' },
+  { type: 'DoSupporting', name: 'Hỗ trợ các phong trào' },
   { type: 'WorldActions', name: 'Thế giới đang hành động' },
 
   { type: 'YourQuestion', name: 'Điều bạn muốn biết?' },
-  { type: 'AskForClimate', name: 'Về khí hậu' },
-  { type: 'AskForOrganisms', name: 'Về sinh vật' },
-  { type: 'AskForPollution', name: 'Về ô nhiễm' },
-  { type: 'AskForOthers', name: 'Chủ đề khác' }
+  { type: 'AskForClimate', name: 'Hỏi về khí hậu' },
+  { type: 'AskForOrganisms', name: 'Hỏi về sinh vật' },
+  { type: 'AskForPollution', name: 'Hỏi về ô nhiễm' },
+  { type: 'AskForOthers', name: 'Hỏi chủ đề khác' }
 ];
 
 generateId(categories, 200);

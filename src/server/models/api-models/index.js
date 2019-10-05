@@ -51,7 +51,8 @@ module.exports = class {
 
   setErrorCode(code) {
     if (isNotSet(code)) return this;
-    this.error = Object.assign(this.error || {}, { code });
+    const message = '';
+    this.error = Object.assign(this.error || {}, { code, message });
     this.failed();
     return this;
   }

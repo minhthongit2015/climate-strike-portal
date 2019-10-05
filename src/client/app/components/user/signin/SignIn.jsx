@@ -52,7 +52,6 @@ class SignIn extends Component {
     return alert('Invalid email or password');
   }
 
-  // eslint-disable-next-line class-methods-use-this
   handleSigninWithFacebook() {
     this.setState({
       disabled: true

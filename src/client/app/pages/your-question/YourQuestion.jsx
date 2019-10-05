@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import SidebarLayout from '../../layouts/sidebar-layout/SidebarLayout';
 import RouteConstants from '../../utils/RouteConstants';
@@ -8,35 +8,36 @@ import TabOrganisms from './tab-organisms/TabOrganisms';
 import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
 import TabOthers from './tab-others/TabOthers';
+import t from '../../languages';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.brand = {
-      name: 'Điều Bạn Muốn Biết?',
+      name: t('pages.yourQuestion.nav.main'),
       link: RouteConstants.yourQuestionLink
     };
     this.tabs = [
       {
-        name: 'Về khí hậu',
+        name: t('pages.yourQuestion.nav.climate'),
         path: RouteConstants.askForClimatePath,
         link: RouteConstants.askForClimateLink,
         component: TabClimate
       },
       {
-        name: 'Về sinh vật',
+        name: t('pages.yourQuestion.nav.organisms'),
         path: RouteConstants.askForOrganismsPath,
         link: RouteConstants.askForOrganismsLink,
         component: TabOrganisms
       },
       {
-        name: 'Về ô nhiễm',
+        name: t('pages.yourQuestion.nav.pollution'),
         path: RouteConstants.askForPollutionPath,
         link: RouteConstants.askForPollutionLink,
         component: TabPollution
       },
       {
-        name: 'Chủ đề khác',
+        name: t('pages.yourQuestion.nav.others'),
         path: RouteConstants.askForOthersPath,
         link: RouteConstants.askForOthersPath,
         component: TabOthers
@@ -51,7 +52,8 @@ export default class extends React.Component {
           {this.tabs.map(tab => (
             <Route key={tab.name} exact path={tab.path} component={tab.component} />
           ))}
-          <Route path="/" component={TabYourQuestion} />
+          <Route exact path={RouteConstants.yourQuestionPath} component={TabYourQuestion} />
+          <Redirect to={RouteConstants.yourQuestionLink} />
         </Switch>
       </SidebarLayout>
     );
