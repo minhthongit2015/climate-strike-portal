@@ -119,7 +119,7 @@ class SignIn extends Component {
           <img
             alt="(^_^)!"
             src={UserService.fbAvatarSrc}
-            title={fbProfile ? `Hi, ${fbProfile.name}!` : ''}
+            title={fbProfile ? `Hi ${fbProfile.short_name}!` : ''}
             width="100%"
             height="100%"
             className="img-fluid z-depth-1 rounded-circle"

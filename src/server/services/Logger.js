@@ -41,7 +41,7 @@ Logger.catch = async function _catch(func, handler = () => {}) {
       const { req, res } = handler;
       if (req && req.api) {
         delete error.stack; // No stack will be send to the client
-        res.status(400).send(new ApiResponse().setError(error));
+        res.status(error.code || 400).send(new ApiResponse().setError(error));
       }
     }
   }

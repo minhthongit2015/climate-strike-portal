@@ -3,6 +3,8 @@
 $climate-color: #ffb3b3;
 $organisms-color: #fbb185;
 $pollution-color: #ad85fb;
+$others-color: #81e0b4;
+$world-actions-color: #8eabff;
 
 .post {
   box-shadow: 0 .125em .25em rgba(0,0,0,.075);
@@ -19,16 +21,24 @@ $pollution-color: #ad85fb;
     background-color: $climate-color;
     color: #fff;
 
-    &.Climate {
+    &.Climate, &.DoForClimate, &.AskForClimate {
       background-color: $climate-color;
       color: #fff;
     }
-    &.Organisms {
+    &.Organisms, &.DoForOrganisms, &.AskForOrganisms {
       background-color: $organisms-color;
       color: #fff;
     }
-    &.Pollution {
+    &.Pollution, &.DoForPollution, &.AskForPollution {
       background-color: $pollution-color;
+      color: #fff;
+    }
+    &.DoSupporting, &.AskForOthers {
+      background-color: $others-color;
+      color: #fff;
+    }
+    &.WorldActions {
+      background-color: $world-actions-color;
       color: #fff;
     }
   }
@@ -38,14 +48,27 @@ $pollution-color: #ad85fb;
   }
 
   &__preview {
-    &.Climate {
-      border-top: 4px solid $climate-color;
+    &.Climate, &.DoForClimate, &.AskForClimate,
+    &.Organisms, &.DoForOrganisms, &.AskForOrganisms,
+    &.Pollution, &.DoForPollution, &.AskForPollution,
+    &.DoSupporting, &.AskForOthers,
+    &.WorldActions {
+      border-top: 4px solid #fff;
     }
-    &.Organisms {
-      border-top: 4px solid $organisms-color;
+    &.Climate, &.DoForClimate, &.AskForClimate {
+      border-top-color: $climate-color;
     }
-    &.Pollution {
-      border-top: 4px solid $pollution-color;
+    &.Organisms, &.DoForOrganisms, &.AskForOrganisms {
+      border-top-color: $organisms-color;
+    }
+    &.Pollution, &.DoForPollution, &.AskForPollution {
+      border-top-color: $pollution-color;
+    }
+    &.DoSupporting, &.AskForOthers {
+      border-top-color: $others-color;
+    }
+    &.WorldActions {
+      border-top-color: $world-actions-color;
     }
   }
 

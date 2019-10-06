@@ -9,6 +9,7 @@ const PostsSecurityService = require('../../../services/security/PostsSecurity')
 router.post('/', (req, res) => {
   Logger.catch(async () => {
     await PostsSecurityService.onlyQuestionOrModOrAdmin(req);
+    req.author = req.session.user;
     const newPost = await PostService.create(req.body);
     return res.send(new APIResponse().setData(newPost));
   }, { req, res });
@@ -24,7 +25,7 @@ router.get('/:postId?', (req, res) => {
 
 router.delete('/:postId', (req, res) => {
   Logger.catch(async () => {
-    await PostsSecurityService.onlyQuestionOrModOrAdmin(req);
+    PostsSecurityService.onlyModOrAdmin(req);
     const { postId } = req.params;
     const deleteResult = await PostService.delete(postId);
     return res.send(new APIResponse().setData(deleteResult));

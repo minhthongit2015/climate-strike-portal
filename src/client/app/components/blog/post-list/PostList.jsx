@@ -77,7 +77,10 @@ export default class PostList extends React.Component {
   static smartSize(image, post) {
     const contentLength = post.title.length + post.summary.length;
     if (image == null) {
-      if (contentLength > 200) {
+      if (contentLength > 70) {
+        return 'w3';
+      }
+      if (contentLength > 30) {
         return 'w2';
       }
       return 'w1';

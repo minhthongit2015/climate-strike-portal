@@ -4,6 +4,16 @@ import superws from './superws';
 import Config from '../config';
 
 export default class {
+  static resolveAgentResponse(agent) {
+    return agent.catch((res) => {
+      const { error } = res.response.body;
+      const newError = new Error(error.message);
+      Object.assign(newError, error);
+      throw newError;
+    })
+      .then(res => res.body);
+  }
+
   static mapUrl(url) {
     if (url.startsWith('/')) {
       return `${Config.httpEndpoint}${url}`;
@@ -37,8 +47,10 @@ export default class {
   }
 
   static async agentGet(url) {
-    return superagent.get(this.mapUrl(url)).withCredentials()
-      .set('AccessToken', this.accessToken).then(res => res.body);
+    return this.resolveAgentResponse(
+      superagent.get(this.mapUrl(url)).withCredentials()
+        .set('AccessToken', this.accessToken)
+    );
   }
 
   static async post(url, body) {
@@ -47,9 +59,10 @@ export default class {
   }
 
   static async agentPost(url, body) {
-    return superagent.post(this.mapUrl(url)).withCredentials()
-      .set('AccessToken', this.accessToken).send(body)
-      .then(res => res.body);
+    return this.resolveAgentResponse(
+      superagent.post(this.mapUrl(url)).withCredentials()
+        .set('AccessToken', this.accessToken).send(body)
+    );
   }
 
   static async put(url, body) {
@@ -58,9 +71,10 @@ export default class {
   }
 
   static async agentPut(url, body) {
-    return superagent.put(this.mapUrl(url)).withCredentials()
-      .set('AccessToken', this.accessToken).send(body)
-      .then(res => res.body);
+    return this.resolveAgentResponse(
+      superagent.put(this.mapUrl(url)).withCredentials()
+        .set('AccessToken', this.accessToken).send(body)
+    );
   }
 
   static async patch(url, body) {
@@ -69,9 +83,10 @@ export default class {
   }
 
   static async agentPatch(url, body) {
-    return superagent.patch(this.mapUrl(url)).withCredentials()
-      .set('AccessToken', this.accessToken).send(body)
-      .then(res => res.body);
+    return this.resolveAgentResponse(
+      superagent.patch(this.mapUrl(url)).withCredentials()
+        .set('AccessToken', this.accessToken).send(body)
+    );
   }
 
   static async delete(url) {
@@ -80,7 +95,9 @@ export default class {
   }
 
   static async agentDelete(url) {
-    return superagent.delete(this.mapUrl(url)).withCredentials()
-      .set('AccessToken', this.accessToken).then(res => res.body);
+    return this.resolveAgentResponse(
+      superagent.delete(this.mapUrl(url)).withCredentials()
+        .set('AccessToken', this.accessToken)
+    );
   }
 }

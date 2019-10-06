@@ -4,6 +4,7 @@ import {
   Card, CardHeader, CardBody, CardFooter, MDBCardImage,
   MDBPopover, MDBPopoverBody
 } from 'mdbreact';
+import classnames from 'classnames';
 import './Post.scss';
 import TimeAgo from '../../utils/time-ago/TimeAgo';
 
@@ -45,9 +46,9 @@ export default class extends React.Component {
             </div>
           </MDBPopoverBody>
         </MDBPopover>
-        <CardBody>
+        <CardBody className={classnames({ 'p-0': !preview && !summary })}>
           {preview && <div className="post__title"><b>{title}</b></div>}
-          <div className="post__summary">{summary}</div>
+          {summary && <div className="post__summary">{summary}</div>}
         </CardBody>
         <CardFooter>
           <TimeAgo time={createdAt} />

@@ -17,6 +17,9 @@ module.exports = class extends SecurityService {
     if (!this.onlyValidPost(req, throwError)) {
       return false;
     }
+    if (this.onlyModOrAdmin(req, false)) {
+      return true;
+    }
     const post = req.body;
     const yourQuestionCategory = await CategoryService.first({
       where: { type: 'YourQuestion' }
@@ -34,6 +37,6 @@ module.exports = class extends SecurityService {
     if (forbiddenCategories.filter(cat => cat).length > 0) {
       return errorOrFalse(noStack(HttpErrors.Unauthorized()), throwError);
     }
-    return this.onlyModOrAdmin(req, false);
+    return true;
   }
 };

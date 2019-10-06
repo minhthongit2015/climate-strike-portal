@@ -73,7 +73,9 @@ export default class {
       return null;
     }
     return new Promise((resolve, reject) => this.FB.api(
-      UserService.fbUserId,
+      UserService.fbUserId, {
+        fields: 'first_name,last_name,name,short_name,friends'
+      },
       (fbProfileResult) => {
         this.resolveFbProfileResult(fbProfileResult, resolve, reject);
       }

@@ -64,15 +64,15 @@ export default class extends React.Component {
       postData.status = 'draft';
     }
     this.setLoadingState(true);
-    superrequest.post('/api/v1/blog/posts', postData)
+    superrequest.agentPost('/api/v1/blog/posts', postData)
       .then((res) => {
         if (res && res.ok) {
           this.dispatchPostPostedEvent(res.data);
           this.resetForm();
         }
       })
-      .catch((res) => {
-        alert(`Xảy ra lỗi trong quá trình đăng bài! Xin vui lòng thử lại!\r\nChi tiết: "${res.error.code} - ${res.error.message}"`);
+      .catch((error) => {
+        alert(`Xảy ra lỗi trong quá trình đăng bài! Xin vui lòng thử lại!\r\nChi tiết: "${error.code} - ${error.message}"`);
       })
       .finally(() => {
         this.setLoadingState(false);
