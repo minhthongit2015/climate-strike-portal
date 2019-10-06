@@ -9,7 +9,7 @@ import t from '../../../languages';
 
 export default class extends BasePage {
   constructor(props) {
-    super(props, t('pages.yourQuestion.title.orthers'));
+    super(props, t('pages.yourQuestion.title.others'));
     this.category = ['AskForOthers'];
   }
 

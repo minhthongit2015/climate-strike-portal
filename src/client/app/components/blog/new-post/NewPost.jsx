@@ -60,8 +60,11 @@ export default class extends React.Component {
       return;
     }
     const isDraft = document.activeElement.value === 'draft';
+    if (isDraft) {
+      postData.status = 'draft';
+    }
     this.setLoadingState(true);
-    superrequest.post(`/api/v1/blog/posts?draft=${isDraft}`, postData)
+    superrequest.post('/api/v1/blog/posts', postData)
       .then((res) => {
         if (res && res.ok) {
           this.dispatchPostPostedEvent(res.data);

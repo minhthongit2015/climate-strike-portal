@@ -6,12 +6,14 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.category = 'YourQuestion';
+    this.innerRef = React.createRef();
   }
 
   render() {
     return (
       <InfinitePostList
         {...this.props}
+        ref={this.innerRef}
         category={this.category}
       />
     );

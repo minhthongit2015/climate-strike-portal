@@ -1,3 +1,4 @@
+const HttpErrors = require('http-errors');
 const { isNotSet } = require('../../utils');
 
 const defaultError = {
@@ -12,6 +13,10 @@ function isDefaultError(error) {
 
 
 module.exports = class {
+  static get throwError() {
+    return HttpErrors;
+  }
+
   constructor(opts = {
     error: defaultError,
     data: undefined

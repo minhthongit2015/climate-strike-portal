@@ -42,9 +42,15 @@ module.exports = class CRUDService {
     return ConverterFactory.get(this.model.modelName).convert(doc);
   }
 
+  static async first(opts = ApiHelper.listParams) {
+    opts.limit = 1;
+    const foundDocs = await this.list(opts);
+    return ConverterFactory.get(this.model.modelName).convert(foundDocs[0]);
+  }
+
   static async list(opts = ApiHelper.listParams) {
     const listOptions = await this.resolveListOptions(opts);
-    if (!listOptions) {
+    if (!listOptions) { // null mean that is have some errors
       return [];
     }
     let query = ApiHelper.findWithModel(this.model, listOptions);
