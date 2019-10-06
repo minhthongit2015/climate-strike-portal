@@ -9,14 +9,13 @@ function FacebookSession(req, res, next) {
   }
   Logger.catch(async () => {
     try {
-      if (req.session && !req.session.fbUser && req.headers) {
-        const accessToken = req.headers.accesstoken;
-        const fbUser = await FaceBookService.getUserByToken(accessToken);
+      if (req.session && !req.session.fbUser && req.headers && req.headers.accesstoken) {
+        const fbUser = await FaceBookService.getUserByToken(req.headers.accesstoken);
         if (fbUser) {
           req.session.fbUser = fbUser;
         }
       }
-      if (req.session && req.session.fbUser && !req.session.user) {
+      if (req.session && !req.session.user && req.session.fbUser) {
         const users = await UserService.list({
           limit: 1,
           where: {

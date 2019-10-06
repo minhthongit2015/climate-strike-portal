@@ -18,8 +18,9 @@ export default class InfinitePostList extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchPosts();
     this._ismounted = true;
+    this.page = 1;
+    this.fetchAllPosts();
   }
 
   componentWillUnmount() {
@@ -27,7 +28,22 @@ export default class InfinitePostList extends React.Component {
   }
 
   refresh() {
-    this.fetchPosts();
+    this.fetchAllPosts();
+  }
+
+  async fetchAllPosts() {
+    const { category, postsPerPage = 4 } = this.props;
+    const limit = (this.page + 1) * postsPerPage;
+    const offset = 0;
+
+    return superrequest.get(`/api/v1/blog/posts?category=${category}&limit=${limit}&offset=${offset}`)
+      .then((res) => {
+        this.setState({
+          posts: []
+        }, () => {
+          this.resolvePosts(res, this.page, offset, limit);
+        });
+      });
   }
 
   async fetchPosts() {
@@ -46,21 +62,26 @@ export default class InfinitePostList extends React.Component {
           }
           return;
         }
-        if (this.state.hasMore) {
-          this.page++;
-        }
-        if (res.data.length > 0) {
-          const newPosts = res.data.filter(post => this.state.posts.every(p => p._id !== post._id));
-          this.setState(prevState => ({
-            posts: prevState.posts.concat(newPosts),
-            hasMore: res.data.length >= limit
-          }));
-        } else {
-          this.setState({
-            hasMore: false
-          });
-        }
+        this.resolvePosts(res, this.page, offset, limit);
       });
+  }
+
+  resolvePosts(res, page, offset, limit) {
+    const isStillHasMore = res.data.length >= limit;
+    if (isStillHasMore) {
+      this.page++;
+    }
+    if (res.data.length > 0) {
+      const newPosts = res.data.filter(post => this.state.posts.every(p => p._id !== post._id));
+      this.setState(prevState => ({
+        posts: prevState.posts.concat(newPosts),
+        hasMore: isStillHasMore
+      }));
+    } else {
+      this.setState({
+        hasMore: isStillHasMore
+      });
+    }
   }
 
   renderLoading() {

@@ -20,9 +20,7 @@ export default class TabPollution extends BasePage {
           <DeepMessage>{t('pages.whatYouCanDo.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule categories={this.category}>
-            <WorldActionsPosts />
-          </PostsModule>
+          <PostsModule categories={this.category} PostList={WorldActionsPosts} />
         </SectionBody>
       </Section>
     );

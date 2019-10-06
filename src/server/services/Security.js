@@ -3,6 +3,7 @@ const { UserRole } = require('../utils/Constants');
 
 function noStack(error) {
   delete error.stack;
+  error.code = error.statusCode;
   return error;
 }
 

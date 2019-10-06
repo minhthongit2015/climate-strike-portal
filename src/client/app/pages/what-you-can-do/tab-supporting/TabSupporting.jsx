@@ -20,9 +20,7 @@ export default class extends BasePage {
           <DeepMessage>{t('pages.whatYouCanDo.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule categories={this.category}>
-            <SupportingPosts />
-          </PostsModule>
+          <PostsModule categories={this.category} PostList={SupportingPosts} />
         </SectionBody>
       </Section>
     );

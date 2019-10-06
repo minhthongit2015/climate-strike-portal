@@ -20,9 +20,7 @@ export default class TabEarthPicture extends BasePage {
           <DeepMessage>{t('pages.earthPicture.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule rootCategory={this.category}>
-            <EarthPicturePosts />
-          </PostsModule>
+          <PostsModule rootCategory={this.category} PostList={EarthPicturePosts} />
         </SectionBody>
       </Section>
     );

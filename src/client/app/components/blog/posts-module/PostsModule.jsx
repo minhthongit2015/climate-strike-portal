@@ -6,16 +6,21 @@ import UserService from '../../../services/UserService';
 export default class extends React.Component {
   constructor(props) {
     super(props);
+    this.postListRef = React.createRef();
     this.handlePostPosted = this.handlePostPosted.bind(this);
     UserService.useUserState(this);
   }
 
   handlePostPosted() {
-    this.forceUpdate();
+    if (this.postListRef.current.innerRef.current.refresh) {
+      this.postListRef.current.innerRef.current.refresh();
+    }
   }
 
   render() {
-    const { children, categories, rootCategory } = this.props;
+    const {
+      categories, rootCategory, PostList, ...restProps
+    } = this.props;
     const { user } = UserService;
 
     return (
@@ -27,7 +32,7 @@ export default class extends React.Component {
             categories={categories}
           />
         )}
-        {children}
+        <PostList ref={this.postListRef} {...restProps} />
       </React.Fragment>
     );
   }

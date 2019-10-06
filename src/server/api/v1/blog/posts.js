@@ -9,6 +9,10 @@ const SecurityService = require('../../../services/Security');
 router.post('/', (req, res) => {
   Logger.catch(async () => {
     SecurityService.onlyModOrAdmin(req);
+    const { draft } = req.query;
+    if (draft) {
+      req.body.status = 'draft';
+    }
     const post = await PostService.create(req.body);
     return res.send(new APIResponse().setData(post));
   }, { req, res });

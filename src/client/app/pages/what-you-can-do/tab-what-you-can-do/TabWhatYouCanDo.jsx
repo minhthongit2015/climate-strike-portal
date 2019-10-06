@@ -20,9 +20,7 @@ export default class TabWhatYouCanDo extends BasePage {
           <DeepMessage>{t('pages.whatYouCanDo.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule rootCategory={this.category}>
-            <WhatYouCanDoPosts />
-          </PostsModule>
+          <PostsModule rootCategory={this.category} PostList={WhatYouCanDoPosts} />
         </SectionBody>
       </Section>
     );

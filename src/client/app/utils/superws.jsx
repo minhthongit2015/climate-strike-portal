@@ -24,7 +24,7 @@ export default class SuperWebsocket {
 
   static async emit(...args) {
     if (!this.connected) {
-      return Promise.reject(new Error('Websocket Error: Lost connection!'));
+      return Promise.reject(new Error('Connection Error: Lost connection!'));
     }
     return new Promise((resolve, reject) => {
       this.socket.emit(...args, (res) => {

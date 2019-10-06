@@ -7,8 +7,8 @@ import RouteConstants from '../../utils/RouteConstants';
 import {
   // MyGardenSrc,
   AICloudSrc,
-  SmileCitySrc,
-  PlanetEarth
+  IconWhatYouCanDo,
+  IconEarthPicture
 } from '../../../assets/icons';
 
 import NavIconLink from '../../components/utils/nav-icon-link/NavIconLink';
@@ -22,7 +22,7 @@ export default class HomePage extends BasePage {
         type: 'nav',
         link: RouteConstants.earthPictureLink,
         text: t('pages.home.nav.earthPicture'),
-        icon: PlanetEarth
+        icon: IconEarthPicture
       },
       // {
       //   type: 'nav',
@@ -34,7 +34,7 @@ export default class HomePage extends BasePage {
         type: 'nav',
         link: RouteConstants.whatYouCanDoLink,
         text: t('pages.home.nav.whatYouCanDo'),
-        iconSrc: SmileCitySrc
+        icon: IconWhatYouCanDo
       },
       {
         type: 'nav',

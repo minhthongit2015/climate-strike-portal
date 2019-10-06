@@ -51,7 +51,7 @@ export default {
         supporting: 'Hỗ trợ các phong trào',
         worldActions: 'Thế giới đang hành động'
       },
-      mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\ntại sao mọi người lại phải cố gắng như vậy...'
+      mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\nsao mọi người lại phải cố gắng như vậy...'
     },
     yourQuestion: {
       title: {

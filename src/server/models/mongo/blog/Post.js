@@ -10,6 +10,7 @@ const PostSchema = new mongoose.Schema({
   content: String,
   summary: String,
   preview: String,
+  status: String, // draft, pending, approved, scheduled, published, archived
   author: [{ type: ObjectId, ref: 'User' }],
   vote: {
     type: Number,

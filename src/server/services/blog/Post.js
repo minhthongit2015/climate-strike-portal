@@ -4,6 +4,7 @@ const CRUDService = require('../CRUDService');
 const CategoryService = require('./Category');
 const ApiHelper = require('../../utils/ApiHelper');
 const ImgurService = require('../../services/thirt-party/imgur');
+const { PostStatus } = require('../../utils/Constants');
 
 module.exports = class extends CRUDService {
   static get model() {
@@ -15,6 +16,9 @@ module.exports = class extends CRUDService {
   }
 
   static async resolveListOptions(opts = ApiHelper.listParams) {
+    opts.where = {
+      status: PostStatus.published
+    };
     if (opts.category) {
       const parentCategory = await CategoryService.list({
         limit: 1,
@@ -30,13 +34,13 @@ module.exports = class extends CRUDService {
         ...parentCategory[0].children.map(category => category._id)
       ];
       if (categories && typeof categories === 'object' && categories.length > 0) {
-        opts.where = {
+        opts.where = Object.assign(opts.where || {}, {
           categories: {
             $elemMatch: {
               $in: categories
             }
           }
-        };
+        });
       }
     }
     return opts;
@@ -46,6 +50,7 @@ module.exports = class extends CRUDService {
     if (!doc.categories || doc.categories.length <= 0) {
       return null;
     }
+    doc.status = doc.status || PostStatus.published;
     doc.categories = await CategoryService.list({
       where: {
         type: {

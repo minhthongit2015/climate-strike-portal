@@ -36,6 +36,7 @@ export default class extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.resetForm = this.resetForm.bind(this);
 
     this.state = {
       title: '',
@@ -62,10 +63,15 @@ export default class extends React.Component {
     this.setLoadingState(true);
     superrequest.post(`/api/v1/blog/posts?draft=${isDraft}`, postData)
       .then((res) => {
-        if (res.ok) {
-          this.dispatchPostPosted(res.data);
+        if (res && res.ok) {
+          this.dispatchPostPostedEvent(res.data);
+          this.resetForm();
         }
-      }).finally(() => {
+      })
+      .catch((res) => {
+        alert(`Xảy ra lỗi trong quá trình đăng bài! Xin vui lòng thử lại!\r\nChi tiết: "${res.error.code} - ${res.error.message}"`);
+      })
+      .finally(() => {
         this.setLoadingState(false);
       });
   }
@@ -107,7 +113,7 @@ export default class extends React.Component {
     }));
   }
 
-  dispatchPostPosted(postedPost) {
+  dispatchPostPostedEvent(postedPost) {
     if (this.props.onPosted) {
       this.props.onPosted(postedPost);
     }
@@ -193,7 +199,7 @@ export default class extends React.Component {
             <Composer ref={this.contentRef} />
             <Row>
               <Col className="text-right">
-                <Button type="button" size="sm" color="none">Bỏ</Button>
+                <Button type="button" size="sm" color="none" onClick={this.resetForm}>Bỏ</Button>
                 <Button type="submit" name="submit" value="draft" size="sm" color="none">Lưu bản nháp</Button>
                 <Button type="submit" size="sm">Đăng bài</Button>
               </Col>
