@@ -1,6 +1,6 @@
 
 const Converter = require('./converter');
-const UserConverter = require('./user-converter');
+const UserConverter = require('./UserConverter');
 const GardenConverter = require('./garden-converter');
 const UserGardenConverter = require('./user-garden-converter');
 const EnvDatasetConverter = require('./env-dataset');

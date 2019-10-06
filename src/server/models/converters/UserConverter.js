@@ -6,7 +6,8 @@ module.exports = class extends Converter {
     const rawUser = JSON.parse(JSON.stringify(object));
     return {
       name: rawUser.name,
-      socials: rawUser.socials
+      socials: rawUser.socials,
+      role: rawUser.role
     };
   }
 };
