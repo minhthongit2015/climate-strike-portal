@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import {
   MDBModal, MDBModalBody,
   MDBBtn, MDBInput,
-  MDBWaves
+  MDBWaves,
+  MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
 } from 'mdbreact';
 import './SignIn.scss';
 
 import UserService from '../../../services/UserService';
 import AuthService from '../../../services/Auth';
+import t from '../../../languages';
 
 
 class SignIn extends Component {
@@ -103,42 +105,50 @@ class SignIn extends Component {
     });
   }
 
+  renderAvatar() {
+    const { disabled } = this.state;
+    const { fbProfile } = UserService;
+    return (
+      <MDBDropdown dropleft>
+        <MDBDropdownToggle
+          floating
+          color="link"
+          className="p-0 btn-paper rounded-circle shadow-style highlight-style"
+          style={{ width: '35px', height: '35px' }}
+        >
+          <img
+            alt="(^_^)!"
+            src={UserService.fbAvatarSrc}
+            title={fbProfile ? `Hi, ${fbProfile.name}!` : ''}
+            width="100%"
+            height="100%"
+            className="img-fluid z-depth-1 rounded-circle"
+          />
+        </MDBDropdownToggle>
+        <MDBDropdownMenu basic>
+          <MDBDropdownItem
+            disabled={disabled}
+            onClick={this.handleSignOut}
+          >{t('components.user.logout')}
+          </MDBDropdownItem>
+          {/* <MDBDropdownItem divider />
+          <MDBDropdownItem>Separated link</MDBDropdownItem> */}
+        </MDBDropdownMenu>
+      </MDBDropdown>
+    );
+  }
+
   render() {
     console.log('render "Comps/signin/SignIn.jsx"');
     const {
       isShowLoginModal, email, password, disabled
     } = this.state;
-    const { fbUser, fbProfile } = UserService;
+    const { fbUser } = UserService;
 
     return (
       <React.Fragment>
         {fbUser
-          ? (
-            // <MDBBtn
-            //   onClick={this.handleSignOut}
-            //   color="none"
-            //   className="px-2 py-1 my-2 btn-paper quiet-style"
-            //   disabled={disabled}
-            // >
-            //   đăng xuất
-            // </MDBBtn>
-            <MDBBtn
-              floating
-              color="link"
-              className="p-0 btn-paper rounded-circle shadow-style highlight-style"
-              style={{ width: '35px', height: '35px' }}
-              onClick={this.handleSignOut}
-            >
-              <img
-                alt="(^_^)!"
-                src={UserService.fbAvatarSrc}
-                title={fbProfile ? `Hi, ${fbProfile.name}!` : ''}
-                width="100%"
-                height="100%"
-                className="img-fluid z-depth-1 rounded-circle"
-              />
-            </MDBBtn>
-          )
+          ? this.renderAvatar()
           : (
             <MDBBtn
               onClick={this.open}
@@ -146,7 +156,7 @@ class SignIn extends Component {
               className="px-2 py-1 my-2 shadow-none"
               disabled={disabled}
             >
-              ❝ Đăng Nhập ❞
+              {t('components.user.login')}
             </MDBBtn>
           )}
         <MDBModal

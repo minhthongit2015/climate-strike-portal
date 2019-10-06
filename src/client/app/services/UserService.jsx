@@ -9,6 +9,10 @@ export const UserObjectKeys = {
 };
 
 export default class UserService {
+  static get user() { return this._user || GlobalState.user; }
+
+  static set user(user) { this._user = user; }
+
   static async fetchUser() {
     if (!this.fbUser) {
       return this.clearUser();
@@ -69,6 +73,10 @@ export default class UserService {
 
   // ---
 
+  static get fbUser() { return this._fbUser || GlobalState.fbUser; }
+
+  static set fbUser(fbUser) { this._fbUser = fbUser; }
+
   static setFbUser(fbUser) {
     this.fbUser = fbUser;
     superrequest.setAccessToken(fbUser.authResponse.accessToken);
@@ -88,6 +96,10 @@ export default class UserService {
   }
 
   // ---
+
+  static get fbProfile() { return this._fbProfile || GlobalState.fbProfile; }
+
+  static set fbProfile(fbProfile) { this._fbProfile = fbProfile; }
 
   static setFbProfile(fbProfile) {
     this.fbProfile = fbProfile;

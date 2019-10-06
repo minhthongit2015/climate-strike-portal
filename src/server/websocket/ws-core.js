@@ -8,6 +8,10 @@ module.exports = class WebsocketManagerCore {
   /**
    * alias of `.wsServer`
    */
+  static get app() {
+    return websocketCoreApp;
+  }
+
   static get io() {
     return this.wsServer;
   }
@@ -76,10 +80,15 @@ module.exports = class WebsocketManagerCore {
   }
 
   static _buildRequest(client, originalUrl, parsedRequest) {
+    const headers = {};
+    Object.entries(parsedRequest.headers).forEach(([key, value]) => {
+      headers[key.toLowerCase()] = value;
+    });
     return {
       method: parsedRequest.method,
       url: parsedRequest.url,
       body: parsedRequest.body,
+      headers,
       socket: client,
       session: client.handshake.session || {},
       sessionID: client.handshake.sessionID,

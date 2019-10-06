@@ -5,7 +5,7 @@
     max-width: 144px;
     height: 100%;
     padding: 10px;
-    overflow: hidden;
+    overflow-x: visible;
     transition: all .3s ease-in-out;
 
     &.hide {

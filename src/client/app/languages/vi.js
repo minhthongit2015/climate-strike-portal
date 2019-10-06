@@ -95,6 +95,10 @@ export default {
         knowAllMsg16: 'bạn đã biết tất cả những gì mình biết...',
         knowAllMsg17: 'bạn đã biết tất cả những gì mình biết...'
       }
+    },
+    user: {
+      login: '❝ Đăng Nhập ❞',
+      logout: 'đăng xuất'
     }
   }
 };

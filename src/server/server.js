@@ -131,18 +131,21 @@ class Server {
   }
 
   static _socketIOMiddleware() {
+    // One time middlewares
     this.io.use(SocketIORequestParser);
     this.io.use(SocketIOQuerySession);
     this.io.use(ExpressSocketIOSession(this.expressSession, {
       autoSave: true
     }));
-    this.io.use(FacebookSession);
-    this.io.use(RegisterFacebookUser);
-    this.io.use((socket, next) => {
-      // force save session to database
-      // socket.handshake.session.idz = socket.handshake.session.id;
-      next();
+
+    // Every request middlewares
+    WebsocketManager.app.use((req, res, next) => {
+      req.session.reload(() => {
+        next();
+      });
     });
+    WebsocketManager.app.use(FacebookSession);
+    WebsocketManager.app.use(RegisterFacebookUser);
   }
 
   static setupRouting() {

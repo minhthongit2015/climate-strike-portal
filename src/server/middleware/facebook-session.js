@@ -8,11 +8,13 @@ function FacebookSession(req, res, next) {
     next = res;
   }
   Logger.catch(async () => {
+    let hasChange = false;
     try {
       if (req.session && !req.session.fbUser && req.headers && req.headers.accesstoken) {
         const fbUser = await FaceBookService.getUserByToken(req.headers.accesstoken);
         if (fbUser) {
           req.session.fbUser = fbUser;
+          hasChange = true;
         }
       }
       if (req.session && !req.session.user && req.session.fbUser) {
@@ -24,12 +26,19 @@ function FacebookSession(req, res, next) {
         });
         if (users && users[0]) {
           [req.session.user] = users;
+          hasChange = true;
         }
       }
     } catch (error) {
       // Just let it get through
     }
-    next();
+    if (hasChange) {
+      req.session.save(() => {
+        next();
+      });
+    } else {
+      next();
+    }
   });
 }
 
