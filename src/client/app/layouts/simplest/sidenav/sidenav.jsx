@@ -6,9 +6,9 @@ import SignIn from '../../../components/user/signin/SignIn';
 
 import RouteConstants from '../../../utils/RouteConstants';
 import {
-  AICloudSrc,
-  // MyGardenSrc,
-  SmileCitySrc
+  IconEarthPicture,
+  IconWhatYouCanDo,
+  IconYourQuestion
 } from '../../../../assets/icons';
 
 import NavIconLink from '../../../components/utils/nav-icon-link/NavIconLink';
@@ -22,7 +22,7 @@ export default class SideNav extends Component {
         type: 'nav',
         link: RouteConstants.earthPictureLink,
         text: 'Bức Tranh\r\nTrái Đất',
-        iconSrc: AICloudSrc
+        icon: IconEarthPicture
       },
       // {
       //   type: 'nav',
@@ -34,13 +34,13 @@ export default class SideNav extends Component {
         type: 'nav',
         link: RouteConstants.whatYouCanDoLink,
         text: 'Điều Bạn\r\nCó Thể Làm',
-        iconSrc: SmileCitySrc
+        icon: IconWhatYouCanDo
       },
       {
         type: 'nav',
         link: RouteConstants.yourQuestionLink,
         text: 'Điều Bạn\r\nMuốn Biết?',
-        iconSrc: AICloudSrc
+        icon: IconYourQuestion
       }
     ];
   }
