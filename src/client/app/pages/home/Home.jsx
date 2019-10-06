@@ -5,10 +5,9 @@ import './Home.scss';
 import UserService from '../../services/UserService';
 import RouteConstants from '../../utils/RouteConstants';
 import {
-  // MyGardenSrc,
-  AICloudSrc,
+  IconEarthPicture,
   IconWhatYouCanDo,
-  IconEarthPicture
+  IconYourQuestion
 } from '../../../assets/icons';
 
 import NavIconLink from '../../components/utils/nav-icon-link/NavIconLink';
@@ -40,7 +39,7 @@ export default class HomePage extends BasePage {
         type: 'nav',
         link: RouteConstants.yourQuestionLink,
         text: t('pages.home.nav.yourQuestion'),
-        iconSrc: AICloudSrc
+        icon: IconYourQuestion
       }
     ];
 

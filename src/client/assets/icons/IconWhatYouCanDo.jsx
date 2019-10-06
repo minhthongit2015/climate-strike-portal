@@ -45,7 +45,6 @@ export default props => (
         <stop offset="1" stopColor="#e4e4e4" />
       </linearGradient>
     </defs>
-    <title>Asset 2</title>
     <g style={{ isolation: 'isolate' }}>
       <g id="425269fe-3e28-45f5-821e-4b2ecef9bb61" data-name="Layer 2">
         <g id="a92db6da-633c-482f-9205-3676b1be91bf" data-name="Layer 2">

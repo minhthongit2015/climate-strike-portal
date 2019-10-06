@@ -16,6 +16,7 @@ export const SmileCityIcon = props => <img src={SmileCitySrc} alt="Smile City" d
 export { default as IconPlanetEarth } from './icons/IconPlanetEarth';
 export { default as IconEarthPicture } from './icons/IconEarthPicture';
 export { default as IconWhatYouCanDo } from './icons/IconWhatYouCanDo';
+export { default as IconYourQuestion } from './icons/IconYourQuestion';
 
 export default {
   AICloudIcon,
