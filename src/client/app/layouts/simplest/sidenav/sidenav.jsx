@@ -6,7 +6,7 @@ import SignIn from '../../../components/user/signin/SignIn';
 
 import RouteConstants from '../../../utils/RouteConstants';
 import {
-  IconEarthPicture,
+  IconEarthPictureStatic,
   IconWhatYouCanDo,
   IconYourQuestion
 } from '../../../../assets/icons';
@@ -22,7 +22,7 @@ export default class SideNav extends Component {
         type: 'nav',
         link: RouteConstants.earthPictureLink,
         text: 'Bức Tranh\r\nTrái Đất',
-        icon: IconEarthPicture
+        icon: IconEarthPictureStatic
       },
       // {
       //   type: 'nav',

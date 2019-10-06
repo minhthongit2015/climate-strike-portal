@@ -18,13 +18,18 @@ export default (props) => {
     setMy(dy);
   }
 
+  const customProps = {};
+  if (!props.static) {
+    customProps.onMouseMove = onMouseMove;
+  }
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       // xmlns:xlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 1118 918"
       {...props}
-      onMouseMove={onMouseMove}
+      {...customProps}
     >
       <defs>
         <linearGradient id="5cf732d4-1544-47c0-bcda-6757cd5293a4" x1="262.62" y1="262.15" x2="880.76" y2="672.71" gradientUnits="userSpaceOnUse">
