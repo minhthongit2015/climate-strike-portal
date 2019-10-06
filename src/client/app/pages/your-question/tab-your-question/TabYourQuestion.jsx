@@ -20,7 +20,7 @@ export default class TabEarthPicture extends BasePage {
           <DeepMessage>{t('pages.yourQuestion.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule rootCategory={this.category} PostList={EarthPicturePosts} />
+          <PostsModule rootCategory={this.category} PostList={EarthPicturePosts} everyoneCanPost />
         </SectionBody>
       </Section>
     );

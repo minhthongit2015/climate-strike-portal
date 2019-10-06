@@ -19,13 +19,15 @@ export default class extends React.Component {
 
   render() {
     const {
-      categories, rootCategory, PostList, ...restProps
+      categories, rootCategory, PostList, everyoneCanPost, ...restProps
     } = this.props;
     const { user } = UserService;
+    const canCreateNewPost = user
+      && (['admin', 'moderator'].includes(user.role) || everyoneCanPost);
 
     return (
       <React.Fragment>
-        {user && (
+        {canCreateNewPost && (
           <NewPostRow
             onPosted={this.handlePostPosted}
             rootCategory={rootCategory}

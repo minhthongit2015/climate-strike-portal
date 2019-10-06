@@ -20,7 +20,7 @@ export default class TabOrganisms extends BasePage {
           <DeepMessage>{t('pages.yourQuestion.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule categories={this.category} PostList={OrganismsPosts} />
+          <PostsModule categories={this.category} PostList={OrganismsPosts} everyoneCanPost />
         </SectionBody>
       </Section>
     );

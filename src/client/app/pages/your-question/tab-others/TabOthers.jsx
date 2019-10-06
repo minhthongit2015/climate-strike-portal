@@ -20,7 +20,7 @@ export default class extends BasePage {
           <DeepMessage>{t('pages.yourQuestion.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule categories={this.category} PostList={OthersPosts} />
+          <PostsModule categories={this.category} PostList={OthersPosts} everyoneCanPost />
         </SectionBody>
       </Section>
     );

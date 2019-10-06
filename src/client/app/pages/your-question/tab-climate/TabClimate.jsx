@@ -20,7 +20,7 @@ export default class TabClimate extends BasePage {
           <DeepMessage>{t('pages.yourQuestion.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule categories={this.category} PostList={ClimatePosts} />
+          <PostsModule categories={this.category} PostList={ClimatePosts} everyoneCanPost />
         </SectionBody>
       </Section>
     );
