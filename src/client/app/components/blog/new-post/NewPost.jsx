@@ -157,7 +157,7 @@ export default class extends React.Component {
   render() {
     console.log('render "components/blog/new-post"');
     const {
-      title, summary, preview, category, disabled, expanded
+      _id, title, summary, preview, category, disabled, expanded
     } = this.state;
     const { categories, rootCategory } = this.props;
     let categoryOptions = [];
@@ -230,7 +230,9 @@ export default class extends React.Component {
               <Col className="text-right">
                 <Button type="button" size="sm" color="none" onClick={this.resetForm}>Bỏ</Button>
                 <Button type="submit" name="submit" value="draft" size="sm" color="none">Lưu bản nháp</Button>
-                <Button type="submit" size="sm">Đăng bài</Button>
+                <Button type="submit" size="sm">
+                  {!_id ? 'Đăng bài' : 'Cập nhập'}
+                </Button>
               </Col>
             </Row>
           </form>

@@ -49,6 +49,9 @@ export default class extends React.Component {
   handleContextActions(event, option) {
     event.preventDefault();
     if (option.value === 'delete') {
+      if (!window.confirm('Bạn có chắc muốn xóa bài viết này?')) {
+        return;
+      }
       const { post } = this.props;
       superrequest.agentDelete(`/api/v1/blog/posts/${post._id}`)
         .then(() => {

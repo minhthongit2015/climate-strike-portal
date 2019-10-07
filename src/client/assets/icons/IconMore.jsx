@@ -1,5 +1,8 @@
 import React from 'react';
 
+// .st0{fill:url(#SVGID_1_);}
+// .st1{fill:url(#SVGID_2_);}
+// .st2{fill:url(#SVGID_3_);}
 export default props => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -15,9 +18,9 @@ export default props => (
   >
     <style type="text/css">
       {`
-      .st0{fill:url(#SVGID_1_);}
-      .st1{fill:url(#SVGID_2_);}
-      .st2{fill:url(#SVGID_3_);}
+      .st0{fill:#fff;}
+      .st1{fill:#fff;}
+      .st2{fill:#fff;}
       `}
     </style>
     <g>
