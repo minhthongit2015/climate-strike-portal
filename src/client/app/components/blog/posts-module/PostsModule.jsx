@@ -20,8 +20,11 @@ export default class extends React.Component {
   }
 
   handleActions(event, option, post, postComponent) {
-    if (option.value === 'edit') {
+    if (option.value === 'update') {
       this.newPostRef.current.setPost(post, postComponent);
+    }
+    if (option.value === 'delete-done') {
+      this.handlePostPosted();
     }
   }
 

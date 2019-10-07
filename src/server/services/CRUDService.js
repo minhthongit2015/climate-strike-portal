@@ -3,6 +3,7 @@ const ApiHelper = require('../utils/ApiHelper');
 const ConverterFactory = require('../models/converters/converter-factory');
 const { isNotSet } = require('../utils');
 
+
 module.exports = class CRUDService {
   static set model(model) {
     this._model = model;
@@ -33,6 +34,7 @@ module.exports = class CRUDService {
   }
 
   static async get(id) {
+    id = ApiHelper.getId(id);
     let query = this.model.findById(id);
     query = this.populate.reduce(
       (prevQuery, relatedColection) => prevQuery.populate(relatedColection),
@@ -63,12 +65,19 @@ module.exports = class CRUDService {
   }
 
   static async update(id, props) {
-    const updatedDoc = await this.model.findByIdAndUpdate(id, props).exec();
+    if (!props) {
+      props = id;
+      id = props._id || props.id;
+    }
+    id = ApiHelper.getId(id);
+    const { id: idz, _id, ...restProps } = props;
+    const updatedDoc = await this.model.findByIdAndUpdate(id, restProps).exec();
     return ConverterFactory.get(this.model.modelName).convert(updatedDoc);
   }
 
   static async delete(id) {
-    const deleteResult = await this.model.findOneAndDelete(id).exec();
+    id = ApiHelper.getId(id);
+    const deleteResult = await this.model.findByIdAndDelete(id).exec();
     return deleteResult;
   }
 };

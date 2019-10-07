@@ -10,11 +10,18 @@ export default class InfinitePostList extends React.Component {
   constructor(props) {
     super(props);
     this.fetchPosts = this.fetchPosts.bind(this);
+    this.handleActions = this.handleActions.bind(this);
     this.page = 0;
     this.state = {
       posts: [],
       hasMore: true
     };
+  }
+
+  handleActions(event, option, post, postComponent) {
+    if (this.props.handleActions) {
+      this.props.handleActions(event, option, post, postComponent);
+    }
   }
 
   componentDidMount() {
@@ -145,7 +152,7 @@ export default class InfinitePostList extends React.Component {
         loader={this.renderLoading()}
         endMessage={this.renderEnd()}
       >
-        <PostList posts={posts} />
+        <PostList posts={posts} handleActions={this.handleActions} />
       </InfiniteScroll>
     );
   }

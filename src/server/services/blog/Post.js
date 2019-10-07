@@ -64,7 +64,12 @@ module.exports = class extends CRUDService {
       });
     }
     doc.content = await this.replaceImageBase64ToUrl(doc.content);
-    const newDoc = super.create(doc);
+    let newDoc;
+    if (doc.id || doc._id) {
+      newDoc = super.update(doc);
+    } else {
+      newDoc = super.create(doc);
+    }
     return newDoc;
   }
 

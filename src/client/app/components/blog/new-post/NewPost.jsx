@@ -16,16 +16,19 @@ import ButtonBar from '../../dialog/ButtonBar';
 import CategoryHelper from '../../../utils/CategoryHelper';
 
 const animatedComponents = makeAnimated();
-
+const scrollToTop = () => {
+  const scrollBox = document.getElementById('sidebar-layout__content');
+  scrollBox.scrollTo({ top: 0, behavior: 'smooth' });
+};
 export default class extends React.Component {
   get post() {
     const {
-      title, summary, preview, category
+      _id, title, summary, preview, category
     } = this.state;
     const content = this.contentRef.current.value;
     const categoryIds = category.map(cate => cate.value);
     return {
-      title, summary, content, preview, categories: categoryIds
+      _id, title, summary, content, preview, categories: categoryIds
     };
   }
 
@@ -39,6 +42,7 @@ export default class extends React.Component {
     this.resetForm = this.resetForm.bind(this);
 
     this.state = {
+      _id: null,
       title: '',
       summary: '',
       preview: '',
@@ -51,13 +55,25 @@ export default class extends React.Component {
   }
 
   setPost(post) {
+    const postCategories = post.categories.map(cat => cat.type);
+    const category = CategoryHelper.categoryArray.filter(cat => postCategories.includes(cat.value));
     this.setState({
-      title: post.title,
-      summary: post.summary,
-      preview: post.preview,
-      category: CategoryHelper.categories.filter(cat => post.categories.includes(cat.value))
+      expanded: true
+    }, () => {
+      this.setState({
+        _id: post._id,
+        title: post.title,
+        summary: post.summary,
+        preview: post.preview
+      });
+      this.contentRef.current.value = post.content;
+      setTimeout(() => {
+        scrollToTop();
+        this.setState({
+          category
+        });
+      }, 200);
     });
-    this.contentRef.current.value = post.content;
   }
 
   handlePostSubmit(event) {

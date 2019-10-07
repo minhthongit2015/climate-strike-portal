@@ -10,7 +10,7 @@ export default class {
 
   static get categoryArray() {
     return Object.entries(this._categories).map(entry => ({
-      label: entry[1],
+      label: entry[1].name,
       value: entry[0]
     }));
   }

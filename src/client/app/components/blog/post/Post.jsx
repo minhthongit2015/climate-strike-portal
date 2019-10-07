@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import './Post.scss';
 import TimeAgo from '../../utils/time-ago/TimeAgo';
 import ContextButton from '../../utils/context-button/ContextButton';
-import { getAutoDispatcher } from '../../Helper';
+import superrequest from '../../../utils/superrequest';
 
 
 const contextOptions = [
@@ -22,7 +22,7 @@ export default class extends React.Component {
     super(props);
     this.togglePopup = this.togglePopup.bind(this);
     this.handlePopupChange = this.handlePopupChange.bind(this);
-    this.handleContextActions = getAutoDispatcher(this);
+    this.handleContextActions = this.handleContextActions.bind(this);
 
     this.state = {
       clickable: false,
@@ -48,6 +48,13 @@ export default class extends React.Component {
 
   handleContextActions(event, option) {
     event.preventDefault();
+    if (option.value === 'delete') {
+      const { post } = this.props;
+      superrequest.agentDelete(`/api/v1/blog/posts/${post._id}`)
+        .then(() => {
+          this.props.handleActions(event, { value: 'delete-done' }, this.props.post, this);
+        });
+    }
     if (this.props.handleActions) {
       this.props.handleActions(event, option, this.props.post, this);
     }

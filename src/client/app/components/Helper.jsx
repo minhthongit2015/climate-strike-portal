@@ -13,7 +13,7 @@ export function getAutoDispatcher(componentOrProps) {
   if (componentOrProps.props) {
     dispatcher = function _dispatcher(event, ...args) {
       if (typeof this.props.hanlder === 'function') {
-        this.hanlder(event, ...args);
+        this.props.hanlder(event, ...args);
       }
       const eventName = camelize(`on ${event.type}`);
       if (typeof this.props[eventName] === 'function') {

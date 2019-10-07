@@ -1,3 +1,11 @@
+const { ObjectId } = require('mongoose').Types;
+
+function getId(id) {
+  if (typeof id === 'string') {
+    id = new ObjectId(id);
+  }
+  return id;
+}
 
 const listParams = {
   offset: 0,
@@ -41,6 +49,7 @@ function findWithFunc(findFunc, opts = listParams) {
 }
 
 module.exports = {
+  getId,
   listParams,
   parseListParams,
   find,

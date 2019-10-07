@@ -9,8 +9,10 @@ $world-actions-color: #8eabff;
 .post {
   box-shadow: 0 .125em .25em rgba(0,0,0,.075);
   transition: all .3s ease-in-out;
+  z-index: 0;
 
   &:hover {
+    z-index: 1;
     box-shadow: 0 .125em .5em rgba(0, 0, 0, 0.247);
   }
 

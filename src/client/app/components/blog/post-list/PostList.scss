@@ -1,6 +1,11 @@
 
 .post-wrapper {
+  z-index: 0;
   box-sizing: border-box;
+
+  &:hover {
+    z-index: 1;
+  }
 
   &.w1 {
     width: 24%;
