@@ -2,5 +2,5 @@ import React from 'react';
 import IconEarthPicture from './IconEarthPicture';
 
 export default props => (
-  <IconEarthPicture {...props} static />
+  <IconEarthPicture {...props} noAnimate />
 );

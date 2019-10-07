@@ -3,6 +3,7 @@ import { getParameters } from './EffectHelper';
 
 
 export default (props) => {
+  const { noAnimate, ...restProps } = props;
   const [mx, setMx] = React.useState(0);
   const [my, setMy] = React.useState(0);
   const [md1, md2, md3, md4, md5] = [0.05, 0.3, 0.75, 1, 2];
@@ -19,7 +20,7 @@ export default (props) => {
   }
 
   const customProps = {};
-  if (!props.static) {
+  if (!noAnimate) {
     customProps.onMouseMove = onMouseMove;
   }
 
@@ -28,7 +29,7 @@ export default (props) => {
       xmlns="http://www.w3.org/2000/svg"
       // xmlns:xlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 1118 918"
-      {...props}
+      {...restProps}
       {...customProps}
     >
       <defs>

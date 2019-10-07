@@ -7,13 +7,21 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.postListRef = React.createRef();
+    this.newPostRef = React.createRef();
     this.handlePostPosted = this.handlePostPosted.bind(this);
+    this.handleActions = this.handleActions.bind(this);
     UserService.useUserState(this);
   }
 
   handlePostPosted() {
     if (this.postListRef.current.innerRef.current.refresh) {
       this.postListRef.current.innerRef.current.refresh();
+    }
+  }
+
+  handleActions(event, option, post, postComponent) {
+    if (option.value === 'edit') {
+      this.newPostRef.current.setPost(post, postComponent);
     }
   }
 
@@ -29,12 +37,13 @@ export default class extends React.Component {
       <React.Fragment>
         {canCreateNewPost && (
           <NewPostRow
+            ref={this.newPostRef}
             onPosted={this.handlePostPosted}
             rootCategory={rootCategory}
             categories={categories}
           />
         )}
-        <PostList ref={this.postListRef} {...restProps} />
+        <PostList ref={this.postListRef} handleActions={this.handleActions} {...restProps} />
       </React.Fragment>
     );
   }

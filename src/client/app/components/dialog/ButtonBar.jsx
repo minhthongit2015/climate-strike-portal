@@ -2,26 +2,13 @@ import React from 'react';
 import { MDBBtn } from 'mdbreact';
 import classnames from 'classnames';
 import './ButtonBar.scss';
+import { getAutoDispatcher } from '../Helper';
 
-function camelize(str) {
-  return str.replace(
-    /(?:^\w|[A-Z]|\b\w)/g,
-    (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase())
-  )
-    .replace(/\s+/g, '');
-}
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
-    this.dispatchEvent = this.dispatchEvent.bind(this);
-  }
-
-  dispatchEvent(event) {
-    const eventName = camelize(`on ${event.type}`);
-    if (typeof this.props[eventName] === 'function') {
-      this.props[eventName](event);
-    }
+    this.autoDispatcher = getAutoDispatcher(this);
   }
 
   render() {
@@ -43,7 +30,7 @@ export default class extends React.Component {
         <MDBBtn
           name="minimize"
           title={minimizeState === 2 ? minimizeTitle : minimizeTitle2}
-          onClick={this.dispatchEvent}
+          onClick={this.autoDispatcher}
           className={classnames(
             'btn-bar__btn rounded mr-2',
             { state2: minimizeState === 2 }
@@ -55,7 +42,7 @@ export default class extends React.Component {
         <MDBBtn
           name="close"
           title={closeState === 2 ? closeTitle : closeTitle2}
-          onClick={this.dispatchEvent}
+          onClick={this.autoDispatcher}
           className={classnames(
             'btn-bar__btn rounded',
             { state2: closeState === 2 }

@@ -10,6 +10,7 @@ export default class PostList extends React.Component {
     super(props);
     this.containerRef = React.createRef();
     this.sizerElementRef = React.createRef();
+    this.handleActions = this.handleActions.bind(this);
     this.processing = null;
   }
 
@@ -45,6 +46,12 @@ export default class PostList extends React.Component {
       this.processing = null;
     }
     return willUpdate;
+  }
+
+  handleActions(event, option, post, postComponent) {
+    if (this.props.handleActions) {
+      this.props.handleActions(event, option, post, postComponent);
+    }
   }
 
   mapPreviews(posts) {
@@ -157,7 +164,8 @@ export default class PostList extends React.Component {
           <div className="sizer-element" ref={this.sizerElementRef} />
           <div className="post-wrapper w4 p-0" />
           {(posts && posts.map(post => (
-            PostList.renderPost(post._id, <Post post={post} />, post)
+            PostList.renderPost(post._id,
+              <Post post={post} handleActions={this.handleActions} />, post)
           )))
           || (children && children.map(post => (
             PostList.renderPost(post.key, post, post.props.post)

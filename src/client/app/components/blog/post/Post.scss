@@ -43,7 +43,7 @@ $world-actions-color: #8eabff;
     }
   }
 
-  &__preview, &__preview > .view {
+  &__preview, &__preview .view {
     cursor: pointer;
   }
 
@@ -69,6 +69,19 @@ $world-actions-color: #8eabff;
     }
     &.WorldActions {
       border-top-color: $world-actions-color;
+    }
+  }
+
+  &__context-btn {
+    position: absolute;
+    top: 4px;
+    right: 0px;
+
+    & .btn-paper {
+      border: none !important;
+      &:hover {
+        background: rgba(255,255,255,.1) !important;
+      }
     }
   }
 

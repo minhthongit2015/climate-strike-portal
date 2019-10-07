@@ -2,14 +2,92 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import {
   Card, CardHeader, CardBody, CardFooter, MDBCardImage,
-  MDBPopover, MDBPopoverBody
+  MDBPopover, MDBPopoverBody,
+  MDBBtn
 } from 'mdbreact';
 import classnames from 'classnames';
 import './Post.scss';
 import TimeAgo from '../../utils/time-ago/TimeAgo';
+import ContextButton from '../../utils/context-button/ContextButton';
+import { getAutoDispatcher } from '../../Helper';
 
+
+const contextOptions = [
+  { label: 'chỉnh sửa bài viết', value: 'update' },
+  { label: 'xóa bài viết', value: 'delete' }
+];
 
 export default class extends React.Component {
+  constructor(props) {
+    super(props);
+    this.togglePopup = this.togglePopup.bind(this);
+    this.handlePopupChange = this.handlePopupChange.bind(this);
+    this.handleContextActions = getAutoDispatcher(this);
+
+    this.state = {
+      clickable: false,
+      isVisible: false
+    };
+  }
+
+  togglePopup() {
+    this.setState(prevState => ({
+      clickable: !prevState.clickable,
+      isVisible: !prevState.isVisible
+    }));
+  }
+
+  handlePopupChange(state) {
+    if (!state) {
+      this.setState({
+        clickable: false,
+        isVisible: false
+      });
+    }
+  }
+
+  handleContextActions(event, option) {
+    event.preventDefault();
+    if (this.props.handleActions) {
+      this.props.handleActions(event, option, this.props.post, this);
+    }
+  }
+
+  renderPreviewAsImage() {
+    const { post } = this.props;
+    const {
+      preview = post.preview
+    } = this.props;
+    return (
+      <div onClick={this.togglePopup}>
+        <MDBCardImage
+          className="img-fluid"
+          src={preview}
+        />
+      </div>
+    );
+  }
+
+  renderPreviewAsTitle() {
+    const { post } = this.props;
+    const {
+      title = post.title,
+      category = post.categories[0].type
+    } = this.props;
+    return (
+      <CardHeader className={category} onClick={this.togglePopup}>{title}</CardHeader>
+    );
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  renderSocials() {
+    return (
+      <div>
+        <MDBBtn size="sm" gradient="blue" className="px-2 py-1 text-pre-wrap">chia sẻ</MDBBtn>
+      </div>
+    );
+  }
+
   render() {
     const { post } = this.props;
     const {
@@ -21,20 +99,29 @@ export default class extends React.Component {
       category = post.categories[0].type,
       createdAt = post.createdAt
     } = this.props;
+    const {
+      clickable,
+      isVisible
+    } = this.state;
 
     return (
       <Card className="post">
         <MDBPopover
           placement="top"
-          clickable={false}
+          clickable={clickable}
+          isVisible={isVisible}
           domElement
           popover
+          onChange={this.handlePopupChange}
           id={_id}
         >
           <span className={`post__preview ${preview ? category : ''}`}>
             {preview
-              ? <MDBCardImage className="img-fluid" src={preview} />
-              : <CardHeader className={category}>{title}</CardHeader>}
+              ? this.renderPreviewAsImage()
+              : this.renderPreviewAsTitle()}
+            <div className="post__context-btn">
+              <ContextButton options={contextOptions} hanlder={this.handleContextActions} />
+            </div>
           </span>
           <MDBPopoverBody>
             <div className="post__content">
@@ -50,8 +137,9 @@ export default class extends React.Component {
           {preview && <div className="post__title"><b>{title}</b></div>}
           {summary && <div className="post__summary">{summary}</div>}
         </CardBody>
-        <CardFooter>
-          <TimeAgo time={createdAt} />
+        <CardFooter className="d-flex align-items-center justify-content-between">
+          <TimeAgo time={createdAt} className="flex-fill" />
+          {this.renderSocials()}
         </CardFooter>
       </Card>
     );

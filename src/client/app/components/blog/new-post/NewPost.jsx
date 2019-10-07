@@ -50,6 +50,16 @@ export default class extends React.Component {
     CategoryHelper.useCategoriesState(this);
   }
 
+  setPost(post) {
+    this.setState({
+      title: post.title,
+      summary: post.summary,
+      preview: post.preview,
+      category: CategoryHelper.categories.filter(cat => post.categories.includes(cat.value))
+    });
+    this.contentRef.current.value = post.content;
+  }
+
   handlePostSubmit(event) {
     if (event) {
       event.preventDefault();
