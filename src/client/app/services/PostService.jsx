@@ -32,4 +32,8 @@ export default class {
     DialogService.setContent(<PostDetails {...post} />);
     DialogService.open();
   }
+
+  static buildPostUrl(post) {
+    return `${window.location.href}?hashtag=${post.baseOrder}`;
+  }
 }

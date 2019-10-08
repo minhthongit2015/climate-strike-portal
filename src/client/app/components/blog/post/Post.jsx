@@ -2,8 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import {
   Card, CardHeader, CardBody, CardFooter, MDBCardImage,
-  MDBPopover, MDBPopoverBody,
-  MDBBtn
+  MDBPopover, MDBPopoverBody
 } from 'mdbreact';
 import classnames from 'classnames';
 import './Post.scss';
@@ -12,6 +11,8 @@ import ContextButton from '../../utils/context-button/ContextButton';
 import superrequest from '../../../utils/superrequest';
 import DialogService from '../../../services/DialogService';
 import PostDetails from './PostDetails';
+import PostService from '../../../services/PostService';
+import FbService from '../../../services/FbService';
 
 
 const contextOptions = [
@@ -32,6 +33,10 @@ export default class extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    FbService.parseButtons();
+  }
+
   togglePopup() {
     this.setState(prevState => ({
       clickable: !prevState.clickable,
@@ -41,7 +46,7 @@ export default class extends React.Component {
     DialogService.setContent(<PostDetails {...this.props.post} />);
     DialogService.toggle();
     DialogService.setHistory({
-      url: `${window.location.href}?hashtag=${post.baseOrder}`,
+      url: PostService.buildPostUrl(post),
       title: post.title,
       state: post
     });
@@ -81,7 +86,7 @@ export default class extends React.Component {
     return (
       <div onClick={this.togglePopup}>
         <MDBCardImage
-          className="img-fluid"
+          className="img-fluid post__preview-image"
           src={preview}
         />
       </div>
@@ -100,13 +105,36 @@ export default class extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  getSizeByClass(className) {
+    switch (className) {
+    case 'w1':
+      return window.innerWidth * 0.1259150805270864;
+    case 'w2':
+      return 150;
+      // return window.innerWidth * 0.29941434846266474;
+    case 'w3':
+      return 150;
+      // return window.innerWidth;
+    default:
+      return window.innerWidth * 0.1259150805270864;
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   renderSocials() {
+    const { post } = this.props;
     return (
-      <div>
-        <div className="d-flex justify-content-around">
-          <MDBBtn size="sm" gradient="blue" className="px-2 py-1 text-pre-wrap">400 likes...</MDBBtn>
-          <MDBBtn size="sm" gradient="blue" className="px-2 py-1 text-pre-wrap">chia sẻ</MDBBtn>
-        </div>
+      <div className="d-flex">
+        <div
+          className="fb-like"
+          data-href={PostService.buildPostUrl(post)}
+          data-width={this.getSizeByClass(post.previewClass)}
+          data-layout="standard"
+          data-action="like"
+          data-size="small"
+          data-show-faces="true"
+          data-share="true"
+        />
       </div>
     );
   }
@@ -162,9 +190,11 @@ export default class extends React.Component {
         </CardBody>
         <CardFooter className="d-flex align-items-center justify-content-stretch flex-wrap">
           <div className="flex-fill">
+            {this.renderSocials()}
+          </div>
+          <div className="">
             <TimeAgo time={createdAt} />
           </div>
-          {this.renderSocials()}
         </CardFooter>
       </Card>
     );

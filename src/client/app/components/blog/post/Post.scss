@@ -74,6 +74,11 @@ $world-actions-color: #8eabff;
     }
   }
 
+  &__preview-image {
+    object-fit: cover;
+    width: 100%;
+  }
+
   &__context-btn {
     position: absolute;
     top: 4px;
