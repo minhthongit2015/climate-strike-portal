@@ -128,6 +128,7 @@ export default class extends React.Component {
 
   resetForm() {
     this.setState({
+      _id: null,
       title: '',
       summary: '',
       preview: '',
