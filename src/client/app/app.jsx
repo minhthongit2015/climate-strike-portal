@@ -22,6 +22,9 @@ import RouteConstants from './utils/RouteConstants';
 
 import KeyTracker from './utils/KeyTracker';
 import AuthService from './services/Auth';
+import DialogService from './services/DialogService';
+import PageDialog from './components/dialog/PageDialog';
+import PostService from './services/PostService';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
@@ -37,10 +40,13 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    this.pageDialogRef = React.createRef();
     GlobalState.init();
     GlobalState.loadState();
     superws.init();
     AuthService.init();
+    DialogService.init(this.pageDialogRef);
+    PostService.init();
     KeyTracker();
   }
 
@@ -56,6 +62,7 @@ class App extends Component {
           <Redirect to={RouteConstants.homeLink} />
         </Switch>
         {(this.isTheRealWorldPage || window.myGoogleMap) && <TheRealWorldPage />}
+        <PageDialog ref={this.pageDialogRef} />
       </React.Suspense>
     );
     return (

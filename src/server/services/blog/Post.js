@@ -16,9 +16,9 @@ module.exports = class extends CRUDService {
   }
 
   static async resolveListOptions(opts = ApiHelper.listParams) {
-    opts.where = {
+    opts.where = Object.assign(opts.where || {}, {
       status: PostStatus.published
-    };
+    });
     if (opts.category) {
       const parentCategory = await CategoryService.list({
         limit: 1,

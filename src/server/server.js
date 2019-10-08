@@ -10,6 +10,7 @@ const expressEasyZip = require('express-easy-zip');
 const CookieParser = require('cookie-parser');
 const ExpressSocketIOSession = require('express-socket.io-session');
 const SocketIO = require('socket.io');
+const queryString = require('query-string');
 
 const mongoDB = require('./models/mongo');
 // const sequelizeDB = require('./models/sequelize');
@@ -19,6 +20,7 @@ const noCache = require('./middleware/no-cache');
 const ExpressSession = require('./middleware/express-session');
 const SocketIOQuerySession = require('./middleware/io-query-session');
 const SocketIORequestParser = require('./middleware/io-request-parser');
+const CustomQueryParser = require('./middleware/CustomQueryParser');
 const FacebookSession = require('./middleware/facebook-session');
 const RegisterFacebookUser = require('./middleware/register-facebook-user');
 
@@ -121,6 +123,7 @@ class Server {
         parseBoolean: true
       })
     );
+    this.app.use(CustomQueryParser);
   }
 
   static _bodyParserMiddleware() {
@@ -144,6 +147,23 @@ class Server {
         next();
       });
     });
+    WebsocketManager.app.use((req, res, next) => {
+      req.path = req._parsedUrl.pathname;
+      req.query = queryString.parse(req._parsedUrl.search, {
+        arrayFormat: 'bracket',
+        parseNumbers: true,
+        parseBooleans: true
+      });
+      req.websocket = true;
+      next();
+    });
+    WebsocketManager.app.use(
+      expressQueryParser({
+        parseNull: true,
+        parseBoolean: true
+      })
+    );
+    WebsocketManager.app.use(CustomQueryParser);
     WebsocketManager.app.use(FacebookSession);
     WebsocketManager.app.use(RegisterFacebookUser);
   }

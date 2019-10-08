@@ -10,6 +10,8 @@ import './Post.scss';
 import TimeAgo from '../../utils/time-ago/TimeAgo';
 import ContextButton from '../../utils/context-button/ContextButton';
 import superrequest from '../../../utils/superrequest';
+import DialogService from '../../../services/DialogService';
+import PostDetails from './PostDetails';
 
 
 const contextOptions = [
@@ -35,6 +37,14 @@ export default class extends React.Component {
       clickable: !prevState.clickable,
       isVisible: !prevState.isVisible
     }));
+    const { post } = this.props;
+    DialogService.setContent(<PostDetails {...this.props.post} />);
+    DialogService.toggle();
+    DialogService.setHistory({
+      url: `${window.location.href}?hashtag=${post.baseOrder}`,
+      title: post.title,
+      state: post
+    });
   }
 
   handlePopupChange(state) {
@@ -93,7 +103,10 @@ export default class extends React.Component {
   renderSocials() {
     return (
       <div>
-        <MDBBtn size="sm" gradient="blue" className="px-2 py-1 text-pre-wrap">chia sẻ</MDBBtn>
+        <div className="d-flex justify-content-around">
+          <MDBBtn size="sm" gradient="blue" className="px-2 py-1 text-pre-wrap">400 likes...</MDBBtn>
+          <MDBBtn size="sm" gradient="blue" className="px-2 py-1 text-pre-wrap">chia sẻ</MDBBtn>
+        </div>
       </div>
     );
   }
@@ -145,10 +158,12 @@ export default class extends React.Component {
         </MDBPopover>
         <CardBody className={classnames({ 'p-0': !preview && !summary })}>
           {preview && <div className="post__title"><b>{title}</b></div>}
-          {summary && <div className="post__summary">{summary}</div>}
+          {summary && <div className="post__summary mt-2">{summary}</div>}
         </CardBody>
-        <CardFooter className="d-flex align-items-center justify-content-between">
-          <TimeAgo time={createdAt} className="flex-fill" />
+        <CardFooter className="d-flex align-items-center justify-content-stretch flex-wrap">
+          <div className="flex-fill">
+            <TimeAgo time={createdAt} />
+          </div>
           {this.renderSocials()}
         </CardFooter>
       </Card>

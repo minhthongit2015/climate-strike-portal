@@ -1,6 +1,4 @@
 const websocketCoreApp = require('express').Router();
-const queryString = require('query-string');
-const expressQueryParser = require('express-query-parser');
 const Logger = require('../services/Logger');
 const Debugger = require('../services/Debugger');
 
@@ -34,19 +32,6 @@ module.exports = class WebsocketManagerCore {
 
   static setup(wsServer) {
     Debugger.wsSetup('Setup Websocket Core');
-    websocketCoreApp.use((req, res, next) => {
-      req.path = req._parsedUrl.pathname;
-      req.query = queryString.parse(req._parsedUrl.search);
-      req.websocket = true;
-      next();
-    });
-    websocketCoreApp.use(
-      expressQueryParser({
-        parseNull: true,
-        parseBoolean: true
-      })
-    );
-
     this.wsServer = wsServer;
     wsServer.on('connection', (socket) => {
       try {

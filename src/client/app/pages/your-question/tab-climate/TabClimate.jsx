@@ -1,13 +1,13 @@
 import React from 'react';
-import BasePage from '../../_base/BasePage';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
 import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
 import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import ClimatePosts from './ClimatePosts';
 import t from '../../../languages';
+import BlogPage from '../../_base/BlogPage';
 
 
-export default class TabClimate extends BasePage {
+export default class extends BlogPage {
   constructor(props) {
     super(props, t('pages.yourQuestion.title.climate'));
     this.category = ['AskForClimate'];

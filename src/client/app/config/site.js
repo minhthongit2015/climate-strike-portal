@@ -1,6 +1,6 @@
 
 
-const WEBSITE_TITLE = 'Climate Strike VN';
+const WEBSITE_TITLE = 'Climate Strike Vietnam';
 
 export default {
   WEBSITE_TITLE

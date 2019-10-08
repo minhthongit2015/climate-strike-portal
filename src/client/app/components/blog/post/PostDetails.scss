@@ -1,0 +1,17 @@
+
+.post-details {
+  &__title {
+    font-weight: bold;
+  }
+  
+  &__summary {
+    font-style: italic;
+    color: gray;
+    border-left: 2px solid lightgray;
+    padding-left: .5rem;
+  }
+
+  &__content {
+
+  }
+}

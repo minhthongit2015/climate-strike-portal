@@ -44,7 +44,7 @@ export default class extends React.Component {
       <SidebarLayout navItems={this.tabs} brand={this.brand}>
         <Switch>
           {this.tabs.map(tab => (
-            <Route key={tab.name} exact path={tab.path} component={tab.component} />
+            <Route key={tab.name} path={tab.path} component={tab.component} />
           ))}
           <Route exact path={RouteConstants.earthPicturePath} component={TabEarthPicture} />
           <Redirect to={RouteConstants.earthPictureLink} />

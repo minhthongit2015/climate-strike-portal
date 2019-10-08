@@ -77,7 +77,6 @@ class SignIn extends Component {
 
   handleClick = (e) => {
     e.stopPropagation();
-    console.log(e);
     const cursorPos = {
       top: e.clientY,
       left: e.clientX,
