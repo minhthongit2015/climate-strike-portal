@@ -13,6 +13,7 @@ import DialogService from '../../../services/DialogService';
 import PostDetails from './PostDetails';
 import PostService from '../../../services/PostService';
 import FbService from '../../../services/FbService';
+import LikeAndShare from '../../facebook/LikeAndShare';
 
 
 const contextOptions = [
@@ -125,15 +126,9 @@ export default class extends React.Component {
     const { post } = this.props;
     return (
       <div className="d-flex">
-        <div
-          className="fb-like"
+        <LikeAndShare
           data-href={PostService.buildPostUrl(post)}
           data-width={this.getSizeByClass(post.previewClass)}
-          data-layout="standard"
-          data-action="like"
-          data-size="small"
-          data-show-faces="true"
-          data-share="true"
         />
       </div>
     );

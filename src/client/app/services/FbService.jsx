@@ -3,7 +3,7 @@ import Config from '../config';
 
 export const FbLoginStatus = {
   CONNECTED: 'connected',
-  UNAUTHORIZED: 'unauthorized',
+  UNAUTHORIZED: 'not_authorized',
   UNKNOW: 'unknow' // user logged out or ever login in
 };
 

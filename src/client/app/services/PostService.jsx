@@ -6,7 +6,6 @@ import PostDetails from '../components/blog/post/PostDetails';
 export default class {
   static init() {
     window.onpopstate = (event) => {
-      console.log(event);
       if (event.state && event.state.baseOrder) {
         this.showPost(event.state);
       } else {
