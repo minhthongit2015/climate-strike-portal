@@ -16,8 +16,11 @@ export default React.memo(props => (
       <Col size={props.preview ? '4' : '12'}>
         <div className="post-details__title">{props.title}</div>
         <sup className="post-details__time text-sm"><TimeAgo time={props.createdAt} /></sup>
-        <div className="post-details__summary mt-4">{props.summary}</div>
-        <div className="post-details__content mt-5">
+        <hr className="my-3" />
+        {props.summary && (
+          <div className="post-details__summary mt-3">{props.summary}</div>
+        )}
+        <div className="post-details__content mt-3">
           <ReactMarkdown
             className="markdown"
             source={props.content}

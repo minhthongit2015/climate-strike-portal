@@ -29,7 +29,7 @@ const api = require('./api');
 
 const WebsocketManager = require('./websocket/ws-manager');
 
-const SystemInfo = require('./utils/system-info');
+const SystemInfo = require('./utils/SystemInfo');
 const startUp = require('./utils/_startup');
 
 const Debugger = require('./services/Debugger');
@@ -42,24 +42,35 @@ class Server {
     Debugger.log(colors.rainbow(`\r\n\r\n${new Array(60).fill('▬').join('')}\r\n`));
     Debugger.log(`${''.padStart(12, ' ')}${colors.rainbow('START')} ${colors.yellow('CLIMATE STRIKE VIETNAM SERVER')}\r\n`);
     Debugger.log(colors.rainbow(`${new Array(60).fill('▬').join('')}\r\n`));
-    Server.setupErrorTrap();
-    Server.setupDatabase();
-    Server.createServer();
-    Server.setupWebsocket();
-    Server.setupMiddleware();
-    Server.setupRouting();
-    Server.listen();
+    this.setupErrorTrap();
+    this.setupDatabase();
+    this.createServer();
+    this.setupViewEngine();
+    this.removeExpressHeader();
+    this.setupWebsocket();
+    this.setupMiddleware();
+    this.setupRouting();
+    this.listen();
     // Server.keepAlive(); // Not now
   }
 
   static createServer() {
     this.app = express();
+    this.server = http.createServer(this.app);
+  }
+
+  static setupViewEngine() {
+    const VIEWS_FOLDER = path.resolve(process.cwd(), Config.viewsFolder);
+    this.app.set('views', VIEWS_FOLDER);
+    this.app.set('view engine', 'ejs');
+  }
+
+  static removeExpressHeader() {
     this.app.disable('x-powered-by');
     this.app.use((req, res, next) => {
       res.removeHeader('X-Powered-By');
       next();
     });
-    this.server = http.createServer(this.app);
   }
 
   static setupDatabase() {

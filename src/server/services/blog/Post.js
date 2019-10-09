@@ -87,4 +87,8 @@ module.exports = class extends CRUDService {
     const data = await Promise.all(promises);
     return content.replace(imgRegexp, () => data.shift());
   }
+
+  static async getByOrder(baseOrder) {
+    return super.first({ where: { baseOrder } });
+  }
 };

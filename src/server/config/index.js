@@ -1,5 +1,6 @@
 module.exports = {
   publicFolder: 'public',
+  viewsFolder: 'src/server/views',
   port: process.env.PORT || 5000,
   google: {
     SECRET_API_KEY: process.env.GOOGLE_APPLICATION_CREDENTIALS,

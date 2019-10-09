@@ -12,6 +12,8 @@
     "tsc-prod": "tsc && node src/server/server.js",
     "watch": "webpack-dev-server --open --config webpack/webpack.dev.js",
     "watchs": "webpack-dev-server --https --open --config webpack/webpack.dev.js",
+    "watchfile": "webpack-dev-server --open --writeToDisk --config webpack/webpack.dev.js",
+    "watchsfile": "webpack-dev-server --https --open --writeToDisk --config webpack/webpack.dev.js",
     "build": "webpack --config webpack/webpack.prod.js",
     "start": "node src/server/server.js",
     "fix-tensorflow-js": "npm install -g --production windows-build-tools admin",
