@@ -9,8 +9,6 @@ import './Post.scss';
 import TimeAgo from '../../utils/time-ago/TimeAgo';
 import ContextButton from '../../utils/context-button/ContextButton';
 import superrequest from '../../../utils/superrequest';
-import DialogService from '../../../services/DialogService';
-import PostDetails from './PostDetails';
 import PostService from '../../../services/PostService';
 import FbService from '../../../services/FbService';
 import LikeAndShare from '../../facebook/LikeAndShare';
@@ -44,13 +42,7 @@ export default class extends React.Component {
       isVisible: !prevState.isVisible
     }));
     const { post } = this.props;
-    DialogService.setContent(<PostDetails {...this.props.post} />);
-    DialogService.toggle();
-    DialogService.setHistory({
-      url: PostService.buildPostUrl(post),
-      title: post.title,
-      state: post
-    });
+    PostService.openPostDetails(post);
   }
 
   handlePopupChange(state) {

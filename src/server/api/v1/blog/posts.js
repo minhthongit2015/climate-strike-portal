@@ -4,6 +4,7 @@ const Logger = require('../../../services/Logger');
 const PostService = require('../../../services/blog/Post');
 const APIResponse = require('../../../models/api-models');
 const PostsSecurityService = require('../../../services/security/PostsSecurity');
+const FacebookService = require('../../../services/thirt-party/Facebook');
 
 
 router.post('/', (req, res) => {
@@ -11,7 +12,18 @@ router.post('/', (req, res) => {
     await PostsSecurityService.onlyQuestionOrModOrAdmin(req);
     req.author = req.session.user;
     const newPost = await PostService.create(req.body);
-    return res.send(new APIResponse().setData(newPost));
+    res.send(new APIResponse().setData(newPost));
+  }, { req, res });
+});
+
+router.get('/refresh-cache', (req, res) => {
+  Logger.catch(async () => {
+    const { url } = req.query;
+    if (!url) {
+      return res.send(APIResponse.throwError.BadRequest());
+    }
+    const cachedPost = await FacebookService.refreshCache(url);
+    return res.send(new APIResponse().setData(cachedPost));
   }, { req, res });
 });
 

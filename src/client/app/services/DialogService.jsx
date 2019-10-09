@@ -8,8 +8,8 @@ export default class DialogService {
     this.dialogRef = dialogRef;
   }
 
-  static setHistory({ url, title, state }) {
-    this.dialog.setHistory({ url, title, state });
+  static pushHistory({ url, title, state }) {
+    this.dialog.pushHistory({ url, title, state });
   }
 
   static setContent(content) {

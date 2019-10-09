@@ -32,7 +32,7 @@ module.exports = merge(common, {
         target: 'http://localhost:5000',
         secure: false,
         bypass: (req, res, proxyOptions) => {
-          console.log(req, res, proxyOptions);
+          // console.log(req, res, proxyOptions);
           // if (req.headers.accept.indexOf('html') !== -1) {
           //   console.log('Skipping proxy for browser request.');
           //   return '/index.html';

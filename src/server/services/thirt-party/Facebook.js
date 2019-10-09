@@ -1,3 +1,4 @@
+const supperagent = require('superagent');
 const graph = require('fbgraph');
 
 module.exports = class {
@@ -11,6 +12,17 @@ module.exports = class {
         }
         resolve(response);
       });
+    });
+  }
+
+  static getServerAccessToken() {
+    graph.getAccessToken();
+  }
+
+  static async refreshCache(url) {
+    return supperagent.get('https://graph.facebook.com').query({
+      id: url,
+      scrape: true
     });
   }
 };

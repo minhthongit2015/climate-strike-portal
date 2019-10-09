@@ -1,6 +1,6 @@
 
 const Logger = require('../services/Logger');
-const FaceBookService = require('../services/user/Facebook');
+const FaceBookService = require('../services/thirt-party/Facebook');
 const UserService = require('../services/user/User');
 
 function FacebookSession(req, res, next) {

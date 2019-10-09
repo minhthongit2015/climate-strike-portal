@@ -9,6 +9,7 @@ export default class extends BasePage {
     const hashtag = params.get('hashtag');
     if (hashtag) {
       PostService.fetchAndShowPost(hashtag);
+      PostService.refreshCache();
     }
   }
 }

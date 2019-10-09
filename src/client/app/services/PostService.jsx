@@ -27,6 +27,15 @@ export default class {
     return superrequest.get(`/api/v1/blog/posts?limit=1&where={"baseOrder":${postOrder}}`);
   }
 
+  static async openPostDetails(post) {
+    DialogService.pushHistory({
+      url: this.buildPostUrl(post),
+      title: post.title,
+      state: post
+    });
+    this.showPost(post);
+  }
+
   static showPost(post) {
     DialogService.setContent(<PostDetails {...post} />);
     DialogService.open();
@@ -34,5 +43,11 @@ export default class {
 
   static buildPostUrl(post) {
     return `${window.location.href}?hashtag=${post.baseOrder}`;
+  }
+
+  static refreshCache() {
+    superrequest.agent.get('/api/v1/blog/posts/refresh-cache').query({
+      url: window.location.href
+    }).then(res => console.log(res));
   }
 }

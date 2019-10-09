@@ -18,7 +18,7 @@ export default class extends BasePage {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  setHistory({ url, title, state }) {
+  pushHistory({ state, title, url }) {
     window.history.pushState(state, title, url);
     this.historyBack = true;
   }
