@@ -24,7 +24,9 @@ export default class PostList extends React.Component {
     this._isMounted = true;
     [350, 650, 1000].forEach((timeout) => {
       setTimeout(() => {
-        this.shuffle.update();
+        if (this.shuffle) {
+          this.shuffle.update();
+        }
       }, timeout);
     });
   }
@@ -147,13 +149,15 @@ export default class PostList extends React.Component {
     if (posts.length > 0 && this.processing === null) {
       this.mapPreviews(posts).then(() => {
         this.processing = false;
-        if (this._isMounted) {
+        if (this._isMounted && this.shuffle) {
           this.forceUpdate(() => {
             this.shuffle.resetItems();
             this.shuffle.layout();
           });
           setTimeout(() => {
-            this.shuffle.layout();
+            if (this.shuffle) {
+              this.shuffle.layout();
+            }
           }, 1000);
         }
       });

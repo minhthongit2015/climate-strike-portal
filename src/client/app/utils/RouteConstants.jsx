@@ -70,12 +70,12 @@ export default {
 
   yourQuestionPath,
   yourQuestionLink,
-  askForOthersPath,
-  askForOthersLink,
   askForClimatePath,
   askForClimateLink,
   askForOrganismsPath,
   askForOrganismsLink,
   askForPollutionPath,
-  askForPollutionLink
+  askForPollutionLink,
+  askForOthersPath,
+  askForOthersLink
 };

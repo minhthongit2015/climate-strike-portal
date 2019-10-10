@@ -9,7 +9,7 @@ import BlogPage from '../../_base/BlogPage';
 
 export default class extends BlogPage {
   constructor(props) {
-    super(props, t('pages.whatYouCanDo.title.pollution'));
+    super(props, t('pages.whatYouCanDo.title.worldActions'));
     this.category = ['WorldActions'];
   }
 

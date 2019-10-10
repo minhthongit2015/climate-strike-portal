@@ -4,7 +4,8 @@ const Debugger = require('../services/Debugger');
 const Logger = require('../services/Logger');
 // const serverConfig = require('../config');
 const PostService = require('../services/blog/Post');
-const { buildModel, defaultModel } = require('../views/ViewUtils');
+const { buildModel, getModel } = require('../views/ViewUtils');
+const getTitleByUrl = require('./CategoryTitleMap');
 
 router.get('*', (req, res) => {
   Logger.catch(async () => {
@@ -14,7 +15,7 @@ router.get('*', (req, res) => {
     // const indexPath = path.resolve(serverConfig.publicFolder, 'index.html');
     // res.sendFile(indexPath);
 
-    let model = { ...defaultModel };
+    let model = getModel();
     if (req.query && req.query.hashtag) {
       const post = await PostService.getByOrder(req.query.hashtag);
       model = buildModel({
@@ -22,6 +23,12 @@ router.get('*', (req, res) => {
         title: post.title || model.title,
         description: post.summary || model.description,
         image: post.preview || model.image
+      });
+    } else {
+      const titleByCategory = getTitleByUrl(req.path);
+      model = buildModel({
+        url: req.url,
+        title: titleByCategory ? `${titleByCategory} | ${model.title}` : model.title
       });
     }
     res.render('index', model);

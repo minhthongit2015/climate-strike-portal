@@ -46,6 +46,11 @@ export default class HomePage extends BasePage {
     UserService.useFbProfileState(this);
   }
 
+  componentDidMount() {
+    super.componentDidMount();
+    console.log('Home mounted');
+  }
+
   static renderNav(nav) {
     return (
       <div className="col-4" key={nav.link}>

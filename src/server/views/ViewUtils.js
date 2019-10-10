@@ -9,11 +9,16 @@ const defaultModel = {
   app_id: '415534815831116'
 };
 
+function getModel() {
+  return JSON.parse(JSON.stringify(defaultModel));
+}
+
 function buildModel(model = defaultModel) {
   return Object.assign(defaultModel, model);
 }
 
 module.exports = {
   defaultModel,
+  getModel,
   buildModel
 };

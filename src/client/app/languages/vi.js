@@ -41,7 +41,7 @@ export default {
         organisms: 'Cho Sinh Vật',
         pollution: 'Giảm Ô Nhiễm',
         everything: 'Hỗ Trợ Các Phong Trào',
-        worldActions: 'Thế giới đang hành động'
+        worldActions: 'Thế Giới Đang Hành Động'
       },
       nav: {
         main: 'Điều Bạn Có Thể Làm',
