@@ -12,12 +12,32 @@ import superrequest from '../../../utils/superrequest';
 import PostService from '../../../services/PostService';
 import FbService from '../../../services/FbService';
 import LikeAndShare from '../../facebook/LikeAndShare';
+import UserService from '../../../services/UserService';
+import MessageDialogService from '../../../services/MessageDialogService';
+import ShareButton from '../../facebook/ShareButton';
 
-
-const contextOptions = [
+const adminCtxOptions = [
   { label: 'chỉnh sửa bài viết', value: 'update' },
   { label: 'xóa bài viết', value: 'delete' }
 ];
+const moderatorCtxOptions = adminCtxOptions;
+const normalUserCtxOptions = [
+  { label: 'đề xuất chỉnh sửa', value: 'request-update' },
+  { label: 'lưu bài viết', value: 'save-post' }
+];
+
+function getContextOptions() {
+  if (UserService.isAdmin) {
+    return adminCtxOptions;
+  }
+  if (UserService.isModerator) {
+    return moderatorCtxOptions;
+  }
+  if (UserService.isNornalUser) {
+    return normalUserCtxOptions;
+  }
+  return null;
+}
 
 export default class extends React.Component {
   constructor(props) {
@@ -56,19 +76,32 @@ export default class extends React.Component {
 
   handleContextActions(event, option) {
     event.preventDefault();
+    if (option.value === 'request-update') {
+      return MessageDialogService.show(
+        'Have a nice day! /=)',
+        'Sẽ thật tốt nếu bạn có thể thử lại tính năng này sau, tính năng hiện vẫn đang được xây dựng...'
+      );
+    }
+    if (option.value === 'save-post') {
+      return MessageDialogService.show(
+        'Wait me a second /=)',
+        'Sẽ thật tốt nếu bạn có thể thử lại tính năng này sau, tính năng hiện vẫn đang được xây dựng...'
+      );
+    }
     if (option.value === 'delete') {
       if (!window.confirm('Bạn có chắc muốn xóa bài viết này?')) {
-        return;
+        return null;
       }
       const { post } = this.props;
-      superrequest.agentDelete(`/api/v1/blog/posts/${post._id}`)
+      return superrequest.agentDelete(`/api/v1/blog/posts/${post._id}`)
         .then(() => {
           this.props.handleActions(event, { value: 'delete-done' }, this.props.post, this);
         });
     }
     if (this.props.handleActions) {
-      this.props.handleActions(event, option, this.props.post, this);
+      return this.props.handleActions(event, option, this.props.post, this);
     }
+    return null;
   }
 
   renderPreviewAsImage() {
@@ -118,10 +151,11 @@ export default class extends React.Component {
     const { post } = this.props;
     return (
       <div className="d-flex">
-        <LikeAndShare
+        {/* <LikeAndShare
           data-href={PostService.buildPostUrl(post)}
           data-width={this.getSizeByClass(post.previewClass)}
-        />
+        /> */}
+        <ShareButton url={PostService.buildPostUrl(post)} />
       </div>
     );
   }
@@ -135,13 +169,13 @@ export default class extends React.Component {
       summary = post.summary,
       content = post.content,
       category = post.categories[0].type,
-      createdAt = post.createdAt,
-      showContextMenu = false
+      createdAt = post.createdAt
     } = this.props;
     const {
       clickable,
       isVisible
     } = this.state;
+    const contextOptions = getContextOptions();
 
     return (
       <Card className="post">
@@ -158,7 +192,7 @@ export default class extends React.Component {
             {preview
               ? this.renderPreviewAsImage()
               : this.renderPreviewAsTitle()}
-            {showContextMenu && (
+            {contextOptions && (
               <div className="post__context-btn">
                 <ContextButton options={contextOptions} hanlder={this.handleContextActions} />
               </div>

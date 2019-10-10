@@ -1,6 +1,6 @@
 import GlobalState from '../utils/GlobalState';
 import superrequest from '../utils/superrequest';
-import { ApiEndpoints } from '../utils/Constants';
+import { ApiEndpoints, UserTypes } from '../utils/Constants';
 
 export const UserObjectKeys = {
   fbUser: 'fbUser',
@@ -12,6 +12,14 @@ export default class UserService {
   static get user() { return this._user || GlobalState.user; }
 
   static set user(user) { this._user = user; }
+
+  static get isAdmin() { return this.user != null && this.user.role === UserTypes.admin; }
+
+  static get isModerator() { return this.user != null && this.user.role === UserTypes.moderator; }
+
+  static get isNornalUser() { return this.user && !this.isAdmin && !this.isModerator; }
+
+  // ---
 
   static async fetchUser() {
     if (!this.fbUser) {
@@ -48,7 +56,7 @@ export default class UserService {
       });
   }
 
-  // ---
+  // --- --- ---
 
   static get fbUserId() {
     return this.fbUser ? this.fbUser.authResponse.userID : null;
@@ -71,7 +79,7 @@ export default class UserService {
       : '/images/default-avatar.jpg';
   }
 
-  // ---
+  // --- --- ---
 
   static get fbUser() { return this._fbUser || GlobalState.fbUser; }
 
@@ -95,7 +103,7 @@ export default class UserService {
     GlobalState.useState(UserObjectKeys.fbUser, null, component);
   }
 
-  // ---
+  // --- --- ---
 
   static get fbProfile() { return this._fbProfile || GlobalState.fbProfile; }
 
@@ -115,7 +123,7 @@ export default class UserService {
     GlobalState.useState(UserObjectKeys.fbProfile, null, component);
   }
 
-  // ---
+  // --- --- ---
 
   static clearAllUserInfo() {
     this.clearUser();

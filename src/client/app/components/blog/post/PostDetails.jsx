@@ -24,7 +24,7 @@ export default React.memo(props => (
           <ReactMarkdown
             className="markdown"
             source={props.content}
-            escapeHtml={false}
+            // escapeHtml={false} // Do not turn it on for now
           />
         </div>
       </Col>

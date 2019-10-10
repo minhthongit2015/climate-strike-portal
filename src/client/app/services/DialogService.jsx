@@ -1,5 +1,5 @@
 
-export default class PageDialogService {
+export default class DialogService {
   static get dialog() {
     return this.dialogRef.current;
   }
@@ -8,8 +8,8 @@ export default class PageDialogService {
     this.dialogRef = dialogRef;
   }
 
-  static pushHistory({ url, title, state }) {
-    this.dialog.pushHistory({ url, title, state });
+  static setDialogRef(dialogRef) {
+    this.dialogRef = dialogRef;
   }
 
   static setContent(content) {
