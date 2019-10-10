@@ -27,14 +27,18 @@ class Global {
     if (classComponent) {
       if (!classComponent._componentDidMount) {
         classComponent._componentDidMount = new Set();
-        classComponent._componentDidMount.add(classComponent.componentDidMount);
+        if (classComponent.componentDidMount) {
+          classComponent._componentDidMount.add(classComponent.componentDidMount);
+        }
         classComponent.componentDidMount = (...args) => {
           classComponent._componentDidMount.forEach(
             callback => callback.apply(classComponent, args)
           );
         };
         classComponent._componentWillUnmount = new Set();
-        classComponent._componentWillUnmount.add(classComponent.componentWillUnmount);
+        if (classComponent.componentWillUnmount) {
+          classComponent._componentWillUnmount.add(classComponent.componentWillUnmount);
+        }
         classComponent.componentWillUnmount = (...args) => {
           classComponent._componentWillUnmount.forEach(
             callback => callback.apply(classComponent, args)

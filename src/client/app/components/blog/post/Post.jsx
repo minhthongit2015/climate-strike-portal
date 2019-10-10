@@ -11,7 +11,7 @@ import ContextButton from '../../utils/context-button/ContextButton';
 import superrequest from '../../../utils/superrequest';
 import PostService from '../../../services/PostService';
 import FbService from '../../../services/FbService';
-import LikeAndShare from '../../facebook/LikeAndShare';
+// import LikeAndShare from '../../facebook/LikeAndShare';
 import UserService from '../../../services/UserService';
 import MessageDialogService from '../../../services/MessageDialogService';
 import ShareButton from '../../facebook/ShareButton';
