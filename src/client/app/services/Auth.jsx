@@ -30,9 +30,9 @@ export default class Auth {
     return FbService.logout();
   }
 
-  static signin(username, password) {
+  static signin(email, password) {
     return superagent.post(ApiEndpoints.user.SIGN_IN).withCredentials()
-      .send({ username, password });
+      .send({ email, password });
   }
 
   static async logout() {

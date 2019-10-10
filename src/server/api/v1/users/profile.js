@@ -77,12 +77,12 @@ router.post('/change-password', async (req, res) => {
       return res.status(401).send();
     }
 
-    const { username, oldPassword, newPassword } = req.body;
-    if (isBlank(username) || isBlank(oldPassword) || isBlank(newPassword)) {
+    const { email, oldPassword, newPassword } = req.body;
+    if (isBlank(email) || isBlank(oldPassword) || isBlank(newPassword)) {
       return res.status(400).send(new APIResponse().setError({ message: 'Invalid Parameters' }));
     }
 
-    const updatedUser = await UserService.updatePassword(username, oldPassword, newPassword);
+    const updatedUser = await UserService.updatePassword(email, oldPassword, newPassword);
     if (isNone(updatedUser)) {
       return res.send(new APIResponse().setError({ message: 'Old password is not correct' }));
     }

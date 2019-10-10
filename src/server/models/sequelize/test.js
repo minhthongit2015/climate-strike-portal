@@ -6,14 +6,12 @@ const { User, Garden, UserGarden } = db;
 module.exports = async () => {
   const user1 = await User.upsert({
     id: 1,
-    username: 'user1',
     password: 'sunday123',
     name: 'Trần Nguyễn Minh Thông',
     email: 'minhthong.it2015@gmail.com'
   });
   const user2 = await User.upsert({
     id: 2,
-    username: 'user2',
     password: 'sunday123',
     name: 'Trần Nguyễn Minh Thông',
     email: 'minhthong.it2015@gmail.com'

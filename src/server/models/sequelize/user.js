@@ -6,10 +6,12 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     avatar: DataTypes.STRING,
-    username: DataTypes.STRING,
     password: DataTypes.STRING,
     access_token: DataTypes.STRING,
     name: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    shortName: DataTypes.STRING,
     email: DataTypes.STRING,
     description: DataTypes.STRING,
     type: DataTypes.INTEGER
