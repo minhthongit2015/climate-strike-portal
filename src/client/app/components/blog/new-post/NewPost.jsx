@@ -14,6 +14,9 @@ import LeafLoading from '../../utils/loadings/LeafLoading';
 import Composer from '../composer/Composer';
 import ButtonBar from '../../dialog/ButtonBar';
 import CategoryHelper from '../../../utils/CategoryHelper';
+import UserService from '../../../services/UserService';
+import LoginDialogService from '../../../services/LoginDialogService';
+import MessageDialogService from '../../../services/MessageDialogService';
 
 const animatedComponents = makeAnimated();
 const scrollToTop = () => {
@@ -123,7 +126,18 @@ export default class extends React.Component {
     if (event.target.name === 'close') {
       this.resetForm();
     }
-    this.toggleExpand();
+    if (!UserService.user) {
+      LoginDialogService.open();
+    } else if (!this.props.hasPermission) {
+      MessageDialogService.show(
+        'Tham Gia Viết Bài',
+        <div>
+          Để tham gia cùng viết bài, bạn có thể liên hệ qua Facebook page <a href="https://www.facebook.com/Climate-Strike-Vietnam-101448167939446" target="_blank" rel="noopener noreferrer">Climate Strike Vietnam</a>
+        </div>
+      );
+    } else {
+      this.toggleExpand();
+    }
   }
 
   resetForm() {

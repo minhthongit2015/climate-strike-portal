@@ -1,6 +1,6 @@
 import React from 'react';
 import superrequest from '../utils/superrequest';
-import DialogService from './DialogService';
+import PageDialogService from './PageDialogService';
 import PostDetails from '../components/blog/post/PostDetails';
 import UserService from './UserService';
 
@@ -10,18 +10,33 @@ export default class {
       if (event.state && event.state.baseOrder) {
         this.showPost(event.state);
       } else {
-        DialogService.close();
+        PageDialogService.close();
       }
     };
   }
 
   // Direct access
-  static async fetchAndShowPost(postOrder) {
+  static async openPostDetailsCurrentTab(postOrder) {
     this.fetchPost(postOrder).then((res) => {
       if (res && res.data) {
-        this.showPost(res.data[0]);
-        window.history.replaceState(res.data[0], document.title, window.location.href);
+        const post = res.data[0];
+        this.showPost(post);
+        PageDialogService.replaceHistory({
+          url: this.buildPostUrl(post),
+          title: post.title,
+          state: post
+        });
       }
+    });
+  }
+
+  // Open when click to a post
+  static openPostDetailsNewTab(post) {
+    this.showPost(post);
+    PageDialogService.pushHistory({
+      url: this.buildPostUrl(post),
+      title: post.title,
+      state: post
     });
   }
 
@@ -29,19 +44,9 @@ export default class {
     return superrequest.get(`/api/v1/blog/posts?limit=1&where={"baseOrder":${postOrder}}`);
   }
 
-  // Open when click to a post
-  static async openPostDetails(post) {
-    DialogService.pushHistory({
-      url: this.buildPostUrl(post),
-      title: post.title,
-      state: post
-    });
-    this.showPost(post);
-  }
-
   static showPost(post) {
-    DialogService.setContent(<PostDetails {...post} />);
-    DialogService.open();
+    PageDialogService.setContent(<PostDetails {...post} />);
+    PageDialogService.open();
   }
 
   static buildPostUrl(post) {

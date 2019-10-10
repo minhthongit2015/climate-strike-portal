@@ -152,7 +152,7 @@ export default class InfinitePostList extends React.Component {
         loader={this.renderLoading()}
         endMessage={this.renderEnd()}
       >
-        <PostList posts={posts} handleActions={this.handleActions} />
+        <PostList posts={posts} handleActions={this.handleActions} {...this.props} />
       </InfiniteScroll>
     );
   }

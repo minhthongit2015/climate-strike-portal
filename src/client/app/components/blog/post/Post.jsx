@@ -42,7 +42,7 @@ export default class extends React.Component {
       isVisible: !prevState.isVisible
     }));
     const { post } = this.props;
-    PostService.openPostDetails(post);
+    PostService.openPostDetailsNewTab(post);
   }
 
   handlePopupChange(state) {
@@ -135,7 +135,8 @@ export default class extends React.Component {
       summary = post.summary,
       content = post.content,
       category = post.categories[0].type,
-      createdAt = post.createdAt
+      createdAt = post.createdAt,
+      showContextMenu = false
     } = this.props;
     const {
       clickable,
@@ -157,9 +158,11 @@ export default class extends React.Component {
             {preview
               ? this.renderPreviewAsImage()
               : this.renderPreviewAsTitle()}
-            <div className="post__context-btn">
-              <ContextButton options={contextOptions} hanlder={this.handleContextActions} />
-            </div>
+            {showContextMenu && (
+              <div className="post__context-btn">
+                <ContextButton options={contextOptions} hanlder={this.handleContextActions} />
+              </div>
+            )}
           </span>
           <MDBPopoverBody>
             <div className="post__content">

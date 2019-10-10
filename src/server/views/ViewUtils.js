@@ -14,7 +14,7 @@ function getModel() {
 }
 
 function buildModel(model = defaultModel) {
-  return Object.assign(defaultModel, model);
+  return Object.assign(getModel(), model);
 }
 
 module.exports = {

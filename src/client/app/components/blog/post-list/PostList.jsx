@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Shuffle from 'shufflejs';
 import Post from '../post/Post';
 import './PostList.scss';
+import UserService from '../../../services/UserService';
 
 
 export default class PostList extends React.Component {
@@ -12,6 +13,7 @@ export default class PostList extends React.Component {
     this.sizerElementRef = React.createRef();
     this.handleActions = this.handleActions.bind(this);
     this.processing = null;
+    UserService.useUserState(this);
   }
 
   componentDidMount() {
@@ -43,7 +45,8 @@ export default class PostList extends React.Component {
 
   shouldComponentUpdate(newProps) {
     const willUpdate = !(this.props.posts && newProps.posts
-      && newProps.posts.length === this.props.posts.length);
+      && newProps.posts.length === this.props.posts.length)
+      || newProps.hasPermission !== this.props.hasPermission;
     if (willUpdate) {
       this.processing = null;
     }
@@ -144,7 +147,7 @@ export default class PostList extends React.Component {
   }
 
   render() {
-    const { children, posts = [] } = this.props;
+    const { children, posts = [], hasPermission } = this.props;
     if (this.processing) return null;
     if (posts.length > 0 && this.processing === null) {
       this.mapPreviews(posts).then(() => {
@@ -162,21 +165,24 @@ export default class PostList extends React.Component {
         }
       });
     }
+
     return (
-      <React.Fragment>
-        <div ref={this.containerRef}>
-          <div className="sizer-element" ref={this.sizerElementRef} />
-          <div className="post-wrapper w4 p-0" />
-          {(posts && posts.map(post => (
-            PostList.renderPost(post._id,
-              <Post post={post} handleActions={this.handleActions} />, post)
-          )))
-          || (children && children.map(post => (
-            PostList.renderPost(post.key, post, post.props.post)
-          )))
-          }
-        </div>
-      </React.Fragment>
+      <div ref={this.containerRef}>
+        <div className="sizer-element" ref={this.sizerElementRef} />
+        <div className="post-wrapper w4 p-0" />
+        {(posts && posts.map(post => (
+          PostList.renderPost(post._id,
+            <Post
+              post={post}
+              handleActions={this.handleActions}
+              showContextMenu={hasPermission}
+            />, post)
+        )))
+        || (children && children.map(post => (
+          PostList.renderPost(post.key, post, post.props.post)
+        )))
+        }
+      </div>
     );
   }
 }

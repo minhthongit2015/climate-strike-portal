@@ -17,10 +17,17 @@ export default class extends BasePage {
     };
   }
 
-  // eslint-disable-next-line class-methods-use-this
   pushHistory({ state, title, url }) {
     window.history.pushState(state, title, url);
     this.historyBack = true;
+    this.historyPrevTitle = document.title;
+    document.title = title;
+  }
+
+  replaceHistory({ state, title, url }) {
+    window.history.replaceState(state, title, url);
+    this.historyPrevTitle = document.title;
+    document.title = title;
   }
 
   setContent(content) {
@@ -49,6 +56,10 @@ export default class extends BasePage {
         const { location } = window;
         const parentUrl = `${location.origin}${location.pathname}`;
         window.history.pushState(undefined, '', parentUrl);
+      }
+      if (this.historyPrevTitle) {
+        document.title = this.historyPrevTitle;
+        this.historyPrevTitle = null;
       }
     }
     this.setState({

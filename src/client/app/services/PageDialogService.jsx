@@ -12,6 +12,10 @@ export default class PageDialogService {
     this.dialog.pushHistory({ url, title, state });
   }
 
+  static replaceHistory({ url, title, state }) {
+    this.dialog.replaceHistory({ url, title, state });
+  }
+
   static setContent(content) {
     this.dialog.setContent(content);
   }
@@ -30,9 +34,5 @@ export default class PageDialogService {
 
   static close() {
     this.dialog.close();
-  }
-
-  static show(...args) {
-    this.dialog.show(...args);
   }
 }

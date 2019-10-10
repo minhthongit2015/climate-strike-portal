@@ -38,15 +38,19 @@ export default class extends React.Component {
 
     return (
       <React.Fragment>
-        {canCreateNewPost && (
-          <NewPostRow
-            ref={this.newPostRef}
-            onPosted={this.handlePostPosted}
-            rootCategory={rootCategory}
-            categories={categories}
-          />
-        )}
-        <PostList ref={this.postListRef} handleActions={this.handleActions} {...restProps} />
+        <NewPostRow
+          ref={this.newPostRef}
+          onPosted={this.handlePostPosted}
+          rootCategory={rootCategory}
+          categories={categories}
+          hasPermission={canCreateNewPost}
+        />
+        <PostList
+          {...restProps}
+          ref={this.postListRef}
+          handleActions={this.handleActions}
+          hasPermission={canCreateNewPost}
+        />
       </React.Fragment>
     );
   }

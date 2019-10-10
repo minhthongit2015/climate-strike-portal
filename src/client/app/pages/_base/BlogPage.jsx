@@ -8,7 +8,7 @@ export default class extends BasePage {
     const params = new URLSearchParams(window.location.search);
     const hashtag = params.get('hashtag');
     if (hashtag) {
-      PostService.fetchAndShowPost(hashtag);
+      PostService.openPostDetailsCurrentTab(hashtag);
       PostService.refreshCache();
     }
   }

@@ -22,9 +22,13 @@ import RouteConstants from './utils/RouteConstants';
 
 import KeyTracker from './utils/KeyTracker';
 import AuthService from './services/Auth';
-import DialogService from './services/DialogService';
-import PageDialog from './components/dialog/PageDialog';
 import PostService from './services/PostService';
+import PageDialogService from './services/PageDialogService';
+import LoginDialogService from './services/LoginDialogService';
+import MessageDialogService from './services/MessageDialogService';
+import PageDialog from './components/dialog/PageDialog';
+import LoginDialog from './components/dialog/LoginDialog';
+import MessageDialog from './components/dialog/MessageDialog';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
@@ -41,11 +45,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.pageDialogRef = React.createRef();
+    this.loginDialogRef = React.createRef();
+    this.messageDialogRef = React.createRef();
     GlobalState.init();
     GlobalState.loadState();
     superws.init();
     AuthService.init();
-    DialogService.init(this.pageDialogRef);
+    PageDialogService.init(this.pageDialogRef);
+    LoginDialogService.init(this.loginDialogRef);
+    MessageDialogService.init(this.messageDialogRef);
     PostService.init();
     KeyTracker();
   }
@@ -63,6 +71,8 @@ class App extends Component {
         </Switch>
         {(this.isTheRealWorldPage || window.myGoogleMap) && <TheRealWorldPage />}
         <PageDialog ref={this.pageDialogRef} />
+        <LoginDialog ref={this.loginDialogRef} />
+        <MessageDialog ref={this.messageDialogRef} />
       </React.Suspense>
     );
     return (
