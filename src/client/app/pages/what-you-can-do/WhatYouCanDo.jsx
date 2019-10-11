@@ -9,6 +9,7 @@ import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
 import TabSupporting from './tab-supporting/TabSupporting';
 import TabWorldActions from './tab-world-actions/TabWorldActions';
+import TabCommunityRecommend from './tab-community-recommend/TabCommunityRecommend';
 import t from '../../languages';
 
 export default class extends React.Component {
@@ -48,6 +49,12 @@ export default class extends React.Component {
         path: RouteConstants.worldActionsPath,
         link: RouteConstants.worldActionsLink,
         component: TabWorldActions
+      },
+      {
+        name: t('pages.whatYouCanDo.nav.communityRecommend'),
+        path: RouteConstants.communityRecommendPath,
+        link: RouteConstants.communityRecommendLink,
+        component: TabCommunityRecommend
       }
     ];
   }

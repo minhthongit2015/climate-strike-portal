@@ -10,6 +10,8 @@ const epClimatePath = `${earthPicturePath}/khi-hau`;
 const epClimateLink = `${earthPictureLink}/khi-hau`;
 const epPollutionPath = `${earthPicturePath}/o-nhiem`;
 const epPollutionLink = `${earthPictureLink}/o-nhiem`;
+const epCommunitySharePath = `${earthPicturePath}/chia-se-tu-cong-dong`;
+const epCommunityShareLink = `${earthPictureLink}/chia-se-tu-cong-dong`;
 
 const theRealWorldPath = '/the-gioi-thuc';
 const theRealWorldLink = '/the-gioi-thuc';
@@ -26,6 +28,8 @@ const doForPollutionPath = `${whatYouCanDoPath}/giam-o-nhiem`;
 const doForPollutionLink = `${whatYouCanDoLink}/giam-o-nhiem`;
 const worldActionsPath = `${whatYouCanDoPath}/the-gioi-dang-hanh-dong`;
 const worldActionsLink = `${whatYouCanDoLink}/the-gioi-dang-hanh-dong`;
+const communityRecommendPath = `${whatYouCanDoPath}/chia-se-tu-cong-dong`;
+const communityRecommendLink = `${whatYouCanDoLink}/chia-se-tu-cong-dong`;
 
 const yourQuestionPath = '/dieu-ban-muon-biet';
 const yourQuestionLink = '/dieu-ban-muon-biet';
@@ -51,6 +55,8 @@ export default {
   epOrganismsLink,
   epPollutionPath,
   epPollutionLink,
+  epCommunitySharePath,
+  epCommunityShareLink,
 
   theRealWorldPath,
   theRealWorldLink,
@@ -67,6 +73,8 @@ export default {
   doSupportingLink,
   worldActionsPath,
   worldActionsLink,
+  communityRecommendPath,
+  communityRecommendLink,
 
   yourQuestionPath,
   yourQuestionLink,

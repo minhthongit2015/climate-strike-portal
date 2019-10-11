@@ -25,9 +25,12 @@ router.get('*', (req, res) => {
         image: post.preview || model.image
       });
     } else {
+      const port = req.connection.localPort !== 80
+        ? `:${req.connection.localPort}`
+        : '';
       const titleByCategory = getTitleByUrl(req.path);
       model = buildModel({
-        url: req.url,
+        url: `https://${req.hostname}${port}${req.url}`,
         title: titleByCategory ? `${titleByCategory} | ${model.title}` : model.title
       });
     }

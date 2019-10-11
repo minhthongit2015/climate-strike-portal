@@ -5,6 +5,7 @@ const earthPicturePath = '/buc-tranh-trai-dat';
 const epOrganismsPath = `${earthPicturePath}/sinh-vat`;
 const epClimatePath = `${earthPicturePath}/khi-hau`;
 const epPollutionPath = `${earthPicturePath}/o-nhiem`;
+const epCommunitySharePath = `${earthPicturePath}/chia-se-tu-cong-dong`;
 
 const theRealWorldPath = '/the-gioi-thuc';
 
@@ -14,6 +15,7 @@ const doForClimatePath = `${whatYouCanDoPath}/khi-hau`;
 const doForOrganismsPath = `${whatYouCanDoPath}/sinh-vat`;
 const doForPollutionPath = `${whatYouCanDoPath}/giam-o-nhiem`;
 const worldActionsPath = `${whatYouCanDoPath}/the-gioi-dang-hanh-dong`;
+const communityRecommendPath = `${whatYouCanDoPath}/chia-se-tu-cong-dong`;
 
 const yourQuestionPath = '/dieu-ban-muon-biet';
 const askForClimatePath = `${yourQuestionPath}/khi-hau`;
@@ -28,6 +30,7 @@ const titleMap = {
   [epClimatePath]: 'Bức Tranh Khí Hậu',
   [epOrganismsPath]: 'Bức Tranh Sinh Vật',
   [epPollutionPath]: 'Bức Tranh Ô Nhiễm',
+  [epCommunitySharePath]: 'Chia sẻ từ cộng đồng',
 
   [theRealWorldPath]: 'Thế Giới Thực',
 
@@ -37,6 +40,7 @@ const titleMap = {
   [doForPollutionPath]: 'Giảm Ô Nhiễm',
   [doSupportingPath]: 'Hỗ Trợ Các Phong Trào',
   [worldActionsPath]: 'Thế Giới Đang Hành Động',
+  [communityRecommendPath]: 'Chia Sẻ Từ Cộng Đồng',
 
   [yourQuestionPath]: 'Điều Bạn Muốn Biết?',
   [askForClimatePath]: 'Hỏi Về Khí Hậu',

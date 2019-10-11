@@ -20,13 +20,15 @@ export default {
         main: 'Bức Tranh Trái Đất',
         climate: 'Bức Tranh Khí Hậu',
         organisms: 'Bức Tranh Sinh Vật',
-        pollution: 'Bức Tranh Ô Nhiễm'
+        pollution: 'Bức Tranh Ô Nhiễm',
+        communityShare: 'Chia Sẻ Từ Cộng Đồng'
       },
       nav: {
         main: 'Bức Tranh Trái Đất',
         climate: 'Khí hậu',
         organisms: 'Sinh vật',
-        pollution: 'Ô nhiễm'
+        pollution: 'Ô nhiễm',
+        communityShare: 'Chia sẻ tử cộng đồng'
       },
       mainMessage: 'ở đây không có gì ngoài sự thật...'
     },
@@ -41,7 +43,8 @@ export default {
         organisms: 'Cho Sinh Vật',
         pollution: 'Giảm Ô Nhiễm',
         everything: 'Hỗ Trợ Các Phong Trào',
-        worldActions: 'Thế Giới Đang Hành Động'
+        worldActions: 'Thế Giới Đang Hành Động',
+        communityRecommend: 'Chia Sẻ Từ Cộng Đồng'
       },
       nav: {
         main: 'Điều Bạn Có Thể Làm',
@@ -49,7 +52,8 @@ export default {
         organisms: 'Cho sinh vật',
         pollution: 'Giảm ô nhiễm',
         supporting: 'Hỗ trợ các phong trào',
-        worldActions: 'Thế giới đang hành động'
+        worldActions: 'Thế giới đang hành động',
+        communityRecommend: 'Chia sẻ từ cộng đồng'
       },
       mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\nsao mọi người lại phải cố gắng như vậy...'
     },

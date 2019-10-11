@@ -5,6 +5,7 @@ const categories = [
   { type: 'Climate', name: 'Khí hậu' },
   { type: 'Organisms', name: 'Sinh vật' },
   { type: 'Pollution', name: 'Ô nhiễm' },
+  { type: 'CommunityShare', name: 'Chia sẻ từ cộng đồng' },
 
   { type: 'WhatYouCanDo', name: 'Điều bạn có thể làm' },
   { type: 'DoForClimate', name: 'Cho khí hậu' },
@@ -12,6 +13,7 @@ const categories = [
   { type: 'DoForPollution', name: 'Giảm Ô nhiễm' },
   { type: 'DoSupporting', name: 'Hỗ trợ các phong trào' },
   { type: 'WorldActions', name: 'Thế giới đang hành động' },
+  { type: 'CommunityRecommend', name: 'Chia sẻ từ cộng đồng' },
 
   { type: 'YourQuestion', name: 'Điều bạn muốn biết?' },
   { type: 'AskForClimate', name: 'Hỏi về khí hậu' },
@@ -22,13 +24,13 @@ const categories = [
 
 generateId(categories, 200);
 mapParent(categories, [
-  [1, 2, 4]
+  [1, 2, 5]
 ]);
 mapParent(categories, [
-  [5, 6, 10]
+  [6, 7, 12]
 ]);
 mapParent(categories, [
-  [11, 12, 15]
+  [13, 14, 17]
 ]);
 
 module.exports = categories;

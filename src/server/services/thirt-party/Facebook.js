@@ -6,7 +6,7 @@ module.exports = class {
     if (!accessToken) return null;
     graph.setAccessToken(accessToken);
     return new Promise((resolve, reject) => {
-      graph.get('me', (error, response) => {
+      graph.get('me?fields=first_name,last_name,name,short_name', (error, response) => {
         if (error) {
           reject(error);
         }

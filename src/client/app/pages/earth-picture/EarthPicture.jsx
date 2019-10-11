@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import './EarthPicture.scss';
 
 import SidebarLayout from '../../layouts/sidebar-layout/SidebarLayout';
 import RouteConstants from '../../utils/RouteConstants';
@@ -8,6 +7,7 @@ import TabEarthPicture from './tab-earth-picture/TabEarthPicture';
 import TabOrganisms from './tab-organisms/TabOrganisms';
 import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
+import TabCommunityShare from './tab-community-share/TabCommunityShare';
 import t from '../../languages';
 
 export default class extends React.Component {
@@ -35,6 +35,12 @@ export default class extends React.Component {
         path: RouteConstants.epPollutionPath,
         link: RouteConstants.epPollutionLink,
         component: TabPollution
+      },
+      {
+        name: t('pages.earthPicture.nav.communityShare'),
+        path: RouteConstants.epCommunitySharePath,
+        link: RouteConstants.epCommunityShareLink,
+        component: TabCommunityShare
       }
     ];
   }
