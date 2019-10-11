@@ -50,7 +50,16 @@ module.exports = class extends CRUDService {
     if (!doc.categories || doc.categories.length <= 0) {
       return null;
     }
+    const docId = doc.id || doc._id;
+    let oldDoc = null;
+    if (docId) {
+      oldDoc = await this.get(docId);
+    }
+
+    // Resolve status
     doc.status = doc.status || PostStatus.published;
+
+    // Resolve Categories
     doc.categories = await CategoryService.list({
       where: {
         type: {
@@ -58,19 +67,30 @@ module.exports = class extends CRUDService {
         }
       }
     }).then(categories => categories.map(category => category._id));
+
+    // Resolve images
     if (doc.preview) {
       doc.preview = await ImgurService.create(doc.preview, {
         title: doc.title
       });
     }
     doc.content = await this.replaceImageBase64ToUrl(doc.content);
-    let newDoc;
-    if (doc.id || doc._id) {
-      newDoc = super.update(doc);
+
+    // Resolve authors
+    const newAuthor = ApiHelper.getId(doc.newAuthor);
+    delete doc.newAuthor;
+    if (oldDoc) {
+      if (oldDoc.authors.every(authorId => authorId !== newAuthor.toString())) {
+        oldDoc.authors.push(newAuthor);
+        doc.authors = oldDoc.authors;
+      }
     } else {
-      newDoc = super.create(doc);
+      doc.authors = [newAuthor];
     }
-    return newDoc;
+
+    return oldDoc
+      ? super.update(docId, doc)
+      : super.create(doc);
   }
 
   static async replaceImageBase64ToUrl(content) {

@@ -20,7 +20,7 @@ export default class extends BlogPage {
           <DeepMessage>{t('pages.earthPicture.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule categories={this.category} PostList={CommunitySharePosts} />
+          <PostsModule categories={this.category} PostList={CommunitySharePosts} everyoneCanPost />
         </SectionBody>
       </Section>
     );

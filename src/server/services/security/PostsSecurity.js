@@ -21,20 +21,15 @@ module.exports = class extends SecurityService {
       return true;
     }
     const post = req.body;
-    const yourQuestionCategory = await CategoryService.first({
-      where: { type: 'YourQuestion' }
-    });
-    const forbiddenCategories = await Promise.all(
-      post.categories.map(category => CategoryService.first({
-        where: {
-          $and: [
-            { type: category },
-            { parent: { $ne: yourQuestionCategory._id } }
-          ]
+    const publicCategories = await CategoryService.list({
+      where: {
+        type: {
+          $in: ['YourQuestion', 'CommunityShare', 'CommunityRecommed']
         }
-      }))
-    );
-    if (forbiddenCategories.filter(cat => cat).length > 0) {
+      }
+    });
+    const isOK = post.categories.every(cat => publicCategories.find(pCat => pCat._id === cat._id));
+    if (isOK) {
       return errorOrFalse(noStack(HttpErrors.Unauthorized()), throwError);
     }
     return true;

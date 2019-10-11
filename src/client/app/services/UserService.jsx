@@ -13,11 +13,15 @@ export default class UserService {
 
   static set user(user) { this._user = user; }
 
-  static get isAdmin() { return this.user != null && this.user.role === UserTypes.admin; }
+  static get isLoggedIn() { return this.user != null; }
 
-  static get isModerator() { return this.user != null && this.user.role === UserTypes.moderator; }
+  static get isAdmin() { return this.isLoggedIn && this.user.role === UserTypes.admin; }
 
-  static get isNornalUser() { return this.user && !this.isAdmin && !this.isModerator; }
+  static get isModerator() { return this.isLoggedIn && this.user.role === UserTypes.moderator; }
+
+  static get isNormalUser() { return this.isLoggedIn && !this.isAdmin && !this.isModerator; }
+
+  static isOwner(post) { return this.isLoggedIn && post.authors && post.authors.includes(this.user._id); }
 
   // ---
 

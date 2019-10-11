@@ -24,10 +24,10 @@ const categories = [
 
 generateId(categories, 200);
 mapParent(categories, [
-  [1, 2, 5]
+  [1, 2, 4]
 ]);
 mapParent(categories, [
-  [6, 7, 12]
+  [6, 7, 11]
 ]);
 mapParent(categories, [
   [13, 14, 17]

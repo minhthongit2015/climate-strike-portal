@@ -16,24 +16,46 @@ import UserService from '../../../services/UserService';
 import MessageDialogService from '../../../services/MessageDialogService';
 import ShareButton from '../../facebook/ShareButton';
 
-const adminCtxOptions = [
-  { label: 'chỉnh sửa bài viết', value: 'update' },
-  { label: 'xóa bài viết', value: 'delete' }
+const AllCtxOptions = {
+  edit: { label: 'chỉnh sửa bài viết', value: 'update' },
+  delete: { label: 'xóa bài viết', value: 'delete' },
+  request: { label: 'đề xuất chỉnh sửa', value: 'request-update' },
+  save: { label: 'lưu bài viết', value: 'save-post' }
+};
+
+const ownerCtxOptions = [
+  AllCtxOptions.edit,
+  AllCtxOptions.delete,
+  AllCtxOptions.save
 ];
-const moderatorCtxOptions = adminCtxOptions;
+const adminCtxOptions = [
+  ...ownerCtxOptions
+];
+const moderatorCtxOptions = [
+  ...ownerCtxOptions
+];
 const normalUserCtxOptions = [
-  { label: 'đề xuất chỉnh sửa', value: 'request-update' },
-  { label: 'lưu bài viết', value: 'save-post' }
+  AllCtxOptions.request,
+  AllCtxOptions.save
 ];
 
-function getContextOptions() {
+/**
+ * 1. Admin sẽ có tất cả quyền của owner
+ * 2. Moderator hiện sẽ có tất cả quyền của owner
+ * 3. Owner sẽ có quyền "Sửa", "Xóa", "Lưu"
+ * 4. Normal User sẽ có "Đề xuất sửa", "Lưu"
+ */
+function getContextOptions(post) {
   if (UserService.isAdmin) {
     return adminCtxOptions;
   }
   if (UserService.isModerator) {
     return moderatorCtxOptions;
   }
-  if (UserService.isNornalUser) {
+  if (UserService.isOwner(post)) {
+    return ownerCtxOptions;
+  }
+  if (UserService.isNormalUser) {
     return normalUserCtxOptions;
   }
   return null;
@@ -161,7 +183,7 @@ export default class extends React.Component {
   }
 
   render() {
-    const { post } = this.props;
+    let { post = {} } = this.props;
     const {
       _id = post._id,
       preview = post.preview,
@@ -169,13 +191,24 @@ export default class extends React.Component {
       summary = post.summary,
       content = post.content,
       category = post.categories[0].type,
-      createdAt = post.createdAt
+      createdAt = post.createdAt,
+      authors = post.authors
     } = this.props;
     const {
       clickable,
       isVisible
     } = this.state;
-    const contextOptions = getContextOptions();
+    post = {
+      _id,
+      preview,
+      title,
+      summary,
+      content,
+      category,
+      createdAt,
+      authors
+    };
+    const contextOptions = getContextOptions(post);
 
     return (
       <Card className="post">

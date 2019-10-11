@@ -10,7 +10,7 @@ const FacebookService = require('../../../services/thirt-party/Facebook');
 router.post('/', (req, res) => {
   Logger.catch(async () => {
     await PostsSecurityService.onlyQuestionOrModOrAdmin(req);
-    req.author = req.session.user;
+    req.body.newAuthor = req.session.user._id;
     const newPost = await PostService.create(req.body);
     res.send(new APIResponse().setData(newPost));
   }, { req, res });

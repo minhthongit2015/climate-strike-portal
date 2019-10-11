@@ -20,7 +20,7 @@ export default class extends BlogPage {
           <DeepMessage>{t('pages.whatYouCanDo.mainMessage')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule categories={this.category} PostList={CommunityRecommendPosts} />
+          <PostsModule categories={this.category} PostList={CommunityRecommendPosts} everyoneCanPost />
         </SectionBody>
       </Section>
     );

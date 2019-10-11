@@ -11,7 +11,7 @@ const PostSchema = new mongoose.Schema({
   summary: String,
   preview: String,
   status: String, // draft, pending, approved, scheduled, published, archived
-  author: [{ type: ObjectId, ref: 'User' }],
+  authors: [{ type: ObjectId, ref: 'User' }],
   vote: {
     type: Number,
     default: 0

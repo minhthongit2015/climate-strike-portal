@@ -32,9 +32,7 @@ export default class extends React.Component {
     const {
       categories, rootCategory, PostList, everyoneCanPost, ...restProps
     } = this.props;
-    const { user } = UserService;
-    const canCreateNewPost = user
-      && (['admin', 'moderator'].includes(user.role) || everyoneCanPost);
+    const canCreateNewPost = UserService.isAdmin || UserService.isModerator || everyoneCanPost;
 
     return (
       <React.Fragment>
