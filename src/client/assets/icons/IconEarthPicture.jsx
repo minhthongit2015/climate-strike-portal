@@ -9,6 +9,7 @@ export default (props) => {
   const [md1, md2, md3, md4, md5] = [0.05, 0.3, 0.75, 1, 2];
 
   function onMouseMove(event) {
+    event.preventDefault();
     const {
       d, r, dx, dy
     } = getParameters(event, 0.45);
@@ -22,6 +23,7 @@ export default (props) => {
   const customProps = {};
   if (!noAnimate) {
     customProps.onMouseMove = onMouseMove;
+    customProps.onTouchMove = onMouseMove;
   }
 
   return (

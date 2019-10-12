@@ -24,12 +24,12 @@ export default class extends Component {
 
   render() {
     const {
-      nav, className, ratio, type, noText
+      nav, className, imageClass, imageWrapperClass, ratio, type, noText, ...restProps
     } = this.props;
 
     return (
       <NavLink
-        {...this.props}
+        {...restProps}
         to={nav.link}
         key={nav.text}
         activeClassName="active"
@@ -42,7 +42,9 @@ export default class extends Component {
           icon={nav.icon}
           src={nav.iconSrc}
           ratio={ratio || 0.65}
-          type={type || 'contain'}
+          backgroundType={type || 'contain'}
+          wrapperClass={imageWrapperClass}
+          className={imageClass}
         />
         {!noText && <span>{nav.text}</span>}
         <MDBWaves cursorPos={this.state.cursorPos} />

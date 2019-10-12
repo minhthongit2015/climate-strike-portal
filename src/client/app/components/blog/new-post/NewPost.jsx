@@ -215,7 +215,7 @@ export default class extends React.Component {
         <MDBCardBody>
           <form onSubmit={this.handlePostSubmit}>
             <Row>
-              <Col>
+              <Col size="12" sm="6">
                 <Select
                   placeholder="Chuyên mục"
                   name="category"
@@ -249,7 +249,7 @@ export default class extends React.Component {
                   autofill="off"
                 />
               </Col>
-              <Col>
+              <Col size="12" sm="6">
                 <DropUploader
                   label="Tải ảnh xem trước"
                   name="preview"

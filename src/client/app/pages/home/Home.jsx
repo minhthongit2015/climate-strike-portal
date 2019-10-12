@@ -53,8 +53,8 @@ export default class HomePage extends BasePage {
 
   static renderNav(nav) {
     return (
-      <div className="col-4" key={nav.link}>
-        <NavIconLink nav={nav} ratio={1} />
+      <div className="col-12 col-sm-4" key={nav.link}>
+        <NavIconLink nav={nav} ratio={1} imageWrapperClass="col-6 col-xs-12 col-sm-10 m-auto" />
       </div>
     );
   }
@@ -82,7 +82,7 @@ export default class HomePage extends BasePage {
             <div className="text-center text-light">
               {t('pages.home.mainMessage')}
             </div>
-            <div className="d-flex">
+            <div className="home-nav d-flex flex-column flex-sm-row align-items-center">
               {
                 this.links.map((link) => {
                   if (link.type === 'nav') {
@@ -93,7 +93,7 @@ export default class HomePage extends BasePage {
               }
             </div>
             {fbProfile && (
-              <div className="text-center text-light mt-5">
+              <div className="text-center text-light mt-2 mt-xs-3 mt-sm-5">
                 {this.getRandomQuote(fbProfile.short_name)}
               </div>
             )}

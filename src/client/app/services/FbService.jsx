@@ -26,7 +26,7 @@ export default class {
           });
           this.FB.AppEvents.logPageView();
           this.FB.Event.subscribe('xfbml.render', () => {
-            // console.log('finished rendering plugins');
+            console.log('finished rendering plugins');
           });
           resolve();
         };
@@ -117,6 +117,7 @@ export default class {
   }
 
   static parseButtons() {
+    console.log('parsing.. all Facebook buttons');
     this.FB.XFBML.parse();
   }
 }

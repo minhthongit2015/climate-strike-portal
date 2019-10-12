@@ -7,6 +7,15 @@ const PostService = require('../services/blog/Post');
 const { buildModel, getModel } = require('../views/ViewUtils');
 const getTitleByUrl = require('./CategoryTitleMap');
 
+router.get('*', (req, res, next) => {
+  if (process.env.NODE_ENV === 'production' && req.protocol === 'http') {
+    res.redirect(`https://${req.headers.host}${req.url}`);
+    // res.redirect(`https://climate-strike-vietnam.com${req.url}`);
+  } else {
+    next();
+  }
+});
+
 router.get('*', (req, res) => {
   Logger.catch(async () => {
     Debugger.httpRouting('Routing: ', req.sessionID,

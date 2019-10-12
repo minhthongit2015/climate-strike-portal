@@ -31,7 +31,7 @@ export default class {
   }
 
   // Open when click to a post
-  static openPostDetailsNewTab(post) {
+  static openPostDetailsDialog(post) {
     this.showPost(post);
     PageDialogService.pushHistory({
       url: this.buildPostUrl(post),

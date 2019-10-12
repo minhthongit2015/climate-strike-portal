@@ -9,11 +9,11 @@ export default React.memo(props => (
   <div className="post-details container">
     <Row>
       {props.preview && (
-        <Col size="8">
+        <Col size="12" md="8" className="mb-3">
           <img alt={props.title} src={props.preview} />
         </Col>
       )}
-      <Col size={props.preview ? '4' : '12'}>
+      <Col size="12" md={props.preview ? '4' : '12'}>
         <div className="post-details__title">{props.title}</div>
         <sup className="post-details__time text-sm"><TimeAgo time={props.createdAt} /></sup>
         <hr className="my-3" />

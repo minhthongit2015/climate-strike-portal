@@ -8,7 +8,8 @@ import RouteConstants from '../../../utils/RouteConstants';
 import {
   IconEarthPictureStatic,
   IconWhatYouCanDo,
-  IconYourQuestion
+  IconYourQuestion,
+  IconHome
 } from '../../../../assets/icons';
 
 import NavIconLink from '../../../components/utils/nav-icon-link/NavIconLink';
@@ -46,12 +47,18 @@ export default class SideNav extends Component {
   }
 
   static renderHomeNav() {
+    const homeNav = {
+      type: 'nav',
+      link: RouteConstants.homeLink,
+      icon: IconHome
+    };
     return (
-      <div className="w-100 text-center mb-2">
+      <div className="w-100 text-center mb-0 mb-sm-2">
+        <NavIconLink nav={homeNav} className="d-sm-none" />
         <NavLink
           key="home"
           to={RouteConstants.homeLink}
-          className="border-bottom border-light pb-2 w-100"
+          className="border-bottom border-light pb-2 w-100 d-none d-sm-block"
           draggable={false}
         >
           Trang Chủ
@@ -71,7 +78,7 @@ export default class SideNav extends Component {
         className={
           classNames(
             'sidenav',
-            'd-flex flex-column justify-content-center align-items-center modern-scrollbar',
+            'd-flex flex-row flex-sm-column justify-content-center align-items-center modern-scrollbar',
             { hide: this.props.hide }
           )
         }

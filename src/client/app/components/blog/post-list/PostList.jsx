@@ -4,6 +4,7 @@ import Shuffle from 'shufflejs';
 import Post from '../post/Post';
 import './PostList.scss';
 import UserService from '../../../services/UserService';
+import FbService from '../../../services/FbService';
 
 
 export default class PostList extends React.Component {
@@ -139,7 +140,7 @@ export default class PostList extends React.Component {
         key={key}
         className={`post-wrapper p-0 ${post.previewClass || ''}`}
       >
-        <div className="p-2">
+        <div className="px-2 pt-4 pt-md-2">
           {content}
         </div>
       </div>
@@ -152,6 +153,7 @@ export default class PostList extends React.Component {
     if (posts.length > 0 && this.processing === null) {
       this.mapPreviews(posts).then(() => {
         this.processing = false;
+        FbService.parseButtons();
         if (this._isMounted && this.shuffle) {
           this.forceUpdate(() => {
             this.shuffle.resetItems();

@@ -10,7 +10,6 @@ import TimeAgo from '../../utils/time-ago/TimeAgo';
 import ContextButton from '../../utils/context-button/ContextButton';
 import superrequest from '../../../utils/superrequest';
 import PostService from '../../../services/PostService';
-import FbService from '../../../services/FbService';
 // import LikeAndShare from '../../facebook/LikeAndShare';
 import UserService from '../../../services/UserService';
 import MessageDialogService from '../../../services/MessageDialogService';
@@ -78,17 +77,9 @@ export default class extends React.Component {
     };
   }
 
-  componentDidUpdate() {
-    FbService.parseButtons();
-  }
-
   togglePopup() {
-    this.setState(prevState => ({
-      clickable: !prevState.clickable,
-      isVisible: !prevState.isVisible
-    }));
     const { post } = this.props;
-    PostService.openPostDetailsNewTab(post);
+    PostService.openPostDetailsDialog(post);
   }
 
   handlePopupChange(state) {
@@ -253,7 +244,7 @@ export default class extends React.Component {
           {summary && <div className="post__summary mt-2">{summary}</div>}
         </CardBody>
         <CardFooter className="d-flex align-items-center justify-content-stretch flex-wrap">
-          <div className="flex-fill">
+          <div className="flex-fill post__socials">
             {this.renderSocials()}
           </div>
           <div className="">
