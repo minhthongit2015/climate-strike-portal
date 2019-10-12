@@ -9,9 +9,7 @@ const getTitleByUrl = require('./CategoryTitleMap');
 
 router.get('*', (req, res, next) => {
   // next();
-  console.log('headers: ', req.headers);
-  console.log('protocol: ', req.headers['X-Forwarded-Proto']);
-  if (process.env.NODE_ENV === 'production' && req.headers['X-Forwarded-Proto'] === 'http') {
+  if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] === 'http') {
     res.redirect(`https://${req.headers.host}${req.url}`);
     // res.redirect(`https://climate-strike-vietnam.com${req.url}`);
   } else {
