@@ -1,10 +1,4 @@
 
-function noStack(error) {
-  delete error.stack;
-  error.code = error.statusCode;
-  return error;
-}
-
 function errorOrFalse(error, throwError = true) {
   if (throwError) {
     throw error;
@@ -14,6 +8,5 @@ function errorOrFalse(error, throwError = true) {
 }
 
 module.exports = {
-  noStack,
   errorOrFalse
 };

@@ -21,7 +21,9 @@ export default class UserService {
 
   static get isNormalUser() { return this.isLoggedIn && !this.isAdmin && !this.isModerator; }
 
-  static isOwner(post) { return this.isLoggedIn && post.authors && post.authors.includes(this.user._id); }
+  static isOwner(post) {
+    return this.isLoggedIn && post.authors && post.authors.includes(this.user._id);
+  }
 
   // ---
 

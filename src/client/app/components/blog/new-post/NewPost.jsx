@@ -43,6 +43,7 @@ export default class extends React.Component {
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.resetForm = this.resetForm.bind(this);
+    this.close = this.close.bind(this);
 
     this.state = {
       _id: null,
@@ -55,6 +56,41 @@ export default class extends React.Component {
     };
 
     CategoryHelper.useCategoriesState(this);
+  }
+
+  close() {
+    this.setState({
+      expanded: false
+    });
+  }
+
+  resetAndClose() {
+    this.setState({
+      _id: null,
+      title: '',
+      summary: '',
+      preview: '',
+      category: [],
+      expanded: false
+    });
+    this.contentRef.current.value = '';
+  }
+
+  resetForm() {
+    this.setState({
+      _id: null,
+      title: '',
+      summary: '',
+      preview: '',
+      category: []
+    });
+    this.contentRef.current.value = '';
+  }
+
+  toggleExpand() {
+    this.setState(prevState => ({
+      expanded: !prevState.expanded
+    }));
   }
 
   setPost(post) {
@@ -97,7 +133,7 @@ export default class extends React.Component {
       .then((res) => {
         if (res && res.ok) {
           this.dispatchPostPostedEvent(res.data);
-          this.resetForm();
+          this.resetAndClose();
         }
       })
       .catch((error) => {
@@ -138,23 +174,6 @@ export default class extends React.Component {
     } else {
       this.toggleExpand();
     }
-  }
-
-  resetForm() {
-    this.setState({
-      _id: null,
-      title: '',
-      summary: '',
-      preview: '',
-      category: []
-    });
-    this.contentRef.current.value = '';
-  }
-
-  toggleExpand() {
-    this.setState(prevState => ({
-      expanded: !prevState.expanded
-    }));
   }
 
   dispatchPostPostedEvent(postedPost) {

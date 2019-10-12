@@ -1,22 +1,22 @@
 const HttpErrors = require('http-errors');
-const { errorOrFalse, noStack } = require('./SecurityHelper');
+const { errorOrFalse } = require('./SecurityHelper');
 const { UserRole } = require('../../utils/Constants');
 
 
 module.exports = class {
-  static onlyAuthorizedUser(req, throwError = true) {
+  static onlyLoggedInUser(req, throwError = true) {
     if (!req.session.user) {
-      return errorOrFalse(noStack(HttpErrors.Unauthorized()), throwError);
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     return true;
   }
 
   static onlyRoleUser(req, throwError = true) {
-    if (!this.onlyAuthorizedUser(req, throwError)) {
+    if (!this.onlyLoggedInUser(req, throwError)) {
       return false;
     }
     if (!req.session.user.role || typeof req.session.user.role !== 'string') {
-      return errorOrFalse(noStack(HttpErrors.Unauthorized()), throwError);
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     return true;
   }
@@ -26,7 +26,7 @@ module.exports = class {
       return false;
     }
     if (req.session.user.role !== UserRole.MODERATOR) {
-      return errorOrFalse(noStack(HttpErrors.Unauthorized()), throwError);
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     return true;
   }
@@ -36,7 +36,7 @@ module.exports = class {
       return false;
     }
     if (req.session.user.role !== UserRole.ADMIN) {
-      return errorOrFalse(noStack(HttpErrors.Unauthorized()), throwError);
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     return true;
   }
@@ -47,7 +47,7 @@ module.exports = class {
     }
     if (req.session.user.role !== UserRole.MODERATOR
       && req.session.user.role !== UserRole.ADMIN) {
-      return errorOrFalse(noStack(HttpErrors.Unauthorized()), throwError);
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     return true;
   }

@@ -1,5 +1,5 @@
 const HttpErrors = require('http-errors');
-const { errorOrFalse, noStack } = require('./SecurityHelper');
+const { errorOrFalse } = require('./SecurityHelper');
 const SecurityService = require('./index');
 const CategoryService = require('../blog/Category');
 
@@ -13,14 +13,31 @@ module.exports = class extends SecurityService {
     return true;
   }
 
-  static async onlyQuestionOrModOrAdmin(req, throwError = true) {
-    if (!this.onlyValidPost(req, throwError)) {
-      return false;
+  static onlyOwner(req, post, throwError = true) {
+    const userId = req.session.user._id.toString();
+    if (!post || !post.authors || !post.authors.includes || !post.authors.includes(userId)) {
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
+    }
+    return true;
+  }
+
+  static onlyOwnerModAdmin(req, post, throwError = true) {
+    if (!this.onlyLoggedInUser(req, false)) {
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     if (this.onlyModOrAdmin(req, false)) {
       return true;
     }
-    const post = req.body;
+    return this.onlyOwner(req, post, throwError);
+  }
+
+  static async onlyPublicOwnerModAdmin(req, post, throwError = true) {
+    if (!this.onlyValidPost(req, throwError)) {
+      return false;
+    }
+    if (this.onlyOwnerModAdmin(req, post, false)) {
+      return true;
+    }
     const publicCategories = await CategoryService.list({
       where: {
         type: {
@@ -30,7 +47,7 @@ module.exports = class extends SecurityService {
     });
     const isOK = post.categories.every(cat => publicCategories.find(pCat => pCat._id === cat._id));
     if (isOK) {
-      return errorOrFalse(noStack(HttpErrors.Unauthorized()), throwError);
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     return true;
   }

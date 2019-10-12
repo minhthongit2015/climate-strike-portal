@@ -26,10 +26,6 @@ export default class Auth {
     return isOk;
   }
 
-  static async fbLogout() {
-    return FbService.logout();
-  }
-
   static signin(email, password) {
     return superagent.post(ApiEndpoints.user.SIGN_IN).withCredentials()
       .send({ email, password });

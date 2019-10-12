@@ -15,6 +15,7 @@ import FbService from '../../../services/FbService';
 import UserService from '../../../services/UserService';
 import MessageDialogService from '../../../services/MessageDialogService';
 import ShareButton from '../../facebook/ShareButton';
+import LoginDialogService from '../../../services/LoginDialogService';
 
 const AllCtxOptions = {
   edit: { label: 'chỉnh sửa bài viết', value: 'update' },
@@ -38,6 +39,9 @@ const normalUserCtxOptions = [
   AllCtxOptions.request,
   AllCtxOptions.save
 ];
+const noLoginCtxOptions = [
+  AllCtxOptions.request
+];
 
 /**
  * 1. Admin sẽ có tất cả quyền của owner
@@ -58,7 +62,7 @@ function getContextOptions(post) {
   if (UserService.isNormalUser) {
     return normalUserCtxOptions;
   }
-  return null;
+  return noLoginCtxOptions;
 }
 
 export default class extends React.Component {
@@ -99,10 +103,13 @@ export default class extends React.Component {
   handleContextActions(event, option) {
     event.preventDefault();
     if (option.value === 'request-update') {
-      return MessageDialogService.show(
-        'Have a nice day! /=)',
-        'Sẽ thật tốt nếu bạn có thể thử lại tính năng này sau, tính năng hiện vẫn đang được xây dựng...'
-      );
+      if (UserService.isLoggedIn) {
+        return MessageDialogService.show(
+          'Have a nice day! /=)',
+          'Sẽ thật tốt nếu bạn có thể thử lại tính năng này sau, tính năng hiện vẫn đang được xây dựng...'
+        );
+      }
+      return LoginDialogService.open();
     }
     if (option.value === 'save-post') {
       return MessageDialogService.show(

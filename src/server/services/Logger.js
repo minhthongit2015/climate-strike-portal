@@ -10,13 +10,13 @@ const logDir = path.resolve('src/server/logs');
 
 const Logger = createLogger({
   transports: [
-    new (transports.Console)({ json: true, timestamp: true }),
+    // new (transports.Console)({ json: true, timestamp: true }),
     new transports.File({
       dirname: logDir, filename: 'combined.log', json: true, timestamp: true
     })
   ],
   exceptionHandlers: [
-    new (transports.Console)({ json: true, timestamp: true }),
+    // new (transports.Console)({ json: true, timestamp: true }),
     new transports.File({
       dirname: logDir, filename: 'exceptions.log', json: true, timestamp: true
     })
@@ -41,7 +41,8 @@ Logger.catch = async function _catch(func, handler = () => {}) {
       const { req, res } = handler;
       if (req && req.api) {
         delete error.stack; // No stack will be send to the client
-        res.status(error.code || 400).send(new ApiResponse().setError(error));
+        res.status(error.statusCode || error.status || error.code || 400)
+          .send(new ApiResponse().setError(error));
       }
     }
   }
