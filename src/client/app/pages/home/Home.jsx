@@ -21,6 +21,10 @@ export default class HomePage extends BasePage {
         type: 'nav',
         link: RouteConstants.earthPictureLink,
         text: t('pages.home.nav.earthPicture'),
+        textStyle: {
+          marginTop: '-14px',
+          marginBottom: '20px'
+        },
         icon: IconEarthPicture
       },
       // {
@@ -33,12 +37,20 @@ export default class HomePage extends BasePage {
         type: 'nav',
         link: RouteConstants.whatYouCanDoLink,
         text: t('pages.home.nav.whatYouCanDo'),
+        textStyle: {
+          marginTop: '2px',
+          marginBottom: '2px'
+        },
         icon: IconWhatYouCanDo
       },
       {
         type: 'nav',
         link: RouteConstants.yourQuestionLink,
         text: t('pages.home.nav.yourQuestion'),
+        textStyle: {
+          marginTop: '-10px',
+          marginBottom: '20px'
+        },
         icon: IconYourQuestion
       }
     ];
@@ -46,15 +58,15 @@ export default class HomePage extends BasePage {
     UserService.useFbProfileState(this);
   }
 
-  componentDidMount() {
-    super.componentDidMount();
-    console.log('Home mounted');
-  }
-
   static renderNav(nav) {
     return (
       <div className="col-12 col-sm-4 p-0" key={nav.link}>
-        <NavIconLink nav={nav} ratio={1} imageWrapperClass="col-4 col-xs-8 col-sm-10 m-auto p-0" />
+        <NavIconLink
+          nav={nav}
+          ratio={1}
+          className="my-0"
+          imageWrapperClass="col-4 col-xs-8 col-sm-10 p-0 mx-auto"
+        />
       </div>
     );
   }
@@ -79,7 +91,7 @@ export default class HomePage extends BasePage {
       <React.Fragment>
         <div className="h-100 d-flex justify-content-center align-items-center">
           <div className="d-flex flex-column col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12 p-0">
-            <div className="text-center text-light">
+            <div className="text-center text-light px-2">
               {t('pages.home.mainMessage')}
             </div>
             <div className="home-nav d-flex flex-column flex-sm-row align-items-center">

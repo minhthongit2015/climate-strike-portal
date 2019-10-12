@@ -46,7 +46,7 @@ export default class extends Component {
           wrapperClass={imageWrapperClass}
           className={imageClass}
         />
-        {!noText && <span>{nav.text}</span>}
+        {!noText && <span style={nav.textStyle}>{nav.text}</span>}
         <MDBWaves cursorPos={this.state.cursorPos} />
       </NavLink>
     );

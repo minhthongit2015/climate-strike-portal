@@ -8,13 +8,16 @@ const { buildModel, getModel } = require('../views/ViewUtils');
 const getTitleByUrl = require('./CategoryTitleMap');
 
 router.get('*', (req, res, next) => {
-  next();
-  // if (process.env.NODE_ENV === 'production' && req.protocol === 'http') {
-  //   res.redirect(`https://${req.headers.host}${req.url}`);
-  //   // res.redirect(`https://climate-strike-vietnam.com${req.url}`);
-  // } else {
-  //   next();
-  // }
+  // next();
+  console.log('protocol: ', req.protocol);
+  console.log('env: ', process.env);
+  if (process.env.NODE_ENV === 'production' && req.protocol === 'http') {
+    console.log('redirect');
+    res.redirect(`https://${req.headers.host}${req.url}`);
+    // res.redirect(`https://climate-strike-vietnam.com${req.url}`);
+  } else {
+    next();
+  }
 });
 
 router.get('*', (req, res) => {
