@@ -53,8 +53,8 @@ export default class HomePage extends BasePage {
 
   static renderNav(nav) {
     return (
-      <div className="col-12 col-sm-4" key={nav.link}>
-        <NavIconLink nav={nav} ratio={1} imageWrapperClass="col-6 col-xs-12 col-sm-10 m-auto" />
+      <div className="col-12 col-sm-4 p-0" key={nav.link}>
+        <NavIconLink nav={nav} ratio={1} imageWrapperClass="col-6 col-xs-12 col-sm-10 m-auto p-0" />
       </div>
     );
   }
@@ -78,7 +78,7 @@ export default class HomePage extends BasePage {
     return (
       <React.Fragment>
         <div className="h-100 d-flex justify-content-center align-items-center">
-          <div className="d-flex flex-column col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12">
+          <div className="d-flex flex-column col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12 p-0">
             <div className="text-center text-light">
               {t('pages.home.mainMessage')}
             </div>
