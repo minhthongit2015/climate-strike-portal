@@ -54,7 +54,7 @@ export default class HomePage extends BasePage {
   static renderNav(nav) {
     return (
       <div className="col-12 col-sm-4 p-0" key={nav.link}>
-        <NavIconLink nav={nav} ratio={1} imageWrapperClass="col-6 col-xs-12 col-sm-10 m-auto p-0" />
+        <NavIconLink nav={nav} ratio={1} imageWrapperClass="col-4 col-xs-8 col-sm-10 m-auto p-0" />
       </div>
     );
   }
