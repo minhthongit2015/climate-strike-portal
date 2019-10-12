@@ -9,6 +9,7 @@ const getTitleByUrl = require('./CategoryTitleMap');
 
 router.get('*', (req, res, next) => {
   // next();
+  console.log('headers: ', req.headers);
   console.log('protocol: ', req.headers['X-Forwarded-Proto']);
   if (process.env.NODE_ENV === 'production' && req.headers['X-Forwarded-Proto'] === 'http') {
     res.redirect(`https://${req.headers.host}${req.url}`);
