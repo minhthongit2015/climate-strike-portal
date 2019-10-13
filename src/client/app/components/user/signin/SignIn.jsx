@@ -32,6 +32,9 @@ export default class SignIn extends Component {
 
   handleOnDropdownRef(ref) {
     this.dropdownRef = ref;
+    if (ref) {
+      return;
+    }
     ref._toggle = ref.toggle;
     ref.toggle = (...args) => {
       ref._toggle(...args);
@@ -63,7 +66,9 @@ export default class SignIn extends Component {
     const { disabled } = this.state;
     const { fbProfile, user } = UserService;
     const nextLevel = 10;
-    const socialPoint = user.socialPoint || 0;
+    const socialPoint = user
+      ? user.socialPoint || 0
+      : 0;
 
     return (
       <MDBDropdown
