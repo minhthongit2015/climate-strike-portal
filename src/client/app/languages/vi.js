@@ -28,7 +28,7 @@ export default {
         climate: 'Khí hậu',
         organisms: 'Sinh vật',
         pollution: 'Ô nhiễm',
-        communityShare: 'Chia sẻ tử cộng đồng'
+        communityShare: 'Chia sẻ từ cộng đồng'
       },
       mainMessage: 'ở đây không có gì ngoài sự thật...'
     },

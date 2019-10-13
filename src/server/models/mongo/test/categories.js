@@ -13,6 +13,7 @@ const categories = [
   { type: 'DoForPollution', name: 'Giảm Ô nhiễm' },
   { type: 'DoSupporting', name: 'Hỗ trợ các phong trào' },
   { type: 'WorldActions', name: 'Thế giới đang hành động' },
+  { type: 'GretaThunberg', name: 'Greta Thunberg' },
   { type: 'CommunityRecommend', name: 'Chia sẻ từ cộng đồng' },
 
   { type: 'YourQuestion', name: 'Điều bạn muốn biết?' },
@@ -27,10 +28,10 @@ mapParent(categories, [
   [1, 2, 4]
 ]);
 mapParent(categories, [
-  [6, 7, 11]
+  [6, 7, 12]
 ]);
 mapParent(categories, [
-  [13, 14, 17]
+  [14, 15, 18]
 ]);
 
 module.exports = categories;
