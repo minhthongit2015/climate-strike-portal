@@ -1,10 +1,10 @@
 
 const mongoose = require('mongoose');
-const Marker = require('./Marker');
+const Area = require('./Area');
 
 const ActingCountrySchema = new mongoose.Schema({
   type: { type: String, default: 'ActingCountry' }
 });
-const ActingCountryModel = Marker.discriminator('ActingCountry', ActingCountrySchema);
+const ActingCountryModel = Area.discriminator('ActingCountry', ActingCountrySchema);
 
 module.exports = ActingCountryModel;

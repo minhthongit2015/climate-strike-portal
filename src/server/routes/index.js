@@ -24,21 +24,22 @@ router.get('*', (req, res) => {
     // res.sendFile(indexPath);
 
     let model = getModel();
+    const port = req.connection.localPort !== 80
+      ? `:${req.connection.localPort}`
+      : '';
+    const url = `https://${req.hostname}${port}${req.url}`;
     if (req.query && req.query.hashtag) {
       const post = await PostService.getByOrder(req.query.hashtag);
       model = buildModel({
-        url: req.url,
+        url,
         title: post.title || model.title,
         description: post.summary || model.description,
         image: post.preview || model.image
       });
     } else {
-      const port = req.connection.localPort !== 80
-        ? `:${req.connection.localPort}`
-        : '';
       const titleByCategory = getTitleByUrl(req.path);
       model = buildModel({
-        url: `https://${req.hostname}${port}${req.url}`,
+        url,
         title: titleByCategory ? `${titleByCategory} | ${model.title}` : model.title
       });
     }
