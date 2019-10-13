@@ -32,7 +32,7 @@ export default class SignIn extends Component {
 
   handleOnDropdownRef(ref) {
     this.dropdownRef = ref;
-    if (ref) {
+    if (!ref || (ref && ref._toggle)) {
       return;
     }
     ref._toggle = ref.toggle;
