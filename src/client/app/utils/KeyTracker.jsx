@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable func-names */
 
 export default function KeyTracker() {
