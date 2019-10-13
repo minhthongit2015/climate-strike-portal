@@ -1,0 +1,27 @@
+
+
+.rating {
+  &__toggle {
+    cursor: pointer;
+    &:hover {
+      color: orange;
+    }
+    &.rated {
+      color: #ffc75f;
+    }
+  }
+
+  &__points {
+    &__point {
+      color: #ffc75f;
+      font-weight: bolder;
+      &:hover {
+        color: orange;
+      }
+      &.active {
+        color: #fff;
+        background: orange;
+      }
+    }
+  }
+}

@@ -8,7 +8,8 @@ module.exports = class extends Converter {
       _id: rawUser._id,
       name: rawUser.name,
       socials: rawUser.socials,
-      role: rawUser.role
+      role: rawUser.role,
+      socialPoint: rawUser.socialPoint
     };
   }
 };

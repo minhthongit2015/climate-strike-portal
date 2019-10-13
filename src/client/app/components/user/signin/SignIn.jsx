@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-  MDBBtn, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
+  MDBBtn, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,
+  MDBTooltip
 } from 'mdbreact';
 import './SignIn.scss';
 
@@ -8,6 +9,8 @@ import UserService from '../../../services/UserService';
 import AuthService from '../../../services/Auth';
 import t from '../../../languages';
 import LoginDialogService from '../../../services/LoginDialogService';
+import ProgressWithIcon from '../../utils/progres-with-icon/ProgressWithIcon';
+import { IconRankLeader } from '../../../../assets/icons';
 
 
 export default class SignIn extends Component {
@@ -15,12 +18,37 @@ export default class SignIn extends Component {
 
   constructor(props) {
     super(props);
+    this.rankRef = React.createRef();
+    this.dropdownRef = null;
+    this.handleOnDropdownRef = this.handleOnDropdownRef.bind(this);
     this.state = {
       isShowLoginModal: false,
       disabled: false
     };
     UserService.useFbUserState(this);
     UserService.useFbProfileState(this);
+    UserService.useUserState(this);
+  }
+
+  handleOnDropdownRef(ref) {
+    this.dropdownRef = ref;
+    ref._toggle = ref.toggle;
+    ref.toggle = (...args) => {
+      ref._toggle(...args);
+      if (!ref.state.isOpen) {
+        this.handleOpenMenuContext();
+      } else {
+        this.handleCloseMenuContext();
+      }
+    };
+  }
+
+  handleOpenMenuContext() {
+    this.rankRef.current.setOpen(true);
+  }
+
+  handleCloseMenuContext() {
+    this.rankRef.current.setOpen(false);
   }
 
   static handleSignOut() {
@@ -33,9 +61,15 @@ export default class SignIn extends Component {
 
   renderAvatar() {
     const { disabled } = this.state;
-    const { fbProfile } = UserService;
+    const { fbProfile, user } = UserService;
+    const nextLevel = 10;
+    const socialPoint = user.socialPoint || 0;
+
     return (
-      <MDBDropdown dropleft>
+      <MDBDropdown
+        dropleft
+        ref={this.handleOnDropdownRef}
+      >
         <MDBDropdownToggle
           floating
           color="link"
@@ -51,14 +85,43 @@ export default class SignIn extends Component {
             className="img-fluid z-depth-1 rounded-circle"
           />
         </MDBDropdownToggle>
-        <MDBDropdownMenu basic>
+        <MDBDropdownMenu basic flip>
+          {user && (
+            <React.Fragment>
+              <MDBDropdownItem className="text-center" header>
+                <ProgressWithIcon
+                  ref={this.rankRef}
+                  percent={user.socialPoint / nextLevel * 100}
+                  icon={<IconRankLeader />}
+                />
+                <MDBTooltip>
+                  <MDBBtn
+                    className="py-0 pl-1 pr-1 m-0 text-center mt-2 text-bold"
+                    size="lg"
+                    color="link"
+                  >{socialPoint} / {nextLevel}
+                  </MDBBtn>
+                  <div>
+                    {!socialPoint ? (
+                      <div>Bạn vẫn chưa có hoạt động nào</div>
+                    ) : (
+                      <div>Đây là điểm hoạt động của bạn.
+                        <br />Cảm ơn bạn vì đã nỗ lực cùng thế giới chống biến đổi khí hậu!
+                      </div>
+                    )}
+                  </div>
+                </MDBTooltip>
+                <div className="text-center text-light" />
+              </MDBDropdownItem>
+              <MDBDropdownItem divider />
+            </React.Fragment>
+          )}
           <MDBDropdownItem
             disabled={disabled}
             onClick={SignIn.handleSignOut}
+            className="text-gray"
           >{t('components.user.logout')}
           </MDBDropdownItem>
-          {/* <MDBDropdownItem divider />
-          <MDBDropdownItem>Separated link</MDBDropdownItem> */}
         </MDBDropdownMenu>
       </MDBDropdown>
     );

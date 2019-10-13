@@ -20,6 +20,7 @@ export { default as IconEarthPictureStatic } from './icons/IconEarthPictureStati
 export { default as IconWhatYouCanDo } from './icons/IconWhatYouCanDo';
 export { default as IconYourQuestion } from './icons/IconYourQuestion';
 export { default as IconMore } from './icons/IconMore';
+export { default as IconRankLeader } from './icons/IconRankLeader';
 
 export default {
   AICloudIcon,

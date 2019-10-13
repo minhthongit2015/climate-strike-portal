@@ -1,5 +1,5 @@
 const { User } = require('../../models/mongo');
-const ConverterFactory = require('../../models/converters/converter-factory');
+const ConverterFactory = require('../../models/converters/ConverterFactory');
 
 module.exports = class {
   static async authenticate(email, password) {
@@ -12,6 +12,6 @@ module.exports = class {
       email, password
     }).exec();
 
-    return ConverterFactory.get('user').convert(user);
+    return ConverterFactory.get(User.modelName).convert(user);
   }
 };

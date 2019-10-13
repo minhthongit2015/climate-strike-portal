@@ -1,6 +1,7 @@
 
 const Converter = require('./converter');
 const UserConverter = require('./UserConverter');
+const RatingConverter = require('./RatingConverter');
 const GardenConverter = require('./garden-converter');
 const UserGardenConverter = require('./user-garden-converter');
 const EnvDatasetConverter = require('./env-dataset');
@@ -11,6 +12,8 @@ module.exports = class {
     switch (name) {
     case 'User':
       return UserConverter;
+    case 'Rating':
+      return RatingConverter;
     case 'garden':
       return GardenConverter;
     case 'user-garden':

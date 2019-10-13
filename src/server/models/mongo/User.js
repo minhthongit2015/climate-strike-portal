@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
     facebook: String,
     twitter: String,
     instagram: String
+  },
+  socialPoint: {
+    type: Number,
+    default: 0
   }
 });
 const UserModel = mongoose.model('User', UserSchema);

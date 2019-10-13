@@ -8,10 +8,8 @@ const { buildModel, getModel } = require('../views/ViewUtils');
 const getTitleByUrl = require('./CategoryTitleMap');
 
 router.get('*', (req, res, next) => {
-  // next();
   if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] === 'http') {
     res.redirect(`https://${req.headers.host}${req.url}`);
-    // res.redirect(`https://climate-strike-vietnam.com${req.url}`);
   } else {
     next();
   }

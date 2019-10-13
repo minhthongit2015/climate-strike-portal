@@ -15,6 +15,7 @@ import UserService from '../../../services/UserService';
 import MessageDialogService from '../../../services/MessageDialogService';
 import ShareButton from '../../facebook/ShareButton';
 import LoginDialogService from '../../../services/LoginDialogService';
+import Rating from '../../utils/rating/Rating';
 
 const AllCtxOptions = {
   edit: { label: 'chỉnh sửa bài viết', value: 'update' },
@@ -70,6 +71,7 @@ export default class extends React.Component {
     this.togglePopup = this.togglePopup.bind(this);
     this.handlePopupChange = this.handlePopupChange.bind(this);
     this.handleContextActions = this.handleContextActions.bind(this);
+    this.handleRating = this.handleRating.bind(this);
 
     this.state = {
       clickable: false,
@@ -180,6 +182,25 @@ export default class extends React.Component {
     );
   }
 
+  handleRating(rating) {
+    const { post } = this.props;
+    if (!UserService.isLoggedIn) {
+      LoginDialogService.open();
+      return;
+    }
+    if (post.rating) {
+      post.totalRating = post.totalRating - post.rating + rating;
+    } else {
+      post.totalRating += rating;
+      post.totalVotes += 1;
+    }
+    post.rating = rating;
+    superrequest.agentPost(`/api/v1/blog/posts/${post._id}/rating`, {
+      rating
+    });
+    this.forceUpdate();
+  }
+
   render() {
     let { post = {} } = this.props;
     const {
@@ -190,7 +211,10 @@ export default class extends React.Component {
       content = post.content,
       category = post.categories[0].type,
       createdAt = post.createdAt,
-      authors = post.authors
+      authors = post.authors,
+      totalRating = post.totalRating,
+      totalVotes = post.totalVotes,
+      rating = post.rating
     } = this.props;
     const {
       clickable,
@@ -204,12 +228,23 @@ export default class extends React.Component {
       content,
       category,
       createdAt,
-      authors
+      authors,
+      totalRating,
+      totalVotes,
+      rating
     };
     const contextOptions = getContextOptions(post);
+    const ratingInfo = {
+      totalRating,
+      totalVotes,
+      rating
+    };
 
     return (
       <Card className="post">
+        <div className="post__rating">
+          <Rating {...ratingInfo} onRating={this.handleRating} id={_id} />
+        </div>
         <MDBPopover
           placement="top"
           clickable={clickable}

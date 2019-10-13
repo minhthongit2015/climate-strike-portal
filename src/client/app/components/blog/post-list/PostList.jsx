@@ -169,7 +169,7 @@ export default class PostList extends React.Component {
     }
 
     return (
-      <div ref={this.containerRef}>
+      <div ref={this.containerRef} className="mt-5">
         <div className="sizer-element" ref={this.sizerElementRef} />
         <div className="post-wrapper w4 p-0" />
         {(posts && posts.map(post => (

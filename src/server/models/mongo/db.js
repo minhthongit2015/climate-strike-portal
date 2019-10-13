@@ -28,6 +28,7 @@ const User = require('./User');
 const Marker = require('./markers/Marker');
 const Strike = require('./markers/Strike');
 const Category = require('./blog/Category');
+const Rating = require('./blog/Rating');
 const Post = require('./blog/Post');
 const EarthPicturePost = require('./blog/EarthPicturePost');
 const WhatYouCanDoPost = require('./blog/WhatYouCanDoPost');
@@ -40,6 +41,7 @@ module.exports = {
   Marker,
   Strike,
   Category,
+  Rating,
   Post,
   EarthPicturePost,
   WhatYouCanDoPost,

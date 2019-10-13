@@ -1,6 +1,6 @@
 
 const ApiHelper = require('../utils/ApiHelper');
-const ConverterFactory = require('../models/converters/converter-factory');
+const ConverterFactory = require('../models/converters/ConverterFactory');
 const { isNotSet } = require('../utils');
 
 
@@ -11,6 +11,10 @@ module.exports = class CRUDService {
 
   static get model() {
     return this._model;
+  }
+
+  static get converter() {
+    return ConverterFactory.get(this.model.modelName);
   }
 
   static get populate() {
@@ -41,13 +45,13 @@ module.exports = class CRUDService {
       query
     );
     const doc = await query.exec();
-    return ConverterFactory.get(this.model.modelName).convert(doc);
+    return this.converter.convert(doc);
   }
 
   static async first(opts = ApiHelper.listParams) {
     opts.limit = 1;
     const foundDocs = await this.list(opts);
-    return ConverterFactory.get(this.model.modelName).convert(foundDocs[0]);
+    return this.converter.convert(foundDocs[0]);
   }
 
   static async list(opts = ApiHelper.listParams) {
@@ -61,7 +65,7 @@ module.exports = class CRUDService {
       query
     );
     const docs = await query.exec();
-    return ConverterFactory.get(this.model.modelName).convertCollection(docs);
+    return this.converter.convertCollection(docs);
   }
 
   static async update(id, props) {
@@ -72,7 +76,7 @@ module.exports = class CRUDService {
     id = ApiHelper.getId(id);
     const { id: idz, _id, ...restProps } = props;
     const updatedDoc = await this.model.findByIdAndUpdate(id, restProps).exec();
-    return ConverterFactory.get(this.model.modelName).convert(updatedDoc);
+    return this.converter.convert(updatedDoc);
   }
 
   static async delete(id) {

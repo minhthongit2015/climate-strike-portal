@@ -1,6 +1,5 @@
 const { User } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
-const ConverterFactory = require('../../models/converters/converter-factory');
 const { isBlank } = require('../../utils');
 
 module.exports = class extends CRUDService {
@@ -30,7 +29,7 @@ module.exports = class extends CRUDService {
       ]
     })
       .then(user => user || User.create(userToSave));
-    return ConverterFactory.get('user').convert(newUser);
+    return this.converter.convert(newUser);
   }
 
   static async updatePassword({ email, oldPassword, newPassword }) {
@@ -52,7 +51,7 @@ module.exports = class extends CRUDService {
     }
 
     const updatedUser = affectedRows[0];
-    return ConverterFactory.get('user').convert(updatedUser);
+    return this.converter.convert(updatedUser);
   }
 
   static async updateUserRole(userId, newRole) {
@@ -72,6 +71,6 @@ module.exports = class extends CRUDService {
     }
 
     const updatedUser = affectedRows[0];
-    return ConverterFactory.get('user').convert(updatedUser);
+    return this.converter.convert(updatedUser);
   }
 };

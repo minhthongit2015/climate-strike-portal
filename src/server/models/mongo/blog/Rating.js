@@ -1,24 +1,30 @@
 
 const mongoose = require('mongoose');
+const Post = require('./Post');
 
 const { ObjectId } = mongoose.Schema.Types;
 
 const RatingSchema = new mongoose.Schema({
-  categories: [{ type: ObjectId, ref: 'Rating' }],
-  authors: [{ type: ObjectId, ref: 'User' }],
-  vote: {
+  user: { type: ObjectId, ref: 'User' },
+  post: { type: ObjectId, ref: 'Post' },
+  rating: {
     type: Number,
     default: 0
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
   }
 });
+
+RatingSchema.post('save', async (doc) => {
+  const post = await Post.findById(doc.post);
+  if (!post.totalRating) {
+    post.totalRating = 0;
+  }
+  if (!post.totalVotes) {
+    post.totalVotes = 0;
+  }
+  post.totalRating += doc.rating;
+  post.totalVotes += 1;
+  post.save();
+}, { query: true, document: true });
 
 const RatingModel = mongoose.model('Rating', RatingSchema);
 module.exports = RatingModel;
