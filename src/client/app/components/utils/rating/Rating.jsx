@@ -92,6 +92,12 @@ export default class extends React.Component {
         <div>
           <div className="rating__summary d-flex">
             <MDBTooltip placement="top">
+              <MDBBtn className="py-0 px-2 m-0 rating__average" size="lg" color="link">
+                (<i className="rating__star fas fa-star" /> {averageRating.toFixed(2)})
+              </MDBBtn>
+              <div>Khuyên đọc</div>
+            </MDBTooltip>
+            <MDBTooltip placement="top">
               <MDBBtn className="py-0 pl-2 pr-1 m-0" size="lg" color="link">{totalRating}</MDBBtn>
               <div>tổng điểm<br />khuyên đọc</div>
             </MDBTooltip>
@@ -99,10 +105,6 @@ export default class extends React.Component {
             <MDBTooltip placement="top">
               <MDBBtn className="py-0 pl-1 pr-1 m-0" size="lg" color="link">{totalVotes}</MDBBtn>
               <div>lượt khuyên</div>
-            </MDBTooltip>
-            <MDBTooltip placement="top">
-              <MDBBtn className="py-0 px-2 m-0" size="lg" color="link">({averageRating.toFixed(2)})</MDBBtn>
-              <div>điểm trung bình</div>
             </MDBTooltip>
           </div>
         </div>

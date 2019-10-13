@@ -24,4 +24,14 @@
       }
     }
   }
+
+  &__average.btn-link.btn {
+    color: orange !important;
+  }
+  &__star {
+    color: orange;
+    font-size: .7em !important;
+    line-height: .5em;
+    vertical-align: middle;
+  }
 }
