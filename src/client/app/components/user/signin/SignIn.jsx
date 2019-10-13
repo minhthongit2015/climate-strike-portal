@@ -112,6 +112,7 @@ export default class SignIn extends Component {
                     ) : (
                       <div>Đây là điểm hoạt động của bạn.
                         <br />Cảm ơn bạn vì đã nỗ lực cùng thế giới chống biến đổi khí hậu!
+                        <br />...những việc bạn làm sẽ giúp cứu hàng triệu sinh mạng.
                       </div>
                     )}
                   </div>

@@ -16,19 +16,28 @@ export default class extends React.Component {
       isVisible: false,
       clickable: false
     };
+    this.lastStateChange = Date.now();
   }
 
   toggleRatingPopover() {
+    if (Date.now() - this.lastStateChange < 500) {
+      return;
+    }
+    this.lastStateChange = Date.now();
     this.setState(prevState => ({
       isVisible: !prevState.isVisible || !prevState.clickable,
-      clickable: !!(prevState.isVisible && !prevState.clickable)
+      clickable: !prevState.clickable
     }));
   }
 
   handleRatingPopoverChange(state) {
+    if (Date.now() - this.lastStateChange < 500) {
+      return;
+    }
+    this.lastStateChange = Date.now();
     this.setState({
       isVisible: state,
-      clickable: false
+      clickable: !!window.isMobile
     });
   }
 
