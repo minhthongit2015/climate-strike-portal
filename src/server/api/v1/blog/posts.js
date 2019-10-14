@@ -54,10 +54,10 @@ router.get('/:postId?', (req, res) => {
     const postOrPosts = await PostService.getOrList(postId, req.query);
     if (req.session.user) {
       if (postOrPosts.length == null) {
-        await PostService.appendRatingByUser(postOrPosts, req.session.user);
+        await RatingService.appendRatingOfUser(postOrPosts, req.session.user);
       } else {
         await Promise.all(postOrPosts.map(
-          post => PostService.appendRatingByUser(post, req.session.user)
+          post => RatingService.appendRatingOfUser(post, req.session.user)
         ));
       }
     }

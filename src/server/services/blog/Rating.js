@@ -29,11 +29,13 @@ module.exports = class extends CRUDService {
       });
 
       // Update user social point
-      if (!user.socialPoint) {
-        user.socialPoint = 0;
+      const userz = await UserService.get(user._id);
+      if (!userz.socialPoint) {
+        userz.socialPoint = 0;
       }
-      user.socialPoint += 1;
-      user.dirty = true;
+      userz.socialPoint += 1;
+      userz.dirty = true;
+      Object.assign(user, userz);
 
       return newRating;
     }
@@ -56,5 +58,16 @@ module.exports = class extends CRUDService {
     });
 
     return oldRating;
+  }
+
+  static async appendRatingOfUser(post, user) {
+    const ratingRecord = await Rating.findOne({
+      user: user._id,
+      post: post._id
+    });
+    if (ratingRecord) {
+      post.rating = ratingRecord.rating;
+    }
+    return post;
   }
 };

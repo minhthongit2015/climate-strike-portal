@@ -1,5 +1,5 @@
 
-const { Post, Rating } = require('../../models/mongo');
+const { Post } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
 const CategoryService = require('./Category');
 const ApiHelper = require('../../utils/ApiHelper');
@@ -110,16 +110,5 @@ module.exports = class extends CRUDService {
 
   static async getByOrder(baseOrder) {
     return super.first({ where: { baseOrder } });
-  }
-
-  static async appendRatingByUser(post, user) {
-    const ratingRecord = await Rating.findOne({
-      user: user._id,
-      post: post._id
-    });
-    if (ratingRecord) {
-      post.rating = ratingRecord.rating;
-    }
-    return post;
   }
 };
