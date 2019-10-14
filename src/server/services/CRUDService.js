@@ -21,13 +21,21 @@ module.exports = class CRUDService {
     return [];
   }
 
+  static clone(model) {
+    return {
+      model,
+      converter: ConverterFactory.get(model.modelName),
+      populate: this.populate
+    };
+  }
+
   static resolveListOptions(opts = ApiHelper.listParams) {
     return opts;
   }
 
   static async create(doc) {
     const newDoc = await this.model.create(doc);
-    return newDoc;
+    return this.converter.convert(newDoc);
   }
 
   static async getOrList(id, opts = ApiHelper.listParams) {
@@ -68,15 +76,22 @@ module.exports = class CRUDService {
     return this.converter.convertCollection(docs);
   }
 
-  static async update(id, props) {
-    if (!props) {
-      props = id;
-      id = props._id || props.id;
+  static async update(id, doc) {
+    if (!doc) {
+      doc = id;
+      id = doc._id || doc.id;
     }
     id = ApiHelper.getId(id);
-    const { id: idz, _id, ...restProps } = props;
+    const { id: idz, _id, ...restProps } = doc;
     const updatedDoc = await this.model.findByIdAndUpdate(id, restProps).exec();
     return this.converter.convert(updatedDoc);
+  }
+
+  static async createOrUpdate(doc) {
+    if (doc._id || doc.id) {
+      return this.update(doc);
+    }
+    return this.create(doc);
   }
 
   static async delete(id) {

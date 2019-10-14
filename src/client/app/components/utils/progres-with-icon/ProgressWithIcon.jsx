@@ -21,12 +21,15 @@ export default class extends React.Component {
       icon, percent = 0, progressProps = {}, ...restProps
     } = this.props;
     const { isOpen } = this.state;
-    const speedControl = { stiffness: 14, damping: 20 };
+    const normalSpeed = { stiffness: 14, damping: 20 };
+    const flashSpeed = { stiffness: 300, damping: 25 };
+    const speedControl = isOpen ? normalSpeed : flashSpeed;
+    const value = isOpen ? percent : 0;
 
     return (
       <Motion
         defaultStyle={{ percent: 0 }}
-        style={{ percent: spring(isOpen ? percent : 0, speedControl) }}
+        style={{ percent: spring(value, speedControl) }}
       >
         {value => (
           <div style={{ position: 'relative' }} {...restProps}>

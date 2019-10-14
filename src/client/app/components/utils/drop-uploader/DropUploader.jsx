@@ -8,10 +8,15 @@ export default class extends React.Component {
     super(props);
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.handleStartUpload = this.handleStartUpload.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.inputRef = React.createRef();
     this.state = {
       uploading: false
     };
+  }
+
+  handleInputChange(event) {
+    this.dispatchUploadedEvent(event.target.value);
   }
 
   handleStartUpload() {
@@ -28,14 +33,14 @@ export default class extends React.Component {
       this.setState({
         uploading: false
       });
-      this.triggerUploadedEvent(event1.target.result);
+      this.dispatchUploadedEvent(event1.target.result);
     };
 
     const newFile = event.target.files[0];
     reader.readAsDataURL(newFile);
   }
 
-  triggerUploadedEvent(imgUrlBase64) {
+  dispatchUploadedEvent(imgUrlBase64) {
     if (this.props.onChange) {
       this.props.onChange({
         target: {
@@ -49,11 +54,15 @@ export default class extends React.Component {
 
   render() {
     const {
-      className, wrapperProps, innerClass, label, value, ...restProps
+      className, wrapperProps, innerClass, label, value = '', ...restProps
     } = this.props;
     const { uploading } = this.state;
+    const urlInputValue = value && value.startsWith('http')
+      ? value
+      : '';
+
     return (
-      <div className={classnames('drop-uploader', className)} {...wrapperProps}>
+      <div className={classnames('drop-uploader d-flex flex-column', className)} {...wrapperProps}>
         <label
           className={classnames('drop-uploader__drop-zone rounded text-center', innerClass)}
           style={{ backgroundImage: `url(${value || ''})` }}
@@ -71,6 +80,17 @@ export default class extends React.Component {
             style={{ display: 'none' }}
           />
         </label>
+        <input
+          className="drop-uploader__url-input px-2 rounded"
+          placeholder="URL hình ảnh"
+          name="url"
+          value={urlInputValue}
+          onChange={this.handleInputChange}
+          autoComplete="off"
+          autofill="off"
+          spellCheck={false}
+          autoCorrect={false}
+        />
       </div>
     );
   }

@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const ObjectsRoute = require('./entities');
+const PlacesRoute = require('./places');
 
-router.use('/entities', ObjectsRoute);
+router.use('/places', PlacesRoute);
 
 module.exports = router;

@@ -124,6 +124,11 @@ export default class SignIn extends Component {
           )}
           <MDBDropdownItem
             disabled={disabled}
+            className="text-gray"
+          >Bài viết đã lưu
+          </MDBDropdownItem>
+          <MDBDropdownItem
+            disabled={disabled}
             onClick={SignIn.handleSignOut}
             className="text-gray"
           >{t('components.user.logout')}

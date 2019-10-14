@@ -1,14 +1,18 @@
 
+const Place = require('./_Place');
 const Strike = require('./Strike');
 const Activist = require('./Activist');
+const ActivistGroup = require('./ActivistGroup');
 const Disaster = require('./Disaster');
 const Extinction = require('./Extinction');
-const ActingCountry = require('./ActingCountry');
+const Pollution = require('./Pollution');
 
 module.exports = {
+  Place,
   Strike,
   Activist,
+  ActivistGroup,
   Disaster,
   Extinction,
-  ActingCountry
+  Pollution
 };

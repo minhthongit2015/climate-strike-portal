@@ -1,9 +1,7 @@
-const EntityService = require('../../services/map/Entity');
-const ApiHelper = require('../../utils/ApiHelper');
-const CRUDService = require('../CRUDService');
+// const PlaceService = require('./Place');
+// const ApiHelper = require('../../utils/ApiHelper');
+// const CRUDService = require('../CRUDService');
 
-module.exports = class extends CRUDService {
-  static async list(opts = ApiHelper.listParams) {
-    return EntityService.list(opts);
-  }
+module.exports = class {
+
 };

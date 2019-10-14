@@ -20,7 +20,7 @@ export default class extends React.Component {
   }
 
   toggleRatingPopover() {
-    if (Date.now() - this.lastStateChange < 500) {
+    if (Date.now() - this.lastStateChange < 200) {
       return;
     }
     this.lastStateChange = Date.now();
@@ -31,7 +31,7 @@ export default class extends React.Component {
   }
 
   handleRatingPopoverChange(state) {
-    if (Date.now() - this.lastStateChange < 500) {
+    if (Date.now() - this.lastStateChange < 200) {
       return;
     }
     this.lastStateChange = Date.now();

@@ -39,6 +39,11 @@ const Config = require('./config');
 
 class Server {
   static start() {
+    Debugger.log('\x1B[2J');
+    // const lines = process.stdout.getWindowSize()[1];
+    // for (let i = 0; i < lines; i++) {
+    //   Debugger.log('\r\n');
+    // }
     Debugger.log(colors.rainbow(`\r\n\r\n${new Array(60).fill('▬').join('')}\r\n`));
     Debugger.log(`${''.padStart(12, ' ')}${colors.rainbow('START')} ${colors.yellow('CLIMATE STRIKE VIETNAM SERVER')}\r\n`);
     Debugger.log(colors.rainbow(`${new Array(60).fill('▬').join('')}\r\n`));

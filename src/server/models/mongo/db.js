@@ -25,14 +25,14 @@ class MongoDB {
 }
 
 const User = require('./User');
-const Strike = require('./markers/Strike');
+const Strike = require('./map/Strike');
 const Category = require('./blog/Category');
 const Rating = require('./blog/Rating');
 const Post = require('./blog/Post');
 const EarthPicturePost = require('./blog/EarthPicturePost');
 const WhatYouCanDoPost = require('./blog/WhatYouCanDoPost');
 const YourQuestionPost = require('./blog/YourQuestionPost');
-const Markers = require('./markers');
+const Markers = require('./map');
 
 module.exports = {
   db: MongoDB.db,
