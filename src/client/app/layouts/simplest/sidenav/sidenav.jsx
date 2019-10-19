@@ -44,7 +44,7 @@ export default class SideNav extends Component {
         icon: IconYourQuestion
       }
     ];
-    if (window.location.port === 80) {
+    if (window.location.port === '') {
       this.links.splice(0, 1);
     }
   }

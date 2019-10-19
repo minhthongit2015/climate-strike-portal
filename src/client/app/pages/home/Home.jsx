@@ -59,7 +59,7 @@ export default class HomePage extends BasePage {
       }
     ];
 
-    if (window.location.port === 80) {
+    if (window.location.port === '') {
       this.links.splice(0, 1);
     }
 
