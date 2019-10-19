@@ -45,7 +45,7 @@ export default class SideNav extends Component {
       }
     ];
     if (window.location.port === '') {
-      this.links.splice(0, 1);
+      this.links.splice(1, 1);
     }
   }
 

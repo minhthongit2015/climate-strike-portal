@@ -60,7 +60,7 @@ export default class HomePage extends BasePage {
     ];
 
     if (window.location.port === '') {
-      this.links.splice(0, 1);
+      this.links.splice(1, 1);
     }
 
     UserService.useFbProfileState(this);
