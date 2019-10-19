@@ -25,12 +25,12 @@ export default class SideNav extends Component {
         text: 'Bức Tranh\r\nTrái Đất',
         icon: IconEarthPictureStatic
       },
-      // {
-      //   type: 'nav',
-      //   link: RouteConstants.theRealWorldLink,
-      //   text: 'Thế Giới\r\nThực',
-      //   iconSrc: MyGardenSrc
-      // },
+      {
+        type: 'nav',
+        link: RouteConstants.theRealWorldLink,
+        text: 'Thế Giới\r\nThực',
+        icon: IconEarthPictureStatic
+      },
       {
         type: 'nav',
         link: RouteConstants.whatYouCanDoLink,
@@ -44,6 +44,9 @@ export default class SideNav extends Component {
         icon: IconYourQuestion
       }
     ];
+    if (window.location.port === 80) {
+      this.links.splice(0, 1);
+    }
   }
 
   static renderHomeNav() {

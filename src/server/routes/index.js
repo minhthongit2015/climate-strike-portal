@@ -24,10 +24,10 @@ router.get('*', (req, res) => {
     // res.sendFile(indexPath);
 
     let model = getModel();
-    const port = req.connection.localPort !== 80
-      ? `:${req.connection.localPort}`
-      : '';
-    const url = `https://${req.hostname}${port}${req.url}`;
+    // const port = req.connection.localPort !== 80
+    //   ? `:${req.connection.localPort}`
+    //   : '';
+    const url = `https://${req.hostname}${req.url}`;
     if (req.query && req.query.hashtag) {
       const post = await PostService.getByOrder(req.query.hashtag);
       model = buildModel({

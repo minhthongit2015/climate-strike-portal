@@ -3,39 +3,32 @@ import React from 'react';
 import BasePage from '../_base/BasePage';
 
 import GGMap from '../../components/map/Map';
-import MarkerWithInfo from '../../components/map/marker-with-info/MarkerWithInfo';
-import StoreMarker from '../../components/map/store-marker/StoreMarker';
-import GardenToolsMarker from '../../components/map/garden-tools-marker/GardenToolsMarker';
-import UserMarker from '../../components/map/user-marker/UserMarker';
-import FarmMarker from '../../components/map/farm-marker/FarmMarker';
-import Polyline from '../../components/map/polyline/Polyline';
+// import Polyline from '../../components/map/polyline/Polyline';
 import MapService from '../../services/MapService';
 import t from '../../languages';
 
 export default class TheRealWorld extends BasePage {
   constructor(props) {
     super(props, t('pages.theRealWorld.title'));
-    this.state = {
-      dirty: false,
-      mapEntities: [],
-      places: []
-    };
-
     this.markers = new Set();
     this.lineRef = React.createRef();
-
-    const center = [10.821897348888664, 106.68697200200597];
-    this.defaultMapProps = {
-      initialCenter: { lat: center[0], lng: center[1] },
-      zoom: 17
-    };
-
     this.onMapReady = this.onMapReady.bind(this);
     this.onMarkerRef = this.onMarkerRef.bind(this);
     this.renderMapElements = this.renderMapElements.bind(this);
     this.handleHotkeys = this.handleHotkeys.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
     this.onMoveMarker = this.onMoveMarker.bind(this);
+
+    this.state = {
+      dirty: false,
+      mapEntities: [],
+      places: []
+    };
+    const center = [10.821897348888664, 106.68697200200597];
+    this.defaultMapProps = {
+      initialCenter: { lat: center[0], lng: center[1] },
+      zoom: 17
+    };
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -51,7 +44,7 @@ export default class TheRealWorld extends BasePage {
     this.map.setOptions({
       restriction: {
         latLngBounds: {
-          north: 70, south: -70, west: -180, east: 180
+          north: 80, south: -80, west: -180, east: 180
         },
         strictBounds: true
       },
@@ -68,42 +61,12 @@ export default class TheRealWorld extends BasePage {
     this.markers.add(ref);
   }
 
-  static getMarkerByType(type) {
-    switch (type) {
-    case 'Garden':
-      return UserMarker;
-    case 'Farm':
-      return FarmMarker;
-    case 'FoodShop':
-      return StoreMarker;
-    case 'ToolShop':
-      return GardenToolsMarker;
-    default:
-      return MarkerWithInfo;
-    }
-  }
-
   async loadMapObjects() {
-    const mapEntities = await MapService.fetchEntities();
-
-    // clearInterval(this.timer);
-    // this.timer = setInterval(() => {
-    //   mapEntities.forEach((mapEntity) => {
-    //     if (mapEntity.type === 'Garden') {
-    //       mapEntity.position.lat += 0.0001;
-    //       mapEntity.ref.rootMarker.setPosition(mapEntity.position);
-    //     }
-    //   });
-    // }, 1000);
-
-    const { places } = mapEntities;
-
+    const places = await MapService.fetchPlaces();
     this.setState({
       dirty: true,
-      mapEntities,
       places
     });
-    // this.forceUpdate();
   }
 
   onMapClicked(mapProps, map, event) {
@@ -135,18 +98,19 @@ export default class TheRealWorld extends BasePage {
     }
   }
 
-  onMoveMarker(markerProps, map, event, entity) {
-    this.setState((prevState) => {
-      entity.position = event.latLng.toJSON();
-      // const marker = prevState.mapEntities.find(mapEntity => mapEntity.z);
-      const places = prevState.mapEntities.map(mapEntity => mapEntity.position);
-      if (places.length > 0) places.push(places[0]);
-      this.lineRef.current.setPath(places);
-      return {
-        // dirty: true,
-        places
-      };
-    });
+  // eslint-disable-next-line class-methods-use-this
+  onMoveMarker(markerProps, map, event, place) {
+    // this.setState((prevState) => {
+    //   place.position = event.latLng.toJSON();
+    //   // const marker = prevState.mapEntities.find(place => place.z);
+    //   // const places = prevState.places.map(placez => placez.position);
+    //   // if (places.length > 0) places.push(places[0]);
+    //   // this.lineRef.current.setPath(places);
+    //   return {
+    //     // dirty: true,
+    //     places
+    //   };
+    // });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -157,36 +121,34 @@ export default class TheRealWorld extends BasePage {
     this.google = google;
     this.map = map;
 
-    const {
-      mapEntities, places
-    } = this.state;
+    const { places } = this.state;
 
     return (
       <React.Fragment>
-        {mapEntities.map(mapEntity => (
-          mapEntity.marker
+        {places.map(place => (
+          place.marker
             ? (
-              <mapEntity.marker
+              <place.marker
                 {...baseProps}
-                key={mapEntity.name}
-                ref={(ref) => { this.onMarkerRef(ref); mapEntity.ref = ref; }}
-                entity={mapEntity}
+                key={place.name}
+                ref={(ref) => { this.onMarkerRef(ref); place.ref = ref; }}
+                entity={place}
                 markerProps={
                   {
-                    name: mapEntity.name,
-                    position: mapEntity.position,
+                    name: place.name,
+                    position: place.position,
                     draggable: true,
                     onDragend: (markerProps, mapz, event) => {
-                      this.onMoveMarker(markerProps, mapz, event, mapEntity);
+                      this.onMoveMarker(markerProps, mapz, event, place);
                     }
                   }
                 }
                 windowProps={{}}
-                name={mapEntity.name}
+                name={place.name}
               />
             ) : null
         ))}
-        <Polyline
+        {/* <Polyline
           {...baseProps}
           // key="polyline-01"
           ref={this.lineRef}
@@ -194,13 +156,13 @@ export default class TheRealWorld extends BasePage {
           color="#00ffff"
           opacity={0.8}
           width={2}
-        />
+        /> */}
       </React.Fragment>
     );
   }
 
   render() {
-    console.log('render "Pages/smile-city/SmileCity.jsx"');
+    console.log('render "Pages/the-real-world/TheRealWorld.jsx"');
     // if (!window.myGoogleMap) {
     window.myGoogleMap = (
       <GGMap

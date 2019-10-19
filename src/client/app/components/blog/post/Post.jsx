@@ -188,22 +188,36 @@ export default class extends React.Component {
       LoginDialogService.open();
       return;
     }
+
+    const savedState = {
+      postRating: post.rating,
+      postTotalRating: post.totalRating,
+      postTotalVotes: post.totalVotes,
+      userSocialPoint: UserService.user.socialPoint
+    };
+
+    if (post.rating) {
+      post.totalRating = post.totalRating - post.rating + rating;
+    } else {
+      post.totalRating += rating;
+      post.totalVotes += 1;
+      UserService.user.socialPoint += 1;
+      UserService.setUser(UserService.user);
+    }
+    post.rating = rating;
+    this.forceUpdate();
+
     superrequest.agentPost(`/api/v1/blog/posts/${post._id}/rating`, {
       rating
     }).then((res) => {
       if (!res || !res.ok) {
-        return;
-      }
-      if (post.rating) {
-        post.totalRating = post.totalRating - post.rating + rating;
-      } else {
-        post.totalRating += rating;
-        post.totalVotes += 1;
-        UserService.user.socialPoint += 1;
+        post.rating = savedState.postRating;
+        post.totalRating = savedState.postTotalRating;
+        post.totalVotes = savedState.postTotalVotes;
+        UserService.user.socialPoint = savedState.userSocialPoint;
         UserService.setUser(UserService.user);
+        this.forceUpdate();
       }
-      post.rating = rating;
-      this.forceUpdate();
     });
   }
 

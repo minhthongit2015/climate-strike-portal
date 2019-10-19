@@ -27,12 +27,16 @@ export default class HomePage extends BasePage {
         },
         icon: IconEarthPicture
       },
-      // {
-      //   type: 'nav',
-      //   link: RouteConstants.theRealWorldLink,
-      //   text: t('pages.home.nav.theRealWorld'),
-      //   iconSrc: MyGardenSrc
-      // },
+      {
+        type: 'nav',
+        link: RouteConstants.theRealWorldLink,
+        text: `${t('pages.home.nav.theRealWorld')}\r\n `,
+        textStyle: {
+          marginTop: '-14px',
+          marginBottom: '20px'
+        },
+        icon: IconEarthPicture
+      },
       {
         type: 'nav',
         link: RouteConstants.whatYouCanDoLink,
@@ -55,12 +59,18 @@ export default class HomePage extends BasePage {
       }
     ];
 
+    if (window.location.port === 80) {
+      this.links.splice(0, 1);
+    }
+
     UserService.useFbProfileState(this);
   }
 
-  static renderNav(nav) {
+  renderNav(nav) {
+    const colMd = 12 / this.links.length;
+    const colSm = colMd === 4 ? 4 : 4;
     return (
-      <div className="col-12 col-sm-4 p-0" key={nav.link}>
+      <div className={`col-12 col-sm-${colSm} col-md-${colMd} p-0`} key={nav.link}>
         <NavIconLink
           nav={nav}
           ratio={1}
@@ -98,7 +108,7 @@ export default class HomePage extends BasePage {
               {
                 this.links.map((link) => {
                   if (link.type === 'nav') {
-                    return HomePage.renderNav(link);
+                    return this.renderNav(link);
                   }
                   return null;
                 })

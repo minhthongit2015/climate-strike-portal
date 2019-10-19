@@ -1,6 +1,4 @@
-
-import superagent from 'superagent';
-import superws from '../utils/superws';
+import superrequest from '../utils/superrequest';
 import { ApiEndpoints } from '../utils/Constants';
 
 import MarkerWithInfo from '../components/map/marker-with-info/MarkerWithInfo';
@@ -25,33 +23,32 @@ function getMarkerByType(type) {
 }
 
 export default class MapService {
-  static fetchEntities() {
-    let requestPromise;
+  static fetchPlaces() {
     const endpoint = `${ApiEndpoints.map.entities.LIST}?sort=[["_id", 1]]`;
-    if (superws.connected) {
-      requestPromise = superws.get(endpoint);
-    } else {
-      requestPromise = superagent.get(endpoint).withCredentials().then(res => res.body);
-    }
-    return requestPromise
+    return superrequest.get(endpoint)
       .then((res) => {
-        const mapEntities = (res.data && res.data.entities) || [];
-        return this.mapEntities(mapEntities);
+        if (!res || !res.data) {
+          return [];
+        }
+        const places = res.data || [];
+        return this.mapEntities(places);
       });
   }
 
-  static mapEntities(mapEntities) {
-    mapEntities.forEach((entity) => {
-      entity.marker = getMarkerByType(entity.type);
-      if (entity.type === 'Garden') {
-        entity.picture = `https://graph.facebook.com/${entity.socials.fb}`
+  static mapEntities(places) {
+    places.forEach((place) => {
+      place.marker = getMarkerByType(place.type);
+      if (place.type === 'Garden') {
+        place.picture = `https://graph.facebook.com/${place.socials.fb}`
           + '/picture?type=square&width=200&height=200';
         // entity.cover = `https://graph.facebook.com/${entity.socials.fb}/cover-photo`;
       }
     });
-    const places = mapEntities.map(mapEntity => mapEntity.position);
-    if (places.length > 0) places.push(places[0]);
-    mapEntities.places = places;
-    return mapEntities;
+    places.map(mapEntity => mapEntity.position);
+    return places;
+  }
+
+  static async createPlace(place) {
+    return superrequest.agentPost('/api/v1/map/places', place);
   }
 }
