@@ -50,7 +50,14 @@ export default class {
   }
 
   static buildPostUrl(post) {
-    return `${window.location.href}?hashtag=${post.baseOrder}`;
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('hashtag', post.baseOrder);
+    let search = urlParams.toString();
+    search = search ? `?${search}` : '';
+    const {
+      protocol, host, pathname, hash
+    } = window.location;
+    return `${protocol}//${host}${pathname}${search}${hash}`;
   }
 
   static refreshCache() {

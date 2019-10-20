@@ -88,8 +88,8 @@ export default class extends React.Component {
           onChange={this.handleInputChange}
           autoComplete="off"
           autofill="off"
-          spellCheck={false}
-          autoCorrect={false}
+          spellCheck="false"
+          autoCorrect="false"
         />
       </div>
     );
