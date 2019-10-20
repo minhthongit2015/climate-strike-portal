@@ -74,7 +74,7 @@ export default class extends BasePage {
         isOpen={isShowLoginModal}
         toggle={this.toggle}
         style={{ position: 'relative' }}
-        size="lg"
+        size="xl"
       >
         <MDBModalBody>
           {content}
