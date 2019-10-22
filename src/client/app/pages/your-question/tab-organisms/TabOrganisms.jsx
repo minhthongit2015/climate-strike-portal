@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
 import PostsModule from '../../../components/blog/posts-module/PostsModule';
-import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
+import DeepMessage from '../../../components/utils/messages/DeepMessage';
 import OrganismsPosts from './OrganismsPosts';
 import t from '../../../languages';
 import BlogPage from '../../_base/BlogPage';

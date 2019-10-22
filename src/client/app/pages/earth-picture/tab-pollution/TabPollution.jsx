@@ -3,7 +3,7 @@ import { Section, SectionHeader, SectionBody } from '../../../layouts/base/secti
 import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import PollutionPosts from './PollutionPosts';
 import t from '../../../languages';
-import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
+import DeepMessage from '../../../components/utils/messages/DeepMessage';
 import BlogPage from '../../_base/BlogPage';
 
 

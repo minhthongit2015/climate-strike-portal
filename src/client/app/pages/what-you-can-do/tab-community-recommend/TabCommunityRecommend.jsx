@@ -1,10 +1,10 @@
 import React from 'react';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
-import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
 import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import CommunityRecommendPosts from './CommunityRecommendPosts';
 import t from '../../../languages';
 import BlogPage from '../../_base/BlogPage';
+import GuideMessage from '../../../components/utils/messages/GuideMessage';
 
 
 export default class extends BlogPage {
@@ -17,10 +17,14 @@ export default class extends BlogPage {
     return (
       <Section>
         <SectionHeader>
-          <DeepMessage>{t('pages.whatYouCanDo.mainMessage')}</DeepMessage>
+          <GuideMessage>{t('pages.whatYouCanDo.communityGuideMessage')}</GuideMessage>
         </SectionHeader>
         <SectionBody>
-          <PostsModule categories={this.category} PostList={CommunityRecommendPosts} everyoneCanPost />
+          <PostsModule
+            categories={this.category}
+            PostList={CommunityRecommendPosts}
+            everyoneCanPost
+          />
         </SectionBody>
       </Section>
     );

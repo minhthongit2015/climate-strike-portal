@@ -9,6 +9,7 @@ import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
 import TabCommunityShare from './tab-community-share/TabCommunityShare';
 import t from '../../languages';
+import { IconCommunity } from '../../../assets/icons';
 
 export default class extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ export default class extends React.Component {
         component: TabPollution
       },
       {
-        name: t('pages.earthPicture.nav.communityShare'),
+        name: <IconCommunity text={t('pages.earthPicture.nav.communityShare')} />,
         path: RouteConstants.epCommunitySharePath,
         link: RouteConstants.epCommunityShareLink,
         component: TabCommunityShare

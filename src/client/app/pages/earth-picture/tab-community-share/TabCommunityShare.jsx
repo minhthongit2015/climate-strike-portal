@@ -3,8 +3,8 @@ import { Section, SectionHeader, SectionBody } from '../../../layouts/base/secti
 import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import CommunitySharePosts from './CommunitySharePosts';
 import t from '../../../languages';
-import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
 import BlogPage from '../../_base/BlogPage';
+import GuideMessage from '../../../components/utils/messages/GuideMessage';
 
 
 export default class extends BlogPage {
@@ -17,7 +17,7 @@ export default class extends BlogPage {
     return (
       <Section>
         <SectionHeader>
-          <DeepMessage>{t('pages.earthPicture.mainMessage')}</DeepMessage>
+          <GuideMessage>{t('pages.earthPicture.communityGuideMessage')}</GuideMessage>
         </SectionHeader>
         <SectionBody>
           <PostsModule categories={this.category} PostList={CommunitySharePosts} everyoneCanPost />

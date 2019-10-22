@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section, SectionHeader, SectionBody } from '../../../layouts/base/section';
-import DeepMessage from '../../../components/utils/deep-message/DeepMessage';
+import DeepMessage from '../../../components/utils/messages/DeepMessage';
 import PostsModule from '../../../components/blog/posts-module/PostsModule';
 import PollutionPosts from './PollutionPosts';
 import t from '../../../languages';

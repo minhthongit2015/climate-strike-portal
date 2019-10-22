@@ -11,6 +11,7 @@ import TabSupporting from './tab-supporting/TabSupporting';
 import TabWorldActions from './tab-world-actions/TabWorldActions';
 import TabCommunityRecommend from './tab-community-recommend/TabCommunityRecommend';
 import t from '../../languages';
+import { IconCommunity } from '../../../assets/icons';
 
 export default class extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ export default class extends React.Component {
         component: TabWorldActions
       },
       {
-        name: t('pages.whatYouCanDo.nav.communityRecommend'),
+        name: <IconCommunity text={t('pages.whatYouCanDo.nav.communityRecommend')} />,
         path: RouteConstants.communityRecommendPath,
         link: RouteConstants.communityRecommendLink,
         component: TabCommunityRecommend

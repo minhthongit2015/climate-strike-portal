@@ -30,7 +30,8 @@ export default {
         pollution: 'Ô nhiễm',
         communityShare: 'Chia sẻ từ cộng đồng'
       },
-      mainMessage: 'ở đây không có gì ngoài sự thật...'
+      mainMessage: 'ở đây không có gì ngoài sự thật...',
+      communityGuideMessage: 'Đây là nơi bạn có thể chia sẻ những điều mình biết với mọi người một cách tự do,\r\nnhững tin tức quan trọng sẽ được chọn để đưa lên trang chính.'
     },
     theRealWorld: {
       title: 'Thế Giới Thực',
@@ -55,7 +56,8 @@ export default {
         worldActions: 'Thế giới đang hành động',
         communityRecommend: 'Chia sẻ từ cộng đồng'
       },
-      mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\nsao mọi người lại phải cố gắng như vậy...'
+      mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\nsao mọi người lại phải cố gắng như vậy...',
+      communityGuideMessage: 'Đây là nơi bạn có thể chia sẻ những điều mình biết với mọi người một cách tự do,\r\nnhững tin tức quan trọng sẽ được chọn để đưa lên trang chính.'
     },
     yourQuestion: {
       title: {
