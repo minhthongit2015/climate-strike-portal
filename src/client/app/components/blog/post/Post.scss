@@ -5,6 +5,7 @@ $organisms-color: #fbb185;
 $pollution-color: #ad85fb;
 $others-color: #81e0b4;
 $world-actions-color: #8eabff;
+$community-color: #ffba66;
 
 .post {
   box-shadow: 0 .125em .25em rgba(0,0,0,.075);
@@ -44,6 +45,10 @@ $world-actions-color: #8eabff;
       background-color: $world-actions-color;
       color: #fff;
     }
+    &.CommunityShare {
+      background-color: $community-color;
+      color: #fff;
+    }
   }
 
   &__preview, &__preview .view {
@@ -55,7 +60,7 @@ $world-actions-color: #8eabff;
     &.Organisms, &.DoForOrganisms, &.AskForOrganisms,
     &.Pollution, &.DoForPollution, &.AskForPollution,
     &.DoSupporting, &.AskForOthers,
-    &.WorldActions {
+    &.WorldActions, &.CommunityShare {
       border-top: 4px solid #fff;
     }
     &.Climate, &.DoForClimate, &.AskForClimate {
@@ -72,6 +77,9 @@ $world-actions-color: #8eabff;
     }
     &.WorldActions {
       border-top-color: $world-actions-color;
+    }
+    &.CommunityShare {
+      border-top-color: $community-color;
     }
   }
 

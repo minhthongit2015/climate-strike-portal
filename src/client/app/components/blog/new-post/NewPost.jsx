@@ -17,6 +17,8 @@ import CategoryHelper from '../../../utils/CategoryHelper';
 import UserService from '../../../services/UserService';
 import LoginDialogService from '../../../services/LoginDialogService';
 import MessageDialogService from '../../../services/MessageDialogService';
+import { IconCommunity } from '../../../../assets/icons';
+import t from '../../../languages';
 
 const animatedComponents = makeAnimated();
 const scrollToTop = () => {
@@ -168,7 +170,7 @@ export default class extends React.Component {
       MessageDialogService.show(
         'Tham Gia Viết Bài',
         <div>
-          Để tham gia cùng viết bài, bạn có thể liên hệ qua Facebook page <a href="https://www.facebook.com/Climate-Strike-Vietnam-101448167939446" target="_blank" rel="noopener noreferrer">Climate Strike Vietnam</a>
+          Để tham gia cùng viết bài, bạn có thể liên hệ qua Facebook page <a href="https://www.facebook.com/Climate-Strike-Vietnam-101448167939446" target="_blank" rel="noopener noreferrer">Climate Strike Vietnam</a>. Hoặc đăng bài ở chuyên mục <IconCommunity text={t('pages.earthPicture.nav.communityShare')} />.
         </div>
       );
     } else {
