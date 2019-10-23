@@ -13,7 +13,7 @@ export default React.memo(props => (
           <div className="post-details__categories mb-2 border-left pl-2">
             <span className="post-details__categories__label">Chuyên mục: </span>
             {props.categories.map(category => (
-              <b className={`post-details__categories__category ${category.type}`}>{category.name}</b>
+              <b className={`post-details__categories__category pr-2 ${category.type}`}>{category.name}</b>
             ))}
           </div>
           <img alt={props.title} src={props.preview} className="w-100" />
@@ -28,7 +28,7 @@ export default React.memo(props => (
             <sup className="post-details__categories ml-2">
               <span className="post-details__categories__label">Chuyên mục: </span>
               {props.categories.map(category => (
-                <b className={`post-details__categories__category ${category.type}`}>{category.name}</b>
+                <b className={`post-details__categories__category pr-2 ${category.type}`}>{category.name}</b>
               ))}
             </sup>
           </React.Fragment>

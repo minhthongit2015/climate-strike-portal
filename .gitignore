@@ -62,3 +62,5 @@ typings/
 /public
 /.env.ini
 /tokens
+/.env.dev.ini
+/.env.prod.ini
