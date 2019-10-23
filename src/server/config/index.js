@@ -1,7 +1,16 @@
+const isProduction = process.env.NODE_ENV === 'production';
+
 module.exports = {
   publicFolder: 'public',
   viewsFolder: 'src/server/views',
   port: process.env.PORT || 5000,
+  facebook: {
+    CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
+    CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
+    REDIRECT_URL: isProduction
+      ? 'https://climate-strike-vietnam.herokuapp.com'
+      : 'https://localhost:8080'
+  },
   google: {
     SECRET_API_KEY: process.env.GOOGLE_APPLICATION_CREDENTIALS,
     photo: {

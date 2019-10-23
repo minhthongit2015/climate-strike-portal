@@ -1,5 +1,6 @@
 const supperagent = require('superagent');
 const graph = require('fbgraph');
+const Config = require('../../config');
 
 module.exports = class {
   static async getUserByToken(accessToken) {
@@ -23,6 +24,23 @@ module.exports = class {
     return supperagent.get('https://graph.facebook.com').query({
       id: url,
       scrape: true
+    });
+  }
+
+  static async getUserByCode(code) {
+    return new Promise((resolve, reject) => {
+      graph.authorize({
+        client_id: Config.facebook.CLIENT_ID,
+        redirect_uri: Config.facebook.REDIRECT_URL,
+        client_secret: Config.facebook.CLIENT_SECRET,
+        code
+      }, (err, facebookRes) => {
+        if (!err) {
+          resolve(facebookRes);
+        } else {
+          reject(err);
+        }
+      });
     });
   }
 };
