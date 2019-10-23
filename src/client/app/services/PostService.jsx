@@ -1,7 +1,7 @@
 import React from 'react';
 import superrequest from '../utils/superrequest';
 import PageDialogService from './PageDialogService';
-import PostDetails from '../components/blog/post/PostDetails';
+import PostDetails from '../components/blog/post-details/PostDetails';
 import UserService from './UserService';
 
 export default class {
