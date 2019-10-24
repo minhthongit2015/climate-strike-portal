@@ -13,7 +13,7 @@ import superrequest from '../../../utils/superrequest';
 import LeafLoading from '../../utils/loadings/LeafLoading';
 import Composer from '../composer/Composer';
 import ButtonBar from '../../dialog/ButtonBar';
-import CategoryHelper from '../../../utils/CategoryHelper';
+import CategoryService from '../../../services/CategoryService';
 import UserService from '../../../services/UserService';
 import LoginDialogService from '../../../services/LoginDialogService';
 import MessageDialogService from '../../../services/MessageDialogService';
@@ -57,7 +57,7 @@ export default class extends React.Component {
       expanded: false
     };
 
-    CategoryHelper.useCategoriesState(this);
+    CategoryService.useCategoriesState(this);
   }
 
   close() {
@@ -97,7 +97,8 @@ export default class extends React.Component {
 
   setPost(post) {
     const postCategories = post.categories.map(cat => cat.type);
-    const category = CategoryHelper.categoryArray.filter(cat => postCategories.includes(cat.value));
+    const category = CategoryService.categoryArray
+      .filter(cat => postCategories.includes(cat.value));
     this.setState({
       expanded: true
     }, () => {
@@ -198,10 +199,10 @@ export default class extends React.Component {
     const { categories, rootCategory } = this.props;
     let categoryOptions = [];
     if (rootCategory) {
-      categoryOptions = CategoryHelper.getLeafCategoriesAsOptions(rootCategory);
+      categoryOptions = CategoryService.getLeafCategoriesAsOptions(rootCategory);
     }
     if (categories) {
-      categoryOptions = CategoryHelper.getCategoriesAsOptions(categories);
+      categoryOptions = CategoryService.getCategoriesAsOptions(categories);
     }
 
     return (

@@ -16,8 +16,10 @@ import MessageDialogService from '../../../services/MessageDialogService';
 import ShareButton from '../../facebook/ShareButton';
 import LoginDialogService from '../../../services/LoginDialogService';
 import Rating from '../../utils/rating/Rating';
+import CategoryService from '../../../services/CategoryService';
 
-const AllCtxOptions = {
+const contextOptions = {
+  iWillDoThis: { label: 'Thêm vào điều tôi sẽ làm', value: 'i-will-do-this' },
   edit: { label: 'chỉnh sửa bài viết', value: 'update' },
   delete: { label: 'xóa bài viết', value: 'delete' },
   request: { label: 'đề xuất chỉnh sửa', value: 'request-update' },
@@ -25,9 +27,9 @@ const AllCtxOptions = {
 };
 
 const ownerCtxOptions = [
-  AllCtxOptions.edit,
-  AllCtxOptions.delete,
-  AllCtxOptions.save
+  contextOptions.edit,
+  contextOptions.delete,
+  contextOptions.save
 ];
 const adminCtxOptions = [
   ...ownerCtxOptions
@@ -36,11 +38,15 @@ const moderatorCtxOptions = [
   ...ownerCtxOptions
 ];
 const normalUserCtxOptions = [
-  AllCtxOptions.request,
-  AllCtxOptions.save
+  contextOptions.request,
+  contextOptions.save
 ];
 const noLoginCtxOptions = [
-  AllCtxOptions.request
+  contextOptions.request
+];
+
+const whatYouCanDoCtxOptions = [
+  contextOptions.iWillDoThis
 ];
 
 /**
@@ -50,17 +56,18 @@ const noLoginCtxOptions = [
  * 4. Normal User sẽ có "Đề xuất sửa", "Lưu"
  */
 function getContextOptions(post) {
+  let options = [];
   if (UserService.isAdmin) {
-    return adminCtxOptions;
+    options = adminCtxOptions;
+  } else if (UserService.isModerator) {
+    options = moderatorCtxOptions;
+  } else if (UserService.isOwner(post)) {
+    options = ownerCtxOptions;
+  } else if (UserService.isNormalUser) {
+    options = normalUserCtxOptions;
   }
-  if (UserService.isModerator) {
-    return moderatorCtxOptions;
-  }
-  if (UserService.isOwner(post)) {
-    return ownerCtxOptions;
-  }
-  if (UserService.isNormalUser) {
-    return normalUserCtxOptions;
+  if (CategoryService.isBelongsToCategory(post, 'WhatYouCanDo')) {
+    return [...whatYouCanDoCtxOptions, ...options];
   }
   return noLoginCtxOptions;
 }
@@ -97,18 +104,15 @@ export default class extends React.Component {
     event.preventDefault();
     if (option.value === 'request-update') {
       if (UserService.isLoggedIn) {
-        return MessageDialogService.show(
-          'Have a nice day! /=)',
-          'Sẽ thật tốt nếu bạn có thể thử lại tính năng này sau, tính năng hiện vẫn đang được xây dựng...'
-        );
+        return MessageDialogService.showUpComingFeature(option.value);
       }
       return LoginDialogService.open();
     }
     if (option.value === 'save-post') {
-      return MessageDialogService.show(
-        'Wait me a second /=)',
-        'Sẽ thật tốt nếu bạn có thể thử lại tính năng này sau, tính năng hiện vẫn đang được xây dựng...'
-      );
+      return MessageDialogService.showUpComingFeature(option.value);
+    }
+    if (option.value === 'i-will-do-this') {
+      return MessageDialogService.showUpComingFeature(option.value);
     }
     if (option.value === 'delete') {
       if (!window.confirm('Bạn có chắc muốn xóa bài viết này?')) {
@@ -201,7 +205,7 @@ export default class extends React.Component {
     } else {
       post.totalRating += rating;
       post.totalVotes += 1;
-      UserService.user.socialPoint += 1;
+      UserService.user.socialPoint = (UserService.user.socialPoint || 0) + 1;
       UserService.setUser(UserService.user);
     }
     post.rating = rating;
@@ -217,6 +221,9 @@ export default class extends React.Component {
         UserService.user.socialPoint = savedState.userSocialPoint;
         UserService.setUser(UserService.user);
         this.forceUpdate();
+      } else {
+        Object.assign(UserService.user, res.data.user);
+        UserService.setUser(UserService.user);
       }
     });
   }
@@ -229,6 +236,7 @@ export default class extends React.Component {
       title = post.title,
       summary = post.summary,
       content = post.content,
+      categories = post.categories,
       category = post.categories[0].type,
       createdAt = post.createdAt,
       authors = post.authors,
@@ -246,6 +254,7 @@ export default class extends React.Component {
       title,
       summary,
       content,
+      categories,
       category,
       createdAt,
       authors,
@@ -253,7 +262,7 @@ export default class extends React.Component {
       totalVotes,
       rating
     };
-    const contextOptions = getContextOptions(post);
+    const postContextOptions = getContextOptions(post);
     const ratingInfo = {
       totalRating,
       totalVotes,
@@ -278,9 +287,9 @@ export default class extends React.Component {
             {preview
               ? this.renderPreviewAsImage()
               : this.renderPreviewAsTitle()}
-            {contextOptions && (
+            {postContextOptions && (
               <div className="post__context-btn">
-                <ContextButton options={contextOptions} hanlder={this.handleContextActions} />
+                <ContextButton options={postContextOptions} hanlder={this.handleContextActions} />
               </div>
             )}
           </span>

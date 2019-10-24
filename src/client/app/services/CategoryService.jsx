@@ -1,5 +1,5 @@
-import superrequest from './superrequest';
-import GlobalState from './GlobalState';
+import superrequest from '../utils/superrequest';
+import GlobalState from '../utils/GlobalState';
 
 const CategoriesStateName = 'CategoriesType';
 
@@ -51,5 +51,16 @@ export default class {
     if (!this._categories) {
       this.fetchCategories();
     }
+  }
+
+  static isBelongsToCategory(post, categoryName) {
+    if (!post || !categoryName) return false;
+    const targetCategory = this._categories[categoryName];
+    return post.categories.some(
+      postCategory => (
+        postCategory.type === targetCategory.type
+        || targetCategory.children.some(childCategory => childCategory.type === postCategory.type)
+      )
+    );
   }
 }

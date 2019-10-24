@@ -31,9 +31,11 @@ router.post('/:postId/rating', (req, res) => {
     const ratingObject = await RatingService.rating(post, user, rating);
     if (user.dirty) {
       delete user.dirty;
-      return req.session.save(() => res.send(new APIResponse().setData(ratingObject)));
+      return req.session.save(
+        () => res.send(new APIResponse().setData({ rating: ratingObject, user }))
+      );
     }
-    return res.send(new APIResponse().setData(ratingObject));
+    return res.send(new APIResponse().setData({ rating: ratingObject, user }));
   }, { req, res });
 });
 

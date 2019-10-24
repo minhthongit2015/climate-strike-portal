@@ -30,13 +30,11 @@ module.exports = class extends CRUDService {
 
       // Get user to update user social point
       const userz = await UserService.get(user._id);
-      if (!userz.socialPoint) {
-        userz.socialPoint = 0;
-      }
-      userz.socialPoint += 1;
+      userz.socialPoint = (userz.socialPoint || 0) + 1;
 
-      userz.dirty = true;
       Object.assign(user, userz);
+      user.dirty = true;
+      await UserService.update(userz);
 
       return newRating;
     }

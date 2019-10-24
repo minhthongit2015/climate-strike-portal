@@ -11,6 +11,7 @@ import t from '../../../languages';
 import LoginDialogService from '../../../services/LoginDialogService';
 import ProgressWithIcon from '../../utils/progres-with-icon/ProgressWithIcon';
 import { IconRankLeader } from '../../../../assets/icons';
+import MessageDialogService from '../../../services/MessageDialogService';
 
 
 export default class SignIn extends Component {
@@ -60,6 +61,18 @@ export default class SignIn extends Component {
 
   static open() {
     LoginDialogService.open();
+  }
+
+  static handleContextAction(event) {
+    const option = event.target.name;
+    switch (option) {
+    case 'save-post':
+      return MessageDialogService.showUpComingFeature(option);
+    case 'i-will-do-this':
+      return MessageDialogService.showUpComingFeature(option);
+    default:
+      return null;
+    }
   }
 
   renderAvatar() {
@@ -125,7 +138,16 @@ export default class SignIn extends Component {
           <MDBDropdownItem
             disabled={disabled}
             className="text-gray"
+            name="save-post"
+            onClick={SignIn.handleContextAction}
           >Bài viết đã lưu
+          </MDBDropdownItem>
+          <MDBDropdownItem
+            disabled={disabled}
+            className="text-gray"
+            name="i-will-do-this"
+            onClick={SignIn.handleContextAction}
+          >Điều tôi sẽ làm
           </MDBDropdownItem>
           <MDBDropdownItem
             disabled={disabled}
