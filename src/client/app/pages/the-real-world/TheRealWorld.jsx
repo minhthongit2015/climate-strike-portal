@@ -6,6 +6,7 @@ import GGMap from '../../components/map/Map';
 // import Polyline from '../../components/map/polyline/Polyline';
 import MapService from '../../services/MapService';
 import t from '../../languages';
+import LeftToolBar from '../../components/map-tools/left-toolbar/LeftToolBar';
 
 export default class TheRealWorld extends BasePage {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class TheRealWorld extends BasePage {
     this.handleHotkeys = this.handleHotkeys.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
     this.onMoveMarker = this.onMoveMarker.bind(this);
+    this.handleToolbarAction = this.handleToolbarAction.bind(this);
 
     this.state = {
       dirty: false,
@@ -99,6 +101,11 @@ export default class TheRealWorld extends BasePage {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  handleToolbarAction(event, action) {
+    console.log(action);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   onMoveMarker(markerProps, map, event, place) {
     // this.setState((prevState) => {
     //   place.position = event.latLng.toJSON();
@@ -173,6 +180,7 @@ export default class TheRealWorld extends BasePage {
         dirty={this.state.dirty}
       >
         <this.renderMapElements />
+        <LeftToolBar handler={this.handleToolbarAction} />
       </GGMap>
     );
     // }

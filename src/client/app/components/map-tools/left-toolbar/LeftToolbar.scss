@@ -1,0 +1,13 @@
+
+.map-toolbar {
+  &.left-toolbar {
+    position: absolute;
+    left: 10px;
+    top: 100px;
+    padding: 5px;
+    color: rgb(36, 172, 47);
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    border-radius: 2px;
+  }
+}

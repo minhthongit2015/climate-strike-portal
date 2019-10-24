@@ -289,7 +289,7 @@ export default class extends React.Component {
               : this.renderPreviewAsTitle()}
             {postContextOptions && (
               <div className="post__context-btn">
-                <ContextButton options={postContextOptions} hanlder={this.handleContextActions} />
+                <ContextButton options={postContextOptions} handler={this.handleContextActions} />
               </div>
             )}
           </span>

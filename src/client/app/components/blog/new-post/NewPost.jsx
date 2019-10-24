@@ -1,4 +1,5 @@
 import React from 'react';
+import { Prompt } from 'react-router-dom';
 import {
   MDBInput, MDBCard, MDBCardHeader, MDBCardBody,
   Button,
@@ -25,6 +26,16 @@ const scrollToTop = () => {
   const scrollBox = document.getElementById('sidebar-layout__content');
   scrollBox.scrollTo({ top: 0, behavior: 'smooth' });
 };
+
+function isZeroVariable(variable) {
+  if (!variable) return true;
+  if (variable.length != null && variable.length <= 0) return true;
+  if (typeof variable === 'object' && Object.keys(variable).length === 0) return true;
+  return false;
+}
+
+const preventLeaveMessage = 'Bài viết của bạn vẫn chưa được lưu! Bạn có chắc muốn rời đi?';
+
 export default class extends React.Component {
   get post() {
     const {
@@ -35,6 +46,14 @@ export default class extends React.Component {
     return {
       _id, title, summary, content, preview, categories: categoryIds
     };
+  }
+
+  get isEmpty() {
+    try {
+      return Object.entries(this.post).every(entry => isZeroVariable(entry[1]));
+    } catch (error) {
+      return true;
+    }
   }
 
   constructor(props) {
@@ -58,6 +77,17 @@ export default class extends React.Component {
     };
 
     CategoryService.useCategoriesState(this);
+  }
+
+  componentDidUpdate = () => {
+    window.onbeforeunload = !this.isEmpty
+      ? this.preventLeavePage
+      : undefined;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  preventLeavePage() {
+    return true;
   }
 
   close() {
@@ -207,6 +237,10 @@ export default class extends React.Component {
 
     return (
       <MDBCard className={classnames('new-post overlapable flex-fill', { disabled, expanded })}>
+        <Prompt
+          when={!this.isEmpty}
+          message={preventLeaveMessage}
+        />
         <MDBCardHeader className="d-flex justify-content-between py-0">
           <div className="flex-fill d-flex align-items-center">Đăng bài mới</div>
           <ButtonBar
@@ -266,9 +300,10 @@ export default class extends React.Component {
             <Row>
               <Col className="text-right">
                 <Button type="button" size="sm" color="none" onClick={this.resetForm}>Bỏ</Button>
-                <Button type="submit" name="submit" value="draft" size="sm" color="none">Lưu bản nháp</Button>
+                {/* <Button type="submit" name="submit" value="draft" size="sm" color="none">
+                  Lưu bản nháp</Button> */}
                 <Button type="submit" size="sm">
-                  {!_id ? 'Đăng bài' : 'Cập nhập'}
+                  {!_id ? 'Đăng bài' : 'Cập nhập bài viết'}
                 </Button>
               </Col>
             </Row>
