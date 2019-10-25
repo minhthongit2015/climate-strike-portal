@@ -69,6 +69,9 @@ function getContextOptions(post) {
   if (CategoryService.isBelongsToCategory(post, 'WhatYouCanDo')) {
     return [...whatYouCanDoCtxOptions, ...options];
   }
+  if (options.length > 0) {
+    return options;
+  }
   return noLoginCtxOptions;
 }
 
