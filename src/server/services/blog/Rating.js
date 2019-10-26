@@ -10,7 +10,7 @@ module.exports = class extends CRUDService {
   }
 
   static get populate() {
-    return ['post', 'user'];
+    return [];
   }
 
   static async rating(post, user, rating) {
@@ -51,15 +51,10 @@ module.exports = class extends CRUDService {
     if (!posts.length) {
       return null;
     }
-    return Promise.all(posts.map(
-      post => Rating.findOne({
-        user: user._id,
-        post: post._id
-      }).then((ratingRecord) => {
-        if (ratingRecord) {
-          post.rating = ratingRecord.rating;
-        }
-      })
-    ));
+    const ratings = await this.listIn(posts, post => post._id, 'post', { user: user._id });
+    ratings.forEach((ratingPost) => {
+      posts.find(post => post._id === ratingPost.post).rating = ratingPost.rating;
+    });
+    return ratings;
   }
 };

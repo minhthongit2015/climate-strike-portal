@@ -17,10 +17,12 @@ export default class extends PageDialogService {
       <React.Fragment>
         <DeepMessage>Bài Viết Đã Lưu</DeepMessage>
         <InfinitePostList
+          parentPage="saved-posts"
           noPostMsg="chưa có bài viết nào được lưu"
           endMessage=""
           fetchPosts={this.fetchSavedPosts}
           allSmall
+          scrollableTarget="page-dialog-instance"
         />
       </React.Fragment>
     );

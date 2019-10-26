@@ -1,5 +1,4 @@
 const Converter = require('./converter');
-const UserConverter = require('./UserConverter');
 
 module.exports = class extends Converter {
   static convert(object) {
@@ -8,7 +7,7 @@ module.exports = class extends Converter {
     return {
       _id: rawRating._id,
       rating: rawRating.rating,
-      user: UserConverter.convert(rawRating.user),
+      user: super.convert(rawRating.user),
       post: super.convert(rawRating.post)
     };
   }

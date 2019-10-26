@@ -6,7 +6,7 @@ const APIResponse = require('../../../models/api-models');
 const PostsSecurityService = require('../../../services/security/PostsSecurity');
 const IDoPostService = require('../../../services/blog/IDoPost');
 const RatingService = require('../../../services/blog/Rating');
-const SavedPostService = require('../../../services/blog/Post');
+const SavedPostService = require('../../../services/blog/SavedPost');
 
 
 router.get('/:iDoPostId?', (req, res) => {

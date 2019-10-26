@@ -72,6 +72,21 @@ module.exports = class CRUDService {
     return this.converter.convertCollection(docs);
   }
 
+  static async listIn(ids, mapFn, key = '_id', where = {}) {
+    if (mapFn) {
+      ids = ids.map(mapFn);
+    }
+    return this.list({
+      where: {
+        ...where,
+        [key]: {
+          $in: ids
+        }
+      },
+      limit: ids.length
+    });
+  }
+
   static async update(id, doc) {
     if (!doc) {
       doc = id;

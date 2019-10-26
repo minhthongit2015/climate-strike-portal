@@ -20,15 +20,7 @@ module.exports = class extends CRUDService {
       }
     });
     const savedPosts = await this.getOrList(id, opts);
-    const postIds = savedPosts.map(savedPost => savedPost.post);
-    const posts = await PostService.list({
-      where: {
-        _id: {
-          $in: postIds
-        }
-      },
-      limit: postIds.length
-    });
+    const posts = await PostService.listIn(savedPosts, savedPost => savedPost.post);
     return posts;
   }
 
@@ -55,16 +47,7 @@ module.exports = class extends CRUDService {
     if (!posts.length) {
       return null;
     }
-    const postIds = posts.map(post => post._id);
-    const savedPosts = await this.list({
-      where: {
-        user: user._id,
-        post: {
-          $in: postIds
-        }
-      },
-      limit: postIds.length
-    });
+    const savedPosts = await this.listIn(posts, post => post._id, 'post', { user: user._id });
     savedPosts.forEach((savedPost) => {
       posts.find(post => post._id === savedPost.post).isSaved = true;
     });

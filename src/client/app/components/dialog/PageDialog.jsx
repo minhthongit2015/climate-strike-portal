@@ -78,6 +78,7 @@ export default class extends BasePage {
         toggle={this.toggle}
         style={{ position: 'relative' }}
         size="xl"
+        id="page-dialog-instance"
       >
         <MDBModalBody>
           {content}

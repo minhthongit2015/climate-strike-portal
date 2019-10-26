@@ -21,10 +21,12 @@ export default class extends PageDialogService {
           </span>
         </DeepMessage>
         <InfinitePostList
+          parentPage="i-will-do-this"
           noPostMsg="chưa có hành động nào được chọn"
           endMessage=""
           fetchPosts={this.fetchIDoPosts}
           allSmall
+          scrollableTarget="page-dialog-instance"
         />
       </React.Fragment>
     );

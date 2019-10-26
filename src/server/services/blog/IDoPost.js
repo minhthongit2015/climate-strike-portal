@@ -20,15 +20,7 @@ module.exports = class extends CRUDService {
       }
     });
     const iDoPosts = await this.getOrList(id, opts);
-    const postIds = iDoPosts.map(iDoPost => iDoPost.post);
-    const posts = await PostService.list({
-      where: {
-        _id: {
-          $in: postIds
-        }
-      },
-      limit: postIds.length
-    });
+    const posts = await PostService.listIn(iDoPosts, iDoPost => iDoPost.post);
     return posts;
   }
 
@@ -55,16 +47,7 @@ module.exports = class extends CRUDService {
     if (!posts.length) {
       return null;
     }
-    const postIds = posts.map(post => post._id);
-    const iDoPosts = await this.list({
-      where: {
-        user: user._id,
-        post: {
-          $in: postIds
-        }
-      },
-      limit: postIds.length
-    });
+    const iDoPosts = await this.listIn(posts, post => post._id, 'post', { user: user._id });
     iDoPosts.forEach((iDoPost) => {
       posts.find(post => post._id === iDoPost.post).iWillDoThis = true;
     });

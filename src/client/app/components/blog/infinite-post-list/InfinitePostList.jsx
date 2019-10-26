@@ -19,12 +19,16 @@ export default class InfinitePostList extends React.Component {
   }
 
   handleActions(event, option, post, postComponent) {
-    if (option.value === 'remove-saved-post' || option.value === 'remove-i-do-post') {
+    const { parentPage } = this.props;
+
+    if ((option.value === 'remove-saved-post' && parentPage === 'saved-posts')
+      || (option.value === 'remove-i-do-post' && parentPage === 'i-will-do-this')) {
       this.setState(prevState => ({
         posts: prevState.posts.filter(p => p._id !== post._id)
       }));
     }
-    if (option.value === 'remove-saved-post-done' || option.value === 'remove-i-do-post-done') {
+    if ((option.value === 'remove-saved-post-done' && parentPage === 'saved-posts')
+      || (option.value === 'remove-i-do-post-done' && parentPage === 'i-will-do-this')) {
       this.refresh();
     }
 
@@ -164,13 +168,14 @@ export default class InfinitePostList extends React.Component {
 
   render() {
     const { posts } = this.state;
+    const { scrollableTarget = 'sidebar-layout__content' } = this.props;
 
     return (
       <InfiniteScroll
         dataLength={posts.length}
         next={this.fetchPosts}
         scrollThreshold="200px"
-        scrollableTarget="sidebar-layout__content"
+        scrollableTarget={scrollableTarget}
         style={{ overflowX: 'hidden' }}
         hasMore={this.state.hasMore}
         loader={this.renderLoading()}
