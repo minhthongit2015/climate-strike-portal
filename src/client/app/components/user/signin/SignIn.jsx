@@ -65,7 +65,7 @@ export default class SignIn extends Component {
   }
 
   static handleContextAction(event) {
-    const option = event.target.name;
+    const option = event.currentTarget.name;
     switch (option) {
     case 'saved-posts':
       return SavedPostsDialogService.openSavedPostsInNewHistory();
@@ -138,7 +138,7 @@ export default class SignIn extends Component {
           )}
           <MDBDropdownItem
             disabled={disabled}
-            className="text-gray"
+            className="i-will-do-this"
             name="i-will-do-this"
             onClick={SignIn.handleContextAction}
           >
