@@ -139,16 +139,22 @@ export default class SignIn extends Component {
           <MDBDropdownItem
             disabled={disabled}
             className="text-gray"
-            name="saved-posts"
+            name="i-will-do-this"
             onClick={SignIn.handleContextAction}
-          >Bài viết đã lưu
+          >
+            <span
+              role="img"
+              aria-label="i-do"
+              aria-labelledby="i-do"
+            >✊ Điều tôi sẽ làm
+            </span>
           </MDBDropdownItem>
           <MDBDropdownItem
             disabled={disabled}
             className="text-gray"
-            name="i-will-do-this"
+            name="saved-posts"
             onClick={SignIn.handleContextAction}
-          >Điều tôi sẽ làm
+          >Bài viết đã lưu
           </MDBDropdownItem>
           <MDBDropdownItem
             disabled={disabled}

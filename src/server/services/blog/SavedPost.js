@@ -12,7 +12,12 @@ module.exports = class extends CRUDService {
     return ['post', 'user'];
   }
 
-  static async getOrListMin(id, opts = ApiHelper.listParams) {
+  static async getOrListMin(id, opts = ApiHelper.listParams, user) {
+    opts = Object.assign(opts || {}, {
+      where: {
+        user: user._id
+      }
+    });
     const posts = await super.getOrList(id, opts);
     if (posts.length != null) {
       posts.forEach((post) => {

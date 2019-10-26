@@ -17,9 +17,17 @@ import ShareButton from '../../facebook/ShareButton';
 import LoginDialogService from '../../../services/LoginDialogService';
 import Rating from '../../utils/rating/Rating';
 import CategoryService from '../../../services/CategoryService';
+import { IconBookmark } from '../../../../assets/icons';
 
 const ContextOptions = {
-  iWillDoThis: { label: 'Thêm vào điều tôi sẽ làm', value: 'i-will-do-this' },
+  iWillDoThis: {
+    label: (
+      <span role="img" className="i-will-do-this" aria-label="i-do" aria-labelledby="i-do">
+        ✊ Thêm vào điều tôi sẽ làm
+      </span>
+    ),
+    value: 'i-will-do-this'
+  },
   edit: { label: 'chỉnh sửa bài viết', value: 'update' },
   delete: { label: 'xóa bài viết', value: 'delete' },
   request: { label: 'đề xuất chỉnh sửa', value: 'request-update' },
@@ -27,9 +35,9 @@ const ContextOptions = {
 };
 
 const ownerCtxOptions = [
+  ContextOptions.save,
   ContextOptions.edit,
-  ContextOptions.delete,
-  ContextOptions.save
+  ContextOptions.delete
 ];
 const adminCtxOptions = [
   ...ownerCtxOptions
@@ -42,7 +50,8 @@ const normalUserCtxOptions = [
   ContextOptions.request
 ];
 const noLoginCtxOptions = [
-  ContextOptions.request
+  ContextOptions.request,
+  ContextOptions.save
 ];
 
 const whatYouCanDoCtxOptions = [
@@ -65,14 +74,14 @@ function getContextOptions(post) {
     options = ownerCtxOptions;
   } else if (UserService.isNormalUser) {
     options = normalUserCtxOptions;
+  } else {
+    options = noLoginCtxOptions;
   }
-  if (CategoryService.isBelongsToCategory(post, 'WhatYouCanDo')) {
+  if (CategoryService.isBelongsToCategory(post, 'WhatYouCanDo')
+    || CategoryService.isBelongsToCategory(post, 'CommunityRecommend')) {
     return [...whatYouCanDoCtxOptions, ...options];
   }
-  if (options.length > 0) {
-    return options;
-  }
-  return noLoginCtxOptions;
+  return options;
 }
 
 export default class extends React.Component {
@@ -114,10 +123,13 @@ export default class extends React.Component {
       return LoginDialogService.open();
 
     case ContextOptions.save:
+      this.props.handleActions(event, {
+        value: 'remove-saved-post'
+      }, post, this);
       return this.handleAddSavedPost().then(() => {
         if (this.props.handleActions) {
           this.props.handleActions(event, {
-            value: 'remove-saved-post'
+            value: 'remove-saved-post-done'
           }, post, this);
         }
       });
@@ -263,7 +275,7 @@ export default class extends React.Component {
           post.isSaved = savedState.postIsSaved;
           this.forceUpdate();
         } else {
-          MessageDialogService.showSuccessMessage(ContextOptions.save.value, true);
+          // MessageDialogService.showSuccessMessage(ContextOptions.save.value, true);
         }
       });
     }
@@ -273,7 +285,7 @@ export default class extends React.Component {
         post.isSaved = savedState.postIsSaved;
         this.forceUpdate();
       } else {
-        MessageDialogService.showSuccessMessage(ContextOptions.save.value, false);
+        // MessageDialogService.showSuccessMessage(ContextOptions.save.value, false);
       }
     });
   }
@@ -294,7 +306,8 @@ export default class extends React.Component {
       totalRating = post.totalRating,
       totalVotes = post.totalVotes,
       rating = post.rating,
-      isSaved = post.isSaved
+      isSaved = post.isSaved,
+      totalSaved = post.totalSaved
     } = this.props;
     const {
       clickable,
@@ -313,7 +326,8 @@ export default class extends React.Component {
       totalRating,
       totalVotes,
       rating,
-      isSaved
+      isSaved,
+      totalSaved
     };
     const postContextOptions = getContextOptions(post);
     const ratingInfo = {
@@ -324,8 +338,9 @@ export default class extends React.Component {
     const addSavedPostOption = postContextOptions.find(
       option => option.value === ContextOptions.save.value
     );
+    const isReallySaved = UserService.isLoggedIn && isSaved;
     if (addSavedPostOption) {
-      addSavedPostOption.label = !isSaved ? 'lưu bài viết' : 'bỏ lưu bài viết';
+      addSavedPostOption.label = !isReallySaved ? 'lưu bài viết' : 'bỏ lưu bài viết';
     }
 
     return (
@@ -342,7 +357,7 @@ export default class extends React.Component {
           onChange={this.handlePopupChange}
           id={_id}
         >
-          <span className={`post__preview ${isSaved ? 'saved' : ''} ${preview ? category : ''}`}>
+          <span className={`post__preview ${isReallySaved ? 'saved' : ''} ${preview ? category : ''}`}>
             {preview
               ? this.renderPreviewAsImage()
               : this.renderPreviewAsTitle()}
@@ -351,6 +366,7 @@ export default class extends React.Component {
                 <ContextButton options={postContextOptions} handler={this.handleContextActions} />
               </div>
             )}
+            {isReallySaved && <IconBookmark className="post__bookmark" totalSaved={totalSaved} />}
           </span>
           <MDBPopoverBody>
             <div className="post__content">

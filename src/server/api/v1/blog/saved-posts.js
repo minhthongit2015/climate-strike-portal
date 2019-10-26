@@ -13,7 +13,7 @@ router.get('/:savedPostId?', (req, res) => {
     await PostsSecurityService.onlyLoggedInUser(req);
     const { user } = req.session;
     const { savedPostId } = req.params;
-    const savedPosts = await SavedPostService.getOrListMin(savedPostId, req.query);
+    const savedPosts = await SavedPostService.getOrListMin(savedPostId, req.query, user);
     const posts = savedPosts.map(savedPost => savedPost.post);
     await RatingService.appendRatingOfUser(posts, user);
     return res.send(new APIResponse().setData(savedPosts));

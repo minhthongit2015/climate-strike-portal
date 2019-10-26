@@ -12,22 +12,11 @@ const PostSchema = new mongoose.Schema({
   preview: String,
   status: String, // draft, pending, approved, scheduled, published, archived
   authors: [{ type: ObjectId, ref: 'User' }],
-  totalRating: {
-    type: Number,
-    default: 0
-  },
-  totalVotes: {
-    type: Number,
-    default: 0
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
+  totalRating: { type: Number, default: 0 },
+  totalVotes: { type: Number, default: 0 },
+  totalSaved: { type: Number, default: 0 },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
 });
 
 async function deleteRelatedDocs(post) {

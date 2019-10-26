@@ -20,6 +20,11 @@ export default class InfinitePostList extends React.Component {
 
   handleActions(event, option, post, postComponent) {
     if (option.value === 'remove-saved-post') {
+      this.setState(prevState => ({
+        posts: prevState.posts.filter(p => p._id !== post._id)
+      }));
+    }
+    if (option.value === 'remove-saved-post-done') {
       this.refresh();
     }
 
