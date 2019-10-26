@@ -11,8 +11,8 @@ import t from '../../../languages';
 import LoginDialogService from '../../../services/LoginDialogService';
 import ProgressWithIcon from '../../utils/progres-with-icon/ProgressWithIcon';
 import { IconRankLeader } from '../../../../assets/icons';
-import MessageDialogService from '../../../services/MessageDialogService';
 import SavedPostsDialogService from '../../../services/SavedPostsDialogService';
+import IDoPostsDialogService from '../../../services/IDoPostsDialogService';
 
 
 export default class SignIn extends Component {
@@ -70,7 +70,7 @@ export default class SignIn extends Component {
     case 'saved-posts':
       return SavedPostsDialogService.openSavedPostsInNewHistory();
     case 'i-will-do-this':
-      return MessageDialogService.showUpComingFeature(option);
+      return IDoPostsDialogService.openIDoPostsInNewHistory();
     default:
       return null;
     }

@@ -30,6 +30,7 @@ import LoginDialog from './components/dialog/LoginDialog';
 import MessageDialog from './components/dialog/MessageDialog';
 import PostService from './services/PostService';
 import SavedPostsDialogService from './services/SavedPostsDialogService';
+import IDoPostsDialogService from './services/IDoPostsDialogService';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
@@ -45,18 +46,24 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    // this.pageDialogRef = React.createRef();
+    this.pageDialogRef = React.createRef();
     this.postPageDialogRef = React.createRef();
     this.savedPostsPageDialogRef = React.createRef();
+    this.iDoPostsPageDialogRef = React.createRef();
+
     this.loginDialogRef = React.createRef();
     this.messageDialogRef = React.createRef();
+
     GlobalState.init();
     GlobalState.loadState();
     superws.init();
     AuthService.init();
+
     PageDialogService.init(this.pageDialogRef);
     PostService.init(this.postPageDialogRef);
     SavedPostsDialogService.init(this.savedPostsPageDialogRef);
+    IDoPostsDialogService.init(this.iDoPostsPageDialogRef);
+
     LoginDialogService.init(this.loginDialogRef);
     MessageDialogService.init(this.messageDialogRef);
     KeyTracker();
@@ -76,6 +83,7 @@ class App extends Component {
         {(this.isTheRealWorldPage || window.myGoogleMap) && <TheRealWorldPage />}
         <PageDialog ref={this.pageDialogRef} />
         <PageDialog ref={this.savedPostsPageDialogRef} />
+        <PageDialog ref={this.iDoPostsPageDialogRef} />
         <PageDialog ref={this.postPageDialogRef} />
         <LoginDialog ref={this.loginDialogRef} />
         <MessageDialog ref={this.messageDialogRef} />

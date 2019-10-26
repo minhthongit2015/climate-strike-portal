@@ -13,10 +13,33 @@ const IDoPostSchema = new mongoose.Schema({
   }
 });
 
-IDoPostSchema.post('save', async (IDoPost) => {
-  const post = await Post.findById(IDoPost.post);
+async function increseTotalIDo(iDoPost) {
+  const post = await Post.findById(iDoPost.post);
   post.totalIDo = (post.totalIDo || 0) + 1;
   post.save();
+}
+
+async function decreseTotalIDo(savedPost) {
+  const post = await Post.findById(savedPost.post);
+  post.totalIDo = (post.totalIDo || 0) - 1;
+  post.totalIDo = Math.max(post.totalIDo, 0);
+  post.save();
+}
+
+IDoPostSchema.post('save', async (iDoPost) => {
+  increseTotalIDo(iDoPost);
+}, { query: true, document: true });
+
+IDoPostSchema.post('updateOne', async (iDoPost) => {
+  increseTotalIDo(iDoPost);
+}, { query: true, document: true });
+
+IDoPostSchema.post('delete', async (iDoPost) => {
+  decreseTotalIDo(iDoPost);
+}, { query: true, document: true });
+
+IDoPostSchema.post('findOneAndDelete', async (iDoPost) => {
+  decreseTotalIDo(iDoPost);
 }, { query: true, document: true });
 
 const IDoPostModel = mongoose.model('IDoPost', IDoPostSchema);

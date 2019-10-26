@@ -7,6 +7,7 @@ const PostsSecurityService = require('../../../services/security/PostsSecurity')
 const FacebookService = require('../../../services/thirt-party/Facebook');
 const RatingService = require('../../../services/blog/Rating');
 const SavedPostService = require('../../../services/blog/SavedPost');
+const IDoPostService = require('../../../services/blog/IDoPost');
 
 
 router.post('/', (req, res) => {
@@ -42,15 +43,17 @@ router.post('/:postId/rating', (req, res) => {
 
 router.get('/:postId?', (req, res) => {
   Logger.catch(async () => {
+    const { user } = req.session;
     const { postId } = req.params;
-    const postOrPosts = await PostService.getOrList(postId, req.query);
+    const posts = await PostService.getOrList(postId, req.query);
 
-    if (req.session.user) {
-      await RatingService.appendRatingOfUser(postOrPosts, req.session.user);
-      await SavedPostService.appendIsSavedOfUser(postOrPosts, req.session.user);
+    if (user) {
+      await RatingService.appendRatingOfUser(posts, user);
+      await SavedPostService.appendIsSavedOfUser(posts, user);
+      await IDoPostService.appendIWillDoThisOfUser(posts, user);
     }
 
-    return res.send(new APIResponse().setData(postOrPosts));
+    return res.send(new APIResponse().setData(posts));
   }, { req, res });
 });
 

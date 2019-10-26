@@ -15,6 +15,7 @@ const PostSchema = new mongoose.Schema({
   totalRating: { type: Number, default: 0 },
   totalVotes: { type: Number, default: 0 },
   totalSaved: { type: Number, default: 0 },
+  totalIDo: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
@@ -27,6 +28,10 @@ async function deleteRelatedDocs(post) {
   // eslint-disable-next-line global-require
   const SavedPost = require('./SavedPost');
   await SavedPost.deleteMany({ post: post._id });
+
+  // eslint-disable-next-line global-require
+  const IDoPost = require('./IDoPost');
+  await IDoPost.deleteMany({ post: post._id });
 }
 
 PostSchema.post('delete', async (posts) => {

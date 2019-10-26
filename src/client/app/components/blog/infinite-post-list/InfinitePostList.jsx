@@ -19,12 +19,12 @@ export default class InfinitePostList extends React.Component {
   }
 
   handleActions(event, option, post, postComponent) {
-    if (option.value === 'remove-saved-post') {
+    if (option.value === 'remove-saved-post' || option.value === 'remove-i-do-post') {
       this.setState(prevState => ({
         posts: prevState.posts.filter(p => p._id !== post._id)
       }));
     }
-    if (option.value === 'remove-saved-post-done') {
+    if (option.value === 'remove-saved-post-done' || option.value === 'remove-i-do-post-done') {
       this.refresh();
     }
 
@@ -35,7 +35,7 @@ export default class InfinitePostList extends React.Component {
 
   componentDidMount() {
     this._ismounted = true;
-    this.page = 1;
+    this.page = 0;
     this.fetchAllPosts();
   }
 

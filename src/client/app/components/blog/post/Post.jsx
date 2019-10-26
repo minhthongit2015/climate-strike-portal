@@ -123,11 +123,16 @@ export default class extends React.Component {
       return LoginDialogService.open();
 
     case ContextOptions.save:
-      this.props.handleActions(event, {
-        value: 'remove-saved-post'
-      }, post, this);
+      if (!UserService.isLoggedIn) {
+        return LoginDialogService.open();
+      }
+      if (post.isSaved && this.props.handleActions) {
+        this.props.handleActions(event, {
+          value: 'remove-saved-post'
+        }, post, this);
+      }
       return this.handleAddSavedPost().then(() => {
-        if (this.props.handleActions) {
+        if (!post.isSaved && this.props.handleActions) {
           this.props.handleActions(event, {
             value: 'remove-saved-post-done'
           }, post, this);
@@ -135,10 +140,21 @@ export default class extends React.Component {
       });
 
     case ContextOptions.iWillDoThis:
-      if (UserService.isLoggedIn) {
-        return MessageDialogService.showUpComingFeature(option.value);
+      if (!UserService.isLoggedIn) {
+        return LoginDialogService.open();
       }
-      return LoginDialogService.open();
+      if (post.iWillDoThis && this.props.handleActions) {
+        this.props.handleActions(event, {
+          value: 'remove-i-do-post'
+        }, post, this);
+      }
+      return this.handleAddIDoPost().then(() => {
+        if (!post.iWillDoThis && this.props.handleActions) {
+          this.props.handleActions(event, {
+            value: 'remove-i-do-post-done'
+          }, post, this);
+        }
+      });
 
     case ContextOptions.delete:
       if (!window.confirm('Bạn có chắc muốn xóa bài viết này?')) {
@@ -283,6 +299,40 @@ export default class extends React.Component {
     return superrequest.agentDelete(`/api/v1/blog/saved-posts/${post._id}`).then((res) => {
       if (!res || !res.ok) {
         post.isSaved = savedState.postIsSaved;
+        this.forceUpdate();
+      } else {
+        // MessageDialogService.showSuccessMessage(ContextOptions.save.value, false);
+      }
+    });
+  }
+
+  handleAddIDoPost() {
+    const { post } = this.props;
+    if (!UserService.isLoggedIn) {
+      return LoginDialogService.open();
+    }
+
+    const savedState = {
+      postIWillDoThis: post.iWillDoThis
+    };
+
+    post.iWillDoThis = !post.iWillDoThis;
+    this.forceUpdate();
+
+    if (post.iWillDoThis) {
+      return superrequest.agentPost(`/api/v1/blog/i-will-do-this/${post._id}`).then((res) => {
+        if (!res || !res.ok) {
+          post.iWillDoThis = savedState.postIWillDoThis;
+          this.forceUpdate();
+        } else {
+          // MessageDialogService.showSuccessMessage(ContextOptions.save.value, true);
+        }
+      });
+    }
+
+    return superrequest.agentDelete(`/api/v1/blog/i-will-do-this/${post._id}`).then((res) => {
+      if (!res || !res.ok) {
+        post.iWillDoThis = savedState.postIWillDoThis;
         this.forceUpdate();
       } else {
         // MessageDialogService.showSuccessMessage(ContextOptions.save.value, false);

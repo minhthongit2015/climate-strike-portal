@@ -2,6 +2,7 @@
 const { SavedPost } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
 const ApiHelper = require('../../utils/ApiHelper');
+const PostService = require('./Post');
 
 module.exports = class extends CRUDService {
   static get model() {
@@ -9,7 +10,7 @@ module.exports = class extends CRUDService {
   }
 
   static get populate() {
-    return ['post', 'user'];
+    return [];
   }
 
   static async getOrListMin(id, opts = ApiHelper.listParams, user) {
@@ -18,15 +19,17 @@ module.exports = class extends CRUDService {
         user: user._id
       }
     });
-    const posts = await super.getOrList(id, opts);
-    if (posts.length != null) {
-      posts.forEach((post) => {
-        delete post.user;
-      });
-    } else {
-      delete posts.user;
-    }
-    return posts.filter(post => post.post);
+    const savedPosts = await this.getOrList(id, opts);
+    const postIds = savedPosts.map(savedPost => savedPost.post);
+    const posts = await PostService.list({
+      where: {
+        _id: {
+          $in: postIds
+        }
+      },
+      limit: postIds.length
+    });
+    return posts;
   }
 
   static async addSavedPost(post, user) {
@@ -52,15 +55,19 @@ module.exports = class extends CRUDService {
     if (!posts.length) {
       return null;
     }
-    return Promise.all(posts.map(
-      post => SavedPost.findOne({
+    const postIds = posts.map(post => post._id);
+    const savedPosts = await this.list({
+      where: {
         user: user._id,
-        post: post._id
-      }).then((savedPost) => {
-        if (savedPost) {
-          post.isSaved = true;
+        post: {
+          $in: postIds
         }
-      })
-    ));
+      },
+      limit: postIds.length
+    });
+    savedPosts.forEach((savedPost) => {
+      posts.find(post => post._id === savedPost.post).isSaved = true;
+    });
+    return savedPosts;
   }
 };

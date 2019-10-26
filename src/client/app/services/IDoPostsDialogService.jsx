@@ -5,21 +5,25 @@ import InfinitePostList from '../components/blog/infinite-post-list/InfinitePost
 import DeepMessage from '../components/utils/messages/DeepMessage';
 
 
-const defaultState = { isSavedPostsPage: true };
+const defaultState = { isIDoPage: true };
 
 export default class extends PageDialogService {
   static shouldOpenWithState(state) {
-    return state && state.isSavedPostsPage != null;
+    return state && state.isIDoPage != null;
   }
 
   static renderPageDialog() {
     return (
       <React.Fragment>
-        <DeepMessage>Bài Viết Đã Lưu</DeepMessage>
+        <DeepMessage>
+          <span role="img" aria-label="i-do" aria-labelledby="i-do">
+            Những Việc Tôi Sẽ Làm! ✊
+          </span>
+        </DeepMessage>
         <InfinitePostList
-          noPostMsg="chưa có bài viết nào được lưu"
+          noPostMsg="chưa có hành động nào được chọn"
           endMessage=""
-          fetchPosts={this.fetchSavedPosts}
+          fetchPosts={this.fetchIDoPosts}
           allSmall
         />
       </React.Fragment>
@@ -27,10 +31,10 @@ export default class extends PageDialogService {
   }
 
   static async openNoHistory() {
-    this.show({ isSavedPostsPage: true });
+    this.show(defaultState);
   }
 
-  static openSavedPostsInCurrentHistory() {
+  static openIDoPostsInCurrentHistory() {
     this.openInCurrentHistory({
       url: this.getSavePageUrl(),
       title: this.getPageTitle(),
@@ -38,7 +42,7 @@ export default class extends PageDialogService {
     });
   }
 
-  static openSavedPostsInNewHistory() {
+  static openIDoPostsInNewHistory() {
     this.openInNewHistory({
       url: this.getSavePageUrl(),
       title: this.getPageTitle(),
@@ -46,12 +50,12 @@ export default class extends PageDialogService {
     });
   }
 
-  static async fetchSavedPosts() {
-    return superrequest.get('/api/v1/blog/saved-posts')
+  static async fetchIDoPosts() {
+    return superrequest.get('/api/v1/blog/i-will-do-this')
       .then((res) => {
         if (res && res.data) {
           res.data.forEach((savedPost) => {
-            savedPost.isSaved = true;
+            savedPost.iWillDoThis = true;
           });
         }
         return res;
@@ -60,7 +64,7 @@ export default class extends PageDialogService {
 
   static getSavePageUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('saved-posts', 'open');
+    urlParams.set('i-will-do-this', 'yes');
     let search = urlParams.toString();
     search = search ? `?${search}` : '';
     const {
@@ -70,6 +74,6 @@ export default class extends PageDialogService {
   }
 
   static getPageTitle() {
-    return 'Bài viết đã lưu | Climate Strike Vietnam';
+    return 'Điều Tôi Sẽ Làm | Climate Strike Vietnam';
   }
 }
