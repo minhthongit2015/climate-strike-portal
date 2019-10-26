@@ -18,7 +18,7 @@ import LoginDialogService from '../../../services/LoginDialogService';
 import Rating from '../../utils/rating/Rating';
 import CategoryService from '../../../services/CategoryService';
 
-const contextOptions = {
+const ContextOptions = {
   iWillDoThis: { label: 'Thêm vào điều tôi sẽ làm', value: 'i-will-do-this' },
   edit: { label: 'chỉnh sửa bài viết', value: 'update' },
   delete: { label: 'xóa bài viết', value: 'delete' },
@@ -27,9 +27,9 @@ const contextOptions = {
 };
 
 const ownerCtxOptions = [
-  contextOptions.edit,
-  contextOptions.delete,
-  contextOptions.save
+  ContextOptions.edit,
+  ContextOptions.delete,
+  ContextOptions.save
 ];
 const adminCtxOptions = [
   ...ownerCtxOptions
@@ -38,15 +38,15 @@ const moderatorCtxOptions = [
   ...ownerCtxOptions
 ];
 const normalUserCtxOptions = [
-  contextOptions.request,
-  contextOptions.save
+  ContextOptions.save,
+  ContextOptions.request
 ];
 const noLoginCtxOptions = [
-  contextOptions.request
+  ContextOptions.request
 ];
 
 const whatYouCanDoCtxOptions = [
-  contextOptions.iWillDoThis
+  ContextOptions.iWillDoThis
 ];
 
 /**
@@ -105,30 +105,43 @@ export default class extends React.Component {
 
   handleContextActions(event, option) {
     event.preventDefault();
-    if (option.value === 'request-update') {
+    const { post } = this.props;
+    switch (option) {
+    case ContextOptions.request:
       if (UserService.isLoggedIn) {
         return MessageDialogService.showUpComingFeature(option.value);
       }
       return LoginDialogService.open();
-    }
-    if (option.value === 'save-post') {
-      return MessageDialogService.showUpComingFeature(option.value);
-    }
-    if (option.value === 'i-will-do-this') {
-      return MessageDialogService.showUpComingFeature(option.value);
-    }
-    if (option.value === 'delete') {
+
+    case ContextOptions.save:
+      return this.handleAddSavedPost().then(() => {
+        if (this.props.handleActions) {
+          this.props.handleActions(event, {
+            value: 'remove-saved-post'
+          }, post, this);
+        }
+      });
+
+    case ContextOptions.iWillDoThis:
+      if (UserService.isLoggedIn) {
+        return MessageDialogService.showUpComingFeature(option.value);
+      }
+      return LoginDialogService.open();
+
+    case ContextOptions.delete:
       if (!window.confirm('Bạn có chắc muốn xóa bài viết này?')) {
         return null;
       }
-      const { post } = this.props;
       return superrequest.agentDelete(`/api/v1/blog/posts/${post._id}`)
         .then(() => {
-          this.props.handleActions(event, { value: 'delete-done' }, this.props.post, this);
+          this.props.handleActions(event, { value: 'delete-done' }, post, this);
         });
+    default:
+      break;
     }
+
     if (this.props.handleActions) {
-      return this.props.handleActions(event, option, this.props.post, this);
+      return this.props.handleActions(event, option, post, this);
     }
     return null;
   }
@@ -214,7 +227,7 @@ export default class extends React.Component {
     post.rating = rating;
     this.forceUpdate();
 
-    superrequest.agentPost(`/api/v1/blog/posts/${post._id}/rating`, {
+    superrequest.agentPost(`/api/v1/blog/rating/${post._id}`, {
       rating
     }).then((res) => {
       if (!res || !res.ok) {
@@ -231,7 +244,42 @@ export default class extends React.Component {
     });
   }
 
+  handleAddSavedPost() {
+    const { post } = this.props;
+    if (!UserService.isLoggedIn) {
+      return LoginDialogService.open();
+    }
+
+    const savedState = {
+      postIsSaved: post.isSaved
+    };
+
+    post.isSaved = !post.isSaved;
+    this.forceUpdate();
+
+    if (post.isSaved) {
+      return superrequest.agentPost(`/api/v1/blog/saved-posts/${post._id}`).then((res) => {
+        if (!res || !res.ok) {
+          post.isSaved = savedState.postIsSaved;
+          this.forceUpdate();
+        } else {
+          MessageDialogService.showSuccessMessage(ContextOptions.save.value, true);
+        }
+      });
+    }
+
+    return superrequest.agentDelete(`/api/v1/blog/saved-posts/${post._id}`).then((res) => {
+      if (!res || !res.ok) {
+        post.isSaved = savedState.postIsSaved;
+        this.forceUpdate();
+      } else {
+        MessageDialogService.showSuccessMessage(ContextOptions.save.value, false);
+      }
+    });
+  }
+
   render() {
+    const { allSmall } = this.props;
     let { post = {} } = this.props;
     const {
       _id = post._id,
@@ -245,7 +293,8 @@ export default class extends React.Component {
       authors = post.authors,
       totalRating = post.totalRating,
       totalVotes = post.totalVotes,
-      rating = post.rating
+      rating = post.rating,
+      isSaved = post.isSaved
     } = this.props;
     const {
       clickable,
@@ -263,7 +312,8 @@ export default class extends React.Component {
       authors,
       totalRating,
       totalVotes,
-      rating
+      rating,
+      isSaved
     };
     const postContextOptions = getContextOptions(post);
     const ratingInfo = {
@@ -271,6 +321,12 @@ export default class extends React.Component {
       totalVotes,
       rating
     };
+    const addSavedPostOption = postContextOptions.find(
+      option => option.value === ContextOptions.save.value
+    );
+    if (addSavedPostOption) {
+      addSavedPostOption.label = !isSaved ? 'lưu bài viết' : 'bỏ lưu bài viết';
+    }
 
     return (
       <Card className="post">
@@ -286,7 +342,7 @@ export default class extends React.Component {
           onChange={this.handlePopupChange}
           id={_id}
         >
-          <span className={`post__preview ${preview ? category : ''}`}>
+          <span className={`post__preview ${isSaved ? 'saved' : ''} ${preview ? category : ''}`}>
             {preview
               ? this.renderPreviewAsImage()
               : this.renderPreviewAsTitle()}
@@ -308,7 +364,7 @@ export default class extends React.Component {
         </MDBPopover>
         <CardBody className={classnames({ 'p-0': !preview && !summary })}>
           {preview && <div className="post__title"><b>{title}</b></div>}
-          {summary && <div className="post__summary mt-2">{summary}</div>}
+          {(!preview || !allSmall) && summary && <div className="post__summary mt-2">{summary}</div>}
         </CardBody>
         <CardFooter className="d-flex align-items-center justify-content-stretch flex-wrap">
           <div className="flex-fill post__socials">

@@ -12,6 +12,7 @@ import LoginDialogService from '../../../services/LoginDialogService';
 import ProgressWithIcon from '../../utils/progres-with-icon/ProgressWithIcon';
 import { IconRankLeader } from '../../../../assets/icons';
 import MessageDialogService from '../../../services/MessageDialogService';
+import SavedPostsDialogService from '../../../services/SavedPostsDialogService';
 
 
 export default class SignIn extends Component {
@@ -66,8 +67,8 @@ export default class SignIn extends Component {
   static handleContextAction(event) {
     const option = event.target.name;
     switch (option) {
-    case 'save-post':
-      return MessageDialogService.showUpComingFeature(option);
+    case 'saved-posts':
+      return SavedPostsDialogService.openSavedPostsInNewHistory();
     case 'i-will-do-this':
       return MessageDialogService.showUpComingFeature(option);
     default:
@@ -138,7 +139,7 @@ export default class SignIn extends Component {
           <MDBDropdownItem
             disabled={disabled}
             className="text-gray"
-            name="save-post"
+            name="saved-posts"
             onClick={SignIn.handleContextAction}
           >Bài viết đã lưu
           </MDBDropdownItem>

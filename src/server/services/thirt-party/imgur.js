@@ -29,7 +29,7 @@ module.exports = class {
     if (image.startsWith('http')) {
       return image;
     }
-    if (image.startsWith('data:image')) {
+    if (image.startsWith('data:image') || image.startsWith('data:video')) {
       image = image.slice(image.indexOf(',') + 1);
     }
     return superagent.post('https://api.imgur.com/3/upload')

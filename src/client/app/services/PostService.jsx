@@ -4,24 +4,21 @@ import PageDialogService from './PageDialogService';
 import PostDetails from '../components/blog/post-details/PostDetails';
 import UserService from './UserService';
 
-export default class {
-  static init() {
-    window.onpopstate = (event) => {
-      if (event.state && event.state.baseOrder) {
-        this.showPost(event.state);
-      } else {
-        PageDialogService.close();
-      }
-    };
+export default class extends PageDialogService {
+  static shouldOpenWithState(post) {
+    return post && post.baseOrder;
+  }
+
+  static renderPageDialog(post) {
+    return <PostDetails {...post} />;
   }
 
   // Direct access
   static async openPostDetailsCurrentTab(postOrder) {
-    this.fetchPost(postOrder).then((res) => {
+    return this.fetchPost(postOrder).then((res) => {
       if (res && res.data) {
         const post = res.data[0];
-        this.showPost(post);
-        PageDialogService.replaceHistory({
+        this.openInCurrentHistory({
           url: this.buildPostUrl(post),
           title: post.title,
           state: post
@@ -32,8 +29,7 @@ export default class {
 
   // Open when click to a post
   static openPostDetailsDialog(post) {
-    this.showPost(post);
-    PageDialogService.pushHistory({
+    return this.openInNewHistory({
       url: this.buildPostUrl(post),
       title: post.title,
       state: post
@@ -42,11 +38,6 @@ export default class {
 
   static async fetchPost(postOrder) {
     return superrequest.get(`/api/v1/blog/posts?limit=1&where={"baseOrder":${postOrder}}`);
-  }
-
-  static showPost(post) {
-    PageDialogService.setContent(<PostDetails {...post} />);
-    PageDialogService.open();
   }
 
   static buildPostUrl(post) {

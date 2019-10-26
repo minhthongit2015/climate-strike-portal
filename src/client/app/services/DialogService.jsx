@@ -1,7 +1,7 @@
 
 export default class DialogService {
   static get dialog() {
-    return this.dialogRef.current;
+    return this.dialogRef && this.dialogRef.current;
   }
 
   static init(dialogRef) {
@@ -13,26 +13,32 @@ export default class DialogService {
   }
 
   static setContent(content) {
+    if (!this.dialog) return;
     this.dialog.setContent(content);
   }
 
   static setHandler(handler) {
+    if (!this.dialog) return;
     this.dialog.setHandler(handler);
   }
 
-  static toggle() {
-    this.dialog.toggle();
+  static toggle(noBack) {
+    if (!this.dialog) return;
+    this.dialog.toggle(noBack);
   }
 
   static open() {
+    if (!this.dialog) return;
     this.dialog.open();
   }
 
-  static close() {
-    this.dialog.close();
+  static close(noBack) {
+    if (!this.dialog) return;
+    this.dialog.close(noBack);
   }
 
   static show(...args) {
+    if (!this.dialog) return;
     this.dialog.show(...args);
   }
 }

@@ -1,6 +1,8 @@
 const { User } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
 const { isBlank } = require('../../utils');
+const ApiHelper = require('../../utils/ApiHelper');
+
 
 module.exports = class extends CRUDService {
   static get model() {
@@ -72,5 +74,16 @@ module.exports = class extends CRUDService {
 
     const updatedUser = affectedRows[0];
     return this.converter.convert(updatedUser);
+  }
+
+  static async updateSocialPoint(user, pointToAdd = 1) {
+    const userz = await this.get(ApiHelper.getId(user._id));
+    userz.socialPoint = (userz.socialPoint || 0) + pointToAdd;
+    await this.update(userz._id, {
+      socialPoint: userz.socialPoint
+    });
+    Object.assign(user, userz);
+    user.dirty = true;
+    return user;
   }
 };

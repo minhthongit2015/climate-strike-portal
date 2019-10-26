@@ -21,11 +21,11 @@ export default React.memo(props => (
       )}
       <Col size="12" md={props.preview ? '4' : '12'}>
         <div className="post-details__title">{props.title}</div>
-        <sup className="post-details__time text-sm mr-2"><TimeAgo time={props.createdAt} /></sup>
+        <sup key="1" className="post-details__time text-sm mr-2"><TimeAgo time={props.createdAt} /></sup>
         {!props.preview && (
           <React.Fragment>
-            <sup> | </sup>
-            <sup className="post-details__categories ml-2">
+            <sup key="2"> | </sup>
+            <sup key="3" className="post-details__categories ml-2">
               <span className="post-details__categories__label">Chuyên mục: </span>
               {props.categories.map(category => (
                 <b key={category.type} className={`post-details__categories__category pr-2 ${category.type}`}>{category.name}</b>

@@ -56,7 +56,7 @@ class Server {
     this.setupMiddleware();
     this.setupRouting();
     this.listen();
-    // Server.keepAlive(); // Not now
+    this.keepAlive();
   }
 
   static createServer() {
@@ -143,8 +143,8 @@ class Server {
   }
 
   static _bodyParserMiddleware() {
-    this.app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
-    this.app.use(bodyParser.json({ limit: '10mb' }));
+    this.app.use(bodyParser.json({ limit: '10mb', extended: true }));
+    this.app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
     this.app.use(fileUpload());
     this.app.use(expressEasyZip());
   }
@@ -216,10 +216,12 @@ class Server {
   }
 
   static keepAlive() {
-    const minutes = 15;
-    setInterval(() => {
-      http.get('https://yoth-garden.herokuapp.com');
-    }, minutes * 60 * 1000);
+    if (process.env.NODE_ENV === 'production') {
+      const minutes = 20;
+      setInterval(() => {
+        http.get('https://climate-strike-vietnam.herokuapp.com');
+      }, minutes * 60 * 1000);
+    }
   }
 
   static setupErrorTrap() {

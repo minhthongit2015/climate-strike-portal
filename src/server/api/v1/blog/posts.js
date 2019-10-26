@@ -6,6 +6,7 @@ const APIResponse = require('../../../models/api-models');
 const PostsSecurityService = require('../../../services/security/PostsSecurity');
 const FacebookService = require('../../../services/thirt-party/Facebook');
 const RatingService = require('../../../services/blog/Rating');
+const SavedPostService = require('../../../services/blog/SavedPost');
 
 
 router.post('/', (req, res) => {
@@ -39,30 +40,16 @@ router.post('/:postId/rating', (req, res) => {
   }, { req, res });
 });
 
-router.get('/refresh-cache', (req, res) => {
-  Logger.catch(async () => {
-    const { url } = req.query;
-    if (!url) {
-      return res.send(APIResponse.throwError.BadRequest());
-    }
-    const cachedPost = await FacebookService.refreshCache(url);
-    return res.send(new APIResponse().setData(cachedPost));
-  }, { req, res });
-});
-
 router.get('/:postId?', (req, res) => {
   Logger.catch(async () => {
     const { postId } = req.params;
     const postOrPosts = await PostService.getOrList(postId, req.query);
+
     if (req.session.user) {
-      if (postOrPosts.length == null) {
-        await RatingService.appendRatingOfUser(postOrPosts, req.session.user);
-      } else {
-        await Promise.all(postOrPosts.map(
-          post => RatingService.appendRatingOfUser(post, req.session.user)
-        ));
-      }
+      await RatingService.appendRatingOfUser(postOrPosts, req.session.user);
+      await SavedPostService.appendIsSavedOfUser(postOrPosts, req.session.user);
     }
+
     return res.send(new APIResponse().setData(postOrPosts));
   }, { req, res });
 });
@@ -74,6 +61,17 @@ router.delete('/:postId', (req, res) => {
     PostsSecurityService.onlyOwnerModAdmin(req, post);
     const deleteResult = await PostService.delete(postId);
     return res.send(new APIResponse().setData(deleteResult));
+  }, { req, res });
+});
+
+router.get('/refresh-cache', (req, res) => {
+  Logger.catch(async () => {
+    const { url } = req.query;
+    if (!url) {
+      return res.send(APIResponse.throwError.BadRequest());
+    }
+    const cachedPost = await FacebookService.refreshCache(url);
+    return res.send(new APIResponse().setData(cachedPost));
   }, { req, res });
 });
 

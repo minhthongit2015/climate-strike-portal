@@ -27,24 +27,13 @@ module.exports = class extends CRUDService {
         post: post._id,
         rating
       });
-
-      // Get user to update user social point
-      const userz = await UserService.get(user._id);
-      userz.socialPoint = (userz.socialPoint || 0) + 1;
-
-      Object.assign(user, userz);
-      user.dirty = true;
-      await UserService.update(userz);
-
+      await UserService.updateSocialPoint(user, 1);
       return newRating;
     }
 
-    // Update post rating
     PostService.update(post._id, {
       totalRating: post.totalRating - oldRating.rating + rating
     });
-
-    // Update rating record
     oldRating.rating = rating;
     await this.update({
       _id: oldRating._id,
@@ -54,14 +43,23 @@ module.exports = class extends CRUDService {
     return oldRating;
   }
 
-  static async appendRatingOfUser(post, user) {
-    const ratingRecord = await Rating.findOne({
-      user: user._id,
-      post: post._id
-    });
-    if (ratingRecord) {
-      post.rating = ratingRecord.rating;
+  static async appendRatingOfUser(posts, user) {
+    if (!posts) return null;
+    if (posts.length == null) {
+      posts = [posts];
     }
-    return post;
+    if (!posts.length) {
+      return null;
+    }
+    return Promise.all(posts.map(
+      post => Rating.findOne({
+        user: user._id,
+        post: post._id
+      }).then((ratingRecord) => {
+        if (ratingRecord) {
+          post.rating = ratingRecord.rating;
+        }
+      })
+    ));
   }
 };

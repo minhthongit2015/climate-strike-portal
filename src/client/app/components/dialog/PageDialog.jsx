@@ -41,14 +41,17 @@ export default class extends BasePage {
     this.toggle();
   }
 
-  close() {
+  close(noBack) {
     if (!this.isOpen) return;
-    this.toggle();
+    this.toggle(noBack);
   }
 
-  toggle = () => {
+  toggle(noBack) {
     if (this.state.disabled) return;
     if (this.isOpen) {
+      if (noBack) {
+        this.historyBack = false;
+      }
       if (this.historyBack) {
         this.historyBack = false;
         window.history.back();

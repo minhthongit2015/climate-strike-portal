@@ -19,6 +19,10 @@ export default class InfinitePostList extends React.Component {
   }
 
   handleActions(event, option, post, postComponent) {
+    if (option.value === 'remove-saved-post') {
+      this.refresh();
+    }
+
     if (this.props.handleActions) {
       this.props.handleActions(event, option, post, postComponent);
     }
@@ -43,14 +47,17 @@ export default class InfinitePostList extends React.Component {
     const limit = (this.page + 1) * postsPerPage;
     const offset = 0;
 
-    return superrequest.get(`/api/v1/blog/posts?category=${category}&limit=${limit}&offset=${offset}`)
-      .then((res) => {
-        this.setState({
-          posts: []
-        }, () => {
-          this.resolvePosts(res, this.page, offset, limit);
-        });
+    const fetchPostsPromise = this.props.fetchPosts
+      ? this.props.fetchPosts()
+      : superrequest.get(`/api/v1/blog/posts?category=${category}&limit=${limit}&offset=${offset}`);
+
+    return fetchPostsPromise.then((res) => {
+      this.setState({
+        posts: []
+      }, () => {
+        this.resolvePosts(res, this.page, offset, limit);
       });
+    });
   }
 
   async fetchPosts() {
@@ -102,6 +109,9 @@ export default class InfinitePostList extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   getRandomEndMessage() {
+    if (this.props.endMessage != null) {
+      return this.props.endMessage;
+    }
     return RandomItem([
       t('components.blog.infinitePostList.knowAllMsg'),
       t('components.blog.infinitePostList.knowAllMsg1'),
@@ -126,15 +136,24 @@ export default class InfinitePostList extends React.Component {
 
   renderEnd() {
     const knowAllMsg = this.getRandomEndMessage();
-    const noPostMsg = t('components.blog.infinitePostList.noPostMsg');
+    const noPostMsg = this.props.noPostMsg || t('components.blog.infinitePostList.noPostMsg');
     const isNoPost = this.state.posts.length === 0;
+    const message = isNoPost
+      ? noPostMsg
+      : knowAllMsg;
     return (
-      <div className="text-center">
-        <hr className="w-75 mt-5" />
-        <div className="my-5 text-monospace text-black-50 font-weight-bold">
-          {isNoPost ? noPostMsg : knowAllMsg}
-        </div>
-      </div>
+      <React.Fragment>
+        {message ? (
+          <div className="text-center">
+            <hr className="w-75 mt-5" />
+            <div className="my-5 text-monospace text-black-50 font-weight-bold">
+              {message}
+            </div>
+          </div>
+        ) : (
+          <div className="mt-3" />
+        )}
+      </React.Fragment>
     );
   }
 

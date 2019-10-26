@@ -5,12 +5,8 @@ const { isNotSet } = require('../utils');
 
 
 module.exports = class CRUDService {
-  static set model(model) {
-    this._model = model;
-  }
-
   static get model() {
-    return this._model;
+    return ApiHelper.BlankModel;
   }
 
   static get converter() {
@@ -87,7 +83,10 @@ module.exports = class CRUDService {
     return this.converter.convert(updatedDoc);
   }
 
-  static async createOrUpdate(doc) {
+  static async createOrUpdate(doc, where) {
+    if (where) {
+      return this.model.updateOne(where, doc, { upsert: true, setDefaultsOnInsert: true }).exec();
+    }
     if (doc._id || doc.id) {
       return this.update(doc);
     }
@@ -97,6 +96,16 @@ module.exports = class CRUDService {
   static async delete(id) {
     id = ApiHelper.getId(id);
     const deleteResult = await this.model.findByIdAndDelete(id).exec();
+    return deleteResult;
+  }
+
+  static async findOneAndDelete(where) {
+    const deleteResult = await this.model.findOneAndDelete(where).exec();
+    return deleteResult;
+  }
+
+  static async findAndDelete(where) {
+    const deleteResult = await this.model.deleteMany(where).exec();
     return deleteResult;
   }
 };

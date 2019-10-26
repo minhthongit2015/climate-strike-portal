@@ -1,7 +1,6 @@
 
 const mongoose = require('mongoose');
 const { MongooseAutoIncrementID } = require('mongoose-auto-increment-reworked');
-const Rating = require('./Rating');
 
 const { ObjectId } = mongoose.Schema.Types;
 
@@ -31,14 +30,32 @@ const PostSchema = new mongoose.Schema({
   }
 });
 
-PostSchema.post('remove', async (doc) => {
-  const ratings = await Rating.find({
-    where: {
-      post: doc._id
-    }
-  });
-  ratings.forEach(rating => rating.remove());
+async function deleteRelatedDocs(post) {
+  // eslint-disable-next-line global-require
+  const Rating = require('./Rating');
+  await Rating.deleteMany({ post: post._id });
+
+  // eslint-disable-next-line global-require
+  const SavedPost = require('./SavedPost');
+  await SavedPost.deleteMany({ post: post._id });
+}
+
+PostSchema.post('delete', async (posts) => {
+  deleteRelatedDocs(posts);
 });
+
+PostSchema.post('remove', async (post) => {
+  deleteRelatedDocs(post);
+});
+
+PostSchema.post('findOneAndDelete', async (post) => {
+  deleteRelatedDocs(post);
+});
+
+PostSchema.post('findByIdAndDelete', async (post) => {
+  deleteRelatedDocs(post);
+});
+
 
 PostSchema.plugin(MongooseAutoIncrementID.plugin, { modelName: 'Post', field: 'baseOrder' });
 

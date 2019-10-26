@@ -1,4 +1,8 @@
+const mongoose = require('mongoose');
 const { ObjectId } = require('mongoose').Types;
+
+const BlankModel = mongoose.model('BlankModel', new mongoose.Schema({
+}));
 
 function getId(id) {
   if (typeof id === 'string') {
@@ -49,6 +53,7 @@ function findWithFunc(findFunc, opts = listParams) {
 }
 
 module.exports = {
+  BlankModel,
   getId,
   listParams,
   parseListParams,

@@ -62,12 +62,14 @@ export default class PostList extends React.Component {
 
   mapPreviews(posts) {
     return Promise.all(posts.map(post => new Promise((resolve) => {
+      const { allSmall } = this.props;
+
       if (post.previewClass) {
         resolve(post);
         return;
       }
       if (!post.preview) {
-        post.previewClass = PostList.smartSize(null, post);
+        post.previewClass = allSmall ? 'w1' : PostList.smartSize(null, post);
         resolve(post);
         return;
       }
@@ -76,11 +78,11 @@ export default class PostList extends React.Component {
       image.src = post.preview;
 
       if (image.naturalWidth > 0 || image.complete) {
-        post.previewClass = PostList.smartSize(image, post);
+        post.previewClass = allSmall ? 'w1' : PostList.smartSize(image, post);
         resolve(post);
       } else {
         image.onload = () => {
-          post.previewClass = PostList.smartSize(image, post);
+          post.previewClass = allSmall ? 'w1' : PostList.smartSize(image, post);
           resolve(post);
         };
       }
@@ -148,7 +150,9 @@ export default class PostList extends React.Component {
   }
 
   render() {
-    const { children, posts = [], hasPermission } = this.props;
+    const {
+      children, posts = [], hasPermission, allSmall
+    } = this.props;
     if (this.processing) return null;
     if (posts.length > 0 && this.processing === null) {
       this.mapPreviews(posts).then(() => {
@@ -178,6 +182,7 @@ export default class PostList extends React.Component {
               post={post}
               handleActions={this.handleActions}
               showContextMenu={hasPermission}
+              allSmall={allSmall}
             />, post)
         )))
         || (children && children.map(post => (
