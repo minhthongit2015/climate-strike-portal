@@ -99,6 +99,13 @@ $community-color: #ffba66;
     width: 20px;
   }
 
+  &__status-icon {
+    position: absolute;
+    bottom: calc(100% + 3px);
+    right: 4px;
+    width: 20px;
+  }
+
   &__context-btn {
     position: absolute;
     top: 4px;

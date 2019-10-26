@@ -22,7 +22,9 @@ export { default as IconYourQuestion } from './icons/IconYourQuestion';
 export { default as IconMore } from './icons/IconMore';
 export { default as IconRankLeader } from './icons/IconRankLeader';
 export { default as IconCommunity } from './icons/IconCommunity';
+// eslint-disable-next-line import/no-cycle
 export { default as IconBookmark } from './icons/IconBookmark';
+export { default as IconRaisedFist } from './icons/IconRaisedFist';
 
 export default {
   AICloudIcon,

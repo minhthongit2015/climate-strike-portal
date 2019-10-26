@@ -17,15 +17,19 @@ import ShareButton from '../../facebook/ShareButton';
 import LoginDialogService from '../../../services/LoginDialogService';
 import Rating from '../../utils/rating/Rating';
 import CategoryService from '../../../services/CategoryService';
-import { IconBookmark } from '../../../../assets/icons';
+import { IconBookmark, IconRaisedFist } from '../../../../assets/icons';
+// eslint-disable-next-line import/no-cycle
+import SavedPostsDialogService from '../../../services/SavedPostsDialogService';
+import IDoPostsDialogService from '../../../services/IDoPostsDialogService';
 
 const ContextOptions = {
   iWillDoThis: {
-    label: (
+    labelAdd: (
       <span role="img" className="i-will-do-this" aria-label="i-do" aria-labelledby="i-do">
         ✊ Thêm vào điều tôi sẽ làm
       </span>
     ),
+    labelRemove: 'Bỏ khỏi điều tôi sẽ làm',
     value: 'i-will-do-this'
   },
   edit: { label: 'chỉnh sửa bài viết', value: 'update' },
@@ -84,7 +88,7 @@ function getContextOptions(post) {
   return options;
 }
 
-export default class extends React.Component {
+export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.togglePopup = this.togglePopup.bind(this);
@@ -340,6 +344,14 @@ export default class extends React.Component {
     });
   }
 
+  static handleOpenSavedPosts() {
+    SavedPostsDialogService.openSavedPostsInNewHistory();
+  }
+
+  static handleOpenIWillDoThisPosts() {
+    IDoPostsDialogService.openIDoPostsInNewHistory();
+  }
+
   render() {
     const { allSmall } = this.props;
     let { post = {} } = this.props;
@@ -357,7 +369,9 @@ export default class extends React.Component {
       totalVotes = post.totalVotes,
       rating = post.rating,
       isSaved = post.isSaved,
-      totalSaved = post.totalSaved
+      totalSaved = post.totalSaved,
+      iWillDoThis = post.iWillDoThis,
+      totalIdo = post.totalIdo
     } = this.props;
     const {
       clickable,
@@ -377,7 +391,9 @@ export default class extends React.Component {
       totalVotes,
       rating,
       isSaved,
-      totalSaved
+      totalSaved,
+      iWillDoThis,
+      totalIdo
     };
     const postContextOptions = getContextOptions(post);
     const ratingInfo = {
@@ -385,12 +401,23 @@ export default class extends React.Component {
       totalVotes,
       rating
     };
+
+    const isReallySaved = UserService.isLoggedIn && isSaved;
     const addSavedPostOption = postContextOptions.find(
       option => option.value === ContextOptions.save.value
     );
-    const isReallySaved = UserService.isLoggedIn && isSaved;
     if (addSavedPostOption) {
       addSavedPostOption.label = !isReallySaved ? 'lưu bài viết' : 'bỏ lưu bài viết';
+    }
+
+    const isReallyIDo = UserService.isLoggedIn && iWillDoThis;
+    const iWillDoThisOption = postContextOptions.find(
+      option => option === ContextOptions.iWillDoThis
+    );
+    if (iWillDoThisOption) {
+      iWillDoThisOption.label = !isReallyIDo
+        ? iWillDoThisOption.labelAdd
+        : iWillDoThisOption.labelRemove;
     }
 
     return (
@@ -407,7 +434,7 @@ export default class extends React.Component {
           onChange={this.handlePopupChange}
           id={_id}
         >
-          <span className={`post__preview ${isReallySaved ? 'saved' : ''} ${preview ? category : ''}`}>
+          <span className={classnames('post__preview', { saved: isReallySaved, [category]: preview })}>
             {preview
               ? this.renderPreviewAsImage()
               : this.renderPreviewAsTitle()}
@@ -416,7 +443,20 @@ export default class extends React.Component {
                 <ContextButton options={postContextOptions} handler={this.handleContextActions} />
               </div>
             )}
-            {isReallySaved && <IconBookmark className="post__bookmark" totalSaved={totalSaved} />}
+            {isReallySaved && (
+              <IconBookmark
+                className="post__bookmark"
+                totalSaved={totalSaved}
+                onClick={Post.handleOpenSavedPosts}
+              />
+            )}
+            {isReallyIDo && (
+              <IconRaisedFist
+                className="post__status-icon"
+                totalIdo={totalIdo}
+                onClick={Post.handleOpenIWillDoThisPosts}
+              />
+            )}
           </span>
           <MDBPopoverBody>
             <div className="post__content">
