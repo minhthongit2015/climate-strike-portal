@@ -13,6 +13,8 @@ const SavedPostSchema = new mongoose.Schema({
   }
 });
 
+let SavedPostModel;
+
 async function increaseTotalSaved(savedPost) {
   const post = await Post.findById(savedPost.post);
   post.totalSaved = (post.totalSaved || 0) + 1;
@@ -21,17 +23,19 @@ async function increaseTotalSaved(savedPost) {
 
 async function decreaseTotalSaved(savedPost) {
   const post = await Post.findById(savedPost.post);
-  post.totalSaved = (post.totalSaved || 0) - 1;
-  post.totalSaved = Math.max(post.totalSaved, 0);
+  post.totalSaved = Math.max((post.totalSaved || 0) - 1, 0);
   post.save();
 }
 
-SavedPostSchema.post('save', async (savedPost) => {
+SavedPostSchema.post('create', async (savedPost) => {
   increaseTotalSaved(savedPost);
 }, { query: true, document: true });
 
-SavedPostSchema.post('updateOne', async (savedPost) => {
-  increaseTotalSaved(savedPost);
+SavedPostSchema.post('updateOne', async (updateResult) => {
+  if (updateResult.result.n > 0) {
+    const savedPost = await SavedPostModel.findById(updateResult.upsertedId);
+    increaseTotalSaved(savedPost);
+  }
 }, { query: true, document: true });
 
 SavedPostSchema.post('delete', async (savedPost) => {
@@ -42,5 +46,6 @@ SavedPostSchema.post('findOneAndDelete', async (savedPost) => {
   decreaseTotalSaved(savedPost);
 }, { query: true, document: true });
 
-const SavedPostModel = mongoose.model('SavedPost', SavedPostSchema);
+SavedPostModel = mongoose.model('SavedPost', SavedPostSchema);
+
 module.exports = SavedPostModel;

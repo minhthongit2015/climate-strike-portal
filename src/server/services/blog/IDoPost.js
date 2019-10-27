@@ -30,8 +30,11 @@ module.exports = class extends CRUDService {
       user: user._id,
       post: post._id
     };
-    await UserService.updateSocialPoint(user, 2);
-    return this.createOrUpdate(iDoPost, iDoPost);
+    const addResult = await this.createOrUpdate(iDoPost, iDoPost);
+    if (addResult.upserted) {
+      await UserService.updateSocialPoint(user, 2);
+    }
+    return addResult;
   }
 
   static async removeIDoPost(postId, user) {
@@ -39,8 +42,11 @@ module.exports = class extends CRUDService {
       user: user._id,
       post: postId
     };
-    await UserService.updateSocialPoint(user, -2);
-    return this.findOneAndDelete(removeSignal);
+    const removeResult = await this.findOneAndDelete(removeSignal);
+    if (removeResult) {
+      await UserService.updateSocialPoint(user, -2);
+    }
+    return removeResult;
   }
 
   static async appendIWillDoThisOfUser(posts, user) {

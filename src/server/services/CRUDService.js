@@ -100,7 +100,8 @@ module.exports = class CRUDService {
 
   static async createOrUpdate(doc, where) {
     if (where) {
-      return this.model.updateOne(where, doc, { upsert: true, setDefaultsOnInsert: true }).exec();
+      return this.model.updateOne(where, doc,
+        { upsert: true, new: true, setDefaultsOnInsert: true }).exec();
     }
     if (doc._id || doc.id) {
       return this.update(doc);

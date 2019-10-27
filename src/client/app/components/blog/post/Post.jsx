@@ -311,13 +311,13 @@ export default class Post extends React.Component {
     }
 
     const savedState = GlobalState.buildSavedState(
-      post, ['iWillDoThis', 'totalIdo']
+      post, ['iWillDoThis', 'totalIDo']
     );
 
     post.iWillDoThis = !post.iWillDoThis;
 
     if (post.iWillDoThis) {
-      GlobalState.updatePoint(post, 'totalIdo', 1, this);
+      GlobalState.updatePoint(post, 'totalIDo', 1, this);
       UserService.updateUserSocialPoint(2);
       return superrequest.agentPost(`/api/v1/blog/i-will-do-this/${post._id}`).then((res) => {
         if (!res || !res.ok) {
@@ -329,7 +329,7 @@ export default class Post extends React.Component {
       });
     }
 
-    GlobalState.updatePoint(post, 'totalIdo', -1, this);
+    GlobalState.updatePoint(post, 'totalIDo', -1, this);
     UserService.updateUserSocialPoint(-2);
     return superrequest.agentDelete(`/api/v1/blog/i-will-do-this/${post._id}`).then((res) => {
       if (!res || !res.ok) {
