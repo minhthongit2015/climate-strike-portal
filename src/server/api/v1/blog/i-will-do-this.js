@@ -3,6 +3,7 @@ const router = require('express').Router();
 const Logger = require('../../../services/Logger');
 const PostService = require('../../../services/blog/Post');
 const APIResponse = require('../../../models/api-models');
+const SessionService = require('../../../services/user/Session');
 const PostsSecurityService = require('../../../services/security/PostsSecurity');
 const IDoPostService = require('../../../services/blog/IDoPost');
 const RatingService = require('../../../services/blog/Rating');
@@ -31,12 +32,7 @@ router.post('/:postId', (req, res) => {
       throw APIResponse.throwError.NotFound();
     }
     const iDoPost = await IDoPostService.addIDoPost(post, user);
-    if (user.dirty) {
-      delete user.dirty;
-      return req.session.save(
-        () => res.send(new APIResponse().setData({ iDoPost, user }))
-      );
-    }
+    await SessionService.checkForDirtySession(req);
     return res.send(new APIResponse().setData({ iDoPost, user }));
   }, { req, res });
 });
@@ -47,12 +43,7 @@ router.delete('/:postId', (req, res) => {
     const { user } = req.session;
     const { postId } = req.params;
     const iDoPost = await IDoPostService.removeIDoPost(postId, user);
-    if (user.dirty) {
-      delete user.dirty;
-      return req.session.save(
-        () => res.send(new APIResponse().setData({ iDoPost, user }))
-      );
-    }
+    await SessionService.checkForDirtySession(req);
     return res.send(new APIResponse().setData({ iDoPost, user }));
   }, { req, res });
 });

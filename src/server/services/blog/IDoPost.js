@@ -3,6 +3,7 @@ const { IDoPost } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
 const ApiHelper = require('../../utils/ApiHelper');
 const PostService = require('./Post');
+const UserService = require('../user/User');
 
 module.exports = class extends CRUDService {
   static get model() {
@@ -29,6 +30,7 @@ module.exports = class extends CRUDService {
       user: user._id,
       post: post._id
     };
+    await UserService.updateSocialPoint(user, 2);
     return this.createOrUpdate(iDoPost, iDoPost);
   }
 
@@ -37,6 +39,7 @@ module.exports = class extends CRUDService {
       user: user._id,
       post: postId
     };
+    await UserService.updateSocialPoint(user, -2);
     return this.findOneAndDelete(removeSignal);
   }
 

@@ -20,7 +20,10 @@ import CategoryService from '../../../services/CategoryService';
 import { IconBookmark, IconRaisedFist } from '../../../../assets/icons';
 // eslint-disable-next-line import/no-cycle
 import SavedPostsDialogService from '../../../services/SavedPostsDialogService';
+// eslint-disable-next-line import/no-cycle
 import IDoPostsDialogService from '../../../services/IDoPostsDialogService';
+import GlobalState from '../../../utils/GlobalState';
+
 
 const ContextOptions = {
   iWillDoThis: {
@@ -241,20 +244,16 @@ export default class Post extends React.Component {
       return;
     }
 
-    const savedState = {
-      postRating: post.rating,
-      postTotalRating: post.totalRating,
-      postTotalVotes: post.totalVotes,
-      userSocialPoint: UserService.user.socialPoint
-    };
+    const savedState = GlobalState.buildSavedState(
+      post, ['rating', 'totalRating', 'totalVotes']
+    );
 
     if (post.rating) {
-      post.totalRating = post.totalRating - post.rating + rating;
+      GlobalState.updatePoint(post, 'totalRating', -post.rating + rating);
     } else {
-      post.totalRating += rating;
-      post.totalVotes += 1;
-      UserService.user.socialPoint = (UserService.user.socialPoint || 0) + 1;
-      UserService.setUser(UserService.user);
+      GlobalState.updatePoint(post, 'totalRating', rating);
+      GlobalState.updatePoint(post, 'totalVotes', 1);
+      UserService.updateUserSocialPoint(1);
     }
     post.rating = rating;
     this.forceUpdate();
@@ -263,12 +262,8 @@ export default class Post extends React.Component {
       rating
     }).then((res) => {
       if (!res || !res.ok) {
-        post.rating = savedState.postRating;
-        post.totalRating = savedState.postTotalRating;
-        post.totalVotes = savedState.postTotalVotes;
-        UserService.user.socialPoint = savedState.userSocialPoint;
-        UserService.setUser(UserService.user);
-        this.forceUpdate();
+        GlobalState.restoreFromSavedState(post, savedState, this);
+        UserService.updateUserSocialPoint(-1);
       } else {
         Object.assign(UserService.user, res.data.user);
         UserService.setUser(UserService.user);
@@ -282,28 +277,27 @@ export default class Post extends React.Component {
       return LoginDialogService.open();
     }
 
-    const savedState = {
-      postIsSaved: post.isSaved
-    };
+    const savedState = GlobalState.buildSavedState(
+      post, ['isSaved', 'totalSaved']
+    );
 
     post.isSaved = !post.isSaved;
-    this.forceUpdate();
 
     if (post.isSaved) {
+      GlobalState.updatePoint(post, 'totalSaved', 1, this);
       return superrequest.agentPost(`/api/v1/blog/saved-posts/${post._id}`).then((res) => {
         if (!res || !res.ok) {
-          post.isSaved = savedState.postIsSaved;
-          this.forceUpdate();
+          GlobalState.restoreFromSavedState(post, savedState, this);
         } else {
           // MessageDialogService.showSuccessMessage(ContextOptions.save.value, true);
         }
       });
     }
 
+    GlobalState.updatePoint(post, 'totalSaved', -1, this);
     return superrequest.agentDelete(`/api/v1/blog/saved-posts/${post._id}`).then((res) => {
       if (!res || !res.ok) {
-        post.isSaved = savedState.postIsSaved;
-        this.forceUpdate();
+        GlobalState.restoreFromSavedState(post, savedState, this);
       } else {
         // MessageDialogService.showSuccessMessage(ContextOptions.save.value, false);
       }
@@ -316,28 +310,31 @@ export default class Post extends React.Component {
       return LoginDialogService.open();
     }
 
-    const savedState = {
-      postIWillDoThis: post.iWillDoThis
-    };
+    const savedState = GlobalState.buildSavedState(
+      post, ['iWillDoThis', 'totalIdo']
+    );
 
     post.iWillDoThis = !post.iWillDoThis;
-    this.forceUpdate();
 
     if (post.iWillDoThis) {
+      GlobalState.updatePoint(post, 'totalIdo', 1, this);
+      UserService.updateUserSocialPoint(2);
       return superrequest.agentPost(`/api/v1/blog/i-will-do-this/${post._id}`).then((res) => {
         if (!res || !res.ok) {
-          post.iWillDoThis = savedState.postIWillDoThis;
-          this.forceUpdate();
+          GlobalState.restoreFromSavedState(post, savedState, this);
+          UserService.updateUserSocialPoint(-2);
         } else {
           // MessageDialogService.showSuccessMessage(ContextOptions.save.value, true);
         }
       });
     }
 
+    GlobalState.updatePoint(post, 'totalIdo', -1, this);
+    UserService.updateUserSocialPoint(-2);
     return superrequest.agentDelete(`/api/v1/blog/i-will-do-this/${post._id}`).then((res) => {
       if (!res || !res.ok) {
-        post.iWillDoThis = savedState.postIWillDoThis;
-        this.forceUpdate();
+        GlobalState.restoreFromSavedState(post, savedState, this);
+        UserService.updateUserSocialPoint(2);
       } else {
         // MessageDialogService.showSuccessMessage(ContextOptions.save.value, false);
       }
@@ -371,7 +368,7 @@ export default class Post extends React.Component {
       isSaved = post.isSaved,
       totalSaved = post.totalSaved,
       iWillDoThis = post.iWillDoThis,
-      totalIdo = post.totalIdo
+      totalIDo = post.totalIDo
     } = this.props;
     const {
       clickable,
@@ -393,13 +390,13 @@ export default class Post extends React.Component {
       isSaved,
       totalSaved,
       iWillDoThis,
-      totalIdo
+      totalIDo
     };
     const postContextOptions = getContextOptions(post);
     const ratingInfo = {
       totalRating,
       totalVotes,
-      rating
+      rating: UserService.isLoggedIn && rating
     };
 
     const isReallySaved = UserService.isLoggedIn && isSaved;
@@ -453,7 +450,7 @@ export default class Post extends React.Component {
             {isReallyIDo && (
               <IconRaisedFist
                 className="post__status-icon"
-                totalIdo={totalIdo}
+                totalIDo={totalIDo}
                 onClick={Post.handleOpenIWillDoThisPosts}
               />
             )}

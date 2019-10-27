@@ -2,6 +2,7 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import RandomItem from 'random-item';
 import LeafLoading from '../../utils/loadings/LeafLoading';
+// eslint-disable-next-line import/no-cycle
 import PostList from '../post-list/PostList';
 import superrequest from '../../../utils/superrequest';
 import t from '../../../languages';
@@ -56,17 +57,20 @@ export default class InfinitePostList extends React.Component {
     const limit = (this.page + 1) * postsPerPage;
     const offset = 0;
 
-    const fetchPostsPromise = this.props.fetchPosts
-      ? this.props.fetchPosts()
-      : superrequest.get(`/api/v1/blog/posts?category=${category}&limit=${limit}&offset=${offset}`);
+    let endPoint = this.props.endPoint || `/api/v1/blog/posts?category=${category}`;
+    endPoint = `${endPoint}${endPoint.includes('?') ? '&' : '?'}limit=${limit}&offset=${offset}`;
 
-    return fetchPostsPromise.then((res) => {
-      this.setState({
-        posts: []
-      }, () => {
-        this.resolvePosts(res, this.page, offset, limit);
+    const mappingRes = this.props.mappingRes || (res => res);
+
+    return superrequest.get(endPoint)
+      .then(mappingRes)
+      .then((res) => {
+        this.setState({
+          posts: []
+        }, () => {
+          this.resolvePosts(res, this.page, offset, limit);
+        });
       });
-    });
   }
 
   async fetchPosts() {
@@ -74,7 +78,13 @@ export default class InfinitePostList extends React.Component {
     const limit = postsPerPage;
     const offset = this.page * limit;
 
-    return superrequest.get(`/api/v1/blog/posts?category=${category}&limit=${limit}&offset=${offset}`)
+    let endPoint = this.props.endPoint || `/api/v1/blog/posts?category=${category}`;
+    endPoint = `${endPoint}${endPoint.includes('?') ? '&' : '?'}limit=${limit}&offset=${offset}`;
+
+    const mappingRes = this.props.mappingRes || (res => res);
+
+    return superrequest.get(endPoint)
+      .then(mappingRes)
       .then((res) => {
         if (!res || !res.ok) {
           // If it has some error, then try to fetch again after 2s
@@ -168,7 +178,7 @@ export default class InfinitePostList extends React.Component {
 
   render() {
     const { posts } = this.state;
-    const { scrollableTarget = 'sidebar-layout__content' } = this.props;
+    const { scrollableTarget = 'sidebar-layout__content', ...restProps } = this.props;
 
     return (
       <InfiniteScroll
@@ -181,7 +191,7 @@ export default class InfinitePostList extends React.Component {
         loader={this.renderLoading()}
         endMessage={this.renderEnd()}
       >
-        <PostList posts={posts} handleActions={this.handleActions} {...this.props} />
+        <PostList posts={posts} handleActions={this.handleActions} {...restProps} />
       </InfiniteScroll>
     );
   }

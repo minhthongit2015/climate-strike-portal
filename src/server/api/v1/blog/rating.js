@@ -3,6 +3,7 @@ const router = require('express').Router();
 const Logger = require('../../../services/Logger');
 const PostService = require('../../../services/blog/Post');
 const APIResponse = require('../../../models/api-models');
+const SessionService = require('../../../services/user/Session');
 const PostsSecurityService = require('../../../services/security/PostsSecurity');
 const RatingService = require('../../../services/blog/Rating');
 
@@ -18,12 +19,8 @@ router.post('/:postId', (req, res) => {
       throw APIResponse.throwError.NotFound();
     }
     const ratingObject = await RatingService.rating(post, user, rating);
-    if (user.dirty) {
-      delete user.dirty;
-      return req.session.save(
-        () => res.send(new APIResponse().setData({ rating: ratingObject, user }))
-      );
-    }
+    await SessionService.checkForDirtySession(req);
+
     return res.send(new APIResponse().setData({ rating: ratingObject, user }));
   }, { req, res });
 });

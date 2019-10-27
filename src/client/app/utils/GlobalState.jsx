@@ -119,6 +119,43 @@ class Global {
       }
     }
   }
+
+  // --- Some related utils
+
+  static buildSavedState(object, states = []) {
+    const savedState = {};
+    if (!object || !states || !states.length) {
+      return savedState;
+    }
+    states.forEach((state) => {
+      savedState[state] = object[state];
+    });
+    return savedState;
+  }
+
+  static restoreFromSavedState(object, savedState, component) {
+    if (!object || !savedState || !Object.keys(savedState).length) {
+      return object;
+    }
+    Object.entries(savedState).forEach(([key, value]) => {
+      object[key] = savedState[value];
+    });
+    if (component) {
+      component.forceUpdate();
+    }
+    return object;
+  }
+
+  static updatePoint(object, key, point, component) {
+    if (!object || !key) {
+      return object;
+    }
+    object[key] = Math.max((object[key] || 0) + (point || 0), 0);
+    if (component) {
+      component.forceUpdate();
+    }
+    return object;
+  }
 }
 
 export default Global;

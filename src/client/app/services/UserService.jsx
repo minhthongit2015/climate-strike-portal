@@ -62,6 +62,14 @@ export default class UserService {
       });
   }
 
+  static updateUserSocialPoint(point) {
+    if (!this.user) {
+      return;
+    }
+    GlobalState.updatePoint(this.user, 'socialPoint', point);
+    this.setUser(this.user);
+  }
+
   // --- --- ---
 
   static get fbUserId() {

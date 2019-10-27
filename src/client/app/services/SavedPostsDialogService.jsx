@@ -1,6 +1,7 @@
 import React from 'react';
 import superrequest from '../utils/superrequest';
 import PageDialogService from './PageDialogService';
+// eslint-disable-next-line import/no-cycle
 import InfinitePostList from '../components/blog/infinite-post-list/InfinitePostList';
 import DeepMessage from '../components/utils/messages/DeepMessage';
 
@@ -20,7 +21,8 @@ export default class extends PageDialogService {
           parentPage="saved-posts"
           noPostMsg="chưa có bài viết nào được lưu"
           endMessage=""
-          fetchPosts={this.fetchSavedPosts}
+          endPoint="/api/v1/blog/saved-posts"
+          mappingRes={this.mappingRes}
           allSmall
           scrollableTarget="page-dialog-instance"
         />
@@ -50,14 +52,16 @@ export default class extends PageDialogService {
 
   static async fetchSavedPosts() {
     return superrequest.get('/api/v1/blog/saved-posts')
-      .then((res) => {
-        if (res && res.data) {
-          res.data.forEach((savedPost) => {
-            savedPost.isSaved = true;
-          });
-        }
-        return res;
+      .then(this.mappingRes);
+  }
+
+  static mappingRes(res) {
+    if (res && res.data) {
+      res.data.forEach((savedPost) => {
+        savedPost.isSaved = true;
       });
+    }
+    return res;
   }
 
   static getSavePageUrl() {

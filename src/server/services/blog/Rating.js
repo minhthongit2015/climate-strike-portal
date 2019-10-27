@@ -27,6 +27,9 @@ module.exports = class extends CRUDService {
         post: post._id,
         rating
       });
+
+      // After create new Rating, it will auto increase post.totalRating & post.totalVotes
+
       await UserService.updateSocialPoint(user, 1);
       return newRating;
     }

@@ -21,4 +21,20 @@ module.exports = class SessionService {
   static deleteAllSession() {
 
   }
+
+  static async checkForDirtySession(req) {
+    let isDirty = false;
+    isDirty = isDirty || this.checkForDirtyUser(req);
+    return isDirty
+      ? new Promise(resolve => req.session.save(resolve))
+      : undefined;
+  }
+
+  static checkForDirtyUser(req) {
+    const isDirty = req.session.user && req.session.user.dirty;
+    if (isDirty) {
+      delete req.session.user.dirty;
+    }
+    return isDirty;
+  }
 };

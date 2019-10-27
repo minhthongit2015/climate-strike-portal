@@ -13,13 +13,13 @@ const SavedPostSchema = new mongoose.Schema({
   }
 });
 
-async function increseTotalSaved(savedPost) {
+async function increaseTotalSaved(savedPost) {
   const post = await Post.findById(savedPost.post);
   post.totalSaved = (post.totalSaved || 0) + 1;
   post.save();
 }
 
-async function decreseTotalSaved(savedPost) {
+async function decreaseTotalSaved(savedPost) {
   const post = await Post.findById(savedPost.post);
   post.totalSaved = (post.totalSaved || 0) - 1;
   post.totalSaved = Math.max(post.totalSaved, 0);
@@ -27,19 +27,19 @@ async function decreseTotalSaved(savedPost) {
 }
 
 SavedPostSchema.post('save', async (savedPost) => {
-  increseTotalSaved(savedPost);
+  increaseTotalSaved(savedPost);
 }, { query: true, document: true });
 
 SavedPostSchema.post('updateOne', async (savedPost) => {
-  increseTotalSaved(savedPost);
+  increaseTotalSaved(savedPost);
 }, { query: true, document: true });
 
 SavedPostSchema.post('delete', async (savedPost) => {
-  decreseTotalSaved(savedPost);
+  decreaseTotalSaved(savedPost);
 }, { query: true, document: true });
 
 SavedPostSchema.post('findOneAndDelete', async (savedPost) => {
-  decreseTotalSaved(savedPost);
+  decreaseTotalSaved(savedPost);
 }, { query: true, document: true });
 
 const SavedPostModel = mongoose.model('SavedPost', SavedPostSchema);

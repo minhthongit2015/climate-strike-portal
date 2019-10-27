@@ -31,12 +31,6 @@ router.post('/:postId', (req, res) => {
       throw APIResponse.throwError.NotFound();
     }
     const savedPost = await SavedPostService.addSavedPost(post, user);
-    if (user.dirty) {
-      delete user.dirty;
-      return req.session.save(
-        () => res.send(new APIResponse().setData({ savedPost, user }))
-      );
-    }
     return res.send(new APIResponse().setData({ savedPost, user }));
   }, { req, res });
 });
@@ -47,12 +41,6 @@ router.delete('/:postId', (req, res) => {
     const { user } = req.session;
     const { postId } = req.params;
     const savedPost = await SavedPostService.removeSavedPost(postId, user);
-    if (user.dirty) {
-      delete user.dirty;
-      return req.session.save(
-        () => res.send(new APIResponse().setData({ savedPost, user }))
-      );
-    }
     return res.send(new APIResponse().setData({ savedPost, user }));
   }, { req, res });
 });

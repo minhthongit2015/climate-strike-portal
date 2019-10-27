@@ -10,7 +10,7 @@ import AuthService from '../../../services/Auth';
 import t from '../../../languages';
 import LoginDialogService from '../../../services/LoginDialogService';
 import ProgressWithIcon from '../../utils/progres-with-icon/ProgressWithIcon';
-import { IconRankLeader } from '../../../../assets/icons';
+import { IconRankLeader, IconPlusPoint } from '../../../../assets/icons';
 import SavedPostsDialogService from '../../../services/SavedPostsDialogService';
 import IDoPostsDialogService from '../../../services/IDoPostsDialogService';
 
@@ -88,6 +88,7 @@ export default class SignIn extends Component {
       <MDBDropdown
         dropleft
         ref={this.handleOnDropdownRef}
+        className="sign-in"
       >
         <MDBDropdownToggle
           floating
@@ -104,6 +105,7 @@ export default class SignIn extends Component {
             className="img-fluid z-depth-1 rounded-circle"
           />
         </MDBDropdownToggle>
+        <IconPlusPoint className="sign-in__plus-point" point={socialPoint} />
         <MDBDropdownMenu basic flip>
           {user && (
             <React.Fragment>

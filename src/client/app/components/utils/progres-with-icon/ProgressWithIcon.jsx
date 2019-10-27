@@ -24,12 +24,12 @@ export default class extends React.Component {
     const normalSpeed = { stiffness: 14, damping: 20 };
     const flashSpeed = { stiffness: 300, damping: 25 };
     const speedControl = isOpen ? normalSpeed : flashSpeed;
-    const value = isOpen ? percent : 0;
+    const targetValue = isOpen ? percent : 0;
 
     return (
       <Motion
         defaultStyle={{ percent: 0 }}
-        style={{ percent: spring(value, speedControl) }}
+        style={{ percent: spring(targetValue, speedControl) }}
       >
         {value => (
           <div style={{ position: 'relative' }} {...restProps}>

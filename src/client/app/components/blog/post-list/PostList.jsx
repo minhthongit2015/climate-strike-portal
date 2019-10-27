@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Shuffle from 'shufflejs';
+// eslint-disable-next-line import/no-cycle
 import Post from '../post/Post';
 import './PostList.scss';
 import UserService from '../../../services/UserService';

@@ -1,6 +1,7 @@
 import React from 'react';
 import superrequest from '../utils/superrequest';
 import PageDialogService from './PageDialogService';
+// eslint-disable-next-line import/no-cycle
 import InfinitePostList from '../components/blog/infinite-post-list/InfinitePostList';
 import DeepMessage from '../components/utils/messages/DeepMessage';
 
@@ -24,7 +25,8 @@ export default class extends PageDialogService {
           parentPage="i-will-do-this"
           noPostMsg="chưa có hành động nào được chọn"
           endMessage=""
-          fetchPosts={this.fetchIDoPosts}
+          endPoint="/api/v1/blog/i-will-do-this"
+          mappingRes={this.mappingRes}
           allSmall
           scrollableTarget="page-dialog-instance"
         />
@@ -54,14 +56,16 @@ export default class extends PageDialogService {
 
   static async fetchIDoPosts() {
     return superrequest.get('/api/v1/blog/i-will-do-this')
-      .then((res) => {
-        if (res && res.data) {
-          res.data.forEach((savedPost) => {
-            savedPost.iWillDoThis = true;
-          });
-        }
-        return res;
+      .then(this.mappingRes);
+  }
+
+  static mappingRes(res) {
+    if (res && res.data) {
+      res.data.forEach((savedPost) => {
+        savedPost.iWillDoThis = true;
       });
+    }
+    return res;
   }
 
   static getSavePageUrl() {

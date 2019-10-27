@@ -1,21 +1,28 @@
 
-.i-will-do-this {
-  color: #ff842d;
-}
 
-.login-modal {
-  max-width: 350px;
-}
-
-.signin-button {
-  transition: all .14s ease-in-out;
-  & > .btn {
-    white-space: nowrap;
+.sign-in {
+  .i-will-do-this {
+    color: #ff842d;
   }
-}
 
-@at-root .sidenav.hide .signin-button > .btn {
-  opacity: 0;
+  .login-modal {
+    max-width: 350px;
+  }
+
+  .signin-button {
+    transition: all .14s ease-in-out;
+    & > .btn {
+      white-space: nowrap;
+    }
+  }
+
+  @at-root .sidenav.hide .signin-button > .btn {
+    opacity: 0;
+  }
+
+  &__plus-point {
+    
+  }
 }
 
 .btn-paper {
