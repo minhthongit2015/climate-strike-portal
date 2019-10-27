@@ -15,6 +15,7 @@ module.exports = class extends SecurityService {
       'content',
       'summary',
       'preview',
+      'video',
       'categories',
       'status'
     ];

@@ -39,12 +39,12 @@ const preventLeaveMessage = 'Bài viết của bạn vẫn chưa được lưu! 
 export default class extends React.Component {
   get post() {
     const {
-      _id, title, summary, preview, category
+      _id, title, summary, preview, video, category
     } = this.state;
     const content = this.contentRef.current.value;
     const categoryIds = category.map(cate => cate.value);
     return {
-      _id, title, summary, content, preview, categories: categoryIds
+      _id, title, summary, content, preview, video, categories: categoryIds
     };
   }
 
@@ -71,6 +71,7 @@ export default class extends React.Component {
       title: '',
       summary: '',
       preview: '',
+      video: '',
       category: [],
       disabled: false,
       expanded: false
@@ -102,6 +103,7 @@ export default class extends React.Component {
       title: '',
       summary: '',
       preview: '',
+      video: '',
       category: [],
       expanded: false
     });
@@ -114,6 +116,7 @@ export default class extends React.Component {
       title: '',
       summary: '',
       preview: '',
+      video: '',
       category: []
     });
     this.contentRef.current.value = '';
@@ -136,7 +139,8 @@ export default class extends React.Component {
         _id: post._id,
         title: post.title,
         summary: post.summary,
-        preview: post.preview
+        preview: post.preview,
+        video: post.video
       });
       this.contentRef.current.value = post.content;
       setTimeout(() => {
@@ -224,7 +228,7 @@ export default class extends React.Component {
   render() {
     console.log('render "components/blog/new-post"');
     const {
-      _id, title, summary, preview, category, disabled, expanded
+      _id, title, summary, preview, video, category, disabled, expanded
     } = this.state;
     const { categories, rootCategory } = this.props;
     let categoryOptions = [];
@@ -291,6 +295,8 @@ export default class extends React.Component {
                   label="Tải ảnh xem trước"
                   name="preview"
                   value={preview}
+                  videoName="video"
+                  video={video}
                   onChange={this.handleInputChange}
                   className="px-2 pb-4 pt-1"
                 />

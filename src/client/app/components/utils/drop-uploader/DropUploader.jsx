@@ -16,7 +16,13 @@ export default class extends React.Component {
   }
 
   handleInputChange(event) {
-    this.dispatchUploadedEvent(event.target.value);
+    if (event.target.name === 'video') {
+      const match = event.target.value.match(/src="(.*?)"/);
+      if (match && match[1]) {
+        [, event.target.value] = match;
+      }
+    }
+    this.dispatchUploadedEvent(event);
   }
 
   handleStartUpload() {
@@ -33,19 +39,21 @@ export default class extends React.Component {
       this.setState({
         uploading: false
       });
-      this.dispatchUploadedEvent(event1.target.result);
+      event.value = event1.target.result;
+      this.dispatchUploadedEvent(event);
     };
 
     const newFile = event.target.files[0];
     reader.readAsDataURL(newFile);
   }
 
-  dispatchUploadedEvent(imgUrlBase64) {
+  dispatchUploadedEvent(event) {
+    const { value, name } = event.target;
     if (this.props.onChange) {
       this.props.onChange({
         target: {
-          name: this.props.name || 'file',
-          value: imgUrlBase64
+          name,
+          value
         },
         preventDefault: () => {}
       });
@@ -54,7 +62,7 @@ export default class extends React.Component {
 
   render() {
     const {
-      className, wrapperProps, innerClass, label, value = '', ...restProps
+      className, wrapperProps, innerClass, label, name, videoName, value = '', video = '', ...restProps
     } = this.props;
     const { uploading } = this.state;
     const urlInputValue = value && value.startsWith('http')
@@ -74,6 +82,7 @@ export default class extends React.Component {
           <input
             type="file"
             accept="image/*"
+            name="image"
             onChange={this.handleFileUpload}
             onInput={this.handleStartUpload}
             ref={this.inputRef}
@@ -83,8 +92,19 @@ export default class extends React.Component {
         <input
           className="drop-uploader__url-input px-2 rounded"
           placeholder="URL hình ảnh"
-          name="url"
+          name={name}
           value={urlInputValue}
+          onChange={this.handleInputChange}
+          autoComplete="off"
+          autofill="off"
+          spellCheck="false"
+          autoCorrect="false"
+        />
+        <input
+          className="drop-uploader__url-input px-2 mt-2 rounded"
+          placeholder="URL video"
+          name={videoName}
+          value={video}
           onChange={this.handleInputChange}
           autoComplete="off"
           autofill="off"

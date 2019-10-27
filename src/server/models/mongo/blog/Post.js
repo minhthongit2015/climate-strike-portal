@@ -10,6 +10,7 @@ const PostSchema = new mongoose.Schema({
   content: String,
   summary: String,
   preview: String,
+  video: String,
   status: String, // draft, pending, approved, scheduled, published, archived
   authors: [{ type: ObjectId, ref: 'User' }],
   totalRating: { type: Number, default: 0 },

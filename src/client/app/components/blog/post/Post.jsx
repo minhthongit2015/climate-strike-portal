@@ -355,6 +355,7 @@ export default class Post extends React.Component {
     const {
       _id = post._id,
       preview = post.preview,
+      video = post.video,
       title = post.title,
       summary = post.summary,
       content = post.content,
@@ -377,6 +378,7 @@ export default class Post extends React.Component {
     post = {
       _id,
       preview,
+      video,
       title,
       summary,
       content,
