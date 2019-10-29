@@ -49,7 +49,7 @@ export default React.memo((props) => {
             <ReactMarkdown
               className="markdown"
               source={content}
-            // escapeHtml={false} // Do not turn it on for now
+              escapeHtml={false} // Do not turn it on for now
             />
           </div>
         </Col>

@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
   role: String,
   name: String,
   email: String,
+  latestRead: {
+    category: String,
+    timestamp: Date
+  },
   picture: String,
   cover: String,
   description: String,

@@ -1,4 +1,5 @@
 
+const xss = require('xss');
 const { Post } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
 const CategoryService = require('./Category');
@@ -88,6 +89,8 @@ module.exports = class extends CRUDService {
       doc.authors = [newAuthor];
     }
 
+    doc.content = xss(doc.content);
+
     return oldDoc
       ? super.update(docId, doc)
       : super.create(doc);
@@ -110,5 +113,9 @@ module.exports = class extends CRUDService {
 
   static async getByOrder(baseOrder) {
     return super.first({ where: { baseOrder } });
+  }
+
+  static async checkNewPost(req) {
+
   }
 };
