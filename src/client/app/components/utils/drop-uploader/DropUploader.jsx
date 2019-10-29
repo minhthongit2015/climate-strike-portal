@@ -10,6 +10,8 @@ export default class extends React.Component {
     this.handleStartUpload = this.handleStartUpload.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handlePaste = this.handlePaste.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
+    this.handleDragOver = this.handleDragOver.bind(this);
     this.inputRef = React.createRef();
     this.state = {
       uploading: false
@@ -86,6 +88,29 @@ export default class extends React.Component {
     });
   }
 
+  handleDrop(event) {
+    event.preventDefault();
+    const { items } = event.dataTransfer || event.originalEvent.dataTransfer;
+    Object.values(items).forEach((item) => {
+      if (item.kind === 'file') {
+        this.fileToDataURL(item.getAsFile())
+          .then((dataUrl) => {
+            this.setState({ uploading: false });
+            const uploadEvent = {
+              target: { name: this.props.name, value: dataUrl },
+              preventDefault: () => {}
+            };
+            this.dispatchUploadedEvent(uploadEvent);
+          });
+      }
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  handleDragOver(event) {
+    event.preventDefault();
+  }
+
   render() {
     const {
       className, wrapperProps, innerClass, label, name, videoName, value = '', video = '', ...restProps
@@ -96,7 +121,12 @@ export default class extends React.Component {
       : '';
 
     return (
-      <div className={classnames('drop-uploader d-flex flex-column', className)} {...wrapperProps}>
+      <div
+        className={classnames('drop-uploader d-flex flex-column', className)}
+        onDrop={this.handleDrop}
+        onDragOver={this.handleDragOver}
+        {...wrapperProps}
+      >
         <label
           className={classnames('drop-uploader__drop-zone rounded text-center', innerClass)}
           style={{ backgroundImage: `url(${value || ''})` }}
