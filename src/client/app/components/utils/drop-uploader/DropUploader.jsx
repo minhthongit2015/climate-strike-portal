@@ -9,6 +9,7 @@ export default class extends React.Component {
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.handleStartUpload = this.handleStartUpload.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handlePaste = this.handlePaste.bind(this);
     this.inputRef = React.createRef();
     this.state = {
       uploading: false
@@ -32,19 +33,12 @@ export default class extends React.Component {
   }
 
   handleFileUpload(event) {
-    const reader = new FileReader();
-    reader.onabort = () => console.log('file reading was aborted');
-    reader.onerror = () => console.log('file reading has failed');
-    reader.onload = (event1) => {
-      this.setState({
-        uploading: false
+    this.fileToDataURL(event.target.files[0], event)
+      .then((dataUrl) => {
+        this.setState({ uploading: false });
+        event.target.value = dataUrl;
+        this.dispatchUploadedEvent(event);
       });
-      event.value = event1.target.result;
-      this.dispatchUploadedEvent(event);
-    };
-
-    const newFile = event.target.files[0];
-    reader.readAsDataURL(newFile);
   }
 
   dispatchUploadedEvent(event) {
@@ -58,6 +52,38 @@ export default class extends React.Component {
         preventDefault: () => {}
       });
     }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async fileToDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onabort = (error) => { console.log('file reading was aborted'); reject(error); };
+      reader.onerror = (error) => { console.log('file reading has failed'); reject(error); };
+      // reader.onloadstart = () => console.log('file reading start');
+      // reader.onprogress = () => console.log('file reading progress');
+      reader.onload = (event1) => {
+        resolve(event1.target.result);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  handlePaste(event) {
+    const { items } = event.clipboardData || event.originalEvent.clipboardData;
+    Object.values(items).forEach((item) => {
+      if (item.kind === 'file') {
+        this.fileToDataURL(item.getAsFile())
+          .then((dataUrl) => {
+            this.setState({ uploading: false });
+            const uploadEvent = {
+              target: { name: this.props.name, value: dataUrl },
+              preventDefault: () => {}
+            };
+            this.dispatchUploadedEvent(uploadEvent);
+          });
+      }
+    });
   }
 
   render() {
@@ -95,6 +121,7 @@ export default class extends React.Component {
           name={name}
           value={urlInputValue}
           onChange={this.handleInputChange}
+          onPaste={this.handlePaste}
           autoComplete="off"
           autofill="off"
           spellCheck="false"
@@ -106,6 +133,7 @@ export default class extends React.Component {
           name={videoName}
           value={video}
           onChange={this.handleInputChange}
+          onPaste={this.handlePaste}
           autoComplete="off"
           autofill="off"
           spellCheck="false"
