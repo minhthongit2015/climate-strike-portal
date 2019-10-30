@@ -52,7 +52,7 @@ export default class UserService {
   }
 
   static useUserState(component) {
-    GlobalState.useState(UserObjectKeys.user, null, component);
+    return GlobalState.useState(UserObjectKeys.user, null, component);
   }
 
   static async logout() {
@@ -114,7 +114,7 @@ export default class UserService {
   }
 
   static useFbUserState(component) {
-    GlobalState.useState(UserObjectKeys.fbUser, null, component);
+    return GlobalState.useState(UserObjectKeys.fbUser, null, component);
   }
 
   // --- --- ---
@@ -134,7 +134,7 @@ export default class UserService {
   }
 
   static useFbProfileState(component) {
-    GlobalState.useState(UserObjectKeys.fbProfile, null, component);
+    return GlobalState.useState(UserObjectKeys.fbProfile, null, component);
   }
 
   // --- --- ---

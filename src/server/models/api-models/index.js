@@ -17,6 +17,12 @@ module.exports = class {
     return HttpErrors;
   }
 
+  static get SUCCESS() {
+    return {
+      ok: true
+    };
+  }
+
   constructor(opts = {
     error: defaultError,
     data: undefined

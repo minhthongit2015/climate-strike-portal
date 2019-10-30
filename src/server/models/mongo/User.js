@@ -8,10 +8,7 @@ const UserSchema = new mongoose.Schema({
   role: String,
   name: String,
   email: String,
-  latestRead: {
-    category: String,
-    timestamp: Date
-  },
+  latestReads: Object,
   picture: String,
   cover: String,
   description: String,

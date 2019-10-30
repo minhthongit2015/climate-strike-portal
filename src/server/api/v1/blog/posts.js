@@ -8,6 +8,7 @@ const FacebookService = require('../../../services/thirt-party/Facebook');
 const RatingService = require('../../../services/blog/Rating');
 const SavedPostService = require('../../../services/blog/SavedPost');
 const IDoPostService = require('../../../services/blog/IDoPost');
+const SessionService = require('../../../services/user/Session');
 
 
 router.post('/', (req, res) => {
@@ -38,6 +39,27 @@ router.post('/:postId/rating', (req, res) => {
       );
     }
     return res.send(new APIResponse().setData({ rating: ratingObject, user }));
+  }, { req, res });
+});
+
+router.get('/unread-posts', (req, res) => {
+  Logger.catch(async () => {
+    await PostsSecurityService.onlyLoggedInUser(req);
+    const { user } = req.session;
+    const unreadPosts = await PostService.checkUnreadPosts(user);
+    res.send(new APIResponse().setData({ unreadPosts, user }));
+  }, { req, res });
+});
+
+router.post('/:postId/seen', (req, res) => {
+  Logger.catch(async () => {
+    await PostsSecurityService.onlyLoggedInUser(req);
+    const { user } = req.session;
+    const { postId } = req.params;
+    const post = await PostService.get(postId);
+    await PostService.seenLatestPost(user, post);
+    await SessionService.checkForDirtySession(req);
+    res.send(APIResponse.SUCCESS);
   }, { req, res });
 });
 

@@ -53,6 +53,7 @@ function findWithFunc(findFunc, opts = listParams) {
 }
 
 module.exports = {
+  mongoose,
   BlankModel,
   getId,
   listParams,

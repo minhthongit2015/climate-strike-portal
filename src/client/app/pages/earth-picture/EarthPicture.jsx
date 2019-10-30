@@ -10,6 +10,7 @@ import TabPollution from './tab-pollution/TabPollution';
 import TabCommunityShare from './tab-community-share/TabCommunityShare';
 import t from '../../languages';
 import { IconCommunity } from '../../../assets/icons';
+import NewsTracker from '../../services/NewsTracker';
 
 export default class extends React.Component {
   constructor(props) {
@@ -44,9 +45,12 @@ export default class extends React.Component {
         component: TabCommunityShare
       }
     ];
+
+    NewsTracker.useUnreadPostsState(this);
   }
 
   render() {
+    const { unreadPosts } = NewsTracker;
     return (
       <SidebarLayout navItems={this.tabs} brand={this.brand}>
         <Switch>

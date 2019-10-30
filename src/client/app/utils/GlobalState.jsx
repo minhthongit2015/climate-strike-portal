@@ -3,6 +3,7 @@ import React from 'react';
 class Global {
   static init() {
     this.state = {};
+    this.volatileStates = new Set();
     this.listeners = {};
   }
 
@@ -87,6 +88,14 @@ class Global {
     this.saveState();
   }
 
+  static setVolativeState(name, value) {
+    this.volatileStates.add(name);
+    this.state[name] = value;
+    if (this.listeners[name]) {
+      this.listeners[name].forEach(listener => listener(value));
+    }
+  }
+
   static removeState(name) {
     this.setState(name, undefined);
     delete this.state[name];
@@ -103,6 +112,8 @@ class Global {
   }
 
   static saveState() {
+    const clone = { ...this.state };
+    this.volatileStates.forEach(volatileState => delete clone[volatileState]);
     localStorage.setItem('GlobalState', JSON.stringify(this.state));
   }
 
