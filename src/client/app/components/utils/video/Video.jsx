@@ -24,6 +24,7 @@ export default class Video extends React.Component {
         <video
           src={src}
           className={`video w-100 ${className || ''}`}
+          controls
           {...restProps}
         >
           {tracks && tracks.map(track => (
