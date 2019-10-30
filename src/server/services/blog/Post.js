@@ -8,7 +8,7 @@ const ImgurService = require('../../services/thirt-party/imgur');
 const { PostStatus } = require('../../utils/Constants');
 
 module.exports = class extends CRUDService {
-  static get model() {
+  static getModel() {
     return Post;
   }
 

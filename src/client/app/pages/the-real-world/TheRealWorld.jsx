@@ -55,7 +55,7 @@ export default class TheRealWorld extends BasePage {
       rotateControl: true,
       streetViewControl: true
     });
-    this.loadMapObjects();
+    this.fetchPlaces();
   }
 
   onMarkerRef(ref) {
@@ -63,7 +63,7 @@ export default class TheRealWorld extends BasePage {
     this.markers.add(ref);
   }
 
-  async loadMapObjects() {
+  async fetchPlaces() {
     const places = await MapService.fetchPlaces();
     this.setState({
       dirty: true,
@@ -75,8 +75,20 @@ export default class TheRealWorld extends BasePage {
     if (window.key.ctrl) {
       prompt('LatLng', `${event.latLng.lat()}, ${event.latLng.lng()}`);
     }
+    if (window.key.alt) {
+      MapService.createPlace({
+        name: 'Marker',
+        position: {
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng()
+        },
+        __t: 'Activist'
+      }).then(
+        this.fetchPlaces()
+      );
+    }
     if (window.key.shift) {
-      return this.loadMapObjects();
+      return this.fetchPlaces();
     }
     return this.markers.forEach(marker => marker && marker.close());
   }
@@ -137,7 +149,7 @@ export default class TheRealWorld extends BasePage {
             ? (
               <place.marker
                 {...baseProps}
-                key={place.name}
+                key={place._id}
                 ref={(ref) => { this.onMarkerRef(ref); place.ref = ref; }}
                 entity={place}
                 markerProps={
@@ -171,18 +183,18 @@ export default class TheRealWorld extends BasePage {
   render() {
     console.log('render "Pages/the-real-world/TheRealWorld.jsx"');
     // if (!window.myGoogleMap) {
-    window.myGoogleMap = (
-      <GGMap
-        google={this.props.google || window.google}
-        {...this.defaultMapProps}
-        onClick={this.onMapClicked}
-        onReady={this.onMapReady}
-        dirty={this.state.dirty}
-      >
-        <this.renderMapElements />
-        <LeftToolBar handler={this.handleToolbarAction} />
-      </GGMap>
-    );
+      window.myGoogleMap = (
+        <GGMap
+          google={this.props.google || window.google}
+          {...this.defaultMapProps}
+          onClick={this.onMapClicked}
+          onReady={this.onMapReady}
+          dirty={this.state.dirty}
+        >
+          <this.renderMapElements />
+          <LeftToolBar handler={this.handleToolbarAction} />
+        </GGMap>
+      );
     // }
     return (
       <div {...this.props} onKeyDown={this.handleHotkeys}>

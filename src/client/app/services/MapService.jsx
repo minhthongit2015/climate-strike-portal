@@ -1,5 +1,5 @@
 import superrequest from '../utils/superrequest';
-import { ApiEndpoints } from '../utils/Constants';
+// import { ApiEndpoints } from '../utils/Constants';
 
 import MarkerWithInfo from '../components/map/marker-with-info/MarkerWithInfo';
 import StoreMarker from '../components/map/store-marker/StoreMarker';
@@ -18,14 +18,14 @@ function getMarkerByType(type) {
   case 'ToolShop':
     return GardenToolsMarker;
   default:
-    return MarkerWithInfo;
+    return FarmMarker;
   }
 }
 
 export default class MapService {
-  static fetchPlaces() {
-    const endpoint = `${ApiEndpoints.map.entities.LIST}?sort=[["_id", 1]]`;
-    return superrequest.get(endpoint)
+  static async fetchPlaces() {
+    // const endpoint = `${ApiEndpoints.map.entities.LIST}?sort=[["_id", 1]]`;
+    return superrequest.get('/api/v1/map/places')
       .then((res) => {
         if (!res || !res.data) {
           return [];
@@ -33,6 +33,14 @@ export default class MapService {
         const places = res.data || [];
         return this.mapEntities(places);
       });
+  }
+
+  static async createPlace(place) {
+    return superrequest.agentPost('/api/v1/map/places', place);
+  }
+
+  static async deletePlace(place) {
+    return superrequest.agentDelete(`/api/v1/map/places/${place._id}`);
   }
 
   static mapEntities(places) {
@@ -44,11 +52,6 @@ export default class MapService {
         // entity.cover = `https://graph.facebook.com/${entity.socials.fb}/cover-photo`;
       }
     });
-    places.map(mapEntity => mapEntity.position);
     return places;
-  }
-
-  static async createPlace(place) {
-    return superrequest.agentPost('/api/v1/map/places', place);
   }
 }

@@ -77,9 +77,7 @@ MapContainer.defaultProps = {
 
 function MapLoadingContainer() {
   return (
-    <React.Fragment>
-      <LeafLoading overlaping text={t('pages.theRealWorld.loadingText')} />
-    </React.Fragment>
+    <LeafLoading overlaping text={t('pages.theRealWorld.loadingText')} />
   );
 }
 export default GoogleApiWrapper({

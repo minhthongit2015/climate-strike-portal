@@ -6,7 +6,7 @@ const PostService = require('./Post');
 const UserService = require('../user/User');
 
 module.exports = class extends CRUDService {
-  static get model() {
+  static getModel() {
     return IDoPost;
   }
 

@@ -56,19 +56,14 @@ export default class MarkerWithInfo extends Component {
     return jQuery(`.gm-style .${CUSTOM_MARKER_CLASS}`);
   }
 
-  buildMarkerIcon() {
-    if (!this.props.iconSrc) return;
-    this.markerIcon = new this.google.maps.MarkerImage(
-      this.props.iconSrc,
-      null, /* size is determined at runtime */
-      null, /* origin is 0,0 */
-      null, /* anchor is bottom center of the scaled image */
-      new this.google.maps.Size(32, 32)
-    );
-  }
-
   get rootMarker() {
     return this.markerRef.marker;
+  }
+
+  get baseProps() {
+    const { google, map } = this.props;
+    if (!google || !map) return null;
+    return { google, map };
   }
 
   constructor(props) {
@@ -229,9 +224,52 @@ export default class MarkerWithInfo extends Component {
     mapTreeNodeToArray(this.props.children, this._nodeMap);
   }
 
+  buildMarkerIcon() {
+    if (!this.props.iconSrc) return;
+    this._markerIcon = new this.google.maps.MarkerImage(
+      this.props.iconSrc,
+      null, /* size is determined at runtime */
+      null, /* origin is 0,0 */
+      null, /* anchor is bottom center of the scaled image */
+      new this.google.maps.Size(32, 32)
+    );
+  }
+
+  get markerIcon() {
+    if (!this._markerIcon) {
+      this.buildMarkerIcon();
+    }
+    return this._markerIcon;
+  }
+
+  renderContent() {
+    return this.props.children;
+  }
+
+  renderInfoWindows() {
+    if (!this.baseProps) return null;
+    const { windowProps } = this.props;
+
+    return (
+      <InfoWindow
+        ref={this.windowRef}
+        marker={this.state.marker}
+        {...this.baseProps}
+        {...windowProps}
+        onOpen={this.onOpen}
+        onClose={this.onForceClose}
+        visible={this.isOpen}
+      >
+        <div id={this.uid}>
+          {this.renderContent()}
+        </div>
+      </InfoWindow>
+    );
+  }
+
   render() {
     const {
-      google, map, markerProps, windowProps
+      google, map, markerProps
     } = this.props;
     if (!google || !map) return null;
     const baseProps = { google, map };
@@ -239,17 +277,6 @@ export default class MarkerWithInfo extends Component {
     this.map = map;
 
     this.storeContentOriginTree();
-    const Content = () => (
-      <React.Fragment>
-        {this.props.children}
-      </React.Fragment>
-    );
-
-    if (!this.markerIcon) {
-      this.buildMarkerIcon();
-    }
-
-    console.log('render marker', this.isOpen);
 
     return (
       <React.Fragment>
@@ -265,19 +292,7 @@ export default class MarkerWithInfo extends Component {
           {...markerProps}
           title={this.markerTitle}
         />
-        <InfoWindow
-          ref={this.windowRef}
-          marker={this.state.marker}
-          {...baseProps}
-          {...windowProps}
-          onOpen={this.onOpen}
-          onClose={this.onForceClose}
-          visible={this.isOpen}
-        >
-          <div id={this.uid}>
-            <Content />
-          </div>
-        </InfoWindow>
+        {this.renderInfoWindows()}
       </React.Fragment>
     );
   }
@@ -287,38 +302,50 @@ MarkerWithInfo.propTypes = {
   google: PropTypes.object,
   map: PropTypes.object,
   entity: PropTypes.object,
+
+  // Configs
+  openOnHover: PropTypes.bool,
+  enableToggle: PropTypes.bool,
+
+  iconSrc: PropTypes.string,
+  position: PropTypes.object,
+
+  markerProps: PropTypes.shape(MarkerProps),
+  windowProps: PropTypes.shape(InfoWindowProps),
+
+  customMarkerClass: PropTypes.string,
+  customWindowClass: PropTypes.string,
+
+
+  // Events
   onLoad: PropTypes.func,
   onClick: PropTypes.func,
   onHover: PropTypes.func,
   onLeave: PropTypes.func,
-  enableToggle: PropTypes.bool,
-  openOnHover: PropTypes.bool,
-  iconSrc: PropTypes.string,
-  position: PropTypes.object,
-  markerProps: PropTypes.shape(MarkerProps),
   onOpen: PropTypes.func,
-  onClose: PropTypes.func,
-  windowProps: PropTypes.shape(InfoWindowProps),
-  customMarkerClass: PropTypes.string,
-  customWindowClass: PropTypes.string
+  onClose: PropTypes.func
 };
 
 MarkerWithInfo.defaultProps = {
   google: null,
   map: null,
   entity: null,
+
+  // Configs
+  openOnHover: false,
+  enableToggle: true,
+  iconSrc: null,
+  position: null,
+  markerProps: {},
+  windowProps: {},
+  customMarkerClass: '',
+  customWindowClass: '',
+
+  // Events
   onLoad: null,
   onClick: null,
   onHover: null,
   onLeave: null,
-  enableToggle: true,
-  openOnHover: false,
-  iconSrc: null,
-  position: null,
-  markerProps: {},
   onOpen: null,
-  onClose: null,
-  windowProps: {},
-  customMarkerClass: '',
-  customWindowClass: ''
+  onClose: null
 };

@@ -5,7 +5,7 @@ const ApiHelper = require('../../utils/ApiHelper');
 
 
 module.exports = class extends CRUDService {
-  static get model() {
+  static getModel() {
     return User;
   }
 

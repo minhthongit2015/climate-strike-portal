@@ -12,7 +12,7 @@ function isDefaultError(error) {
 }
 
 
-module.exports = class {
+module.exports = class APIResponse {
   static get throwError() {
     return HttpErrors;
   }
@@ -20,6 +20,12 @@ module.exports = class {
   static get SUCCESS() {
     return {
       ok: true
+    };
+  }
+
+  static get FAILED() {
+    return {
+      ok: false
     };
   }
 
@@ -38,6 +44,10 @@ module.exports = class {
     return this;
   }
 
+  static setData(data) {
+    return new APIResponse().setData(data);
+  }
+
   setError(error = defaultError || '') {
     if (isNotSet(error) || isDefaultError(error)) return this;
     if (typeof error === 'string') {
@@ -53,11 +63,19 @@ module.exports = class {
     return this;
   }
 
+  static setError(error = defaultError || '') {
+    return new APIResponse().setError(error);
+  }
+
   setErrorMessage(message) {
     if (isNotSet(message)) return this;
     this.error = Object.assign(this.error || {}, { message });
     this.failed();
     return this;
+  }
+
+  static setErrorMessage(message) {
+    return new APIResponse().setErrorMessage(message);
   }
 
   setErrorCode(code) {
@@ -68,11 +86,19 @@ module.exports = class {
     return this;
   }
 
+  static setErrorCode(code) {
+    return new APIResponse().setErrorCode(code);
+  }
+
   setErrorStack(stack) {
     if (isNotSet(stack)) return this;
     this.error = Object.assign(this.error || {}, { stack });
     this.failed();
     return this;
+  }
+
+  static setErrorStack(stack) {
+    return new APIResponse().setErrorStack(stack);
   }
 
   success() {

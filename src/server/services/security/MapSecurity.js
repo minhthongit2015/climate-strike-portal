@@ -4,30 +4,33 @@ const SecurityService = require('./index');
 
 
 module.exports = class extends SecurityService {
-  static filterUnallowedProperties(post) {
-    if (!post || typeof post !== 'object') {
+  static filterUnallowedProperties(place) {
+    if (!place || typeof place !== 'object') {
       return null;
     }
     const allowedProps = [
       '_id',
-      'title',
-      'content',
-      'summary',
-      'preview',
-      'categories',
-      'status'
+      '__t',
+      'name',
+      'picture',
+      'description',
+      'link',
+      'position',
+      'path',
+      'radius',
+      'address'
     ];
-    Object.keys(post).forEach((key) => {
+    Object.keys(place).forEach((key) => {
       if (!allowedProps.includes(key)) {
-        delete post[key];
+        delete place[key];
       }
     });
-    return post;
+    return place;
   }
 
-  static onlyValidPost(req, throwError = true) {
-    const post = req.body;
-    if (!post || !post.categories || post.categories.length <= 0) {
+  static onlyValidPlace(req, throwError = true) {
+    const place = req.body;
+    if (!place || !place.categories || place.categories.length <= 0) {
       return errorOrFalse(HttpErrors.BadRequest(), throwError);
     }
     return true;

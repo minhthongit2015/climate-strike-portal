@@ -5,7 +5,7 @@ const ApiHelper = require('../../utils/ApiHelper');
 const PostService = require('./Post');
 
 module.exports = class extends CRUDService {
-  static get model() {
+  static getModel() {
     return SavedPost;
   }
 
