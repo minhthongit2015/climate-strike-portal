@@ -14,9 +14,8 @@ router.get('/:placeId?', (req, res) => {
 
 router.post('/', (req, res) => {
   Logger.catch(async () => {
-    const place = MapSecurityService.filterUnallowedProperties(req.body);
     await MapSecurityService.onlyModOrAdmin(req);
-
+    const place = MapSecurityService.filterUnallowedProperties(req.body);
     const newPlace = await PlaceService.createOrUpdate(place);
     return res.send(APIResponse.setData(newPlace));
   }, { req, res });

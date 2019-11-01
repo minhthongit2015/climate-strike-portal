@@ -9,6 +9,8 @@ export const FarmSrc = '/images/agriculture.svg';
 export const GardenToolsSrc = '/images/trowel.svg';
 export const GardenOwnerSrc = '/images/bonsai.svg';
 
+export const FlagSrc = '/images/flag.svg';
+
 export const AICloudIcon = props => <img src={AICloudSrc} alt="AI Cloud" draggable={false} {...props} />;
 export const MyGardenIcon = props => <img src={MyGardenSrc} alt="My Garden" draggable={false} {...props} />;
 export const SmileCityIcon = props => <img src={SmileCitySrc} alt="Smile City" draggable={false} {...props} />;
@@ -25,6 +27,7 @@ export { default as IconCommunity } from './icons/IconCommunity';
 export { default as IconBookmark } from './icons/IconBookmark';
 export { default as IconRaisedFist } from './icons/IconRaisedFist';
 export { default as IconPlusPoint } from './icons/IconPlusPoint';
+export { default as IconFlag } from './icons/map/IconFlag';
 
 export default {
   AICloudIcon,
@@ -34,5 +37,6 @@ export default {
   PlantPot1Src,
   FarmSrc,
   GardenToolsSrc,
-  GardenOwnerSrc
+  GardenOwnerSrc,
+  FlagSrc
 };

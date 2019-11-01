@@ -19,6 +19,8 @@ export default class UserService {
 
   static get isModerator() { return this.isLoggedIn && this.user.role === UserTypes.moderator; }
 
+  static get isModOrAdmin() { return this.isModerator || this.isAdmin; }
+
   static get isNormalUser() { return this.isLoggedIn && !this.isAdmin && !this.isModerator; }
 
   static isOwner(post) {

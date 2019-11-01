@@ -7,6 +7,7 @@ import GGMap from '../../components/map/Map';
 import MapService from '../../services/MapService';
 import t from '../../languages';
 import LeftToolBar from '../../components/map-tools/left-toolbar/LeftToolBar';
+import UserService from '../../services/UserService';
 
 export default class TheRealWorld extends BasePage {
   constructor(props) {
@@ -31,6 +32,8 @@ export default class TheRealWorld extends BasePage {
       initialCenter: { lat: center[0], lng: center[1] },
       zoom: 17
     };
+
+    UserService.useUserState(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -119,17 +122,12 @@ export default class TheRealWorld extends BasePage {
 
   // eslint-disable-next-line class-methods-use-this
   onMoveMarker(markerProps, map, event, place) {
-    // this.setState((prevState) => {
-    //   place.position = event.latLng.toJSON();
-    //   // const marker = prevState.mapEntities.find(place => place.z);
-    //   // const places = prevState.places.map(placez => placez.position);
-    //   // if (places.length > 0) places.push(places[0]);
-    //   // this.lineRef.current.setPath(places);
-    //   return {
-    //     // dirty: true,
-    //     places
-    //   };
-    // });
+    if (!window.confirm('Xác nhận di chuyển địa điểm này?')) {
+      event.preventDefault();
+      return;
+    }
+    place.position = event.latLng.toJSON();
+    MapService.updatePlace(place);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -156,7 +154,7 @@ export default class TheRealWorld extends BasePage {
                   {
                     name: place.name,
                     position: place.position,
-                    draggable: true,
+                    draggable: UserService.isModOrAdmin,
                     onDragend: (markerProps, mapz, event) => {
                       this.onMoveMarker(markerProps, mapz, event, place);
                     }
@@ -183,18 +181,18 @@ export default class TheRealWorld extends BasePage {
   render() {
     console.log('render "Pages/the-real-world/TheRealWorld.jsx"');
     // if (!window.myGoogleMap) {
-      window.myGoogleMap = (
-        <GGMap
-          google={this.props.google || window.google}
-          {...this.defaultMapProps}
-          onClick={this.onMapClicked}
-          onReady={this.onMapReady}
-          dirty={this.state.dirty}
-        >
-          <this.renderMapElements />
-          <LeftToolBar handler={this.handleToolbarAction} />
-        </GGMap>
-      );
+    window.myGoogleMap = (
+      <GGMap
+        google={this.props.google || window.google}
+        {...this.defaultMapProps}
+        onClick={this.onMapClicked}
+        onReady={this.onMapReady}
+        dirty={this.state.dirty}
+      >
+        <this.renderMapElements />
+        <LeftToolBar handler={this.handleToolbarAction} />
+      </GGMap>
+    );
     // }
     return (
       <div {...this.props} onKeyDown={this.handleHotkeys}>

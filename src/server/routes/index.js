@@ -44,6 +44,8 @@ router.get('*', (req, res) => {
       });
     }
     res.render('index', model);
+  }, () => {
+    res.redirect('/');
   });
 });
 
