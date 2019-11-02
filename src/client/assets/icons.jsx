@@ -28,6 +28,7 @@ export { default as IconBookmark } from './icons/IconBookmark';
 export { default as IconRaisedFist } from './icons/IconRaisedFist';
 export { default as IconPlusPoint } from './icons/IconPlusPoint';
 export { default as IconFlag } from './icons/map/IconFlag';
+export { default as IconPlus } from './icons/utils/IconPlus';
 
 export default {
   AICloudIcon,

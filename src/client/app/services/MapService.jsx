@@ -8,22 +8,6 @@ import UserMarker from '../components/map/user-marker/UserMarker';
 import FarmMarker from '../components/map/farm-marker/FarmMarker';
 import ActivistMarker from '../components/map/activist-marker/ActivistMarker';
 
-function getMarkerByType(type) {
-  switch (type) {
-  case 'Garden':
-    return UserMarker;
-  case 'Farm':
-    return FarmMarker;
-  case 'FoodShop':
-    return StoreMarker;
-  case 'ToolShop':
-    return GardenToolsMarker;
-  case 'Activist':
-    return ActivistMarker;
-  default:
-    return FarmMarker;
-  }
-}
 
 export default class MapService {
   static async fetchPlaces() {
@@ -55,7 +39,7 @@ export default class MapService {
 
   static mapEntities(places) {
     places.forEach((place) => {
-      place.marker = getMarkerByType(place.__t);
+      place.marker = this.getMarkerByType(place.__t);
       if (place.__t === 'Garden') {
         place.picture = `https://graph.facebook.com/${place.socials.fb}`
           + '/picture?type=square&width=200&height=200';
@@ -63,5 +47,22 @@ export default class MapService {
       }
     });
     return places;
+  }
+
+  static getMarkerByType(type) {
+    switch (type) {
+    case 'Garden':
+      return UserMarker;
+    case 'Farm':
+      return FarmMarker;
+    case 'FoodShop':
+      return StoreMarker;
+    case 'ToolShop':
+      return GardenToolsMarker;
+    case 'Activist':
+      return ActivistMarker;
+    default:
+      return FarmMarker;
+    }
   }
 }

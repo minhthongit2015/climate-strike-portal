@@ -30,7 +30,7 @@ MapContainer.propTypes = {
   google: PropTypes.object,
   zoom: PropTypes.number,
   centerAroundCurrentLocation: PropTypes.bool,
-  center: PropTypes.object,
+  // center: PropTypes.object,
   initialCenter: PropTypes.object,
   className: PropTypes.string,
   style: PropTypes.object,
@@ -68,7 +68,7 @@ MapContainer.defaultProps = {
     lat: 37.774929,
     lng: -122.419416
   },
-  center: {},
+  // center: {},
   centerAroundCurrentLocation: false,
   style: {},
   containerStyle: {},

@@ -129,6 +129,7 @@ export default class MarkerWithInfo extends Component {
   }
 
   onMarkerRef(ref) {
+    if (!ref) return;
     this.markerRef = ref;
     this.markerRef.marker.parent = this;
     const interval = setInterval(() => {

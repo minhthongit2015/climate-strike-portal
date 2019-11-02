@@ -1,13 +1,81 @@
 
 .map-toolbar {
+  &__btn {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    transition: box-shadow .2s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 0.125rem 0.25rem 2px rgba(0, 0, 0, 0.075) !important
+    }
+    &:focus:not(:hover) {
+      box-shadow: none !important;
+    }
+  }
+
   &.left-toolbar {
     position: absolute;
     left: 10px;
     top: 100px;
-    padding: 5px;
+    border-radius: 25px;
+    max-width: 50px;
+    max-height: 50px;
+    padding: 5px 5px;
     color: rgb(36, 172, 47);
     background: #fff;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-    border-radius: 2px;
+    box-shadow: rgba(145, 143, 143, 0.3) 0px 1px 4px -1px;
+    transition: all .3s ease-out;
+    overflow: hidden;
+
+    &.open {
+      max-width: 300px;
+      max-height: 300px;
+      border-radius: 5px;
+      transition: all .3s ease-in;
+    }
+  }
+
+  &.left-toolbar &__list {
+    // position: absolute;
+    max-height: 0;
+    margin-top: 0;
+    padding: 0;
+    transition: all .3s ease-in-out;
+
+    &__item {
+      display: flex;
+      margin-top: 0;
+      border-radius: 25px;
+
+      &__icon {
+        height: 30px;
+        transition: all .3s ease-in-out;
+      }
+
+      &__label {
+        margin-top: .25rem;
+        padding: 4px 10px;
+        white-space: nowrap;
+      }
+    }
+  }
+  &.left-toolbar.open &__list {
+    margin-top: .5rem;
+    padding: 0;
+    max-height: 500px;
+
+    &__item {
+      margin-top: .5rem;
+    }
+  }
+
+  &__toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 }

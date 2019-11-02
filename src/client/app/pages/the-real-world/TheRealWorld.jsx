@@ -8,12 +8,14 @@ import MapService from '../../services/MapService';
 import t from '../../languages';
 import LeftToolBar from '../../components/map-tools/left-toolbar/LeftToolBar';
 import UserService from '../../services/UserService';
+import MapContextMenu from '../../components/map-tools/map-context-menu/MapContextMenu';
 
 export default class TheRealWorld extends BasePage {
   constructor(props) {
     super(props, t('pages.theRealWorld.title'));
     this.markers = new Set();
     this.lineRef = React.createRef();
+    this.mapCtxMenuRef = React.createRef();
     this.onMapReady = this.onMapReady.bind(this);
     this.onMarkerRef = this.onMarkerRef.bind(this);
     this.renderMapElements = this.renderMapElements.bind(this);
@@ -21,6 +23,8 @@ export default class TheRealWorld extends BasePage {
     this.onMapClicked = this.onMapClicked.bind(this);
     this.onMoveMarker = this.onMoveMarker.bind(this);
     this.handleToolbarAction = this.handleToolbarAction.bind(this);
+    this.handleRightClick = this.handleRightClick.bind(this);
+    this.handleContextActions = this.handleContextActions.bind(this);
 
     this.state = {
       dirty: false,
@@ -49,7 +53,7 @@ export default class TheRealWorld extends BasePage {
     this.map.setOptions({
       restriction: {
         latLngBounds: {
-          north: 80, south: -80, west: -180, east: 180
+          north: 85.45, south: -85.45, west: -180, east: 180
         },
         strictBounds: true
       },
@@ -67,11 +71,23 @@ export default class TheRealWorld extends BasePage {
   }
 
   async fetchPlaces() {
-    const places = await MapService.fetchPlaces();
+    if (!this.stress) {
+      this.stress = 0;
+    }
+    let places = await MapService.fetchPlaces();
+    for (let i = 0; i < this.stress; i++) {
+      places = places.concat(places);
+    }
+    console.log(this.stress, places.length);
+    this.stress++;
     this.setState({
       dirty: true,
       places
     });
+  }
+
+  refresh() {
+    this.setState({ dirty: true });
   }
 
   onMapClicked(mapProps, map, event) {
@@ -79,21 +95,59 @@ export default class TheRealWorld extends BasePage {
       prompt('LatLng', `${event.latLng.lat()}, ${event.latLng.lng()}`);
     }
     if (window.key.alt) {
-      MapService.createPlace({
-        name: 'Marker',
-        position: {
-          lat: event.latLng.lat(),
-          lng: event.latLng.lng()
-        },
-        __t: 'Activist'
-      }).then(
-        this.fetchPlaces()
-      );
+      //
     }
     if (window.key.shift) {
       return this.fetchPlaces();
     }
     return this.markers.forEach(marker => marker && marker.close());
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getContextOptions() {
+    return [
+      { label: '+ Thêm vùng thiên tai', value: 'add-disaster' },
+      { label: '+ Thêm cá nhân tham gia', value: 'add-activist' }
+    ];
+  }
+
+  handleRightClick(mapProps, map, event) {
+    this.mapCtxMenuRef.current.open(event.wa, {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng()
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  handleContextActions(event, option, data) {
+    let newPlace;
+    let promise;
+    if (option.value === 'add-activist') {
+      newPlace = {
+        __t: 'Activist',
+        name: '...',
+        position: data
+      };
+      promise = MapService.createPlace(newPlace);
+    }
+
+    if (newPlace) {
+      const newMarker = {
+        ...newPlace,
+        marker: MapService.getMarkerByType(newPlace.__t)
+      };
+      this.setState(prevState => ({
+        dirty: true,
+        places: prevState.places.concat(newMarker)
+      }));
+      promise.then((res) => {
+        if (!res || !res.data) {
+          // rollback
+        }
+        Object.assign(newMarker, res.data);
+        this.refresh();
+      });
+    }
   }
 
   handleHotkeys(event) {
@@ -124,6 +178,7 @@ export default class TheRealWorld extends BasePage {
   onMoveMarker(markerProps, map, event, place) {
     if (!window.confirm('Xác nhận di chuyển địa điểm này?')) {
       event.preventDefault();
+      // place.ref.setPosition(place.ref.position);
       return;
     }
     place.position = event.latLng.toJSON();
@@ -147,7 +202,7 @@ export default class TheRealWorld extends BasePage {
             ? (
               <place.marker
                 {...baseProps}
-                key={place._id}
+                key={place._id || Math.random()}
                 ref={(ref) => { this.onMarkerRef(ref); place.ref = ref; }}
                 entity={place}
                 markerProps={
@@ -186,11 +241,17 @@ export default class TheRealWorld extends BasePage {
         google={this.props.google || window.google}
         {...this.defaultMapProps}
         onClick={this.onMapClicked}
+        onRightclick={this.handleRightClick}
         onReady={this.onMapReady}
         dirty={this.state.dirty}
       >
         <this.renderMapElements />
         <LeftToolBar handler={this.handleToolbarAction} />
+        <MapContextMenu
+          ref={this.mapCtxMenuRef}
+          options={this.getContextOptions()}
+          handler={this.handleContextActions}
+        />
       </GGMap>
     );
     // }
