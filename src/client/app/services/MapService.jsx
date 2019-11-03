@@ -7,12 +7,13 @@ import GardenToolsMarker from '../components/map/garden-tools-marker/GardenTools
 import UserMarker from '../components/map/user-marker/UserMarker';
 import FarmMarker from '../components/map/farm-marker/FarmMarker';
 import ActivistMarker from '../components/map/activist-marker/ActivistMarker';
+import DisasterMarker from '../components/map/disaster-marker/DisasterMarker';
 
 
 export default class MapService {
   static async fetchPlaces() {
     // const endpoint = `${ApiEndpoints.map.entities.LIST}?sort=[["_id", 1]]`;
-    return superrequest.get('/api/v1/map/places')
+    return superrequest.get('/api/v1/map/places?sort=-createdAt')
       .then((res) => {
         if (!res || !res.data) {
           return [];
@@ -57,8 +58,8 @@ export default class MapService {
       return FarmMarker;
     case 'FoodShop':
       return StoreMarker;
-    case 'ToolShop':
-      return GardenToolsMarker;
+    case 'Disaster':
+      return DisasterMarker;
     case 'Activist':
       return ActivistMarker;
     default:

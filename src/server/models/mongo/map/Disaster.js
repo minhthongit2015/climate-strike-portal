@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Place = require('./_Place');
 
 const DisasterSchema = new mongoose.Schema({
-  type: String, // Bão, Cháy rừng, Động đất, Sóng thần, Hạn hán, Mất mùa
+  type: String, // Bão, Cháy rừng, Động đất, Núi lửa, Sóng thần, Lũ lụt, Hạn hán, Mất mùa
   events: [{
     time: { type: Date, default: Date.now },
     title: String,

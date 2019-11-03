@@ -9,6 +9,7 @@ import t from '../../languages';
 import LeftToolBar from '../../components/map-tools/left-toolbar/LeftToolBar';
 import UserService from '../../services/UserService';
 import MapContextMenu from '../../components/map-tools/map-context-menu/MapContextMenu';
+import RightToolBar from '../../components/map-tools/right-toolbar/RightToolBar';
 
 export default class TheRealWorld extends BasePage {
   constructor(props) {
@@ -22,9 +23,10 @@ export default class TheRealWorld extends BasePage {
     this.handleHotkeys = this.handleHotkeys.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
     this.onMoveMarker = this.onMoveMarker.bind(this);
-    this.handleToolbarAction = this.handleToolbarAction.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
     this.handleContextActions = this.handleContextActions.bind(this);
+    this.handleLeftToolbarAction = this.handleLeftToolbarAction.bind(this);
+    this.handleRightToolbarAction = this.handleRightToolbarAction.bind(this);
 
     this.state = {
       dirty: false,
@@ -34,7 +36,8 @@ export default class TheRealWorld extends BasePage {
     const center = [10.821897348888664, 106.68697200200597];
     this.defaultMapProps = {
       initialCenter: { lat: center[0], lng: center[1] },
-      zoom: 17
+      // zoom: 17
+      zoom: 5
     };
 
     UserService.useUserState(this);
@@ -71,15 +74,15 @@ export default class TheRealWorld extends BasePage {
   }
 
   async fetchPlaces() {
-    if (!this.stress) {
-      this.stress = 0;
-    }
-    let places = await MapService.fetchPlaces();
-    for (let i = 0; i < this.stress; i++) {
-      places = places.concat(places);
-    }
-    console.log(this.stress, places.length);
-    this.stress++;
+    // if (!this.stress) {
+    //   this.stress = 0;
+    // }
+    const places = await MapService.fetchPlaces();
+    // for (let i = 0; i < this.stress; i++) {
+    //   places = places.concat(places);
+    // }
+    // console.log(this.stress, places.length);
+    // this.stress++;
     this.setState({
       dirty: true,
       places
@@ -100,14 +103,18 @@ export default class TheRealWorld extends BasePage {
     if (window.key.shift) {
       return this.fetchPlaces();
     }
-    return this.markers.forEach(marker => marker && marker.close());
+    return this.closeAll();
+  }
+
+  closeAll() {
+    this.markers.forEach(marker => marker && marker.close());
   }
 
   // eslint-disable-next-line class-methods-use-this
   getContextOptions() {
     return [
-      { label: '+ Thêm vùng thiên tai', value: 'add-disaster' },
-      { label: '+ Thêm cá nhân tham gia', value: 'add-activist' }
+      { label: '+ Thêm vùng thiên tai', value: 'add-Disaster' },
+      { label: '+ Thêm cá nhân tham gia', value: 'add-Activist' }
     ];
   }
 
@@ -122,10 +129,10 @@ export default class TheRealWorld extends BasePage {
   handleContextActions(event, option, data) {
     let newPlace;
     let promise;
-    if (option.value === 'add-activist') {
+    if (option.value.match(/add-(.+)/)) {
       newPlace = {
-        __t: 'Activist',
-        name: '...',
+        __t: option.value.match(/add-(.+)/)[1],
+        name: '',
         position: data
       };
       promise = MapService.createPlace(newPlace);
@@ -170,8 +177,31 @@ export default class TheRealWorld extends BasePage {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  handleToolbarAction(event, action) {
-    console.log(action);
+  handleLeftToolbarAction(event) {
+    const { name, value, checked } = event.currentTarget;
+    switch (name) {
+    case 'Activist':
+      break;
+    case 'Strike':
+      break;
+    case 'Extinction':
+      break;
+    case 'Disaster':
+      break;
+    case 'Pollution':
+      break;
+    case 'Community':
+      break;
+    default:
+      break;
+    }
+    console.log(event);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  handleRightToolbarAction(event, place) {
+    this.closeAll();
+    place.ref.open();
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -235,6 +265,8 @@ export default class TheRealWorld extends BasePage {
 
   render() {
     console.log('render "Pages/the-real-world/TheRealWorld.jsx"');
+    const { places } = this.state;
+
     // if (!window.myGoogleMap) {
     window.myGoogleMap = (
       <GGMap
@@ -246,7 +278,11 @@ export default class TheRealWorld extends BasePage {
         dirty={this.state.dirty}
       >
         <this.renderMapElements />
-        <LeftToolBar handler={this.handleToolbarAction} />
+        {/* <LeftToolBar handler={this.handleLeftToolbarAction} /> */}
+        <RightToolBar
+          handler={this.handleRightToolbarAction}
+          places={places}
+        />
         <MapContextMenu
           ref={this.mapCtxMenuRef}
           options={this.getContextOptions()}
@@ -255,6 +291,7 @@ export default class TheRealWorld extends BasePage {
       </GGMap>
     );
     // }
+
     return (
       <div {...this.props} onKeyDown={this.handleHotkeys}>
         {window.myGoogleMap}

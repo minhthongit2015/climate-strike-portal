@@ -23,7 +23,7 @@ export default (props) => {
     };
   });
   return (
-    <span title={getCustomTime(time)} className="text-monospace text-muted">
+    <span title={getCustomTime(time)} className="time-ago text-monospace text-muted">
       <i className="far fa-clock" /> {time.fromNow()}
     </span>
   );

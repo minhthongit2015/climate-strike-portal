@@ -18,7 +18,11 @@ module.exports = class extends SecurityService {
       'position',
       'path',
       'radius',
-      'address'
+      'address',
+      'type',
+      'events',
+      'prev',
+      'next'
     ];
     Object.keys(place).forEach((key) => {
       if (!allowedProps.includes(key)) {

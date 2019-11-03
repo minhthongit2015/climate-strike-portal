@@ -78,7 +78,7 @@ $window-height: 400px;  // default height: 400px
     // }
     &:hover {
       border-radius: 50%;
-      box-shadow: 0 0 10px #0ff;
+      box-shadow: 0 0 10px #0ff, 0 0 2px 3px #a3f2ff;
       opacity: 1 !important;
     }
   }

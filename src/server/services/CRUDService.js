@@ -29,10 +29,39 @@ module.exports = class CRUDService {
     return opts;
   }
 
+
+  // Create & Update
+
   static async create(doc) {
     const newDoc = await this.getModel(...convertArguments(arguments)).create(doc);
     return this.converter.convert(newDoc);
   }
+
+  static async update(id, doc) {
+    if (!doc) {
+      doc = id;
+      id = doc._id || doc.id;
+    }
+    id = ApiHelper.getId(id);
+    const { id: idz, _id, ...restProps } = doc;
+    const updatedDoc = await this.getModel(...convertArguments(arguments))
+      .findByIdAndUpdate(id, restProps).exec();
+    return this.converter.convert(updatedDoc);
+  }
+
+  static async createOrUpdate(doc, where) {
+    if (where) {
+      return this.getModel(...convertArguments(arguments)).updateOne(where, doc,
+        { upsert: true, new: true, setDefaultsOnInsert: true }).exec();
+    }
+    if (doc._id || doc.id) {
+      return this.update(doc);
+    }
+    return this.create(doc);
+  }
+
+
+  // Read
 
   static async getOrList(id, opts = ApiHelper.listParams) {
     if (isNotSet(id)) {
@@ -87,28 +116,8 @@ module.exports = class CRUDService {
     });
   }
 
-  static async update(id, doc) {
-    if (!doc) {
-      doc = id;
-      id = doc._id || doc.id;
-    }
-    id = ApiHelper.getId(id);
-    const { id: idz, _id, ...restProps } = doc;
-    const updatedDoc = await this.getModel(...convertArguments(arguments))
-      .findByIdAndUpdate(id, restProps).exec();
-    return this.converter.convert(updatedDoc);
-  }
 
-  static async createOrUpdate(doc, where) {
-    if (where) {
-      return this.getModel(...convertArguments(arguments)).updateOne(where, doc,
-        { upsert: true, new: true, setDefaultsOnInsert: true }).exec();
-    }
-    if (doc._id || doc.id) {
-      return this.update(doc);
-    }
-    return this.create(doc);
-  }
+  // Delete
 
   static async delete(id) {
     id = ApiHelper.getId(id);

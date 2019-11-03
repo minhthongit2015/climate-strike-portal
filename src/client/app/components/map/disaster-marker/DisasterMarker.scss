@@ -1,8 +1,10 @@
 
 $base-info-window-class: 'custom-info-window';
-$custom-info-window-class: "farm-info-window";
+$custom-info-window-class: "disaster-info-window";
 $window-width: 400px;
 $window-height: 400px;
+$marker-color: #ec4e4e;
+$marker-shadow-color: #e76767;
 
 .gm-style {
   .#{$base-info-window-class} {
@@ -20,41 +22,15 @@ $window-height: 400px;
             & > div {
               max-height: $window-height !important;
             }
-            .farm-header {
-              .farm-branding {
-                text-align: center;
-                background: #3ed08d;
-                margin: auto;
-                padding: 4px;
-                width: 88%;
-                border-radius: 25px;
-                color: #fff;
-                font-size: 22px;
-                font-family: 'icielz-bambola';
-                letter-spacing: 2px;
-                border: 3px solid #ffffff;
-                margin-bottom: -18px;
-                position: relative;
-              }
-              .farm-preview {
-                border-radius: 8px;
-              }
-            }
-            .farm-body {
-              text-align: center;
-              .preview-image {
-                @include fixed-ratio-wrapper(100% * 2 / 3);
-                & > * {
-                  object-fit: cover;
-                  @include fixed-ratio;
-                }
-              }
-            }
           }
           .gm-style-iw-d + button {
-            background: #3ecc89 !important;
+            background: $marker-color !important;
           }
         }
+      }
+      //
+      .marker__title {
+        color: #ec5757;
       }
     }
   
@@ -62,7 +38,7 @@ $window-height: 400px;
       .gm-style-iw-a.#{$custom-info-window-class} {
         .gm-style-iw-t {
           .gm-style-iw-c.gm-style-iw {
-            box-shadow: 0 0 5px #3ecc89, 0 0 30px -3px #8ce4a8;
+            box-shadow: 0 0 5px $marker-color, 0 0 30px -3px $marker-shadow-color;
           }
         }
       }

@@ -75,7 +75,7 @@ class App extends Component {
         <Switch>
           <Route exact path={RouteConstants.homePath}><HomePage /></Route>
           <Route path={RouteConstants.earthPicturePath}><EarthPicturePage /></Route>
-          <Route exact path={RouteConstants.theRealWorldPath}><DummyTheRealWorldPage /></Route>
+          <Route exact path={RouteConstants.theRealWorldPath} component={DummyTheRealWorldPage} />
           <Route path={RouteConstants.whatYouCanDoPath}><WhatYouCanDoPage /></Route>
           <Route path={RouteConstants.yourQuestionPath}><YourQuestionPage /></Route>
           <Redirect to={RouteConstants.homeLink} />

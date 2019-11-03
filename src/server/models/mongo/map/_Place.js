@@ -1,12 +1,14 @@
 
 const mongoose = require('mongoose');
+const { MongooseAutoIncrementID } = require('mongoose-auto-increment-reworked');
 
 const { ObjectId } = mongoose.Schema.Types;
 
 // Marker, Area
-// Strike, Activist, ActivistGroup, Disaster, Extinction, Pollution
+// Strike, Activist, ActivistGroup, Action, Disaster, Extinction, Pollution
 const PlaceSchema = new mongoose.Schema({
-  user: { type: ObjectId, ref: 'User' },
+  author: { type: ObjectId, ref: 'User' },
+  post: { type: ObjectId, ref: 'Post' },
   name: String,
   images: [String],
   description: String,
@@ -19,6 +21,7 @@ const PlaceSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
-const PlaceModel = mongoose.model('Place', PlaceSchema);
+PlaceSchema.plugin(MongooseAutoIncrementID.plugin, { modelName: 'Place', field: 'baseOrder' });
 
+const PlaceModel = mongoose.model('Place', PlaceSchema);
 module.exports = PlaceModel;

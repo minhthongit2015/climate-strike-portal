@@ -6,6 +6,7 @@ import t from '../../languages';
 export default class extends BasePage {
   constructor(props) {
     super(props, t('pages.theRealWorld.title'));
+    window.realWorldHistory = this.props.history;
   }
 
   render() {

@@ -10,6 +10,7 @@ export const GardenToolsSrc = '/images/trowel.svg';
 export const GardenOwnerSrc = '/images/bonsai.svg';
 
 export const FlagSrc = '/images/flag.svg';
+export const ForestFireSrc = '/images/forest-fire.svg';
 
 export const AICloudIcon = props => <img src={AICloudSrc} alt="AI Cloud" draggable={false} {...props} />;
 export const MyGardenIcon = props => <img src={MyGardenSrc} alt="My Garden" draggable={false} {...props} />;
@@ -29,6 +30,7 @@ export { default as IconRaisedFist } from './icons/IconRaisedFist';
 export { default as IconPlusPoint } from './icons/IconPlusPoint';
 export { default as IconFlag } from './icons/map/IconFlag';
 export { default as IconPlus } from './icons/utils/IconPlus';
+export { default as IconCheckbox } from './icons/utils/IconCheckbox';
 
 export default {
   AICloudIcon,
@@ -39,5 +41,6 @@ export default {
   FarmSrc,
   GardenToolsSrc,
   GardenOwnerSrc,
-  FlagSrc
+  FlagSrc,
+  ForestFireSrc
 };

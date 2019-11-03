@@ -6,7 +6,8 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const ActivistGroupSchema = new mongoose.Schema({
   members: [{ type: ObjectId, ref: 'User' }], // Danh sách thành viên
-  leaders: [{ type: ObjectId, ref: 'User' }] // Những người dẫn đầu
+  leaders: [{ type: ObjectId, ref: 'User' }], // Những người dẫn đầu
+  contact: String
 });
 
 const ActivistGroupModel = Place.discriminator('ActivistGroup', ActivistGroupSchema);

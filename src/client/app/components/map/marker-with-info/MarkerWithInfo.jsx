@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import * as jQuery from 'jquery';
 import uuid from 'uuid';
 import './MarkerWithInfo.scss';
+import './BaseMarkerStyle.scss';
 import { mapTreeNodeToArray } from '../../../utils/DOM';
 
 const CUSTOM_CLASS = 'custom';
