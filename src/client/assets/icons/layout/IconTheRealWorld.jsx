@@ -232,7 +232,8 @@ export default class extends React.PureComponent {
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended))
-      .on('mousemove', mousemove);
+      .on('mousemove', mousemove)
+      .on('touchmove', mousemove);
 
     loadData((world, cList) => {
       land = topojson.feature(world, world.objects.land);

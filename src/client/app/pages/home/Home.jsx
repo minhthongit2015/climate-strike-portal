@@ -33,7 +33,7 @@ export default class HomePage extends BasePage {
         link: RouteConstants.theRealWorldLink,
         text: `\r\n${t('pages.home.nav.theRealWorld')}`,
         textStyle: {
-          marginTop: '-14px',
+          marginTop: '2px',
           marginBottom: '20px'
         },
         icon: IconTheRealWorld
@@ -76,7 +76,7 @@ export default class HomePage extends BasePage {
           nav={nav}
           ratio={1}
           className="my-0"
-          imageWrapperClass="col-4 col-xs-8 col-sm-10 p-0 mx-auto"
+          imageWrapperClass="col-3 col-xs-8 col-sm-10 p-0 mx-auto"
         />
       </div>
     );
@@ -102,7 +102,7 @@ export default class HomePage extends BasePage {
       <React.Fragment>
         <div className="h-100 d-flex justify-content-center align-items-center">
           <div className="d-flex flex-column col-lg-8 col-md-10 col-sm-12 col-xs-12 col-12 p-0">
-            <div className="text-center text-light px-2">
+            <div className="text-center text-light px-2 mb-0 mb-sm-3">
               {t('pages.home.mainMessage')}
             </div>
             <div className="home-nav d-flex flex-column flex-sm-row align-items-center">

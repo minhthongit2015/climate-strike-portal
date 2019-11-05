@@ -15,8 +15,10 @@ export default class TheRealWorld extends BasePage {
   constructor(props) {
     super(props, t('pages.theRealWorld.title'));
     this.markers = new Set();
+    this.mapRef = React.createRef();
     this.lineRef = React.createRef();
     this.mapCtxMenuRef = React.createRef();
+    this.rightToolbarRef = React.createRef();
     this.onMapReady = this.onMapReady.bind(this);
     this.onMarkerRef = this.onMarkerRef.bind(this);
     this.renderMapElements = this.renderMapElements.bind(this);
@@ -33,7 +35,7 @@ export default class TheRealWorld extends BasePage {
       mapEntities: [],
       places: []
     };
-    const center = [10.821897348888664, 106.68697200200597];
+    const center = [15.821897348888664, 106.68697200200597];
     this.defaultMapProps = {
       initialCenter: { lat: center[0], lng: center[1] },
       // zoom: 17
@@ -145,7 +147,7 @@ export default class TheRealWorld extends BasePage {
       };
       this.setState(prevState => ({
         dirty: true,
-        places: prevState.places.concat(newMarker)
+        places: prevState.places.unshift(newMarker) && prevState.places
       }));
       promise.then((res) => {
         if (!res || !res.data) {
@@ -158,8 +160,15 @@ export default class TheRealWorld extends BasePage {
   }
 
   handleHotkeys(event) {
+    let shouldPrevent = 9999;
     if (event.key === 'Tab') {
-      this.switchMarker();
+      if (window.key.shift) {
+        shouldPrevent = this.switchMarker();
+      } else {
+        shouldPrevent = this.rightToolbarRef.current.toggle();
+      }
+    }
+    if (shouldPrevent !== 9999) {
       event.preventDefault();
     }
   }
@@ -202,6 +211,7 @@ export default class TheRealWorld extends BasePage {
   handleRightToolbarAction(event, place) {
     this.closeAll();
     place.ref.open();
+    this.mapRef.current.refs.map.focus();
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -271,6 +281,7 @@ export default class TheRealWorld extends BasePage {
     // if (!window.myGoogleMap) {
     window.myGoogleMap = (
       <GGMap
+        ref={this.mapRef}
         google={this.props.google || window.google}
         {...this.defaultMapProps}
         onClick={this.onMapClicked}
@@ -281,6 +292,7 @@ export default class TheRealWorld extends BasePage {
         <this.renderMapElements />
         {/* <LeftToolBar handler={this.handleLeftToolbarAction} /> */}
         <RightToolBar
+          ref={this.rightToolbarRef}
           handler={this.handleRightToolbarAction}
           places={places}
         />

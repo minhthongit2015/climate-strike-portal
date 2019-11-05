@@ -68,13 +68,15 @@ export default class DisasterMarker extends Component {
               <div className="marker__section__summary">{summary}</div>
               <div className="marker__section__actions">
                 <div>
-                  <button type="button" className="btn btn-sm btn-default px-3"><i className="fab fa-font-awesome-flag" /> Chia sẻ</button>
+                  {/* <button type="button" className="btn btn-sm btn-default px-3">
+                    <i className="fab fa-font-awesome-flag" /> Chia sẻ
+                  </button> */}
                   <button
                     type="button"
                     className="btn btn-sm btn-default px-3"
                     onClick={() => this.handleGoToPost(post)}
                   >
-                    <i className="far fa-paper-plane" /> Đi tới bài viết
+                    <i className="far fa-paper-plane" /> Xem chi tiết
                   </button>
                 </div>
               </div>
