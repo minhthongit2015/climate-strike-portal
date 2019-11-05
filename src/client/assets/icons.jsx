@@ -20,6 +20,7 @@ export { default as IconHome } from './icons/IconHome';
 export { default as IconPlanetEarth } from './icons/IconPlanetEarth';
 export { default as IconEarthPicture } from './icons/IconEarthPicture';
 export { default as IconEarthPictureStatic } from './icons/IconEarthPictureStatic';
+export { default as IconTheRealWorld } from './icons/layout/IconTheRealWorld';
 export { default as IconWhatYouCanDo } from './icons/IconWhatYouCanDo';
 export { default as IconYourQuestion } from './icons/IconYourQuestion';
 export { default as IconMore } from './icons/IconMore';

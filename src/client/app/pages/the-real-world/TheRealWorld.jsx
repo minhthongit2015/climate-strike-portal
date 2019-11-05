@@ -239,6 +239,7 @@ export default class TheRealWorld extends BasePage {
                   {
                     name: place.name,
                     position: place.position,
+                    radius: place.radius,
                     draggable: UserService.isModOrAdmin,
                     onDragend: (markerProps, mapz, event) => {
                       this.onMoveMarker(markerProps, mapz, event, place);

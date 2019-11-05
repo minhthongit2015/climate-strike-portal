@@ -7,7 +7,8 @@ import RouteConstants from '../../utils/RouteConstants';
 import {
   IconEarthPicture,
   IconWhatYouCanDo,
-  IconYourQuestion
+  IconYourQuestion,
+  IconTheRealWorld
 } from '../../../assets/icons';
 
 import NavIconLink from '../../components/utils/nav-icon-link/NavIconLink';
@@ -30,12 +31,12 @@ export default class HomePage extends BasePage {
       {
         type: 'nav',
         link: RouteConstants.theRealWorldLink,
-        text: `${t('pages.home.nav.theRealWorld')}\r\n `,
+        text: `\r\n${t('pages.home.nav.theRealWorld')}`,
         textStyle: {
           marginTop: '-14px',
           marginBottom: '20px'
         },
-        icon: IconEarthPicture
+        icon: IconTheRealWorld
       },
       {
         type: 'nav',

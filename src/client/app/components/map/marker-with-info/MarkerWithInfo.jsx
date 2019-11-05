@@ -8,6 +8,7 @@ import uuid from 'uuid';
 import './MarkerWithInfo.scss';
 import './BaseMarkerStyle.scss';
 import { mapTreeNodeToArray } from '../../../utils/DOM';
+import Circle from '../circle/Circle';
 
 const CUSTOM_CLASS = 'custom';
 const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
@@ -244,8 +245,13 @@ export default class MarkerWithInfo extends Component {
     return this._markerIcon;
   }
 
-  renderContent() {
-    return this.props.children;
+  renderArea() {
+    if (!this.baseProps) return null;
+    const { position, radius } = this.props.markerProps;
+
+    return (
+      radius && <Circle {...this.baseProps} marker={this} center={position} radius={radius} />
+    );
   }
 
   renderInfoWindows() {
@@ -269,6 +275,10 @@ export default class MarkerWithInfo extends Component {
     );
   }
 
+  renderContent() {
+    return this.props.children;
+  }
+
   render() {
     const {
       google, map, markerProps
@@ -282,6 +292,7 @@ export default class MarkerWithInfo extends Component {
 
     return (
       <React.Fragment>
+        {this.renderArea()}
         <Marker
           ref={this.onMarkerRef}
           {...baseProps}
