@@ -61,7 +61,7 @@ export default class SignIn extends Component {
   }
 
   static open() {
-    LoginDialogService.open();
+    LoginDialogService.show('');
   }
 
   static handleContextAction(event) {

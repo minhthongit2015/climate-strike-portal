@@ -7,6 +7,7 @@ import {
 import UserService from '../../services/UserService';
 import AuthService from '../../services/Auth';
 import LeafLoading from '../utils/loadings/LeafLoading';
+import './LoginDialog.scss';
 
 export default class extends React.Component {
   get isOpen() { return this.state.isShowLoginModal; }
@@ -22,6 +23,7 @@ export default class extends React.Component {
 
     this.state = {
       isShowLoginModal: false,
+      message: '',
       email: '',
       password: '',
       cursorPos: {},
@@ -93,9 +95,16 @@ export default class extends React.Component {
     });
   }
 
+  show(message) {
+    this.setState({
+      isShowLoginModal: true,
+      message
+    });
+  }
+
   render() {
     const {
-      isShowLoginModal, email, password, disabled
+      isShowLoginModal, email, password, disabled, message
     } = this.state;
 
     return (
@@ -118,6 +127,7 @@ export default class extends React.Component {
         </div>
         <MDBModalBody>
           <form onSubmit={this.handleSubmit} id="signin-form">
+            {message && <div className="login-modal__message">{message}</div>}
             <MDBInput
               style={{ boxSizing: 'border-box' }}
               className="px-3"
@@ -148,9 +158,15 @@ export default class extends React.Component {
               <MDBBtn
                 color="none"
                 className="btn-paper shadow-style mb-3 px-4 py-2"
+                style={{
+                  color: '#00468c',
+                  fontSize: '17px'
+                }}
                 onClick={this.handleSigninWithFacebook}
               >
-                đăng nhập với Facebook
+                <i
+                  className="fab fa-facebook mr-2"
+                /> đăng nhập với Facebook
               </MDBBtn>
             </div>
             <div className="text-center mb-3">

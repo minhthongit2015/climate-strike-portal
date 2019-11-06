@@ -28,9 +28,12 @@ import MessageDialogService from './services/MessageDialogService';
 import PageDialog from './components/dialog/PageDialog';
 import LoginDialog from './components/dialog/LoginDialog';
 import MessageDialog from './components/dialog/MessageDialog';
+import GuideDialog from './components/dialog/GuideDialog';
+
 import PostService from './services/PostService';
 import SavedPostsDialogService from './services/SavedPostsDialogService';
 import IDoPostsDialogService from './services/IDoPostsDialogService';
+import GuideDialogService from './services/GuideDialogService';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
@@ -50,6 +53,7 @@ class App extends Component {
     this.postPageDialogRef = React.createRef();
     this.savedPostsPageDialogRef = React.createRef();
     this.iDoPostsPageDialogRef = React.createRef();
+    this.guideDialogRef = React.createRef();
 
     this.loginDialogRef = React.createRef();
     this.messageDialogRef = React.createRef();
@@ -66,6 +70,7 @@ class App extends Component {
 
     LoginDialogService.init(this.loginDialogRef);
     MessageDialogService.init(this.messageDialogRef);
+    GuideDialogService.init(this.guideDialogRef);
     KeyTracker();
   }
 
@@ -87,6 +92,7 @@ class App extends Component {
         <PageDialog ref={this.postPageDialogRef} />
         <LoginDialog ref={this.loginDialogRef} />
         <MessageDialog ref={this.messageDialogRef} />
+        <GuideDialog ref={this.guideDialogRef} />
       </React.Suspense>
     );
     return (

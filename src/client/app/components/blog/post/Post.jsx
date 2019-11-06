@@ -127,11 +127,11 @@ export default class Post extends React.Component {
       if (UserService.isLoggedIn) {
         return MessageDialogService.showUpComingFeature(option.value);
       }
-      return LoginDialogService.open();
+      return LoginDialogService.show('Bạn cần đăng nhập để đề xuất chỉnh sửa cho bài viết này.');
 
     case ContextOptions.save:
       if (!UserService.isLoggedIn) {
-        return LoginDialogService.open();
+        return LoginDialogService.show('Bạn cần đăng nhập để lưu bài viết này vào tài khoản của bạn.');
       }
       if (post.isSaved && this.props.handleActions) {
         this.props.handleActions(event, {
@@ -148,7 +148,7 @@ export default class Post extends React.Component {
 
     case ContextOptions.iWillDoThis:
       if (!UserService.isLoggedIn) {
-        return LoginDialogService.open();
+        return LoginDialogService.show('Bạn cần đăng nhập để lưu này vào những việc bạn sẽ làm.');
       }
       if (post.iWillDoThis && this.props.handleActions) {
         this.props.handleActions(event, {
@@ -240,7 +240,7 @@ export default class Post extends React.Component {
   handleRating(rating) {
     const { post } = this.props;
     if (!UserService.isLoggedIn) {
-      LoginDialogService.open();
+      LoginDialogService.show('Bạn cần đăng nhập để đánh giá cho bài viết này.');
       return;
     }
 
@@ -273,10 +273,6 @@ export default class Post extends React.Component {
 
   handleAddSavedPost() {
     const { post } = this.props;
-    if (!UserService.isLoggedIn) {
-      return LoginDialogService.open();
-    }
-
     const savedState = GlobalState.buildSavedState(
       post, ['isSaved', 'totalSaved']
     );
@@ -306,10 +302,6 @@ export default class Post extends React.Component {
 
   handleAddIDoPost() {
     const { post } = this.props;
-    if (!UserService.isLoggedIn) {
-      return LoginDialogService.open();
-    }
-
     const savedState = GlobalState.buildSavedState(
       post, ['iWillDoThis', 'totalIDo']
     );
