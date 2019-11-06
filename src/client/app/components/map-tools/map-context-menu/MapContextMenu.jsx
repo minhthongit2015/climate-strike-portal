@@ -80,7 +80,7 @@ export default class extends React.PureComponent {
         className={classnames('context-menu', { open: isOpen })}
         style={{ top: clientY - 2.5, left: clientX - 2.5 }}
       >
-        <MDBDropdown ref={this.handleOnDropdownRef} isOpen={isOpen}>
+        <MDBDropdown ref={this.handleOnDropdownRef} isOpen={isOpen} dropright>
           <MDBDropdownToggle className="context-menu__point"><i className="fas fa-times" /></MDBDropdownToggle>
           <DropdownMenu>
             {options.map(option => (

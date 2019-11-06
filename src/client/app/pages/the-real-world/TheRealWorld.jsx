@@ -116,7 +116,12 @@ export default class TheRealWorld extends BasePage {
   getContextOptions() {
     return [
       { label: '+ Thêm vùng thiên tai', value: 'add-Disaster' },
-      { label: '+ Thêm cá nhân tham gia', value: 'add-Activist' }
+      { label: '+ Thêm vùng ô nhiễm', value: 'add-Pollution' },
+      { label: '+ Thêm loài nguy cơ tuyệt chủng', value: 'add-Extinction' },
+      { label: '+ Thêm cá nhân vì môi trường', value: 'add-Activist' },
+      { label: '+ Thêm nhóm hoạt động môi trường', value: 'add-ActivistGroup' },
+      { label: '+ Thêm hoạt động biểu tình', value: 'add-Strike' },
+      { label: '+ Thêm hành động vì môi trường', value: 'add-Action' }
     ];
   }
 

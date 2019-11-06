@@ -216,8 +216,8 @@ function getCountry(event) {
 
 export default class extends React.PureComponent {
   componentDidMount() {
-    current = d3.select('#current');
-    canvas = d3.select('#globe');
+    current = d3.select('.icon-globe__label');
+    canvas = d3.select('.icon-globe');
     context = canvas.node().getContext('2d');
     path = d3.geoPath(projection).context(context);
 
@@ -249,10 +249,10 @@ export default class extends React.PureComponent {
   render() {
     const { color, className, ...restProps } = this.props;
     return (
-      <div className={`icon-globe-wrapper ${className || ''}`} {...restProps}>
-        <canvas id="globe" className="icon-globe" />
-        <div className="icon-globe-shadow" />
-        <div id="current" />
+      <div className={`icon-globe__wrapper ${className || ''}`} {...restProps}>
+        <canvas className="icon-globe" />
+        <div className="icon-globe__shadow" />
+        <div className="icon-globe__label" />
       </div>
     );
   }

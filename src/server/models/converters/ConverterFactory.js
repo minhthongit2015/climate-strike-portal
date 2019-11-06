@@ -2,28 +2,16 @@
 const Converter = require('./converter');
 const UserConverter = require('./UserConverter');
 const RatingConverter = require('./RatingConverter');
-const GardenConverter = require('./garden-converter');
-const UserGardenConverter = require('./user-garden-converter');
-const EnvDatasetConverter = require('./env-dataset');
-const DatasetEnvConverter = require('./dataset-env');
+const PlaceConverter = require('./PlaceConverter');
+
+const ConverterMap = {
+  User: UserConverter,
+  Rating: RatingConverter,
+  Place: PlaceConverter
+};
 
 module.exports = class {
   static get(name) {
-    switch (name) {
-    case 'User':
-      return UserConverter;
-    case 'Rating':
-      return RatingConverter;
-    case 'garden':
-      return GardenConverter;
-    case 'user-garden':
-      return UserGardenConverter;
-    case 'env-dataset':
-      return EnvDatasetConverter;
-    case 'dataset-env':
-      return DatasetEnvConverter;
-    default:
-      return Converter;
-    }
+    return ConverterMap[name] || Converter;
   }
 };

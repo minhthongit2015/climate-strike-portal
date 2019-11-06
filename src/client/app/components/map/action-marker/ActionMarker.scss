@@ -1,12 +1,15 @@
 
 $base-info-window-class: 'custom-info-window';
-$custom-info-window-class: "activist-info-window";
+$custom-info-window-class: "action-info-window";
 $window-width: 400px;
-$window-height: 450px;
+$window-height: 400px;
+$marker-color: #3ed08d;
+$marker-shadow-color: #8ce4a8;
 
 .gm-style {
   .#{$base-info-window-class} {
     .gm-style-iw-a.#{$custom-info-window-class} {
+      counter-reset: 1;
       .gm-style-iw-t {
         .gm-style-iw-c.gm-style-iw {
           width: $window-width !important;
@@ -21,21 +24,21 @@ $window-height: 450px;
             }
           }
           .gm-style-iw-d + button {
-            background: #00c5ff !important;
+            background: $marker-color !important;
           }
         }
       }
       //
       .marker__title {
-        color: #00c5ff;
+        color: #1d7e51;
       }
     }
-
+  
     &.focused {
       .gm-style-iw-a.#{$custom-info-window-class} {
         .gm-style-iw-t {
           .gm-style-iw-c.gm-style-iw {
-            box-shadow: 0 0 5px #00c5ff, 0 0 30px -3px #6be8ff;
+            box-shadow: 0 0 5px $marker-color, 0 0 30px -3px $marker-shadow-color;
           }
         }
       }

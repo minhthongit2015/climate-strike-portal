@@ -1,6 +1,6 @@
 const Converter = require('./converter');
 
-module.exports = class extends Converter {
+module.exports = class UserConverter extends Converter {
   static convert(object) {
     if (!object) return object;
     const rawUser = JSON.parse(JSON.stringify(object));

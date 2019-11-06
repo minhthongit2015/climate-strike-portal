@@ -1,6 +1,6 @@
 const Converter = require('./converter');
 
-module.exports = class extends Converter {
+module.exports = class RatingConverter extends Converter {
   static convert(object) {
     if (!object) return object;
     const rawRating = JSON.parse(JSON.stringify(object));

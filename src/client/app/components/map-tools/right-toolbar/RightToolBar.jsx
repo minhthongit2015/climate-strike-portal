@@ -53,7 +53,7 @@ export default class extends React.Component {
         </div>
         {places && (
           <div className="map-toolbar__list d-flex flex-column flex-fill">
-            {places.map(place => (
+            {places.filter(place => !['Activist'].includes(place.__t)).map(place => (
               <div
                 key={place._id}
                 className="map-toolbar__list__item"
