@@ -21,7 +21,7 @@ export default React.memo((props) => {
               ))}
             </div>
             {video ? (
-              <Video alt={title} title={title} src={video} />
+              <Video alt={title} title={title} src={video} preview={preview} />
             ) : (
               <img alt={title} src={preview} className="w-100" />
             )}

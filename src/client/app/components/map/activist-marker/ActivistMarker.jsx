@@ -54,10 +54,11 @@ export default class ActivistMarker extends Component {
   render() {
     const {
       defaultAvatar = '/images/avatar.png',
-      defaultCoverImage = '/images/cover-photo.jpg', user
+      defaultCoverImage = '/images/cover-photo.jpg',
+      user = {}
     } = this.props.entity;
     const { name, socials: { facebook } = {} } = user;
-    const avatar = `https://graph.facebook.com/${facebook}/picture?type=square&width=200&height=200`;
+    const avatar = facebook && `https://graph.facebook.com/${facebook}/picture?type=square&width=200&height=200`;
 
     return (
       <MarkerWithInfo

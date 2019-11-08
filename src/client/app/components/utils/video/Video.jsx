@@ -7,6 +7,10 @@ export default class Video extends React.Component {
     return props.src && props.src.includes('.mp4');
   }
 
+  static isExternalVideo(video) {
+    return video.src && video.src.match(/(facebook\.com)/);
+  }
+
   static isYoutube(props) {
     return props.src && props.src.match(/(youtube\.com|youtu\.be\/)/);
   }
@@ -20,24 +24,22 @@ export default class Video extends React.Component {
       src, tracks, className, ...restProps
     } = video;
     return (
-      <div className="video-wrapper">
-        <video
-          src={src}
-          className={`video w-100 ${className || ''}`}
-          controls
-          {...restProps}
-        >
-          {tracks && tracks.map(track => (
-            <track
-              key={track.src}
-              default
-              kind={track.kind || 'captions'}
-              srcLang={track.lang || 'vi'}
-              src={track.src || 'sunday.vtt'}
-            />
-          ))}
-        </video>
-      </div>
+      <video
+        src={src}
+        className={`video w-100 ${className || ''}`}
+        controls
+        {...restProps}
+      >
+        {tracks && tracks.map(track => (
+          <track
+            key={track.src}
+            default
+            kind={track.kind || 'captions'}
+            srcLang={track.lang || 'vi'}
+            src={track.src || 'sunday.vtt'}
+          />
+        ))}
+      </video>
     );
   }
 
@@ -57,19 +59,38 @@ export default class Video extends React.Component {
     });
 
     return (
-      <div className="video-wrapper">
-        <iframe
-          className={`video ytb-video ${className || ''}`}
-          title={title}
-          type="text/html"
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&hl=vi&playsinline=1&iv_load_policy=3`}
-          frameBorder="0"
-          allowFullScreen
-          {...restProps}
-        />
-      </div>
+      <iframe
+        className={`video ytb-video ${className || ''}`}
+        title={title}
+        type="text/html"
+        width="100%"
+        height="100%"
+        src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&hl=vi&playsinline=1&iv_load_policy=3`}
+        frameBorder="0"
+        allowFullScreen
+        {...restProps}
+      />
+    );
+  }
+
+  static renderExternalVideo(video) {
+    const {
+      preview, src, className
+    } = video;
+    return (
+      <a
+        className={`video video-external ${className || ''}`}
+        href={src}
+        // title={title}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div
+          className="video__preview far"
+          style={{ backgroundImage: `url("${preview}")` }}
+        ><i className="far fa-play-circle video__preview__play-button" />
+        </div>
+      </a>
     );
   }
 
@@ -86,32 +107,33 @@ export default class Video extends React.Component {
     }
 
     return (
-      <div className="video-wrapper">
-        <iframe
-          className={`video embeded-video ${className || ''}`}
-          title={title}
-          src={videoSrc}
-          type="text/html"
-          width="100%"
-          height="auto"
-          frameBorder="0"
-          allowFullScreen
-          {...restProps}
-        />
-      </div>
+      <iframe
+        className={`video embeded-video ${className || ''}`}
+        title={title}
+        src={videoSrc}
+        type="text/html"
+        width="100%"
+        height="auto"
+        frameBorder="0"
+        allowFullScreen
+        {...restProps}
+      />
     );
   }
 
   render() {
-    if (Video.isVideo(this.props)) {
-      return Video.renderVideo(this.props);
-    }
-    if (Video.isYoutube(this.props)) {
-      return Video.renderYoutube(this.props);
-    }
-    if (Video.isEmbeded(this.props)) {
-      return Video.renderEmbeded(this.props);
-    }
-    return null;
+    const video = this.props;
+    const renderers = [
+      { filter: Video.isVideo, render: Video.renderVideo },
+      { filter: Video.isYoutube, render: Video.renderYoutube },
+      { filter: Video.isExternalVideo, render: Video.renderExternalVideo },
+      { filter: Video.isEmbeded, render: Video.renderEmbeded }
+    ];
+    const renderer = renderers.find(renderer1 => renderer1.filter.call(Video, video));
+    return (
+      <div className="video-wrapper">
+        {renderer && renderer.render.call(Video, video)}
+      </div>
+    );
   }
 }
