@@ -36,7 +36,6 @@ export default class ActivistMarker extends Component {
       this.myPeer.destroy();
       this.myPeer = null;
     }
-    this.closeMediaStream();
   }
 
   open() {

@@ -1,8 +1,8 @@
 
 $base-info-window-class: 'custom-info-window';
 $custom-info-window-class: "activist-info-window";
-$window-width: 400px;
-$window-height: 450px;
+$window-width: 400px * .8;
+$window-height: 450px * .8;
 
 .gm-style {
   .#{$base-info-window-class} {
