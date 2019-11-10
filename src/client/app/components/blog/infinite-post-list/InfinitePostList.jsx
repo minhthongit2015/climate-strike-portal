@@ -139,17 +139,7 @@ export default class InfinitePostList extends React.Component {
       t('components.blog.infinitePostList.knowAllMsg4'),
       t('components.blog.infinitePostList.knowAllMsg5'),
       t('components.blog.infinitePostList.knowAllMsg6'),
-      t('components.blog.infinitePostList.knowAllMsg7'),
-      t('components.blog.infinitePostList.knowAllMsg8'),
-      t('components.blog.infinitePostList.knowAllMsg9'),
-      t('components.blog.infinitePostList.knowAllMsg10'),
-      t('components.blog.infinitePostList.knowAllMsg11'),
-      t('components.blog.infinitePostList.knowAllMsg12'),
-      t('components.blog.infinitePostList.knowAllMsg13'),
-      t('components.blog.infinitePostList.knowAllMsg14'),
-      t('components.blog.infinitePostList.knowAllMsg15'),
-      t('components.blog.infinitePostList.knowAllMsg16'),
-      t('components.blog.infinitePostList.knowAllMsg17')
+      t('components.blog.infinitePostList.knowAllMsg7')
     ]);
   }
 
