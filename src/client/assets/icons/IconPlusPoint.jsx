@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import './IconPlusPoint.scss';
 
 export default class extends React.Component {
@@ -7,44 +6,47 @@ export default class extends React.Component {
     super(props);
     this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
     this.oldPoint = null;
-    this.animating = false;
+    this.state = {
+      pluses: []
+    };
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return this.oldPoint !== nextProps.point;
   }
 
   handleAnimationEnd() {
-    this.animating = false;
-    this.forceUpdate();
+    this.setState(prevState => ({
+      pluses: prevState.pluses.slice(1)
+    }));
+  }
+
+  changePoint(diff) {
+    this.setState(prevState => ({
+      pluses: [...prevState.pluses, { id: Date.now(), diff }]
+    }));
   }
 
   render() {
     const { className, point, ...restProps } = this.props;
     const isChange = this.oldPoint !== point;
-    const isFirstChange = this.oldPoint == null;
-    let isAnimate = isChange && !isFirstChange;
     const diff = point - this.oldPoint;
-
-    if (this.animating) {
-      isAnimate = false;
-      setTimeout(() => {
-        this.animating = false;
-        this.forceUpdate();
-      }, 10);
-    } else if (isChange) {
+    if (isChange) {
+      this.state.pluses = [...this.state.pluses, { id: Date.now(), diff }];
       this.oldPoint = point;
+      // this.changePoint(diff);
     }
-    this.animating = isAnimate;
+    const { pluses } = this.state;
 
-    return (
+    return (pluses.map(plus => (
       <div
-        className={classnames(
-          className,
-          'icon-plus-point',
-          { animate: isAnimate, negative: diff < 0 }
-        )}
+        key={plus.id}
+        className={`icon-plus-point animate ${className || ''} ${plus.diff < 0 ? 'negative' : ''}`}
         onAnimationEnd={this.handleAnimationEnd}
         {...restProps}
       >
-        {(diff < 0 ? '' : '+') + diff}
+        {(plus.diff < 0 ? '' : '+') + plus.diff}
       </div>
-    );
+    )));
   }
 }

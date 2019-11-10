@@ -144,7 +144,7 @@ class Global {
     return savedState;
   }
 
-  static restoreFromSavedState(object, savedState, component) {
+  static async restoreFromSavedState(object, savedState, component) {
     if (!object || !savedState || !Object.keys(savedState).length) {
       return object;
     }
@@ -152,20 +152,20 @@ class Global {
       object[key] = savedState[value];
     });
     if (component) {
-      component.forceUpdate();
+      return new Promise(resolve => component.forceUpdate(resolve));
     }
-    return object;
+    return Promise.resolve();
   }
 
-  static updatePoint(object, key, point, component) {
+  static async updatePoint(object, key, point, component) {
     if (!object || !key) {
       return object;
     }
     object[key] = Math.max((object[key] || 0) + (point || 0), 0);
     if (component) {
-      component.forceUpdate();
+      return new Promise(resolve => component.forceUpdate(resolve));
     }
-    return object;
+    return Promise.resolve();
   }
 }
 

@@ -3,10 +3,10 @@ $decrement: .2;
 
 .icon-raised-fist {
   transition: 0.3s all ease-in-out;
+  animation: bounce-sm 1s both 1;
 
   &:hover {
     filter: brightness(1.14);
-    animation: bounce-sm 1s both 1;
   }
 }
 

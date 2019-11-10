@@ -12,6 +12,7 @@ import TabWorldActions from './tab-world-actions/TabWorldActions';
 import TabCommunityRecommend from './tab-community-recommend/TabCommunityRecommend';
 import t from '../../languages';
 import { IconCommunity } from '../../../assets/icons';
+import TabGretaThunberg from './tab-Greta-Thunberg/TabGretaThunberg';
 
 export default class extends React.Component {
   constructor(props) {
@@ -50,6 +51,12 @@ export default class extends React.Component {
         path: RouteConstants.worldActionsPath,
         link: RouteConstants.worldActionsLink,
         component: TabWorldActions
+      },
+      {
+        name: t('pages.whatYouCanDo.nav.GretaThunberg'),
+        path: RouteConstants.GretaThunbergPath,
+        link: RouteConstants.GretaThunbergLink,
+        component: TabGretaThunberg
       },
       {
         name: <IconCommunity text={t('pages.whatYouCanDo.nav.communityRecommend')} />,

@@ -32,6 +32,7 @@ export { default as IconPlusPoint } from './icons/IconPlusPoint';
 export { default as IconFlag } from './icons/map/IconFlag';
 export { default as IconPlus } from './icons/utils/IconPlus';
 export { default as IconCheckbox } from './icons/utils/IconCheckbox';
+export { default as IconThanks } from './icons/utils/IconThanks';
 
 export default {
   AICloudIcon,

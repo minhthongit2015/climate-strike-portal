@@ -1,6 +1,7 @@
 import BasePage from './BasePage';
 import PostService from '../../services/PostService';
 import SavedPostsDialogService from '../../services/SavedPostsDialogService';
+import PostDetailsDialogService from '../../services/PostDetailsDialogService';
 // import NewsTracker from '../../services/NewsTracker';
 
 
@@ -16,7 +17,7 @@ export default class extends BasePage {
 
     const hashtag = params.get('hashtag');
     if (hashtag) {
-      PostService.openPostDetailsCurrentTab(hashtag);
+      PostDetailsDialogService.openPostDetailsCurrentTab(hashtag);
       PostService.refreshCache();
     }
 

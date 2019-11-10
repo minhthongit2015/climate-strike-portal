@@ -45,6 +45,7 @@ export default {
         pollution: 'Giảm Ô Nhiễm',
         everything: 'Hỗ Trợ Các Phong Trào',
         worldActions: 'Thế Giới Đang Hành Động',
+        GretaThunberg: 'Greta Thunberg',
         communityRecommend: 'Chia Sẻ Từ Cộng Đồng'
       },
       nav: {
@@ -54,10 +55,12 @@ export default {
         pollution: 'Giảm ô nhiễm',
         supporting: 'Hỗ trợ các phong trào',
         worldActions: 'Thế giới đang hành động',
+        GretaThunberg: 'Greta Thunberg',
         communityRecommend: 'Chia sẻ từ cộng đồng'
       },
       mainMessage: '~ 10,000,000 người, 6,200 thành phố và 218 quốc gia đã tham gia trong #FridaysForFuture 20-27/9...\r\nsao mọi người lại phải cố gắng như vậy...',
-      communityGuideMessage: 'Đây là nơi bạn có thể chia sẻ những điều mình biết với mọi người một cách tự do,\r\nnhững tin tức quan trọng sẽ được chọn để đưa lên trang chính.'
+      communityGuideMessage: 'Đây là nơi bạn có thể chia sẻ những điều mình biết với mọi người một cách tự do,\r\nnhững tin tức quan trọng sẽ được chọn để đưa lên trang chính.',
+      GretaThunbergMessage: '“This is just the beginning. We will continue. Because change is coming whether you like it or not.” - Greta Thunberg'
     },
     yourQuestion: {
       title: {
@@ -89,22 +92,19 @@ export default {
         knowAllMsg4: 'đây là tất cả những gì mình biết tới thời điểm này...',
         knowAllMsg5: 'cảm ơn bạn đã đọc hết tất cả các bài viết!',
         knowAllMsg6: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg7: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg8: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg9: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg10: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg11: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg12: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg13: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg14: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg15: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg16: 'bạn đã biết tất cả những gì mình biết...',
-        knowAllMsg17: 'bạn đã biết tất cả những gì mình biết...'
+        knowAllMsg7: 'bạn đã biết tất cả những gì mình biết...'
       }
     },
     user: {
       login: '❝ Đăng Nhập ❞',
       logout: 'đăng xuất'
+    },
+    loginDialog: {
+      loginToPost: 'Bạn cần đăng nhập để bắt đầu đăng bài chia sẻ đến mọi người.',
+      loginToRequestChange: 'Bạn cần đăng nhập để đề xuất chỉnh sửa cho bài viết này.',
+      loginToSavePost: 'Bạn cần đăng nhập để lưu bài viết này vào tài khoản của bạn.',
+      loginToSaveIDo: 'Bạn cần đăng nhập để lưu này vào những việc bạn sẽ làm.',
+      loginToRating: 'Bạn cần đăng nhập để đánh giá cho bài viết này.'
     }
   }
 };

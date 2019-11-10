@@ -200,7 +200,7 @@ export default class extends React.Component {
       this.resetForm();
     }
     if (!UserService.user) {
-      LoginDialogService.open();
+      LoginDialogService.show(t('components.loginDialog.loginToPost'));
     } else if (!this.props.hasPermission) {
       MessageDialogService.show(
         'Tham Gia Viết Bài',

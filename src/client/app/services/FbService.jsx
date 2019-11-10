@@ -35,7 +35,7 @@ export default class {
           const fjs = d.getElementsByTagName(s)[0];
           if (d.getElementById(id)) return;
           const js = d.createElement(s); js.id = id;
-          js.src = 'https://connect.facebook.net/en_US/sdk.js';
+          js.src = 'https://connect.facebook.net/vi_VN/sdk.js';
           fjs.parentNode.insertBefore(js, fjs);
         })(document, 'script', 'facebook-jssdk');
       }
@@ -116,8 +116,17 @@ export default class {
     });
   }
 
-  static parseButtons() {
-    console.log('parsing.. all Facebook buttons');
-    this.FB.XFBML.parse();
+  static parseButtons(domOrSelector) {
+    if (domOrSelector) {
+      if (typeof domOrSelector === 'string') {
+        document.querySelectorAll(domOrSelector).forEach((dom) => {
+          this.FB.XFBML.parse(dom);
+        });
+      } else {
+        this.FB.XFBML.parse(domOrSelector);
+      }
+    } else {
+      this.FB.XFBML.parse();
+    }
   }
 }

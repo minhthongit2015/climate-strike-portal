@@ -17,12 +17,14 @@ import ShareButton from '../../facebook/ShareButton';
 import LoginDialogService from '../../../services/LoginDialogService';
 import Rating from '../../utils/rating/Rating';
 import CategoryService from '../../../services/CategoryService';
-import { IconBookmark, IconRaisedFist } from '../../../../assets/icons';
+import { IconBookmark, IconRaisedFist, IconThanks } from '../../../../assets/icons';
 // eslint-disable-next-line import/no-cycle
 import SavedPostsDialogService from '../../../services/SavedPostsDialogService';
 // eslint-disable-next-line import/no-cycle
 import IDoPostsDialogService from '../../../services/IDoPostsDialogService';
 import GlobalState from '../../../utils/GlobalState';
+import t from '../../../languages';
+import PostDetailsDialogService from '../../../services/PostDetailsDialogService';
 
 
 const ContextOptions = {
@@ -91,9 +93,11 @@ function getContextOptions(post) {
   return options;
 }
 
-export default class Post extends React.Component {
+export default class Post extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.thankForDoItRef = React.createRef();
+    this.thankForSaveRef = React.createRef();
     this.togglePopup = this.togglePopup.bind(this);
     this.handlePopupChange = this.handlePopupChange.bind(this);
     this.handleContextActions = this.handleContextActions.bind(this);
@@ -107,7 +111,7 @@ export default class Post extends React.Component {
 
   togglePopup() {
     const { post } = this.props;
-    PostService.openPostDetailsDialog(post);
+    PostDetailsDialogService.openPostDetailsDialog(post);
   }
 
   handlePopupChange(state) {
@@ -127,11 +131,11 @@ export default class Post extends React.Component {
       if (UserService.isLoggedIn) {
         return MessageDialogService.showUpComingFeature(option.value);
       }
-      return LoginDialogService.show('Bạn cần đăng nhập để đề xuất chỉnh sửa cho bài viết này.');
+      return LoginDialogService.show(t('components.loginDialog.loginToRequestChange'));
 
     case ContextOptions.save:
       if (!UserService.isLoggedIn) {
-        return LoginDialogService.show('Bạn cần đăng nhập để lưu bài viết này vào tài khoản của bạn.');
+        return LoginDialogService.show(t('components.loginDialog.loginToSavePost'));
       }
       if (post.isSaved && this.props.handleActions) {
         this.props.handleActions(event, {
@@ -148,7 +152,7 @@ export default class Post extends React.Component {
 
     case ContextOptions.iWillDoThis:
       if (!UserService.isLoggedIn) {
-        return LoginDialogService.show('Bạn cần đăng nhập để lưu này vào những việc bạn sẽ làm.');
+        return LoginDialogService.show(t('components.loginDialog.loginToSaveIDo'));
       }
       if (post.iWillDoThis && this.props.handleActions) {
         this.props.handleActions(event, {
@@ -227,12 +231,12 @@ export default class Post extends React.Component {
   renderSocials() {
     const { post } = this.props;
     return (
-      <div className="d-flex">
+      <div className="d-flex post__sharing-facebook">
         {/* <LikeAndShare
           data-href={PostService.buildPostUrl(post)}
           data-width={this.getSizeByClass(post.previewClass)}
         /> */}
-        <ShareButton url={PostService.buildPostUrl(post)} />
+        <ShareButton url={PostService.buildPostUrl(post)} className="" />
       </div>
     );
   }
@@ -240,7 +244,7 @@ export default class Post extends React.Component {
   handleRating(rating) {
     const { post } = this.props;
     if (!UserService.isLoggedIn) {
-      LoginDialogService.show('Bạn cần đăng nhập để đánh giá cho bài viết này.');
+      LoginDialogService.show(t('components.loginDialog.loginToRating'));
       return;
     }
 
@@ -280,7 +284,9 @@ export default class Post extends React.Component {
     post.isSaved = !post.isSaved;
 
     if (post.isSaved) {
-      GlobalState.updatePoint(post, 'totalSaved', 1, this);
+      GlobalState.updatePoint(post, 'totalSaved', 1, this).then(() => {
+        this.thankForSaveRef.current.sayThanks();
+      });
       return superrequest.agentPost(`/api/v1/blog/saved-posts/${post._id}`).then((res) => {
         if (!res || !res.ok) {
           GlobalState.restoreFromSavedState(post, savedState, this);
@@ -309,7 +315,10 @@ export default class Post extends React.Component {
     post.iWillDoThis = !post.iWillDoThis;
 
     if (post.iWillDoThis) {
-      GlobalState.updatePoint(post, 'totalIDo', 1, this);
+      GlobalState.updatePoint(post, 'totalIDo', 1, this)
+        .then(() => {
+          this.thankForDoItRef.current.sayThanks();
+        });
       UserService.updateUserSocialPoint(2);
       return superrequest.agentPost(`/api/v1/blog/i-will-do-this/${post._id}`).then((res) => {
         if (!res || !res.ok) {
@@ -435,18 +444,22 @@ export default class Post extends React.Component {
               </div>
             )}
             {isReallySaved && (
-              <IconBookmark
-                className="post__bookmark"
-                totalSaved={totalSaved}
-                onClick={Post.handleOpenSavedPosts}
-              />
+              <div className="post__bookmark">
+                <IconBookmark
+                  totalSaved={totalSaved}
+                  onClick={Post.handleOpenSavedPosts}
+                />
+                <IconThanks ref={this.thankForSaveRef} text="Đã lưu bài viết" />
+              </div>
             )}
             {isReallyIDo && (
-              <IconRaisedFist
-                className="post__status-icon"
-                totalIDo={totalIDo}
-                onClick={Post.handleOpenIWillDoThisPosts}
-              />
+              <div className="post__status-icon">
+                <IconRaisedFist
+                  totalIDo={totalIDo}
+                  onClick={Post.handleOpenIWillDoThisPosts}
+                />
+                <IconThanks ref={this.thankForDoItRef} />
+              </div>
             )}
           </span>
           <MDBPopoverBody>

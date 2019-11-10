@@ -106,9 +106,9 @@ export default class PostList extends React.Component {
     const height = image.naturalHeight;
     const ratio = width / height;
     if (ratio > 1) { // width > height
-      if (contentLength > 300) {
+      if (contentLength > 400) {
         return 'w4';
-      } if (contentLength > 200) {
+      } if (contentLength > 300) {
         return 'w3';
       } if (contentLength > 100) {
         return 'w2';
@@ -158,7 +158,7 @@ export default class PostList extends React.Component {
     if (posts.length > 0 && this.processing === null) {
       this.mapPreviews(posts).then(() => {
         this.processing = false;
-        FbService.parseButtons();
+        FbService.parseButtons('.post__sharing-facebook');
         if (this._isMounted && this.shuffle) {
           this.forceUpdate(() => {
             this.shuffle.resetItems();

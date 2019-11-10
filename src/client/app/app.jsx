@@ -30,10 +30,10 @@ import LoginDialog from './components/dialog/LoginDialog';
 import MessageDialog from './components/dialog/MessageDialog';
 import GuideDialog from './components/dialog/GuideDialog';
 
-import PostService from './services/PostService';
 import SavedPostsDialogService from './services/SavedPostsDialogService';
 import IDoPostsDialogService from './services/IDoPostsDialogService';
 import GuideDialogService from './services/GuideDialogService';
+import PostDetailsDialogService from './services/PostDetailsDialogService';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
@@ -64,7 +64,7 @@ class App extends Component {
     AuthService.init();
 
     PageDialogService.init(this.pageDialogRef);
-    PostService.init(this.postPageDialogRef);
+    PostDetailsDialogService.init(this.postPageDialogRef);
     SavedPostsDialogService.init(this.savedPostsPageDialogRef);
     IDoPostsDialogService.init(this.iDoPostsPageDialogRef);
 

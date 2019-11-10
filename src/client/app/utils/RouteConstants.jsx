@@ -28,6 +28,8 @@ const doForPollutionPath = `${whatYouCanDoPath}/giam-o-nhiem`;
 const doForPollutionLink = `${whatYouCanDoLink}/giam-o-nhiem`;
 const worldActionsPath = `${whatYouCanDoPath}/the-gioi-dang-hanh-dong`;
 const worldActionsLink = `${whatYouCanDoLink}/the-gioi-dang-hanh-dong`;
+const GretaThunbergPath = `${whatYouCanDoPath}/Greta-Thunberg`;
+const GretaThunbergLink = `${whatYouCanDoLink}/Greta-Thunberg`;
 const communityRecommendPath = `${whatYouCanDoPath}/chia-se-tu-cong-dong`;
 const communityRecommendLink = `${whatYouCanDoLink}/chia-se-tu-cong-dong`;
 
@@ -73,6 +75,8 @@ export default {
   doSupportingLink,
   worldActionsPath,
   worldActionsLink,
+  GretaThunbergPath,
+  GretaThunbergLink,
   communityRecommendPath,
   communityRecommendLink,
 

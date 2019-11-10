@@ -5,11 +5,13 @@ import {
 } from 'mdbreact';
 import './Rating.scss';
 import classnames from 'classnames';
+import { IconThanks } from '../../../../assets/icons';
 
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
+    this.iconThanksRef = React.createRef();
     this.toggleRatingPopover = this.toggleRatingPopover.bind(this);
     this.handleRatingPopoverChange = this.handleRatingPopoverChange.bind(this);
     this.state = {
@@ -48,6 +50,7 @@ export default class extends React.Component {
     this.setState({
       isVisible: false
     });
+    this.iconThanksRef.current.sayThanks();
   }
 
   render() {
@@ -76,6 +79,7 @@ export default class extends React.Component {
             onClick={this.toggleRatingPopover}
           >
             <i className="fas fa-chevron-up" />
+            <IconThanks ref={this.iconThanksRef} />
           </div>
           <MDBPopoverBody className="shadow-sm">
             <div className="rating__points d-flex flex-row-reverse">
