@@ -42,12 +42,14 @@ export default class extends React.Component {
       },
       {
         name: t('pages.whatYouCanDo.nav.supporting'),
+        shortName: t('pages.whatYouCanDo.nav.supportingShort'),
         path: RouteConstants.doSupportingPath,
         link: RouteConstants.doSupportingLink,
         component: TabSupporting
       },
       {
         name: t('pages.whatYouCanDo.nav.worldActions'),
+        shortName: t('pages.whatYouCanDo.nav.worldActionsShort'),
         path: RouteConstants.worldActionsPath,
         link: RouteConstants.worldActionsLink,
         component: TabWorldActions

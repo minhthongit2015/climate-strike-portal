@@ -43,7 +43,7 @@ export default {
         climate: 'Cho Khí Hậu',
         organisms: 'Cho Sinh Vật',
         pollution: 'Giảm Ô Nhiễm',
-        everything: 'Hỗ Trợ Các Phong Trào',
+        supporting: 'Hỗ Trợ Các Phong Trào',
         worldActions: 'Thế Giới Đang Hành Động',
         GretaThunberg: 'Greta Thunberg',
         communityRecommend: 'Chia Sẻ Từ Cộng Đồng'
@@ -54,7 +54,9 @@ export default {
         organisms: 'Cho sinh vật',
         pollution: 'Giảm ô nhiễm',
         supporting: 'Hỗ trợ các phong trào',
+        supportingShort: 'Hỗ trợ',
         worldActions: 'Thế giới đang hành động',
+        worldActionsShort: 'Thế giới',
         GretaThunberg: 'Greta Thunberg',
         communityRecommend: 'Chia sẻ từ cộng đồng'
       },
