@@ -4,6 +4,7 @@ import MarkerWithInfo from '../marker-with-info/MarkerWithInfo';
 import './ActionMarker.scss';
 
 import { FarmSrc as FarmIconSrc } from '../../../../assets/icons';
+import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 
 const CUSTOM_CLASS = 'action';
 const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
@@ -13,6 +14,10 @@ const CUSTOM_WINDOW_CLASS = `${CUSTOM_CLASS}-info-window`;
 export default class ActionMarker extends Component {
   get uid() {
     return this.marker.uid;
+  }
+
+  get rootMarker() {
+    return this.marker.rootMarker;
   }
 
   constructor(props) {
@@ -26,14 +31,17 @@ export default class ActionMarker extends Component {
   }
 
   open() {
+    if (!this.marker) return;
     this.marker.open();
   }
 
   close() {
+    if (!this.marker) return;
     this.marker.close();
   }
 
   toggle() {
+    if (!this.marker) return;
     this.marker.toggle();
   }
 
@@ -44,9 +52,9 @@ export default class ActionMarker extends Component {
 
   render() {
     const {
-      name, description, entity = {}, events, ...restProps
+      name, description, entity: place = {}, events, ...restProps
     } = this.props;
-    const { post = {} } = entity;
+    const { post = {} } = place;
     const { title, summary, preview } = post;
 
     return (
@@ -79,6 +87,7 @@ export default class ActionMarker extends Component {
                     <i className="far fa-paper-plane" /> Xem chi tiết
                   </button>
                 </div>
+                <PlaceActions place={place} marker={this} />
               </div>
             </div>
           </section>

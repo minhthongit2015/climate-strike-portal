@@ -7,7 +7,7 @@ export default class extends PageDialogService {
     return superrequest.get(`/api/v1/blog/posts?limit=1&where={"baseOrder":${postOrder}}`);
   }
 
-  static buildPostUrl(post) {
+  static buildPostUrl(post, keepQuery = false) {
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set('hashtag', post.baseOrder);
     let search = urlParams.toString();
@@ -15,7 +15,9 @@ export default class extends PageDialogService {
     const {
       protocol, host, pathname, hash
     } = window.location;
-    return `${protocol}//${host}${pathname}${search}${hash}`;
+    return keepQuery
+      ? `${protocol}//${host}${pathname}${search}${hash}`
+      : `${protocol}//${host}${pathname}?hashtag=${post.baseOrder}`;
   }
 
   static refreshCache() {

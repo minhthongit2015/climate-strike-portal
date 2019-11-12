@@ -8,8 +8,10 @@ import MapService from '../../services/MapService';
 import t from '../../languages';
 import LeftToolBar from '../../components/map-tools/left-toolbar/LeftToolBar';
 import UserService from '../../services/UserService';
-import MapContextMenu from '../../components/map-tools/map-context-menu/MapContextMenu';
 import RightToolBar from '../../components/map-tools/right-toolbar/RightToolBar';
+import RightClickContextMenu from './RightClickContextMenu';
+import MapUtils from '../../utils/MapUtils';
+
 
 export default class TheRealWorld extends BasePage {
   constructor(props) {
@@ -76,15 +78,10 @@ export default class TheRealWorld extends BasePage {
   }
 
   async fetchPlaces() {
-    // if (!this.stress) {
-    //   this.stress = 0;
-    // }
     const places = await MapService.fetchPlaces();
-    // for (let i = 0; i < this.stress; i++) {
-    //   places = places.concat(places);
-    // }
-    // console.log(this.stress, places.length);
-    // this.stress++;
+    places.forEach((place) => {
+      place.marker = MapUtils.getMarkerByType(place.__t);
+    });
     this.setState({
       dirty: true,
       places
@@ -112,19 +109,6 @@ export default class TheRealWorld extends BasePage {
     this.markers.forEach(marker => marker && marker.close());
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getContextOptions() {
-    return [
-      { label: '+ Thêm vùng thiên tai', value: 'add-Disaster' },
-      { label: '+ Thêm vùng ô nhiễm', value: 'add-Pollution' },
-      { label: '+ Thêm loài nguy cơ tuyệt chủng', value: 'add-Extinction' },
-      { label: '+ Thêm cá nhân vì môi trường', value: 'add-Activist' },
-      { label: '+ Thêm nhóm hoạt động môi trường', value: 'add-ActivistGroup' },
-      { label: '+ Thêm hoạt động biểu tình', value: 'add-Strike' },
-      { label: '+ Thêm hành động vì môi trường', value: 'add-Action' }
-    ];
-  }
-
   handleRightClick(mapProps, map, event) {
     this.mapCtxMenuRef.current.open(event.wa, {
       lat: event.latLng.lat(),
@@ -132,35 +116,25 @@ export default class TheRealWorld extends BasePage {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  handleContextActions(event, option, data) {
-    let newPlace;
-    let promise;
-    if (option.value.match(/add-(.+)/)) {
-      newPlace = {
-        __t: option.value.match(/add-(.+)/)[1],
-        name: '',
-        position: data
-      };
-      promise = MapService.createPlace(newPlace);
-    }
-
+  handleContextActions(event, option, newPlace) {
+    // const { ContextOptions } = RightClickContextMenu;
     if (newPlace) {
       const newMarker = {
         ...newPlace,
-        marker: MapService.getMarkerByType(newPlace.__t)
+        marker: MapUtils.getMarkerByType(newPlace.__t)
       };
       this.setState(prevState => ({
         dirty: true,
         places: prevState.places.unshift(newMarker) && prevState.places
       }));
-      promise.then((res) => {
-        if (!res || !res.data) {
-          // rollback
-        }
-        Object.assign(newMarker, res.data);
-        this.refresh();
-      });
+      MapService.createPlace(newPlace)
+        .then((res) => {
+          if (!res || !res.data) {
+            // rollback
+          }
+          Object.assign(newMarker, res.data);
+          this.refresh();
+        });
     }
   }
 
@@ -295,16 +269,16 @@ export default class TheRealWorld extends BasePage {
         dirty={this.state.dirty}
       >
         <this.renderMapElements />
-        {/* <LeftToolBar handler={this.handleLeftToolbarAction} /> */}
+        {false && <LeftToolBar handler={this.handleLeftToolbarAction} />}
         <RightToolBar
           ref={this.rightToolbarRef}
           handler={this.handleRightToolbarAction}
           places={places}
         />
-        <MapContextMenu
+        <RightClickContextMenu
           ref={this.mapCtxMenuRef}
-          options={this.getContextOptions()}
           handler={this.handleContextActions}
+          mainMap={this}
         />
       </GGMap>
     );

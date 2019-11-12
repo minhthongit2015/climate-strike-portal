@@ -22,4 +22,13 @@ router.post('/', (req, res) => {
   }, { req, res });
 });
 
+router.delete('/:placeId', (req, res) => {
+  Logger.catch(async () => {
+    await MapSecurityService.onlyModOrAdmin(req);
+    const { placeId } = req.params;
+    const deletedPlace = await PlaceService.delete(placeId);
+    return res.send(APIResponse.setData(deletedPlace));
+  }, { req, res });
+});
+
 module.exports = router;

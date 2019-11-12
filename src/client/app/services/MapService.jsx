@@ -1,16 +1,6 @@
 import superrequest from '../utils/superrequest';
 // import { ApiEndpoints } from '../utils/Constants';
 
-// import MarkerWithInfo from '../components/map/marker-with-info/MarkerWithInfo';
-import StoreMarker from '../components/map/store-marker/StoreMarker';
-import GardenToolsMarker from '../components/map/garden-tools-marker/GardenToolsMarker';
-import UserMarker from '../components/map/user-marker/UserMarker';
-import FarmMarker from '../components/map/farm-marker/FarmMarker';
-
-import DisasterMarker from '../components/map/disaster-marker/DisasterMarker';
-import ActionMarker from '../components/map/action-marker/ActionMarker';
-import ActivistMarker from '../components/map/activist-marker/ActivistMarker';
-
 
 export default class MapService {
   static async fetchPlaces() {
@@ -42,7 +32,6 @@ export default class MapService {
 
   static mapEntities(places) {
     places.forEach((place) => {
-      place.marker = this.getMarkerByType(place.__t);
       if (place.__t === 'Garden') {
         place.picture = `https://graph.facebook.com/${place.socials.fb}`
           + '/picture?type=square&width=200&height=200';
@@ -50,24 +39,5 @@ export default class MapService {
       }
     });
     return places;
-  }
-
-  static getMarkerByType(type) {
-    switch (type) {
-    case 'Garden':
-      return UserMarker;
-    case 'Farm':
-      return FarmMarker;
-    case 'FoodShop':
-      return StoreMarker;
-    case 'Disaster':
-      return DisasterMarker;
-    case 'Activist':
-      return ActivistMarker;
-    case 'Action':
-      return ActionMarker;
-    default:
-      return FarmMarker;
-    }
   }
 }

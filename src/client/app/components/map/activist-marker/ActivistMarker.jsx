@@ -5,6 +5,7 @@ import MarkerWithInfo from '../marker-with-info/MarkerWithInfo';
 import './ActivistMarker.scss';
 
 import { PlantPot1Src } from '../../../../assets/icons';
+import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 
 const CUSTOM_CLASS = 'activist';
 const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
@@ -39,23 +40,27 @@ export default class ActivistMarker extends Component {
   }
 
   open() {
+    if (!this.marker) return;
     this.marker.open();
   }
 
   close() {
+    if (!this.marker) return;
     this.marker.close();
   }
 
   toggle() {
+    if (!this.marker) return;
     this.marker.toggle();
   }
 
   render() {
+    const { entity: place = {} } = this.props;
     const {
       defaultAvatar = '/images/avatar.png',
       defaultCoverImage = '/images/cover-photo.jpg',
       user = {}
-    } = this.props.entity;
+    } = place;
     const { name, socials: { facebook } = {} } = user;
     const avatar = facebook && `https://graph.facebook.com/${facebook}/picture?type=square&width=200&height=200`;
 
@@ -68,7 +73,7 @@ export default class ActivistMarker extends Component {
         customWindowClass={CUSTOM_WINDOW_CLASS}
         iconSrc={PlantPot1Src}
       >
-        <div className="">
+        <div className="marker__header">
           <div className="marker__cover-photo" style={{ backgroundImage: `url(${defaultCoverImage})` }}>
             <img alt="" src={defaultCoverImage} />
           </div>
@@ -78,9 +83,9 @@ export default class ActivistMarker extends Component {
         </div>
         <div className="marker__profile px-3 pb-3">
           <div className="marker__profile__name">{name}</div>
-
           <div className="marker__profile__description">cá nhân hoạt động vì môi trường</div>
           <hr className="my-2 mx-5" />
+          <PlaceActions place={place} marker={this} />
         </div>
       </MarkerWithInfo>
     );

@@ -4,6 +4,7 @@ import MarkerWithInfo from '../marker-with-info/MarkerWithInfo';
 import './DisasterMarker.scss';
 
 import { ForestFireSrc as DisasterIconSrc } from '../../../../assets/icons';
+import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 
 const CUSTOM_CLASS = 'disaster';
 const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
@@ -13,6 +14,10 @@ const CUSTOM_WINDOW_CLASS = `${CUSTOM_CLASS}-info-window`;
 export default class DisasterMarker extends Component {
   get uid() {
     return this.marker.uid;
+  }
+
+  get rootMarker() {
+    return this.marker.rootMarker;
   }
 
   constructor(props) {
@@ -26,14 +31,17 @@ export default class DisasterMarker extends Component {
   }
 
   open() {
+    if (!this.marker) return;
     this.marker.open();
   }
 
   close() {
+    if (!this.marker) return;
     this.marker.close();
   }
 
   toggle() {
+    if (!this.marker) return;
     this.marker.toggle();
   }
 
@@ -44,9 +52,9 @@ export default class DisasterMarker extends Component {
 
   render() {
     const {
-      name, description, entity = {}, events, ...restProps
+      name, description, entity: place = {}, events, ...restProps
     } = this.props;
-    const { post = {} } = entity;
+    const { post = {} } = place;
     const { title, summary, preview } = post;
 
     return (
@@ -79,12 +87,13 @@ export default class DisasterMarker extends Component {
                     <i className="far fa-paper-plane" /> Xem chi tiết
                   </button>
                 </div>
+                <PlaceActions place={place} marker={this} />
               </div>
             </div>
           </section>
           <section className="marker__section">
             {events && events.map(event => (
-              <div>
+              <div key={event._id}>
                 <div className="marker__section__header">{event.title}</div>
                 <div className="marker__section__body">
                   {event.title}

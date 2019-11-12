@@ -7,7 +7,7 @@ import { getAutoDispatcher } from '../../Helper';
 
 
 export default (props) => {
-  const { options } = props;
+  const { options, handler, ...restProps } = props;
   const autoDispatcher = getAutoDispatcher(props);
 
   return (
@@ -18,7 +18,7 @@ export default (props) => {
         className="p-0 btn-paper rounded-circle shadow-style highlight-style"
         style={{ width: '25px', height: '25px' }}
       >
-        <IconMore />
+        <IconMore {...restProps} />
       </MDBDropdownToggle>
       <MDBDropdownMenu basic>
         {options && options.map(option => (

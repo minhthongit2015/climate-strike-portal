@@ -1,5 +1,14 @@
+/* eslint-disable new-cap */
+/* eslint-disable no-new */
 
 export const mapTreeNodeToArray = (() => {
+  function isComponentNode(node) {
+    return typeof node.type === 'function';
+  }
+  function getTrueNode(node) {
+    node = new node.type(node.props);
+    return node.render ? node.render() : node;
+  }
   function isNode(node) {
     return node && typeof node === 'object' && node.props;
   }
@@ -17,6 +26,9 @@ export const mapTreeNodeToArray = (() => {
   return function _mapTreeNodeToArray(root, array, childIndex, parentPath) {
     if (!array || !isNodeOrArrayOfNodes(root)) return null;
     let currentPath;
+    if (isComponentNode(root)) {
+      root = getTrueNode(root);
+    }
     if (isArrayOfNodes(root)) {
       currentPath = parentPath;
     } else {

@@ -5,6 +5,7 @@ import {
 import classnames from 'classnames';
 import './MapContextMenu.scss';
 
+
 export default class extends React.PureComponent {
   constructor(props) {
     super(props);
