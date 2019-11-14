@@ -35,11 +35,16 @@ export default class extends React.Component {
   }
 
   handleFileUpload(event) {
-    this.fileToDataURL(event.target.files[0], event)
+    const { name } = event.target;
+    this.fileToDataURL(event.target.files[0])
       .then((dataUrl) => {
         this.setState({ uploading: false });
-        event.target.value = dataUrl;
-        this.dispatchUploadedEvent(event);
+        this.dispatchUploadedEvent({
+          target: {
+            name,
+            value: dataUrl
+          }
+        });
       });
   }
 
@@ -138,7 +143,7 @@ export default class extends React.Component {
           <input
             type="file"
             accept="image/*"
-            name="image"
+            name={name}
             onChange={this.handleFileUpload}
             onInput={this.handleStartUpload}
             ref={this.inputRef}

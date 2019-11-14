@@ -4,11 +4,11 @@ export default class DialogService {
     return this.dialogRef && this.dialogRef.current;
   }
 
-  static init(dialogRef) {
+  static setDialog(dialogRef) {
     this.dialogRef = dialogRef;
   }
 
-  static setDialogRef(dialogRef) {
+  static init(dialogRef) {
     this.dialogRef = dialogRef;
   }
 

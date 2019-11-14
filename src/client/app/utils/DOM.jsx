@@ -19,9 +19,13 @@ export const mapTreeNodeToArray = (() => {
     return isNode(node) || isArrayOfNodes(node);
   }
   function getChildren(node) {
-    let children = isArrayOfNodes(node) ? node : node.props.children;
-    children = isArrayOfNodes(children) ? children : [children];
-    return children.filter(child => isNode(child));
+    try {
+      let children = isArrayOfNodes(node) ? node : node.props.children;
+      children = isArrayOfNodes(children) ? children : [children];
+      return children.filter(child => isNode(child));
+    } catch (error) {
+      return [];
+    }
   }
   return function _mapTreeNodeToArray(root, array, childIndex, parentPath) {
     if (!array || !isNodeOrArrayOfNodes(root)) return null;

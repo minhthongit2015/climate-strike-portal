@@ -21,19 +21,24 @@ import superws from './utils/superws';
 import RouteConstants from './utils/RouteConstants';
 
 import KeyTracker from './utils/KeyTracker';
+
 import AuthService from './services/Auth';
 import PageDialogService from './services/PageDialogService';
 import LoginDialogService from './services/LoginDialogService';
 import MessageDialogService from './services/MessageDialogService';
+
 import PageDialog from './components/dialog/PageDialog';
 import LoginDialog from './components/dialog/LoginDialog';
 import MessageDialog from './components/dialog/MessageDialog';
 import GuideDialog from './components/dialog/GuideDialog';
+import ActivistDialog from './components/map-tools/edit-dialog/ActivistDialog';
 
 import SavedPostsDialogService from './services/SavedPostsDialogService';
 import IDoPostsDialogService from './services/IDoPostsDialogService';
 import GuideDialogService from './services/GuideDialogService';
 import PostDetailsDialogService from './services/PostDetailsDialogService';
+import PlaceEditDialogService from './services/dialog/PlaceEditDialogService';
+import DisasterDialog from './components/map-tools/edit-dialog/DisasterDialog';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
@@ -55,6 +60,9 @@ class App extends Component {
     this.iDoPostsPageDialogRef = React.createRef();
     this.guideDialogRef = React.createRef();
 
+    this.activistDialogRef = React.createRef();
+    this.diasterDialogRef = React.createRef();
+
     this.loginDialogRef = React.createRef();
     this.messageDialogRef = React.createRef();
 
@@ -67,6 +75,9 @@ class App extends Component {
     PostDetailsDialogService.init(this.postPageDialogRef);
     SavedPostsDialogService.init(this.savedPostsPageDialogRef);
     IDoPostsDialogService.init(this.iDoPostsPageDialogRef);
+
+    PlaceEditDialogService.storeDialog(this.activistDialogRef);
+    PlaceEditDialogService.storeDialog(this.diasterDialogRef);
 
     LoginDialogService.init(this.loginDialogRef);
     MessageDialogService.init(this.messageDialogRef);
@@ -93,6 +104,9 @@ class App extends Component {
         <LoginDialog ref={this.loginDialogRef} />
         <MessageDialog ref={this.messageDialogRef} />
         <GuideDialog ref={this.guideDialogRef} />
+
+        <ActivistDialog ref={this.activistDialogRef} />
+        <DisasterDialog ref={this.diasterDialogRef} />
       </React.Suspense>
     );
     return (

@@ -5,6 +5,7 @@ import './DisasterMarker.scss';
 
 import { ForestFireSrc as DisasterIconSrc } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
+import PostService from '../../../services/PostService';
 
 const CUSTOM_CLASS = 'disaster';
 const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
@@ -24,6 +25,7 @@ export default class DisasterMarker extends Component {
     super(props);
     this.marker = null;
     this.onLoad = this.onLoad.bind(this);
+    this.handleGoToPost = this.handleGoToPost.bind(this);
   }
 
   onLoad(ref) {
@@ -46,8 +48,14 @@ export default class DisasterMarker extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  handleGoToPost(post) {
-    window.realWorldHistory.push(`/buc-tranh-trai-dat?hashtag=${post.baseOrder}`);
+  handleGoToPost(event, post) {
+    if (event.ctrlKey || event.which !== 1) {
+      return;
+    }
+    event.preventDefault();
+
+    const url = PostService.buildPostUrl(post, { relative: true });
+    window.realWorldHistory.push(url);
   }
 
   render() {
@@ -79,13 +87,15 @@ export default class DisasterMarker extends Component {
                   {/* <button type="button" className="btn btn-sm btn-default px-3">
                     <i className="fab fa-font-awesome-flag" /> Chia sẻ
                   </button> */}
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-default px-3"
-                    onClick={() => this.handleGoToPost(post)}
-                  >
-                    <i className="far fa-paper-plane" /> Xem chi tiết
-                  </button>
+                  <a href={PostService.buildPostUrl(post)}>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-default px-3"
+                      onClick={event => this.handleGoToPost(event, post)}
+                    >
+                      <i className="far fa-paper-plane" /> Xem chi tiết
+                    </button>
+                  </a>
                 </div>
                 <PlaceActions place={place} marker={this} />
               </div>

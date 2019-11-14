@@ -18,7 +18,7 @@ export default (props) => {
         className="p-0 btn-paper rounded-circle shadow-style highlight-style"
         style={{ width: '25px', height: '25px' }}
       >
-        <IconMore {...restProps} />
+        <IconMore color="#fff" {...restProps} />
       </MDBDropdownToggle>
       <MDBDropdownMenu basic>
         {options && options.map(option => (

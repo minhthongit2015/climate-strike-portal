@@ -1,11 +1,14 @@
 import React from 'react';
 import MapService from '../../../services/MapService';
+import UserService from '../../../services/UserService';
+import PlaceEditDialogService from '../../../services/dialog/PlaceEditDialogService';
 
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.handlePlaceActions = this.handlePlaceActions.bind(this);
+    UserService.useUserState(this);
   }
 
   handlePlaceActions(event) {
@@ -17,7 +20,8 @@ export default class extends React.Component {
       marker.rootMarker.setMap(null);
       break;
     case 'edit-place':
-      MapService.updatePlace(place);
+      PlaceEditDialogService.edit(place);
+      // MapService.updatePlace(place);
       break;
     default:
       break;
@@ -25,21 +29,26 @@ export default class extends React.Component {
   }
 
   render() {
+    const { place } = this.props;
+    const canEdit = UserService.isPlaceOwner(place) || UserService.isModOrAdmin;
+
     return (
-      <div className="place-actions text-center">
-        <div
-          name="delete-place"
-          className="btn btn-sm py-1 px-4 red lighten-2 text-white"
-          onClick={this.handlePlaceActions}
-        >Xóa
+      canEdit && (
+        <div className="place-actions text-center">
+          <div
+            name="delete-place"
+            className="btn btn-sm py-1 px-4 red lighten-2 text-white"
+            onClick={this.handlePlaceActions}
+          >Xóa
+          </div>
+          <div
+            name="edit-place"
+            className="btn btn-sm py-1 px-4 btn-default"
+            onClick={this.handlePlaceActions}
+          >Sửa
+          </div>
         </div>
-        <div
-          name="edit-place"
-          className="btn btn-sm py-1 px-4 btn-default"
-          onClick={this.handlePlaceActions}
-        >Sửa
-        </div>
-      </div>
+      )
     );
   }
 }

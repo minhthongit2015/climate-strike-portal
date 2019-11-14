@@ -23,8 +23,12 @@ export default class UserService {
 
   static get isNormalUser() { return this.isLoggedIn && !this.isAdmin && !this.isModerator; }
 
-  static isOwner(post) {
+  static isPostOwner(post) {
     return this.isLoggedIn && post.authors && post.authors.includes(this.user._id);
+  }
+
+  static isPlaceOwner(place) {
+    return this.isLoggedIn && place.author && place.author._id === this.user._id;
   }
 
   // ---

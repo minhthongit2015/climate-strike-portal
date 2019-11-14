@@ -79,7 +79,7 @@ function getContextOptions(post) {
     options = adminCtxOptions;
   } else if (UserService.isModerator) {
     options = moderatorCtxOptions;
-  } else if (UserService.isOwner(post)) {
+  } else if (UserService.isPostOwner(post)) {
     options = ownerCtxOptions;
   } else if (UserService.isNormalUser) {
     options = normalUserCtxOptions;

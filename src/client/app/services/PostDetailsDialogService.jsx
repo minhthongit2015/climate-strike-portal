@@ -18,7 +18,7 @@ export default class extends PageDialogService {
       if (res && res.data) {
         const post = res.data[0];
         this.openInCurrentHistory({
-          url: PostService.buildPostUrl(post, true),
+          url: PostService.buildPostUrl(post, { keepQuery: true }),
           title: post.title,
           state: post
         });
@@ -29,7 +29,7 @@ export default class extends PageDialogService {
   // Open when click to a post
   static openPostDetailsDialog(post) {
     return this.openInNewHistory({
-      url: PostService.buildPostUrl(post, true),
+      url: PostService.buildPostUrl(post, { keepQuery: true }),
       title: post.title,
       state: post
     });

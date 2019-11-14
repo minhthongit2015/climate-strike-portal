@@ -9,7 +9,8 @@ import {
   IconEarthPictureStatic,
   IconWhatYouCanDo,
   IconYourQuestion,
-  IconHome
+  IconHome,
+  IconTheRealWorld
 } from '../../../../assets/icons';
 
 import NavIconLink from '../../../components/utils/nav-icon-link/NavIconLink';
@@ -29,7 +30,7 @@ export default class SideNav extends Component {
         type: 'nav',
         link: RouteConstants.theRealWorldLink,
         text: 'Thế Giới\r\nThực',
-        icon: IconEarthPictureStatic
+        icon: IconTheRealWorld
       },
       {
         type: 'nav',

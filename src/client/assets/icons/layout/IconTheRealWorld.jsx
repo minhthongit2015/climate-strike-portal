@@ -203,6 +203,7 @@ function mousemove() {
 }
 
 function getCountry(event) {
+  if (!countries) return null;
   const pos = projection.invert(d3.mouse(event));
   return countries.features.find(
     f => f.geometry.coordinates.find(
@@ -215,7 +216,35 @@ function getCountry(event) {
 
 
 export default class extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.wrapperRef = React.createRef();
+    this.globeRef = React.createRef();
+    this.shadowRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.adjustSize();
+  }
+
+  adjustSize() {
+    const wrapper = this.wrapperRef.current;
+    const parent = this.wrapperRef.current.parentNode;
+    const shadow = this.shadowRef.current;
+    const left = (parent.offsetWidth - parent.offsetHeight) / 2;
+    if (wrapper.offsetHeight > parent.offsetHeight) {
+      wrapper.style.height = `${parent.offsetHeight}px`;
+      wrapper.style.width = `${parent.offsetHeight}px`;
+      wrapper.style.paddingTop = `${parent.offsetHeight}px`;
+      shadow.style.height = `${parent.offsetHeight}px`;
+      shadow.style.width = `${parent.offsetHeight}px`;
+      shadow.style.paddingTop = `${parent.offsetHeight}px`;
+      shadow.style.left = `${left}px`;
+    }
+  }
+
   componentDidMount() {
+    this.adjustSize();
     current = d3.select('.icon-globe__label');
     canvas = d3.select('.icon-globe');
     context = canvas.node().getContext('2d');
@@ -249,9 +278,9 @@ export default class extends React.PureComponent {
   render() {
     const { color, className, ...restProps } = this.props;
     return (
-      <div className={`icon-globe__wrapper ${className || ''}`} {...restProps}>
-        <canvas className="icon-globe" />
-        <div className="icon-globe__shadow" />
+      <div ref={this.wrapperRef} className={`icon-globe__wrapper ${className || ''}`} {...restProps}>
+        <canvas ref={this.globeRef} className="icon-globe" />
+        <div ref={this.shadowRef} className="icon-globe__shadow" />
         <div className="icon-globe__label" />
       </div>
     );
