@@ -60,9 +60,9 @@ export default class HomePage extends BasePage {
       }
     ];
 
-    if (window.location.port === '') {
-      this.links.splice(1, 1);
-    }
+    // if (window.location.port === '') {
+    //   this.links.splice(1, 1);
+    // }
 
     UserService.useFbProfileState(this);
   }
@@ -97,7 +97,6 @@ export default class HomePage extends BasePage {
 
   render() {
     const { fbProfile } = UserService;
-    console.log('render "Pages/home/Home.jsx"');
     return (
       <React.Fragment>
         <div className="h-100 d-flex justify-content-center align-items-center">

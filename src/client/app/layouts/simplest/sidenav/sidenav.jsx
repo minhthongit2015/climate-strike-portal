@@ -10,7 +10,7 @@ import {
   IconWhatYouCanDo,
   IconYourQuestion,
   IconHome,
-  IconTheRealWorld
+  IconEarth
 } from '../../../../assets/icons';
 
 import NavIconLink from '../../../components/utils/nav-icon-link/NavIconLink';
@@ -30,7 +30,7 @@ export default class SideNav extends Component {
         type: 'nav',
         link: RouteConstants.theRealWorldLink,
         text: 'Thế Giới\r\nThực',
-        icon: IconTheRealWorld
+        icon: IconEarth
       },
       {
         type: 'nav',
@@ -45,9 +45,9 @@ export default class SideNav extends Component {
         icon: IconYourQuestion
       }
     ];
-    if (window.location.port === '') {
-      this.links.splice(1, 1);
-    }
+    // if (window.location.port === '') {
+    //   this.links.splice(1, 1);
+    // }
   }
 
   static renderHomeNav() {
@@ -76,7 +76,6 @@ export default class SideNav extends Component {
   }
 
   render() {
-    console.log('render "Layouts/simplest/sidenav/SideNav.jsx"');
     return (
       <aside
         className={

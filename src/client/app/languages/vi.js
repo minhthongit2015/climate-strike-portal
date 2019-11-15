@@ -106,7 +106,8 @@ export default {
       loginToRequestChange: 'Bạn cần đăng nhập để đề xuất chỉnh sửa cho bài viết này.',
       loginToSavePost: 'Bạn cần đăng nhập để lưu bài viết này vào tài khoản của bạn.',
       loginToSaveIDo: 'Bạn cần đăng nhập để lưu này vào những việc bạn sẽ làm.',
-      loginToRating: 'Bạn cần đăng nhập để đánh giá cho bài viết này.'
+      loginToRating: 'Bạn cần đăng nhập để đánh giá cho bài viết này.',
+      loginToRiseYourVoice: 'Bạn cần đăng nhập để tham gia cùng mọi người.'
     }
   }
 };

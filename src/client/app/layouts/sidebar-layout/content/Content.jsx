@@ -3,7 +3,6 @@ import './Content.scss';
 
 export default class Body extends Component {
   render() {
-    console.log('render "Layouts/sidebar-layout/content/Content.jsx"');
     return (
       <article className="sidebar-layout__content flex-fill" id="sidebar-layout__content">
         {this.props.children}

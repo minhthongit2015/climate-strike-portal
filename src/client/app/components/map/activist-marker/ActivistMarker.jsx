@@ -6,6 +6,7 @@ import './ActivistMarker.scss';
 
 import { PlantPot1Src } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
+import UserService from '../../../services/UserService';
 
 const CUSTOM_CLASS = 'activist';
 const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
@@ -57,11 +58,16 @@ export default class ActivistMarker extends Component {
   render() {
     const { entity: place = {} } = this.props;
     const {
-      defaultAvatar = '/images/avatar.png',
+      defaultAvatar = UserService.fbAvatarSrc,
       defaultCoverImage = '/images/cover-photo.jpg',
-      user = {}
+      description = 'cá nhân hoạt động vì môi trường',
+      user,
+      author
     } = place;
-    const { name, socials: { facebook } = {} } = user;
+    const {
+      name = UserService.user.name,
+      socials: { facebook } = {}
+    } = user || author || {};
     const avatar = facebook && `https://graph.facebook.com/${facebook}/picture?type=square&width=200&height=200`;
 
     return (
@@ -83,7 +89,7 @@ export default class ActivistMarker extends Component {
         </div>
         <div className="marker__profile px-3 pb-3">
           <div className="marker__profile__name">{name}</div>
-          <div className="marker__profile__description">cá nhân hoạt động vì môi trường</div>
+          <div className="marker__profile__description">{description}</div>
           <hr className="my-2 mx-5" />
           <PlaceActions place={place} marker={this} />
         </div>

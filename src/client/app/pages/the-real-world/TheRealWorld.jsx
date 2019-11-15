@@ -11,6 +11,7 @@ import UserService from '../../services/UserService';
 import RightToolBar from '../../components/map-tools/right-toolbar/RightToolBar';
 import RightClickContextMenu from './RightClickContextMenu';
 import MapUtils from '../../utils/MapUtils';
+import LoginDialogService from '../../services/LoginDialogService';
 
 
 export default class TheRealWorld extends BasePage {
@@ -93,9 +94,9 @@ export default class TheRealWorld extends BasePage {
   }
 
   onMapClicked(mapProps, map, event) {
-    if (window.key.ctrl) {
-      prompt('LatLng', `${event.latLng.lat()}, ${event.latLng.lng()}`);
-    }
+    // if (window.key.ctrl) {
+    //   prompt('LatLng', `${event.latLng.lat()}, ${event.latLng.lng()}`);
+    // }
     if (window.key.alt) {
       //
     }
@@ -119,6 +120,13 @@ export default class TheRealWorld extends BasePage {
   handleContextActions(event, option, newPlace) {
     // const { ContextOptions } = RightClickContextMenu;
     if (newPlace) {
+      if (!UserService.isLoggedIn) {
+        LoginDialogService.show(t('components.loginDialog.loginToRiseYourVoice'));
+        return;
+      }
+      if (!UserService.isModOrAdmin && !newPlace.__t === 'Activist') {
+        return;
+      }
       const newMarker = {
         ...newPlace,
         marker: MapUtils.getMarkerByType(newPlace.__t)

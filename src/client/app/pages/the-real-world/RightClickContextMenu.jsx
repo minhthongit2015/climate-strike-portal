@@ -1,7 +1,7 @@
 import React from 'react';
 import MapContextMenu from '../../components/map-tools/map-context-menu/MapContextMenu';
 import UserService from '../../services/UserService';
-import MapService from '../../services/MapService';
+// import MapService from '../../services/MapService';
 import { getAutoDispatcher } from '../../components/Helper';
 
 const ContextOptions = {

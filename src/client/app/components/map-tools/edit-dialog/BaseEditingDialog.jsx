@@ -20,6 +20,7 @@ export default class extends React.Component {
       __t: place.__t,
       events: place.events,
       position: place.position,
+      description: place.description,
       name: place.name,
       path: place.path
     };
@@ -37,6 +38,7 @@ export default class extends React.Component {
 
     this.state = {
       place: {},
+      marker: null,
       cursorPos: {},
       isShowModal: false,
       disabled: false,
@@ -75,9 +77,10 @@ export default class extends React.Component {
     }, () => this.open());
   }
 
-  edit(place) {
+  edit(place, marker) {
     this.setState({
       place,
+      marker,
       isShowModal: true
     });
   }
@@ -102,6 +105,7 @@ export default class extends React.Component {
     this.setState({
       disabled: true
     });
+    this.state.marker.forceUpdate();
     MapService.updatePlace(this.place)
       .then(() => {
         this.setState({

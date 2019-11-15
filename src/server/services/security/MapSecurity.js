@@ -34,11 +34,41 @@ module.exports = class extends SecurityService {
     return place;
   }
 
-  static onlyValidPlace(req, throwError = true) {
-    const place = req.body;
-    if (!place || !place.categories || place.categories.length <= 0) {
+  static onlyValidPlace(place, throwError = true) {
+    if (!place || !place.author) {
       return errorOrFalse(HttpErrors.BadRequest(), throwError);
     }
     return true;
+  }
+
+  static onlyModAdminActivist(req, place, throwError = true) {
+    if (!this.onlyValidPlace(place, false)) {
+      return errorOrFalse(HttpErrors.BadRequest(), throwError);
+    }
+    if (this.onlyModOrAdmin(req, false)) {
+      return true;
+    }
+    if (place.__t !== 'Activist') {
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
+    }
+    return true;
+  }
+
+  static onlyOwner(req, place, throwError = true) {
+    const userId = req.session.user._id.toString();
+    if (!place || !place.author || place.author._id !== userId) {
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
+    }
+    return true;
+  }
+
+  static onlyOwnerModAdmin(req, place, throwError = true) {
+    if (!this.onlyLoggedInUser(req, false)) {
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
+    }
+    if (this.onlyModOrAdmin(req, false)) {
+      return true;
+    }
+    return this.onlyOwner(req, place, throwError);
   }
 };

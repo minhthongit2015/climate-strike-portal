@@ -20,7 +20,7 @@ export default class extends React.Component {
       marker.rootMarker.setMap(null);
       break;
     case 'edit-place':
-      PlaceEditDialogService.edit(place);
+      PlaceEditDialogService.edit(place, marker);
       // MapService.updatePlace(place);
       break;
     default:

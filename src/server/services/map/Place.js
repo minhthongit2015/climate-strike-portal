@@ -31,8 +31,7 @@ module.exports = class extends CRUDService {
     return super.create.call(this, place);
   }
 
-  static createOrUpdate(place, user, where) {
-    place.author = ApiHelper.getId(user._id);
+  static createOrUpdate(place, where) {
     return super.createOrUpdate.call(this, place, where);
   }
 

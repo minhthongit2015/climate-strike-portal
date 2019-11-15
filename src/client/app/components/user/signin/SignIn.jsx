@@ -170,7 +170,6 @@ export default class SignIn extends Component {
   }
 
   render() {
-    console.log('render "Comps/signin/SignIn.jsx"');
     const {
       disabled
     } = this.state;

@@ -17,8 +17,6 @@ export default class Polyline extends Component {
   }
 
   render() {
-    console.log('render "Polyline.jsx"');
-
     const {
       google, map, path,
       color, opacity, width,

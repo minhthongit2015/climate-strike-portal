@@ -7,10 +7,22 @@ import DropUploader from '../../utils/drop-uploader/DropUploader';
 export default class ActivistDialog extends BaseEditingDialog {
   static get type() { return 'Activist'; }
 
+  // get place() {
+  //   const originPlace = super.place;
+  //   const { place } = this.state;
+  //   const { description } = place;
+  //   return {
+  //     ...originPlace,
+  //     description
+  //   };
+  // }
+
   renderContent() {
     const { place = {} } = this.state;
-    const { user = {}, description, cover } = place;
-    const { name } = user;
+    const {
+      user, author, description, cover
+    } = place;
+    const { name } = user || author || {};
 
     return (
       <React.Fragment>

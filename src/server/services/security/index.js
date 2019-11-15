@@ -13,7 +13,7 @@ module.exports = class {
 
   static onlyRoleUser(req, throwError = true) {
     if (!this.onlyLoggedInUser(req, throwError)) {
-      return false;
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     if (!req.session.user.role || typeof req.session.user.role !== 'string') {
       return errorOrFalse(HttpErrors.Unauthorized(), throwError);
@@ -23,7 +23,7 @@ module.exports = class {
 
   static onlyModerator(req, throwError = true) {
     if (!this.onlyRoleUser(req, throwError)) {
-      return false;
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     if (req.session.user.role !== UserRole.MODERATOR) {
       return errorOrFalse(HttpErrors.Unauthorized(), throwError);
@@ -33,7 +33,7 @@ module.exports = class {
 
   static onlyAdmin(req, throwError = true) {
     if (!this.onlyRoleUser(req, throwError)) {
-      return false;
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     if (req.session.user.role !== UserRole.ADMIN) {
       return errorOrFalse(HttpErrors.Unauthorized(), throwError);
@@ -43,7 +43,7 @@ module.exports = class {
 
   static onlyModOrAdmin(req, throwError = true) {
     if (!this.onlyRoleUser(req, throwError)) {
-      return false;
+      return errorOrFalse(HttpErrors.Unauthorized(), throwError);
     }
     if (req.session.user.role !== UserRole.MODERATOR
       && req.session.user.role !== UserRole.ADMIN) {

@@ -17,8 +17,8 @@ export default class extends DialogService {
     return this.dialogs.find(dialogRef => dialogRef.current.constructor.type === place.__t);
   }
 
-  static edit(place) {
+  static edit(place, marker) {
     const dialogRef = this.findDialog(place);
-    return dialogRef.current.edit(place);
+    return dialogRef.current.edit(place, marker);
   }
 }

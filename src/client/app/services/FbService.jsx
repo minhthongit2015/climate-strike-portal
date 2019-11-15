@@ -26,7 +26,6 @@ export default class {
           });
           this.FB.AppEvents.logPageView();
           this.FB.Event.subscribe('xfbml.render', () => {
-            console.log('finished rendering plugins');
           });
           resolve();
         };
