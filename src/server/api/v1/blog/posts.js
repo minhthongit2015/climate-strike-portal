@@ -15,8 +15,9 @@ router.post('/', (req, res) => {
   Logger.catch(async () => {
     const post = PostsSecurityService.filterUnallowedProperties(req.body);
     await PostsSecurityService.onlyPublicOwnerModAdmin(req, post);
-    post.newAuthor = req.session.user._id;
+    post.newAuthor = req.session.user;
     const newPost = await PostService.create(post);
+    await SessionService.checkForDirtySession(req);
     res.send(new APIResponse().setData(newPost));
   }, { req, res });
 });

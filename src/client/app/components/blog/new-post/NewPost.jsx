@@ -18,8 +18,9 @@ import CategoryService from '../../../services/CategoryService';
 import UserService from '../../../services/UserService';
 import LoginDialogService from '../../../services/LoginDialogService';
 import MessageDialogService from '../../../services/MessageDialogService';
-import { IconCommunity } from '../../../../assets/icons';
+import { IconCommunity, IconThanks } from '../../../../assets/icons';
 import t from '../../../languages';
+
 
 const animatedComponents = makeAnimated();
 const scrollToTop = () => {
@@ -58,6 +59,7 @@ export default class extends React.Component {
 
   constructor(props) {
     super(props);
+    this.thankForDoItRef = React.createRef();
     this.contentRef = React.createRef();
     this.handlePostSubmit = this.handlePostSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -165,15 +167,21 @@ export default class extends React.Component {
     if (isDraft) {
       postData.status = 'draft';
     }
-    this.setLoadingState(true);
+    this.setLoadingState(true).then(() => {
+      this.thankForDoItRef.current.sayThanks();
+    });
+
+    UserService.updateUserSocialPoint(5);
     superrequest.agentPost('/api/v1/blog/posts', postData)
       .then((res) => {
-        if (res && res.ok) {
-          this.dispatchPostPostedEvent(res.data);
-          this.resetAndClose();
+        if (!res || !res.ok) {
+          UserService.updateUserSocialPoint(-5);
         }
+        this.dispatchPostPostedEvent(res.data);
+        this.resetAndClose();
       })
       .catch((error) => {
+        UserService.updateUserSocialPoint(-5);
         alert(`Xảy ra lỗi trong quá trình đăng bài! Xin vui lòng thử lại!\r\nChi tiết: "${error.code} - ${error.message}"`);
       })
       .finally(() => {
@@ -220,8 +228,10 @@ export default class extends React.Component {
   }
 
   setLoadingState(isLoading) {
-    this.setState({
-      disabled: isLoading
+    return new Promise((resolve) => {
+      this.setState({
+        disabled: isLoading
+      }, resolve);
     });
   }
 
@@ -309,6 +319,7 @@ export default class extends React.Component {
                   Lưu bản nháp</Button> */}
                 <Button type="submit" size="sm">
                   {!_id ? 'Đăng bài' : 'Cập nhập bài viết'}
+                  <IconThanks ref={this.thankForDoItRef} />
                 </Button>
               </Col>
             </Row>

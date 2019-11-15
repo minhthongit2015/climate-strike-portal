@@ -3,6 +3,7 @@ const xss = require('xss');
 const { Post } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
 const CategoryService = require('./Category');
+const UserService = require('../user/User');
 const ApiHelper = require('../../utils/ApiHelper');
 const ImgurService = require('../../services/thirt-party/imgur');
 const { PostStatus } = require('../../utils/Constants');
@@ -78,16 +79,17 @@ module.exports = class extends CRUDService {
     doc.content = await this.replaceImageBase64ToUrl(doc.content);
 
     // Resolve authors
-    const newAuthor = ApiHelper.getId(doc.newAuthor);
-    delete doc.newAuthor;
+    const newAuthor = ApiHelper.getId(doc.newAuthor._id);
     if (oldDoc) {
-      if (oldDoc.authors.every(authorId => authorId !== newAuthor.toString())) {
+      if (oldDoc.authors.every(authorId => authorId !== newAuthor._id.toString())) {
         oldDoc.authors.push(newAuthor);
         doc.authors = oldDoc.authors;
       }
     } else {
-      doc.authors = [newAuthor];
+      doc.authors = [newAuthor._id];
+      await UserService.updateSocialPoint(doc.newAuthor, 5);
     }
+    delete doc.newAuthor;
 
     doc.content = xss(doc.content);
 
