@@ -17,7 +17,7 @@ export default class extends React.Component {
     switch (event.currentTarget.name) {
     case 'delete-place':
       MapService.deletePlace(place);
-      marker.rootMarker.setMap(null);
+      marker.remove();
       break;
     case 'edit-place':
       PlaceEditDialogService.edit(place, marker);

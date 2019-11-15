@@ -55,6 +55,14 @@ export default class ActivistMarker extends Component {
     this.marker.toggle();
   }
 
+  refresh() {
+    this.marker.refresh();
+  }
+
+  remove() {
+    this.marker.remove();
+  }
+
   render() {
     const { entity: place = {} } = this.props;
     const {

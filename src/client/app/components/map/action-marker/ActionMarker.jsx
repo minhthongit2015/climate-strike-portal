@@ -45,6 +45,14 @@ export default class ActionMarker extends Component {
     this.marker.toggle();
   }
 
+  refresh() {
+    this.marker.refresh();
+  }
+
+  remove() {
+    this.marker.remove();
+  }
+
   // eslint-disable-next-line class-methods-use-this
   handleGoToPost(post) {
     window.realWorldHistory.push(`/buc-tranh-trai-dat?hashtag=${post.baseOrder}`);

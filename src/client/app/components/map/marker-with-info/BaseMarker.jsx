@@ -130,6 +130,16 @@ export default class MarkerWithInfo extends Component {
     }
   }
 
+  refresh() {
+    this.forceUpdate();
+    this.rootMarker.setMap(null);
+    this.rootMarker.setMap(this.map);
+  }
+
+  remove() {
+    this.rootMarker.setMap(null);
+  }
+
   onMarkerRef(ref) {
     if (!ref) return;
     this.markerRef = ref;

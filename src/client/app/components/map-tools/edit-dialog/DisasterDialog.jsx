@@ -38,7 +38,7 @@ export default class DisasterDialog extends BaseEditingDialog {
 
   renderContent() {
     const { place = {}, link = '' } = this.state;
-    const { post = {} } = place;
+    const { post = {}, radius } = place;
     const { title = '' } = post;
 
     return (
@@ -50,7 +50,6 @@ export default class DisasterDialog extends BaseEditingDialog {
           onChange={this.handleLinkChange}
           autoComplete="off"
           autofill="off"
-          required
         />
         <MDBInput
           label="Tiêu đề"
@@ -61,6 +60,13 @@ export default class DisasterDialog extends BaseEditingDialog {
           autofill="off"
           required
           disabled
+        />
+        <MDBInput
+          label="Bán kính thảm họa (m)"
+          name="radius"
+          value={radius}
+          onChange={this.handleInputChange}
+          type="number"
         />
       </React.Fragment>
     );

@@ -15,7 +15,7 @@ export default class extends PageDialogService {
   }
 
   static buildPostUrl(post, opts = { keepQuery: false, relative: false }) {
-    if (!post) return '#';
+    if (!post || !post.categories || !post.categories[0]) return '#';
     const optsz = Object.assign({ keepQuery: false, relative: false }, opts);
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set('hashtag', post.baseOrder);

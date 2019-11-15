@@ -22,7 +22,8 @@ export default class extends React.Component {
       position: place.position,
       description: place.description,
       name: place.name,
-      path: place.path
+      path: place.path,
+      radius: place.radius
     };
   }
 
@@ -105,7 +106,7 @@ export default class extends React.Component {
     this.setState({
       disabled: true
     });
-    this.state.marker.forceUpdate();
+    this.state.marker.refresh();
     MapService.updatePlace(this.place)
       .then(() => {
         this.setState({

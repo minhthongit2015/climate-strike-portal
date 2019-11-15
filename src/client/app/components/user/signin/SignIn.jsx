@@ -79,7 +79,7 @@ export default class SignIn extends Component {
   renderAvatar() {
     const { disabled } = this.state;
     const { fbProfile, user } = UserService;
-    const nextLevel = 10;
+    const nextLevel = 100;
     const socialPoint = user
       ? user.socialPoint || 0
       : 0;
