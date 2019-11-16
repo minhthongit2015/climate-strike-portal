@@ -89,7 +89,7 @@ export default class extends React.Component {
             className="map-toolbar__toggle map-toolbar__btn"
             color="none"
             onClick={this.toggle}
-            title="đóng [Tab]"
+            title="Tin tức mới [Tab]"
           >
             <IconPlus width="100%" height="100%" />
           </MDBBtn>

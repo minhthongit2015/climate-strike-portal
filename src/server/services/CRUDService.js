@@ -4,7 +4,7 @@ const ApiHelper = require('../utils/ApiHelper');
 const ConverterFactory = require('../models/converters/ConverterFactory');
 const { isNotSet } = require('../utils');
 
-function convertArguments(args) {
+function convertArgumentsToArray(args) {
   const outputArgs = [];
   for (let i = 0; i < args.length; i++) {
     outputArgs.push(args[i]);
@@ -18,7 +18,7 @@ module.exports = class CRUDService {
   }
 
   static get converter() {
-    return ConverterFactory.get(this.getModel(...convertArguments(arguments)).modelName);
+    return ConverterFactory.get(this.getModel(...convertArgumentsToArray(arguments)).modelName);
   }
 
   static get populate() {
@@ -33,7 +33,7 @@ module.exports = class CRUDService {
   // Create & Update
 
   static async create(doc) {
-    const newDoc = await this.getModel(...convertArguments(arguments)).create(doc);
+    const newDoc = await this.getModel(...convertArgumentsToArray(arguments)).create(doc);
     return this.converter.convert(newDoc);
   }
 
@@ -44,14 +44,14 @@ module.exports = class CRUDService {
     }
     id = ApiHelper.getId(id);
     const { id: idz, _id, ...restProps } = doc;
-    const updatedDoc = await this.getModel(...convertArguments(arguments))
+    const updatedDoc = await this.getModel(...convertArgumentsToArray(arguments))
       .findByIdAndUpdate(id, restProps).exec();
     return this.converter.convert(updatedDoc);
   }
 
   static async createOrUpdate(doc, where) {
     if (where) {
-      return this.getModel(...convertArguments(arguments)).updateOne(where, doc,
+      return this.getModel(...convertArgumentsToArray(arguments)).updateOne(where, doc,
         { upsert: true, new: true, setDefaultsOnInsert: true }).exec();
     }
     if (doc._id || doc.id) {
@@ -72,7 +72,7 @@ module.exports = class CRUDService {
 
   static async get(id) {
     id = ApiHelper.getId(id);
-    let query = this.getModel(...convertArguments(arguments)).findById(id);
+    let query = this.getModel(...convertArgumentsToArray(arguments)).findById(id);
     query = this.populate.reduce(
       (prevQuery, relatedColection) => prevQuery.populate(relatedColection),
       query
@@ -92,7 +92,9 @@ module.exports = class CRUDService {
     if (!listOptions) { // null mean that is have some errors
       return [];
     }
-    let query = ApiHelper.findWithModel(this.getModel(...convertArguments(arguments)), listOptions);
+    let query = ApiHelper.findWithModel(
+      this.getModel(...convertArgumentsToArray(arguments)), listOptions
+    );
     query = this.populate.reduce(
       (prevQuery, relatedColection) => prevQuery.populate(relatedColection),
       query
@@ -121,19 +123,19 @@ module.exports = class CRUDService {
 
   static async delete(id) {
     id = ApiHelper.getId(id);
-    const deleteResult = await this.getModel(...convertArguments(arguments))
+    const deleteResult = await this.getModel(...convertArgumentsToArray(arguments))
       .findByIdAndDelete(id).exec();
     return deleteResult;
   }
 
   static async findOneAndDelete(where) {
-    const deleteResult = await this.getModel(...convertArguments(arguments))
+    const deleteResult = await this.getModel(...convertArgumentsToArray(arguments))
       .findOneAndDelete(where).exec();
     return deleteResult;
   }
 
   static async findAndDelete(where) {
-    const deleteResult = await this.getModel(...convertArguments(arguments))
+    const deleteResult = await this.getModel(...convertArgumentsToArray(arguments))
       .deleteMany(where).exec();
     return deleteResult;
   }

@@ -30,8 +30,7 @@ export default class ActivistDialog extends BaseEditingDialog {
           label="Tải ảnh bìa"
           name="cover"
           value={cover}
-          // videoName="video"
-          // video={cover}
+          useVideo={false}
           onChange={this.handleInputChange}
           className="px-2 pb-4 pt-1"
         />

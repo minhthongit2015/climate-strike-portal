@@ -48,11 +48,17 @@ export default class DisasterMarker extends Component {
   }
 
   refresh() {
-    this.marker.refresh();
+    this.forceUpdate(() => {
+      this.marker.refresh();
+    });
   }
 
   remove() {
     this.marker.remove();
+  }
+
+  moveTo(position) {
+    this.marker.moveTo(position);
   }
 
   // eslint-disable-next-line class-methods-use-this

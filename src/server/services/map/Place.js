@@ -5,6 +5,7 @@ const {
 } = require('../../models/mongo');
 const CRUDService = require('../CRUDService');
 const ApiHelper = require('../../utils/ApiHelper');
+const ImgurService = require('../thirt-party/imgur');
 
 const PlaceTypes = [
   Place,
@@ -31,7 +32,12 @@ module.exports = class extends CRUDService {
     return super.create.call(this, place);
   }
 
-  static createOrUpdate(place, where) {
+  static async createOrUpdate(place, where) {
+    if (place.cover) {
+      place.cover = await ImgurService.create(place.cover, {
+        title: place.name
+      });
+    }
     return super.createOrUpdate.call(this, place, where);
   }
 

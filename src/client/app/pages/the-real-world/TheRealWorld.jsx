@@ -12,6 +12,7 @@ import RightToolBar from '../../components/map-tools/right-toolbar/RightToolBar'
 import RightClickContextMenu from './RightClickContextMenu';
 import MapUtils from '../../utils/MapUtils';
 import LoginDialogService from '../../services/LoginDialogService';
+// import CategoryService from '../../services/CategoryService';
 
 
 export default class TheRealWorld extends BasePage {
@@ -70,7 +71,9 @@ export default class TheRealWorld extends BasePage {
       rotateControl: true,
       streetViewControl: true
     });
-    this.fetchPlaces();
+    this.fetchPlaces().then(() => {
+      // CategoryService.fetchCategories();
+    });
   }
 
   onMarkerRef(ref) {
@@ -124,16 +127,27 @@ export default class TheRealWorld extends BasePage {
         LoginDialogService.show(t('components.loginDialog.loginToRiseYourVoice'));
         return;
       }
-      if (!UserService.isModOrAdmin && !newPlace.__t === 'Activist') {
+      const isActivist = newPlace.__t === 'Activist';
+      if (!UserService.isModOrAdmin && !isActivist) {
         return;
       }
+      const existedPlace = isActivist && this.state.places.find(
+        place => (place.user || place.author)._id === UserService.user._id
+      );
+      const isRaiseYourVoice = isActivist && existedPlace;
+      if (isRaiseYourVoice) {
+        existedPlace.ref.moveTo(newPlace.position);
+        MapService.updatePlace(existedPlace);
+        return;
+      }
+
       const newMarker = {
         ...newPlace,
         marker: MapUtils.getMarkerByType(newPlace.__t)
       };
       this.setState(prevState => ({
         dirty: true,
-        places: prevState.places.unshift(newMarker) && prevState.places
+        places: [newMarker, ...prevState.places]
       }));
       MapService.createPlace(newPlace)
         .then((res) => {

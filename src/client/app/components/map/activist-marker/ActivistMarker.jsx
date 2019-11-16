@@ -56,19 +56,24 @@ export default class ActivistMarker extends Component {
   }
 
   refresh() {
-    this.marker.refresh();
+    this.forceUpdate(() => {
+      this.marker.refresh();
+    });
   }
 
   remove() {
     this.marker.remove();
   }
 
+  moveTo(position) {
+    this.marker.moveTo(position);
+  }
+
   render() {
     const { entity: place = {} } = this.props;
     const {
-      defaultAvatar = UserService.fbAvatarSrc,
-      defaultCoverImage = '/images/cover-photo.jpg',
-      description = 'cá nhân hoạt động vì môi trường',
+      cover,
+      description,
       user,
       author
     } = place;
@@ -77,6 +82,9 @@ export default class ActivistMarker extends Component {
       socials: { facebook } = {}
     } = user || author || {};
     const avatar = facebook && `https://graph.facebook.com/${facebook}/picture?type=square&width=200&height=200`;
+    const defaultDescription = 'cá nhân hoạt động vì môi trường';
+    const defaultCover = '/images/cover-photo.jpg';
+    const defaultAvatar = UserService.fbAvatarSrc;
 
     return (
       <MarkerWithInfo
@@ -88,8 +96,8 @@ export default class ActivistMarker extends Component {
         iconSrc={PlantPot1Src}
       >
         <div className="marker__header">
-          <div className="marker__cover-photo" style={{ backgroundImage: `url(${defaultCoverImage})` }}>
-            <img alt="" src={defaultCoverImage} />
+          <div className="marker__cover-photo" style={{ backgroundImage: `url(${cover || defaultCover})` }}>
+            <img alt="" src={cover || defaultCover} />
           </div>
           <div className="marker__avatar">
             <img alt="" src={avatar || defaultAvatar} />
@@ -97,7 +105,7 @@ export default class ActivistMarker extends Component {
         </div>
         <div className="marker__profile px-3 pb-3">
           <div className="marker__profile__name">{name}</div>
-          <div className="marker__profile__description">{description}</div>
+          <div className="marker__profile__description">{description || defaultDescription}</div>
           <hr className="my-2 mx-5" />
           <PlaceActions place={place} marker={this} />
         </div>

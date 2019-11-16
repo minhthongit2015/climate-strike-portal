@@ -131,9 +131,20 @@ export default class MarkerWithInfo extends Component {
   }
 
   refresh() {
-    this.forceUpdate();
-    this.rootMarker.setMap(null);
-    this.rootMarker.setMap(this.map);
+    this.forceUpdate(() => {
+      this.windowRef.current.updateContent();
+    });
+  }
+
+  moveTo(position) {
+    if (!position) {
+      // eslint-disable-next-line prefer-destructuring
+      position = this.props.entity.position;
+    }
+    if (position) {
+      this.props.entity.position = position;
+      this.rootMarker.setPosition(position);
+    }
   }
 
   remove() {

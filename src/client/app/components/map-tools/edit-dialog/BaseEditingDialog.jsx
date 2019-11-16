@@ -22,6 +22,7 @@ export default class extends React.Component {
       position: place.position,
       description: place.description,
       name: place.name,
+      cover: place.cover,
       path: place.path,
       radius: place.radius
     };
@@ -93,12 +94,12 @@ export default class extends React.Component {
   }
 
   setPlaceState(name, value) {
-    this.setState(prevState => ({
-      place: {
-        ...prevState.place,
-        [name]: value
-      }
-    }));
+    this.setState((prevState) => {
+      prevState.place[name] = value;
+      return {
+        place: prevState.place
+      };
+    });
   }
 
   handleSubmit(event) {
