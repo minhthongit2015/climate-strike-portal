@@ -48,7 +48,7 @@ export default class Video extends React.Component {
       src, title, className, ...restProps
     } = video;
     let videoId;
-    const patterns = [/\/watch\?v=(.*?)(&|$)/, /youtu\.be\/(.+?)(&|$)/];
+    const patterns = [/\/watch\?.*?v=(.*?)(&|$)/, /youtu\.be\/(.+?)(&|$)/];
     patterns.find((pattern) => {
       const match = src.match(pattern);
       if (match && match[1]) {

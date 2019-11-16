@@ -127,9 +127,9 @@ export default class PostList extends React.Component {
       }
       return 'w1';
     } // height > width
-    if (contentLength > 300) {
+    if (contentLength > 500) {
       return 'w4';
-    } if (contentLength > 200) {
+    } if (contentLength > 400) {
       return 'w3';
     } if (contentLength > 100) {
       return 'w2';
