@@ -41,6 +41,21 @@ $tab-link-icon-color-active: lighten($tab-link-color-active, 20%) !default;
           max-width: 20px;
         }
       }
+
+      &.news {
+        &::after {
+          content: "";
+          cursor: pointer;
+          position: absolute;
+          top: 9px;
+          right: -8px;
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #ff6e41;
+          display: block;
+        }
+      }
     }
   
     .tab-title {

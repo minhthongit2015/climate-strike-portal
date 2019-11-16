@@ -43,12 +43,32 @@ router.post('/:postId/rating', (req, res) => {
   }, { req, res });
 });
 
+router.get('/news', (req, res) => {
+  Logger.catch(async () => {
+    await PostsSecurityService.onlyLoggedInUser(req);
+    const { user } = req.session;
+    const news = await PostService.checkNews(user);
+    res.send(APIResponse.setData(news));
+  }, { req, res });
+});
+
+router.post('/news', (req, res) => {
+  Logger.catch(async () => {
+    await PostsSecurityService.onlyLoggedInUser(req);
+    const { user } = req.session;
+    await PostService.markAsRead(req.body, user);
+    await SessionService.checkForDirtySession(req);
+    const news = await PostService.checkNews(user);
+    res.send(APIResponse.setData(news));
+  }, { req, res });
+});
+
 router.get('/unread-posts', (req, res) => {
   Logger.catch(async () => {
     await PostsSecurityService.onlyLoggedInUser(req);
     const { user } = req.session;
     const unreadPosts = await PostService.checkUnreadPosts(user);
-    res.send(new APIResponse().setData({ unreadPosts, user }));
+    res.send(new APIResponse().setData({ unreadPosts }));
   }, { req, res });
 });
 

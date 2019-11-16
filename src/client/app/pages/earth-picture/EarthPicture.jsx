@@ -24,33 +24,38 @@ export default class extends React.Component {
         name: t('pages.earthPicture.nav.climate'),
         path: RouteConstants.epClimatePath,
         link: RouteConstants.epClimateLink,
-        component: TabClimate
+        component: TabClimate,
+        category: 'Climate'
       },
       {
         name: t('pages.earthPicture.nav.organisms'),
         path: RouteConstants.epOrganismsPath,
         link: RouteConstants.epOrganismsLink,
-        component: TabOrganisms
+        component: TabOrganisms,
+        category: 'Organisms'
       },
       {
         name: t('pages.earthPicture.nav.pollution'),
         path: RouteConstants.epPollutionPath,
         link: RouteConstants.epPollutionLink,
-        component: TabPollution
+        component: TabPollution,
+        category: 'Pollution'
       },
       {
         name: <IconCommunity text={t('pages.earthPicture.nav.communityShare')} />,
         path: RouteConstants.epCommunitySharePath,
         link: RouteConstants.epCommunityShareLink,
-        component: TabCommunityShare
+        component: TabCommunityShare,
+        category: 'CommunityShare'
       }
     ];
 
-    NewsTracker.useUnreadPostsState(this);
+    NewsTracker.useNewsState(this);
   }
 
   render() {
-    const { unreadPosts } = NewsTracker;
+    NewsTracker.mappingTabs(this.tabs);
+
     return (
       <SidebarLayout navItems={this.tabs} brand={this.brand}>
         <Switch>

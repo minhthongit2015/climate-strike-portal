@@ -9,6 +9,7 @@ import TabClimate from './tab-climate/TabClimate';
 import TabPollution from './tab-pollution/TabPollution';
 import TabOthers from './tab-others/TabOthers';
 import t from '../../languages';
+import NewsTracker from '../../services/NewsTracker';
 
 export default class extends React.Component {
   constructor(props) {
@@ -22,30 +23,37 @@ export default class extends React.Component {
         name: t('pages.yourQuestion.nav.climate'),
         path: RouteConstants.askForClimatePath,
         link: RouteConstants.askForClimateLink,
-        component: TabClimate
+        component: TabClimate,
+        category: 'AskForClimate'
       },
       {
         name: t('pages.yourQuestion.nav.organisms'),
         path: RouteConstants.askForOrganismsPath,
         link: RouteConstants.askForOrganismsLink,
-        component: TabOrganisms
+        component: TabOrganisms,
+        category: 'AskForOrganisms'
       },
       {
         name: t('pages.yourQuestion.nav.pollution'),
         path: RouteConstants.askForPollutionPath,
         link: RouteConstants.askForPollutionLink,
-        component: TabPollution
+        component: TabPollution,
+        category: 'AskForPollution'
       },
       {
         name: t('pages.yourQuestion.nav.others'),
         path: RouteConstants.askForOthersPath,
         link: RouteConstants.askForOthersPath,
-        component: TabOthers
+        component: TabOthers,
+        category: 'AskForOthers'
       }
     ];
+    NewsTracker.useNewsState(this);
   }
 
   render() {
+    NewsTracker.mappingTabs(this.tabs);
+
     return (
       <SidebarLayout navItems={this.tabs} brand={this.brand}>
         <Switch>

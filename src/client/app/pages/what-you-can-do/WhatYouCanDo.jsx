@@ -13,6 +13,7 @@ import TabCommunityRecommend from './tab-community-recommend/TabCommunityRecomme
 import t from '../../languages';
 import { IconCommunity } from '../../../assets/icons';
 import TabGretaThunberg from './tab-Greta-Thunberg/TabGretaThunberg';
+import NewsTracker from '../../services/NewsTracker';
 
 export default class extends React.Component {
   constructor(props) {
@@ -26,50 +27,60 @@ export default class extends React.Component {
         name: t('pages.whatYouCanDo.nav.climate'),
         path: RouteConstants.doForClimatePath,
         link: RouteConstants.doForClimateLink,
-        component: TabClimate
+        component: TabClimate,
+        category: 'DoForClimate'
       },
       {
         name: t('pages.whatYouCanDo.nav.organisms'),
         path: RouteConstants.doForOrganismsPath,
         link: RouteConstants.doForOrganismsLink,
-        component: TabOrganisms
+        component: TabOrganisms,
+        category: 'DoForOrganisms'
       },
       {
         name: t('pages.whatYouCanDo.nav.pollution'),
         path: RouteConstants.doForPollutionPath,
         link: RouteConstants.doForPollutionLink,
-        component: TabPollution
+        component: TabPollution,
+        category: 'DoForPollution'
       },
       {
         name: t('pages.whatYouCanDo.nav.supporting'),
         shortName: t('pages.whatYouCanDo.nav.supportingShort'),
         path: RouteConstants.doSupportingPath,
         link: RouteConstants.doSupportingLink,
-        component: TabSupporting
+        component: TabSupporting,
+        category: 'DoSupporting'
       },
       {
         name: t('pages.whatYouCanDo.nav.worldActions'),
         shortName: t('pages.whatYouCanDo.nav.worldActionsShort'),
         path: RouteConstants.worldActionsPath,
         link: RouteConstants.worldActionsLink,
-        component: TabWorldActions
+        component: TabWorldActions,
+        category: 'WorldActions'
       },
       {
         name: t('pages.whatYouCanDo.nav.GretaThunberg'),
         path: RouteConstants.GretaThunbergPath,
         link: RouteConstants.GretaThunbergLink,
-        component: TabGretaThunberg
+        component: TabGretaThunberg,
+        category: 'GretaThunberg'
       },
       {
         name: <IconCommunity text={t('pages.whatYouCanDo.nav.communityRecommend')} />,
         path: RouteConstants.communityRecommendPath,
         link: RouteConstants.communityRecommendLink,
-        component: TabCommunityRecommend
+        component: TabCommunityRecommend,
+        category: 'CommunityRecommend'
       }
     ];
+    NewsTracker.useNewsState(this);
   }
 
   render() {
+    NewsTracker.mappingTabs(this.tabs);
+
     return (
       <SidebarLayout navItems={this.tabs} brand={this.brand}>
         <Switch>

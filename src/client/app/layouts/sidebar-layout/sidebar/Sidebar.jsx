@@ -13,9 +13,17 @@ export default class Sidebar extends Component {
           </div>
         )}
         {this.props.navItems.map(item => (
-          <div>
-            <NavLink key={`${item.link}-short`} to={item.link} className="ml-4 d-sm-none">{item.shortName || item.name}</NavLink>
-            <NavLink key={item.link} to={item.link} className="ml-4 d-none d-sm-block">{item.name || item.shortName}</NavLink>
+          <div key={item.link}>
+            <NavLink
+              to={item.link}
+              className={`ml-4 d-sm-none ${item.hasNews ? 'news' : ''}`}
+            >{item.shortName || item.name}
+            </NavLink>
+            <NavLink
+              to={item.link}
+              className={`ml-4 d-none d-sm-inline ${item.hasNews ? 'news' : ''}`}
+            >{item.name || item.shortName}
+            </NavLink>
           </div>
         ))}
       </aside>

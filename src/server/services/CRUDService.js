@@ -49,6 +49,13 @@ module.exports = class CRUDService {
     return this.converter.convert(updatedDoc);
   }
 
+  static async updateWhere(doc, where) {
+    const { id: idz, _id, ...restProps } = doc;
+    const updatedDocs = await this.getModel(...convertArgumentsToArray(arguments))
+      .updateMany(where, restProps).exec();
+    return updatedDocs;
+  }
+
   static async createOrUpdate(doc, where) {
     if (where) {
       return this.getModel(...convertArgumentsToArray(arguments)).updateOne(where, doc,

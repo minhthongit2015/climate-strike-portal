@@ -117,6 +117,39 @@ module.exports = class extends CRUDService {
     return super.first({ where: { baseOrder } });
   }
 
+  static async checkNews(user) {
+    if (!user.latestReads) {
+      user.latestReads = {};
+    }
+    const categories = await CategoryService.list();
+    const news = {};
+    await Promise.all(categories.map(
+      category => this.getModel().exists({
+        categories: {
+          $elemMatch: {
+            $eq: category._id
+          }
+        },
+        createdAt: {
+          $gt: user.latestReads[category.type] || 0
+        }
+      }).then((isExisted) => {
+        news[category.type] = {
+          hasNews: isExisted,
+          latestRead: user.latestReads[category.type] || 0
+        };
+      })
+    ));
+    return news;
+  }
+
+  static async markAsRead(readCategories, user) {
+    readCategories.forEach(({ category, latestRead }) => {
+      user.dirty = user.dirty || user.latestReads[category] !== new Date(latestRead).getTime();
+      user.latestReads[category] = new Date(latestRead).getTime();
+    });
+  }
+
   static async checkUnreadPosts(user) {
     if (!user.latestReads) {
       user.latestReads = {};

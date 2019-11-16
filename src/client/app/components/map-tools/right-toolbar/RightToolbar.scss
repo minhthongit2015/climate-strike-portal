@@ -43,12 +43,12 @@ $color: orange;
 
           &:hover {
             color: lighten($color, .1);
-            box-shadow: 0 0 10px rgba(116, 116, 116, 0.1);
+            box-shadow: 0 0 5px rgba(116, 116, 116, 0.2);
             font-weight: bold;
           }
 
           &:active {
-
+            background: #f9f9f9;
           }
         }
       }

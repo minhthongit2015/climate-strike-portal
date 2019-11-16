@@ -13,6 +13,7 @@ import LoginDialogService from '../../../services/LoginDialogService';
 import t from '../../../languages';
 import superrequest from '../../../utils/superrequest';
 import Rating from '../../utils/rating/Rating';
+import NewsTracker from '../../../services/NewsTracker';
 
 
 export default class PostDetails extends React.PureComponent {
@@ -23,11 +24,17 @@ export default class PostDetails extends React.PureComponent {
 
   componentDidMount() {
     this.parseFBButtons();
+    this.markAsRead();
   }
 
   // eslint-disable-next-line class-methods-use-this
   parseFBButtons() {
     FbService.parseButtons('.post-details__action-buttons');
+  }
+
+  markAsRead() {
+    const { post } = this.props;
+    NewsTracker.markAsRead(post);
   }
 
   handleRating(rating) {
