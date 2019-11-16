@@ -96,7 +96,7 @@ export default class TheRealWorld extends BasePage {
     this.setState({ dirty: true });
   }
 
-  onMapClicked(mapProps, map, event) {
+  onMapClicked(/* mapProps, map, event */) {
     // if (window.key.ctrl) {
     //   prompt('LatLng', `${event.latLng.lat()}, ${event.latLng.lng()}`);
     // }
@@ -132,10 +132,12 @@ export default class TheRealWorld extends BasePage {
         return;
       }
       const existedPlace = isActivist && this.state.places.find(
-        place => (place.user || place.author)._id === UserService.user._id
+        place => place.__t === 'Activist'
+          && (place.user || place.author)._id === UserService.user._id
       );
+      const isForceNew = UserService.isModOrAdmin && window.key.ctrl;
       const isRaiseYourVoice = isActivist && existedPlace;
-      if (isRaiseYourVoice) {
+      if (isRaiseYourVoice && !isForceNew) {
         existedPlace.ref.moveTo(newPlace.position);
         MapService.updatePlace(existedPlace);
         return;
@@ -188,7 +190,7 @@ export default class TheRealWorld extends BasePage {
 
   // eslint-disable-next-line class-methods-use-this
   handleLeftToolbarAction(event) {
-    const { name, value, checked } = event.currentTarget;
+    const { name/* , value, checked */ } = event.currentTarget;
     switch (name) {
     case 'Activist':
       break;
