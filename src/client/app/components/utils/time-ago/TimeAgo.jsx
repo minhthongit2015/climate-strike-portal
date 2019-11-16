@@ -4,14 +4,26 @@ import moment from 'moment';
 moment.locale('vi');
 
 function getCustomTime(time) {
-  return time.format('HH:mm - DD/MM/YYYY');
+  return moment(time).format('HH:mm - DD/MM/YYYY');
+}
+
+function fromNow(time) {
+  return moment(time).fromNow();
+}
+
+function fromNowDetailLn(time) {
+  return `${fromNow(time)}\r\n(${getCustomTime(time)})`;
+}
+
+function fromNowDetail(time) {
+  return `${fromNow(time)} (${getCustomTime(time)})`;
 }
 
 function getIntervalByContext(time) {
   return 1000;
 }
 
-export default (props) => {
+const TimeAgo = (props) => {
   const time = moment(props.time);
   const [value, forceUpdate] = React.useState(true);
   React.useEffect(() => {
@@ -28,3 +40,10 @@ export default (props) => {
     </span>
   );
 };
+
+TimeAgo.format = getCustomTime;
+TimeAgo.fromNow = fromNow;
+TimeAgo.fromNowDetail = fromNowDetail;
+TimeAgo.fromNowDetailLn = fromNowDetailLn;
+
+export default TimeAgo;

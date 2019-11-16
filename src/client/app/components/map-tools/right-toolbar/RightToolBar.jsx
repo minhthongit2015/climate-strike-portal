@@ -6,6 +6,7 @@ import './RightToolbar.scss';
 import { getAutoDispatcher } from '../../Helper';
 import { IconPlus } from '../../../../assets/icons';
 import TimeAgo from '../../utils/time-ago/TimeAgo';
+import { groupBy } from '../../../utils/index';
 
 
 export default class extends React.Component {
@@ -24,11 +25,53 @@ export default class extends React.Component {
     }));
   }
 
+  renderPlace(place, extraContent = null) {
+    return (
+      <div
+        key={place._id}
+        className="map-toolbar__list__item"
+        tabIndex="-1"
+      >
+        <div><TimeAgo time={place.createdAt} /></div>
+        <div
+          className="map-toolbar__list__link"
+          tabIndex="-1"
+          onClick={event => this.autoDispatcher(event, place)}
+        >
+          {place.name || (place.post && place.post.title)}
+        </div>
+        {extraContent}
+      </div>
+    );
+  }
+
+  renderPlaceGroup(places) {
+    return this.renderPlace(places[0], (
+      <div className="map-toolbar__list__item__group">
+        {places.map((place, index) => (
+          <div
+            key={place._id}
+            className="map-toolbar__list__item__group__index"
+            tabIndex="-1"
+            onClick={event => this.autoDispatcher(event, place)}
+            title={TimeAgo.fromNowDetailLn(place.createdAt)}
+          >{places.length - index}
+          </div>
+        ))}
+      </div>
+    ));
+  }
+
   render() {
     const {
       className, handler, places, ...restProps
     } = this.props;
     const { isOpen } = this.state;
+
+    let groupedPlaces;
+    if (places) {
+      groupedPlaces = groupBy(places, 'post._id');
+    }
 
     return (
       <div
@@ -51,23 +94,12 @@ export default class extends React.Component {
             <IconPlus width="100%" height="100%" />
           </MDBBtn>
         </div>
-        {places && (
+        {groupedPlaces && (
           <div className="map-toolbar__list d-flex flex-column flex-fill">
-            {places.filter(place => !['Activist'].includes(place.__t)).map(place => (
-              <div
-                key={place._id}
-                className="map-toolbar__list__item"
-                tabIndex="-1"
-              >
-                <div><TimeAgo time={place.createdAt} /></div>
-                <div
-                  className="map-toolbar__list__link"
-                  tabIndex="-1"
-                  onClick={event => this.autoDispatcher(event, place)}
-                >
-                  {place.name || (place.post && place.post.title)}
-                </div>
-              </div>
+            {Object.values(groupedPlaces).map(placesz => (
+              placesz.length === 1
+                ? this.renderPlace(placesz[0])
+                : this.renderPlaceGroup(placesz)
             ))}
           </div>
         )}

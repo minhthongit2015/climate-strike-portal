@@ -1,4 +1,5 @@
 /* eslint-disable no-plusplus */
+import _ from 'lodash';
 
 const Logger = console;
 
@@ -10,7 +11,7 @@ const Logger = console;
  isNone([]);            // false
  isNone(function() {}); // false
  */
-function isNotSet(object) {
+export function isNotSet(object) {
   return object === undefined;
 }
 
@@ -22,7 +23,7 @@ function isNotSet(object) {
  isNone([]);            // false
  isNone(function() {}); // false
  */
-function isNone(object) {
+export function isNone(object) {
   return object === null || object === undefined;
 }
 
@@ -41,7 +42,7 @@ function isNone(object) {
  isEmpty({ size: 1 })       // false
  isEmpty({ size: () => 0 }) // false
  */
-function isEmpty(object) {
+export function isEmpty(object) {
   if (isNone(object)) {
     return true;
   }
@@ -86,18 +87,18 @@ function isEmpty(object) {
  isBlank('Hello world');   // false
  isBlank([1,2,3]);         // false
  */
-function isBlank(obj) {
+export function isBlank(obj) {
   return isEmpty(obj) || (typeof obj === 'string' && obj.match(/\S/) === null);
 }
 
-function isFunction(func) {
+export function isFunction(func) {
   return typeof func === 'function';
 }
-function isString(str) {
+export function isString(str) {
   return typeof str === 'string';
 }
 
-function parseStringToNumber(text) {
+export function parseStringToNumber(text) {
   if (isBlank(text)) {
     return 0;
   }
@@ -109,14 +110,32 @@ function parseStringToNumber(text) {
   }
 }
 
-async function asyncForEach(array, callback) {
+export async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
     // eslint-disable-next-line no-await-in-loop
     await callback(array[index], index, array);
   }
 }
 
-module.exports = {
+export function groupBy(array, property) {
+  if (!array || !property) return null;
+  const map = {};
+  const unRecognizedItems = [];
+  array.forEach((item) => {
+    const keyValue = _.get(item, property);
+    if (!keyValue) {
+      unRecognizedItems.push(item);
+      return;
+    }
+    if (!(keyValue in map)) {
+      map[keyValue] = [];
+    }
+    map[keyValue].push(item);
+  });
+  return map;
+}
+
+export default {
   isNotSet,
   isNone,
   isEmpty,
@@ -124,5 +143,6 @@ module.exports = {
   isString,
   isFunction,
   parseStringToNumber,
-  asyncForEach
+  asyncForEach,
+  groupBy
 };
