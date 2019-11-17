@@ -7,9 +7,18 @@
   $base-marker-class: 'custom-marker';
   $base-window-class: 'custom-info-window';
   $info-window-class: $class + '-info-window';
+
+  $isNotDefault: $class != 'custom';
+  $base-window-selector: '*';
+  $info-window-selector: '';
+  @if $isNotDefault {
+    $base-window-selector: '.' + $base-window-class;
+    $info-window-selector: '.' + $info-window-class;
+  }
+
   .gm-style {
-    .#{$base-window-class} {
-      .gm-style-iw-a.#{$info-window-class} {
+    #{$base-window-selector} {
+      .gm-style-iw-a#{$info-window-selector} {
         animation-duration: .3s;
         .gm-style-iw-t {
           .gm-style-iw-c.gm-style-iw {

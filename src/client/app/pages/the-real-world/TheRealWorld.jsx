@@ -220,8 +220,8 @@ export default class TheRealWorld extends BasePage {
   // eslint-disable-next-line class-methods-use-this
   onMoveMarker(markerProps, map, event, place) {
     if (!window.confirm('Xác nhận di chuyển địa điểm này?')) {
-      event.preventDefault();
-      // place.ref.setPosition(place.ref.position);
+      place.ref.moveTo();
+      event.stop();
       return;
     }
     place.position = event.latLng.toJSON();

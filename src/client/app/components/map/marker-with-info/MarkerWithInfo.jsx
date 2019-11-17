@@ -7,6 +7,11 @@ import PostService from '../../../services/PostService';
 
 
 export default class MarkerWithInfo extends BaseMarker {
+  constructor(props) {
+    super(props);
+    this.handleGoToPost = this.handleGoToPost.bind(this);
+  }
+
   handleGoToPost(event) {
     if (event.ctrlKey || event.which !== 1) {
       return;

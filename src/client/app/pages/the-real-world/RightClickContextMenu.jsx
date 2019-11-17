@@ -7,11 +7,11 @@ import { getAutoDispatcher } from '../../components/Helper';
 const ContextOptions = {
   addDisaster: { label: '+ Thêm vùng thiên tai', value: 'add-Disaster' },
   addPollution: { label: '+ Thêm vùng ô nhiễm', value: 'add-Pollution' },
-  addExtinction: { label: '+ Thêm loài nguy cơ tuyệt chủng', value: 'add-Extinction' },
-  addActivist: { label: '+ Thêm cá nhân vì môi trường', value: 'add-Activist' },
+  addExtinction: { label: '+ Thêm vùng sinh vật bị nguy hiểm', value: 'add-Extinction' },
+  addActivist: { label: '+ Thêm cá nhân vì môi trường (giữ Ctrl)', value: 'add-Activist' },
   addRiseMyVoice: { label: '+ Tham gia chống biến đổi khí hậu', value: 'add-Activist' },
   addActivistGroup: { label: '+ Thêm nhóm hoạt động môi trường', value: 'add-ActivistGroup' },
-  addStrike: { label: '+ Thêm hoạt động biểu tình', value: 'add-Strike' },
+  addStrike: { label: '+ Thêm cuộc diễu hành', value: 'add-Strike' },
   addAction: { label: '+ Thêm hành động vì môi trường', value: 'add-Action' }
 };
 

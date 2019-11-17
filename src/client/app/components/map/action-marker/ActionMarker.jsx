@@ -42,7 +42,7 @@ export default class ActionMarker extends MarkerWithInfo {
                       className="btn btn-sm btn-default px-3"
                       onClick={this.handleGoToPost}
                     >
-                      <i className="far fa-paper-plane" /> Xem chi tiết
+                      <i className="far fa-paper-plane" /> Đọc chi tiết
                     </button>
                   </a>
                 </div>

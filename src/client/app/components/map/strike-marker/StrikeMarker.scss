@@ -1,0 +1,18 @@
+
+$custom-class: 'strike';
+$window-width: 400px * .8;
+$window-height: 400px * .8;
+$color: #ff6e6e;
+$shadow: #ff8b8b;
+
+// ---
+
+@import "../marker-with-info/BaseMarkerStyle.scss";
+
+@mixin customStyle {
+  .marker__title {
+    color: #ff6262;
+  }
+}
+
+@include markerStyle($custom-class, $window-width, $window-height, $color, $shadow);

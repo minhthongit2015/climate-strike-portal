@@ -16,6 +16,9 @@ export default class extends React.Component {
     event.currentTarget.name = event.currentTarget.getAttribute('name');
     switch (event.currentTarget.name) {
     case 'delete-place':
+      if (!window.confirm('Bạn có chắc chắn muốn xóa địa điểm này?')) {
+        return;
+      }
       MapService.deletePlace(place);
       marker.remove();
       break;
@@ -37,7 +40,7 @@ export default class extends React.Component {
         <div className="place-actions text-center">
           <div
             name="delete-place"
-            className="btn btn-sm py-1 px-4 red lighten-2 text-white"
+            className="btn btn-sm py-1 px-4 grey lighten-1 text-white"
             onClick={this.handlePlaceActions}
           >Xóa
           </div>

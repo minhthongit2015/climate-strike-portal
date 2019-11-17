@@ -1,14 +1,8 @@
-
-
-// import MarkerWithInfo from '../components/map/marker-with-info/MarkerWithInfo';
-import StoreMarker from '../components/map/store-marker/StoreMarker';
-import UserMarker from '../components/map/user-marker/UserMarker';
-import FarmMarker from '../components/map/farm-marker/FarmMarker';
-
 import DisasterMarker from '../components/map/disaster-marker/DisasterMarker';
 import ActionMarker from '../components/map/action-marker/ActionMarker';
 import ActivistMarker from '../components/map/activist-marker/ActivistMarker';
 import ExtinctionMarker from '../components/map/extinction-marker/ExtinctionMarker';
+import StrikeMarker from '../components/map/strike-marker/StrikeMarker';
 
 export default class {
   static getMarkerByType(type) {
@@ -21,8 +15,10 @@ export default class {
       return ActionMarker;
     case 'Extinction':
       return ExtinctionMarker;
+    case 'Strike':
+      return StrikeMarker;
     default:
-      return ActivistMarker;
+      return null;
     }
   }
 }
