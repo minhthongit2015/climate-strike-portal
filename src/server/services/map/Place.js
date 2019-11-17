@@ -20,6 +20,10 @@ module.exports = class extends CRUDService {
     return PlaceTypes.find(type => type.modelName === place.__t) || Place;
   }
 
+  static get populate() {
+    return ['author', 'user', 'post', 'members', 'leaders'];
+  }
+
   static resolveListOptions(opts = ApiHelper.listParams) {
     ApiHelper.SortBuilder.add(opts, '-createdAt');
     return opts;
@@ -41,7 +45,7 @@ module.exports = class extends CRUDService {
     return super.createOrUpdate.call(this, place, where);
   }
 
-  static get populate() {
-    return ['author', 'user', 'post', 'members', 'leaders'];
+  static async getByOrder(baseOrder) {
+    return super.first({ where: { baseOrder } });
   }
 };
