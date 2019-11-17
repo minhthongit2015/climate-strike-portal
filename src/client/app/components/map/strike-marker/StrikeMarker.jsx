@@ -66,7 +66,7 @@ export default class StrikeMarker extends MarkerWithInfo {
           <div className="marker__address">
             <i className="fas fa-map-marker-alt" /> Địa điểm: {address || 'Đang lên lịch trình.'}
           </div>
-          <div className="my-2 text-center">
+          <div className="my-2 d-flex justify-content-between">
             <div
               className={`btn btn-sm py-1 px-3 ${prev ? 'btn-default' : 'grey lighten-1 text-white disabled'}`}
               onClick={this.handleGoToPrev}
