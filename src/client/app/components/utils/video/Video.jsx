@@ -21,13 +21,14 @@ export default class Video extends React.Component {
 
   static renderVideo(video) {
     const {
-      src, tracks, className, ...restProps
+      title, src, tracks, className, ...restProps
     } = video;
     return (
       <video
         src={src}
         className={`video w-100 ${className || ''}`}
         controls
+        alt={title}
         {...restProps}
       >
         {tracks && tracks.map(track => (

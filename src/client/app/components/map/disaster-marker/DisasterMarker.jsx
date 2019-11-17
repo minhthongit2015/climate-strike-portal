@@ -6,6 +6,7 @@ import './DisasterMarker.scss';
 import { ForestFireSrc as DisasterIconSrc } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 import PostService from '../../../services/PostService';
+import Video from '../../utils/video/Video';
 
 
 export default class DisasterMarker extends MarkerWithInfo {
@@ -18,13 +19,19 @@ export default class DisasterMarker extends MarkerWithInfo {
       name, entity: place = {}, events
     } = this.props;
     const { post = {} } = place;
-    const { title, summary, preview } = post;
+    const {
+      title, summary, preview, video
+    } = post;
 
     return (
       <div>
         <div className="marker__header mx-3 mt-3">
           <div className="marker__title">{name || title}</div>
-          <img className="marker__banner" src={preview} alt="" />
+          {video ? (
+            <Video title={title} src={video} />
+          ) : (
+            <img className="marker__banner" src={preview} alt="" />
+          )}
         </div>
         <div className="marker__body mb-3">
           <section className="marker__section marker__post">

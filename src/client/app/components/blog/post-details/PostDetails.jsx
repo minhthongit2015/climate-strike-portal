@@ -100,7 +100,7 @@ export default class PostDetails extends React.PureComponent {
                 ))}
               </div>
               {video ? (
-                <Video alt={title} title={title} src={video} preview={preview} />
+                <Video title={title} src={video} preview={preview} />
               ) : (
                 <img alt={title} src={preview} className="w-100" />
               )}
