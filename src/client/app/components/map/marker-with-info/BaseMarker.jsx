@@ -10,6 +10,7 @@ import './MarkerWithInfo.scss';
 import './DefaultStyle.scss';
 import { mapTreeNodeToArray } from '../../../utils/DOM';
 import Circle from '../circle/Circle';
+import MapService from '../../../services/MapService';
 
 
 export default class MarkerWithInfo extends Component {
@@ -185,6 +186,7 @@ export default class MarkerWithInfo extends Component {
   }
 
   onOpen() {
+    MapService.openPlace(this.props.entity);
     this.infoWindowTopMost.addClass(MarkerWithInfo.windowClass);
     this.infoWindowWrapper.addClass(this.constructor.windowClass);
     this.focus();
@@ -208,6 +210,7 @@ export default class MarkerWithInfo extends Component {
   }
 
   onClose() {
+    MapService.closePlace();
     if (this.props.onClose) {
       this.props.onClose();
     }

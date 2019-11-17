@@ -2,7 +2,7 @@
 const defaultModel = {
   url: 'https://climate-strike-vietnam.herokuapp.com',
   title: 'Climate Strike Vietnam',
-  description: 'Cộng đồng chống biến đổi khí hậu tại Việt Nam',
+  description: 'Phong trào tham gia chống biến đổi khí hậu tại Việt Nam',
   image: 'https://climate-strike-vietnam.herokuapp.com/Climate-Strike-Vietnam.jpg',
   site_name: 'Climate Strike Vietnam',
   type: 'website',

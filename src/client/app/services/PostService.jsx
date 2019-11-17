@@ -10,7 +10,7 @@ export default class extends PageDialogService {
   }
 
   static extractPostOrder(url) {
-    const urlz = new URL(url || window.location.search);
+    const urlz = new URL(url || window.location.href);
     return urlz.searchParams.get('hashtag');
   }
 

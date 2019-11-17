@@ -15,6 +15,7 @@ const doForClimatePath = `${whatYouCanDoPath}/khi-hau`;
 const doForOrganismsPath = `${whatYouCanDoPath}/sinh-vat`;
 const doForPollutionPath = `${whatYouCanDoPath}/giam-o-nhiem`;
 const worldActionsPath = `${whatYouCanDoPath}/the-gioi-dang-hanh-dong`;
+const GretaThunbergPath = `${whatYouCanDoPath}/Greta-Thunberg`;
 const communityRecommendPath = `${whatYouCanDoPath}/chia-se-tu-cong-dong`;
 
 const yourQuestionPath = '/dieu-ban-muon-biet';
@@ -40,6 +41,7 @@ const titleMap = {
   [doForPollutionPath]: 'Giảm Ô Nhiễm',
   [doSupportingPath]: 'Hỗ Trợ Các Phong Trào',
   [worldActionsPath]: 'Thế Giới Đang Hành Động',
+  [GretaThunbergPath]: 'Greta Thunberg',
   [communityRecommendPath]: 'Chia Sẻ Từ Cộng Đồng',
 
   [yourQuestionPath]: 'Điều Bạn Muốn Biết?',

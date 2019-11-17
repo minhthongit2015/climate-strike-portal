@@ -3,7 +3,7 @@ import React from 'react';
 import BasePage from '../_base/BasePage';
 
 import GGMap from '../../components/map/Map';
-// import Polyline from '../../components/map/polyline/Polyline';
+import Polyline from '../../components/map/polyline/Polyline';
 import MapService from '../../services/MapService';
 import t from '../../languages';
 import LeftToolBar from '../../components/map-tools/left-toolbar/LeftToolBar';
@@ -71,8 +71,9 @@ export default class TheRealWorld extends BasePage {
       rotateControl: true,
       streetViewControl: true
     });
-    this.fetchPlaces().then(() => {
+    this.fetchPlaces().then((places) => {
       // CategoryService.fetchCategories();
+      MapService.checkOpenCurrentPlace(places);
     });
   }
 
@@ -82,13 +83,15 @@ export default class TheRealWorld extends BasePage {
   }
 
   async fetchPlaces() {
-    const places = await MapService.fetchPlaces();
-    places.forEach((place) => {
-      place.marker = MapUtils.getMarkerByType(place.__t);
-    });
-    this.setState({
-      dirty: true,
-      places
+    return new Promise(async (resolve) => {
+      const places = await MapService.fetchPlaces();
+      places.forEach((place) => {
+        place.marker = MapUtils.getMarkerByType(place.__t);
+      });
+      this.setState({
+        dirty: true,
+        places
+      }, () => resolve(places));
     });
   }
 
@@ -240,39 +243,42 @@ export default class TheRealWorld extends BasePage {
 
     return (
       <React.Fragment>
-        {places.map(place => (
-          place.marker
-            ? (
+        {places.map((place) => {
+          if (place.marker && place.__t !== 'Path') {
+            return (
               <place.marker
                 {...baseProps}
                 key={place._id || Math.random()}
                 ref={(ref) => { this.onMarkerRef(ref); place.ref = ref; }}
                 entity={place}
-                markerProps={
-                  {
-                    name: place.name,
-                    position: place.position,
-                    radius: place.radius,
-                    draggable: UserService.isModOrAdmin,
-                    onDragend: (markerProps, mapz, event) => {
-                      this.onMoveMarker(markerProps, mapz, event, place);
-                    }
+                markerProps={{
+                  name: place.name,
+                  position: place.position,
+                  radius: place.radius,
+                  draggable: UserService.isModOrAdmin,
+                  onDragend: (markerProps, mapz, event) => {
+                    this.onMoveMarker(markerProps, mapz, event, place);
                   }
-                }
+                }}
                 windowProps={{}}
                 name={place.name}
               />
-            ) : null
-        ))}
-        {/* <Polyline
-          {...baseProps}
-          // key="polyline-01"
-          ref={this.lineRef}
-          path={places}
-          color="#00ffff"
-          opacity={0.8}
-          width={2}
-        /> */}
+            );
+          }
+          if (place.__t === 'Path') {
+            return (
+              <Polyline
+                {...baseProps}
+                key={place._id || Math.random()}
+                path={place.path}
+                color="#00ffff"
+                opacity={0.8}
+                width={2}
+              />
+            );
+          }
+          return null;
+        })}
       </React.Fragment>
     );
   }

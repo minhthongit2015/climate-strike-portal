@@ -22,6 +22,7 @@ export default class extends React.Component {
       events: place.events,
       position: place.position,
       description: place.description,
+      address: place.address,
       name: place.name,
       cover: place.cover,
       path: place.path,
@@ -98,17 +99,28 @@ export default class extends React.Component {
   }
 
   handleLinkChange(event) {
+    const { name, value, dataset: { type } } = event.target;
     this.setState({
-      // eslint-disable-next-line react/no-unused-state
-      link: event.target.value
+      [name]: value
     });
-    PostService.fetchPost(PostService.extractPostOrder(event.target.value))
-      .then((res) => {
-        if (!res || !res.data) {
-          return;
-        }
-        this.setPlaceState('post', res.data[0]);
-      });
+    if (!type) {
+      PostService.fetchPost(PostService.extractPostOrder(value))
+        .then((res) => {
+          if (!res || !res.data) {
+            return;
+          }
+          this.setPlaceState('post', res.data[0]);
+        });
+    } else {
+      this.setPlaceState(name, value);
+      MapService.fetchPlace(MapService.extractPlaceOrder(value))
+        .then((res) => {
+          if (!res || !res.data) {
+            return;
+          }
+          this.setPlaceState(name, res.data[0]);
+        });
+    }
   }
 
   setPlaceState(name, value) {

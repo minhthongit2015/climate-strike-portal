@@ -3,6 +3,7 @@ import ActionMarker from '../components/map/action-marker/ActionMarker';
 import ActivistMarker from '../components/map/activist-marker/ActivistMarker';
 import ExtinctionMarker from '../components/map/extinction-marker/ExtinctionMarker';
 import StrikeMarker from '../components/map/strike-marker/StrikeMarker';
+import Polyline from '../components/map/polyline/Polyline';
 
 export default class {
   static getMarkerByType(type) {
@@ -17,6 +18,8 @@ export default class {
       return ExtinctionMarker;
     case 'Strike':
       return StrikeMarker;
+    case 'Path':
+      return Polyline;
     default:
       return null;
     }
