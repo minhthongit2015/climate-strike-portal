@@ -21,7 +21,7 @@ export default class StrikeDialog extends BaseEditingDialog {
   renderContent() {
     const { place = {} } = this.state;
     const {
-      name, description, address, cover, prev, next
+      name, description, address, cover, next
     } = place;
 
     return (
@@ -63,7 +63,7 @@ export default class StrikeDialog extends BaseEditingDialog {
           label="Địa điểm tiếp theo (url hoặc id)"
           name="next"
           data-type="place"
-          value={typeof next === 'object' ? (next.name || next.baseOrder) : next}
+          value={typeof next === 'object' ? ((`${next.name} (${(next.address || '').slice(0, 15) || '...'})`) || next.baseOrder) : next}
           onChange={this.handleLinkChange}
           autoComplete="off"
           autofill="off"

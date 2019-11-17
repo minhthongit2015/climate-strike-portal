@@ -76,8 +76,11 @@ export default class MapService {
 
   static getPathFromStart(startPlace) {
     const path = [];
+    let prev;
     while (startPlace) {
+      startPlace.prev = prev;
       path.push(startPlace.position);
+      prev = startPlace;
       startPlace = startPlace.next;
     }
     return path;

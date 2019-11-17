@@ -12,6 +12,28 @@ export default class StrikeMarker extends MarkerWithInfo {
     return 'strike';
   }
 
+  constructor(props) {
+    super(props);
+    this.handleGoToPrev = this.handleGoToPrev.bind(this);
+    this.handleGoToNext = this.handleGoToNext.bind(this);
+  }
+
+  handleGoToNext() {
+    const { entity: place = {} } = this.props;
+    if (place.next) {
+      place.ref.close();
+      place.next.ref.open();
+    }
+  }
+
+  handleGoToPrev() {
+    const { entity: place = {} } = this.props;
+    if (place.prev) {
+      place.ref.close();
+      place.prev.ref.open();
+    }
+  }
+
   renderContent() {
     const { entity: place = {} } = this.props;
     const {
@@ -19,7 +41,8 @@ export default class StrikeMarker extends MarkerWithInfo {
       description,
       avatar,
       name,
-      address
+      address,
+      prev, next
     } = place;
     const defaultDescription = 'Cuộc diễu hành kêu gọi chống biến đổi khí hậu';
     const defaultCover = '/images/cover-photo.jpg';
@@ -44,10 +67,16 @@ export default class StrikeMarker extends MarkerWithInfo {
             <i className="fas fa-map-marker-alt" /> Địa điểm: {address || 'Đang lên lịch trình.'}
           </div>
           <div className="my-2 text-center">
-            <div className="btn btn-sm py-1 px-3 btn-default">
+            <div
+              className={`btn btn-sm py-1 px-3 ${prev ? 'btn-default' : 'grey lighten-1 text-white disabled'}`}
+              onClick={this.handleGoToPrev}
+            >
               <i className="fas fa-chevron-left" /> Điểm Trước
             </div>
-            <div className="btn btn-sm py-1 px-3 btn-default">
+            <div
+              className={`btn btn-sm py-1 px-3 ${next ? 'btn-default' : 'grey lighten-1 text-white disabled'}`}
+              onClick={this.handleGoToNext}
+            >
               Điểm Tiếp Theo <i className="fas fa-chevron-right" />
             </div>
           </div>
