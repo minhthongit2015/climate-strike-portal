@@ -4,8 +4,8 @@ import BaseEditingDialog from './BaseEditingDialog';
 import DropUploader from '../../utils/drop-uploader/DropUploader';
 
 
-export default class ActivistDialog extends BaseEditingDialog {
-  static get type() { return 'Activist'; }
+export default class StrikeDialog extends BaseEditingDialog {
+  static get type() { return 'Strike'; }
 
   // get place() {
   //   const originPlace = super.place;

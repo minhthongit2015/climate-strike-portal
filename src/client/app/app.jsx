@@ -40,6 +40,7 @@ import PostDetailsDialogService from './services/PostDetailsDialogService';
 import PlaceEditDialogService from './services/dialog/PlaceEditDialogService';
 import DisasterDialog from './components/map-tools/edit-dialog/DisasterDialog';
 import ExtinctionDialog from './components/map-tools/edit-dialog/ExtinctionDialog';
+import StrikeDialog from './components/map-tools/edit-dialog/StrikeDialog';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
@@ -60,6 +61,7 @@ class App extends Component {
     this.savedPostsPageDialogRef = React.createRef();
     this.iDoPostsPageDialogRef = React.createRef();
     this.guideDialogRef = React.createRef();
+    this.strikeDialogRef = React.createRef();
 
     this.activistDialogRef = React.createRef();
     this.diasterDialogRef = React.createRef();
@@ -81,6 +83,7 @@ class App extends Component {
     PlaceEditDialogService.storeDialog(this.activistDialogRef);
     PlaceEditDialogService.storeDialog(this.diasterDialogRef);
     PlaceEditDialogService.storeDialog(this.extinctionDialogRef);
+    PlaceEditDialogService.storeDialog(this.strikeDialogRef);
 
     LoginDialogService.init(this.loginDialogRef);
     MessageDialogService.init(this.messageDialogRef);
@@ -111,6 +114,7 @@ class App extends Component {
         <ActivistDialog ref={this.activistDialogRef} />
         <DisasterDialog ref={this.diasterDialogRef} />
         <ExtinctionDialog ref={this.extinctionDialogRef} />
+        <StrikeDialog ref={this.strikeDialogRef} />
       </React.Suspense>
     );
     return (

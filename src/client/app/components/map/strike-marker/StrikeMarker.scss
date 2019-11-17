@@ -10,8 +10,18 @@ $shadow: #ff8b8b;
 @import "../marker-with-info/BaseMarkerStyle.scss";
 
 @mixin customStyle {
-  .marker__title {
-    color: #ff6262;
+  .marker__profile__name {
+    color: #ffcb56;
+  }
+  .marker__profile__description {
+    color: #e6a40d;
+  }
+  .marker__address {
+    font-size: 1rem;
+    color: #e6a40d;
+  }
+  .marker__cover-photo {
+    padding-top: 45%;
   }
 }
 
