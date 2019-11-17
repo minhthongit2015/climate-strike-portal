@@ -48,7 +48,7 @@ export default class StrikeMarker extends MarkerWithInfo {
               <i className="fas fa-chevron-left" /> Điểm Trước
             </div>
             <div className="btn btn-sm py-1 px-3 btn-default">
-              Điểm Tiếp <i className="fas fa-chevron-right" />
+              Điểm Tiếp Theo <i className="fas fa-chevron-right" />
             </div>
           </div>
           <hr className="my-2" />
