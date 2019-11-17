@@ -5,17 +5,26 @@ import {
 import PropTypes from 'prop-types';
 import * as jQuery from 'jquery';
 import uuid from 'uuid';
-import './MarkerWithInfo.scss';
 import './BaseMarkerStyle.scss';
+import './MarkerWithInfo.scss';
+import './DefaultStyle.scss';
 import { mapTreeNodeToArray } from '../../../utils/DOM';
 import Circle from '../circle/Circle';
 
-const CUSTOM_CLASS = 'custom';
-const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
-const CUSTOM_WINDOW_CLASS = `${CUSTOM_CLASS}-info-window`;
-
 
 export default class MarkerWithInfo extends Component {
+  static get customClass() {
+    return 'custom';
+  }
+
+  static get markerClass() {
+    return `${this.customClass}-marker`;
+  }
+
+  static get windowClass() {
+    return `${this.customClass}-info-window`;
+  }
+
   get isOpen() {
     return !!this.state.marker;
   }
@@ -55,7 +64,7 @@ export default class MarkerWithInfo extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   get allMarkerElements() {
-    return jQuery(`.gm-style .${CUSTOM_MARKER_CLASS}`);
+    return jQuery(`.gm-style .${this.constructor.markerClass}`);
   }
 
   get rootMarker() {
@@ -165,8 +174,8 @@ export default class MarkerWithInfo extends Component {
 
   onMarkerLoaded() {
     this.originMarkerElement
-      .addClass(CUSTOM_MARKER_CLASS)
-      .addClass(this.props.customMarkerClass)
+      .addClass(MarkerWithInfo.markerClass)
+      .addClass(this.constructor.markerClass)
       .attr('title', this.props.title || '')
       .attr('id', this.markerId);
     this.markerRef.marker.title = this.props.title || '';
@@ -176,8 +185,8 @@ export default class MarkerWithInfo extends Component {
   }
 
   onOpen() {
-    this.infoWindowTopMost.addClass(CUSTOM_WINDOW_CLASS);
-    this.infoWindowWrapper.addClass(this.props.customWindowClass);
+    this.infoWindowTopMost.addClass(MarkerWithInfo.windowClass);
+    this.infoWindowWrapper.addClass(this.constructor.windowClass);
     this.focus();
     const root = jQuery(`#${this.uid}`);
     this._nodeMap.forEach((node) => {
@@ -245,7 +254,7 @@ export default class MarkerWithInfo extends Component {
 
   storeContentOriginTree() {
     this._nodeMap = [];
-    mapTreeNodeToArray(this.props.children, this._nodeMap);
+    mapTreeNodeToArray(this.props.children || this.content, this._nodeMap);
   }
 
   buildMarkerIcon() {
@@ -278,6 +287,7 @@ export default class MarkerWithInfo extends Component {
   renderInfoWindows() {
     if (!this.baseProps) return null;
     const { windowProps } = this.props;
+    this.content = this.renderContent();
 
     return (
       <InfoWindow
@@ -290,7 +300,7 @@ export default class MarkerWithInfo extends Component {
         visible={this.isOpen}
       >
         <div id={this.uid}>
-          {this.renderContent()}
+          {this.content}
         </div>
       </InfoWindow>
     );

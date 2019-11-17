@@ -8,6 +8,7 @@ export const PlantPot1Src = '/images/plant.svg';
 export const FarmSrc = '/images/agriculture.svg';
 export const GardenToolsSrc = '/images/trowel.svg';
 export const GardenOwnerSrc = '/images/bonsai.svg';
+export const DinosaurSrc = '/images/triceratops.svg';
 
 export const FlagSrc = '/images/flag.svg';
 export const ForestFireSrc = '/images/forest-fire.svg';
@@ -44,6 +45,7 @@ export default {
   FarmSrc,
   GardenToolsSrc,
   GardenOwnerSrc,
+  DinosaurSrc,
   FlagSrc,
   ForestFireSrc
 };

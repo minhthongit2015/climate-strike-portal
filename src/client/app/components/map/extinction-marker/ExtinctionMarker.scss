@@ -1,15 +1,9 @@
 
-$base-info-window-class: 'custom-info-window';
-$custom-info-window-class: "action-info-window";
+$custom-class: 'extinction';
 $window-width: 400px * .8;
 $window-height: 400px * .8;
-
-
-$custom-class: 'action';
-$window-width: 400px * .8;
-$window-height: 400px * .8;
-$color: #3ed08d;
-$shadow: #8ce4a8;
+$color: #d4884a;
+$shadow: #e2995d;
 
 // ---
 
@@ -17,7 +11,7 @@ $shadow: #8ce4a8;
 
 @mixin customStyle {
   .marker__title {
-    color: #1d7e51;
+    color: #9c5831;
   }
 }
 

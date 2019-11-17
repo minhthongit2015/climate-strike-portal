@@ -6,6 +6,7 @@ import {
 } from 'mdbreact';
 import LeafLoading from '../../utils/loadings/LeafLoading';
 import MapService from '../../../services/MapService';
+import PostService from '../../../services/PostService';
 
 
 export default class extends React.Component {
@@ -37,8 +38,11 @@ export default class extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDiscard = this.handleDiscard.bind(this);
+    this.handleLinkChange = this.handleLinkChange.bind(this);
 
     this.state = {
+      // eslint-disable-next-line react/no-unused-state
+      link: '',
       place: {},
       marker: null,
       cursorPos: {},
@@ -91,6 +95,20 @@ export default class extends React.Component {
     const { target } = event;
     const { name, value } = target;
     this.setPlaceState(name, value);
+  }
+
+  handleLinkChange(event) {
+    this.setState({
+      // eslint-disable-next-line react/no-unused-state
+      link: event.target.value
+    });
+    PostService.fetchPost(PostService.extractPostOrder(event.target.value))
+      .then((res) => {
+        if (!res || !res.data) {
+          return;
+        }
+        this.setPlaceState('post', res.data[0]);
+      });
   }
 
   setPlaceState(name, value) {

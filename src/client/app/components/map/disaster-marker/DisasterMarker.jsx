@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import MarkerWithInfo from '../marker-with-info/MarkerWithInfo';
 import './DisasterMarker.scss';
@@ -7,86 +7,21 @@ import { ForestFireSrc as DisasterIconSrc } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 import PostService from '../../../services/PostService';
 
-const CUSTOM_CLASS = 'disaster';
-const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
-const CUSTOM_WINDOW_CLASS = `${CUSTOM_CLASS}-info-window`;
 
-
-export default class DisasterMarker extends Component {
-  get uid() {
-    return this.marker.uid;
+export default class DisasterMarker extends MarkerWithInfo {
+  static get customClass() {
+    return 'disaster';
   }
 
-  get rootMarker() {
-    return this.marker.rootMarker;
-  }
-
-  constructor(props) {
-    super(props);
-    this.marker = null;
-    this.onLoad = this.onLoad.bind(this);
-    this.handleGoToPost = this.handleGoToPost.bind(this);
-  }
-
-  onLoad(ref) {
-    this.marker = ref;
-  }
-
-  open() {
-    if (!this.marker) return;
-    this.marker.open();
-  }
-
-  close() {
-    if (!this.marker) return;
-    this.marker.close();
-  }
-
-  toggle() {
-    if (!this.marker) return;
-    this.marker.toggle();
-  }
-
-  refresh() {
-    this.forceUpdate(() => {
-      this.marker.refresh();
-    });
-  }
-
-  remove() {
-    this.marker.remove();
-  }
-
-  moveTo(position) {
-    this.marker.moveTo(position);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  handleGoToPost(event, post) {
-    if (event.ctrlKey || event.which !== 1) {
-      return;
-    }
-    event.preventDefault();
-
-    const url = PostService.buildPostUrl(post, { relative: true });
-    window.realWorldHistory.push(url);
-  }
-
-  render() {
+  renderContent() {
     const {
-      name, description, entity: place = {}, events, ...restProps
+      name, entity: place = {}, events
     } = this.props;
     const { post = {} } = place;
     const { title, summary, preview } = post;
 
     return (
-      <MarkerWithInfo
-        {...restProps}
-        ref={this.onLoad}
-        onOpen={this.onOpen}
-        customMarkerClass={CUSTOM_MARKER_CLASS}
-        customWindowClass={CUSTOM_WINDOW_CLASS}
-      >
+      <div>
         <div className="marker__header mx-3 mt-3">
           <div className="marker__title">{name || title}</div>
           <img className="marker__banner" src={preview} alt="" />
@@ -105,7 +40,7 @@ export default class DisasterMarker extends Component {
                     <button
                       type="button"
                       className="btn btn-sm btn-default px-3"
-                      onClick={event => this.handleGoToPost(event, post)}
+                      onClick={this.handleGoToPost}
                     >
                       <i className="far fa-paper-plane" /> Xem chi tiết
                     </button>
@@ -126,7 +61,7 @@ export default class DisasterMarker extends Component {
             ))}
           </section>
         </div>
-      </MarkerWithInfo>
+      </div>
     );
   }
 }

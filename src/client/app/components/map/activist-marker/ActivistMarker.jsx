@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import MarkerWithInfo from '../marker-with-info/MarkerWithInfo';
 import './ActivistMarker.scss';
@@ -8,68 +8,12 @@ import { PlantPot1Src } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 import UserService from '../../../services/UserService';
 
-const CUSTOM_CLASS = 'activist';
-const CUSTOM_MARKER_CLASS = `${CUSTOM_CLASS}-marker`;
-const CUSTOM_WINDOW_CLASS = `${CUSTOM_CLASS}-info-window`;
-
-export default class ActivistMarker extends Component {
-  get uid() {
-    return this.marker.uid;
+export default class ActivistMarker extends MarkerWithInfo {
+  static get customClass() {
+    return 'activist';
   }
 
-  get rootMarker() {
-    return this.marker.rootMarker;
-  }
-
-  constructor(props) {
-    super(props);
-    this.myPeer = null;
-    this.marker = null;
-    this.onLoad = this.onLoad.bind(this);
-    this.onClose = this.onClose.bind(this);
-  }
-
-  onLoad(ref) {
-    this.marker = ref;
-  }
-
-  onClose() {
-    if (this.myPeer) {
-      this.myPeer.destroy();
-      this.myPeer = null;
-    }
-  }
-
-  open() {
-    if (!this.marker) return;
-    this.marker.open();
-  }
-
-  close() {
-    if (!this.marker) return;
-    this.marker.close();
-  }
-
-  toggle() {
-    if (!this.marker) return;
-    this.marker.toggle();
-  }
-
-  refresh() {
-    this.forceUpdate(() => {
-      this.marker.refresh();
-    });
-  }
-
-  remove() {
-    this.marker.remove();
-  }
-
-  moveTo(position) {
-    this.marker.moveTo(position);
-  }
-
-  render() {
+  renderContent() {
     const { entity: place = {} } = this.props;
     const {
       cover,
@@ -87,14 +31,7 @@ export default class ActivistMarker extends Component {
     const defaultAvatar = UserService.fbAvatarSrc;
 
     return (
-      <MarkerWithInfo
-        {...this.props}
-        ref={this.onLoad}
-        onClose={this.onClose}
-        customMarkerClass={CUSTOM_MARKER_CLASS}
-        customWindowClass={CUSTOM_WINDOW_CLASS}
-        iconSrc={PlantPot1Src}
-      >
+      <div>
         <div className="marker__header">
           <div className="marker__cover-photo" style={{ backgroundImage: `url(${cover || defaultCover})` }}>
             <img alt="" src={cover || defaultCover} />
@@ -109,7 +46,7 @@ export default class ActivistMarker extends Component {
           <hr className="my-2 mx-5" />
           <PlaceActions place={place} marker={this} />
         </div>
-      </MarkerWithInfo>
+      </div>
     );
   }
 }

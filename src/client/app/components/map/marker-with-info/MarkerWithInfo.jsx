@@ -3,9 +3,20 @@ import { MarkerProps, InfoWindowProps } from 'google-maps-react';
 import PropTypes from 'prop-types';
 import './MarkerWithInfo.scss';
 import BaseMarker from './BaseMarker';
+import PostService from '../../../services/PostService';
 
 
 export default class MarkerWithInfo extends BaseMarker {
+  handleGoToPost(event) {
+    if (event.ctrlKey || event.which !== 1) {
+      return;
+    }
+    event.preventDefault();
+
+    const { post } = this.props.entity;
+    const url = PostService.buildPostUrl(post, { relative: true });
+    window.realWorldHistory.push(url);
+  }
 }
 
 MarkerWithInfo.propTypes = {

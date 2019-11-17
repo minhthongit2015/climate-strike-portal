@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
   },
   socialPoint: {
     type: Number,
-    default: 0
+    default: 10
   }
 });
 const UserModel = mongoose.model('User', UserSchema);

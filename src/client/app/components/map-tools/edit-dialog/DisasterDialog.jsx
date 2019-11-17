@@ -1,7 +1,6 @@
 import React from 'react';
 import { MDBInput } from 'mdbreact';
 import BaseEditingDialog from './BaseEditingDialog';
-import PostService from '../../../services/PostService';
 
 
 export default class DisasterDialog extends BaseEditingDialog {
@@ -15,25 +14,6 @@ export default class DisasterDialog extends BaseEditingDialog {
       ...originPlace,
       post
     };
-  }
-
-  constructor(props) {
-    super(props);
-    this.handleLinkChange = this.handleLinkChange.bind(this);
-    this.state.link = '';
-  }
-
-  handleLinkChange(event) {
-    this.setState({
-      link: event.target.value
-    });
-    PostService.fetchPost(PostService.extractPostOrder(event.target.value))
-      .then((res) => {
-        if (!res || !res.data) {
-          return;
-        }
-        this.setPlaceState('post', res.data[0]);
-      });
   }
 
   renderContent() {

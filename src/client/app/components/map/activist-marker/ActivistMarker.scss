@@ -1,45 +1,18 @@
 
-$base-info-window-class: 'custom-info-window';
-$custom-info-window-class: "activist-info-window";
+$custom-class: 'activist';
 $window-width: 400px * .8;
-$window-height: 450px * .8;
+$window-height: 400px * .8;
+$color: #00c5ff;
+$shadow: #6be8ff;
 
-.gm-style {
-  .#{$base-info-window-class} {
-    .gm-style-iw-a.#{$custom-info-window-class} {
-      .gm-style-iw-t {
-        .gm-style-iw-c.gm-style-iw {
-          width: $window-width !important;
-          max-width: $window-width !important;
-          max-height: $window-height !important;
-          .gm-style-iw-d {
-            width: $window-width !important;
-            max-width: $window-width !important;
-            max-height: $window-height !important;
-            & > div {
-              max-height: $window-height !important;
-            }
-          }
-          .gm-style-iw-d + button {
-            background: #00c5ff !important;
-          }
-        }
-      }
-      //
-      .marker__title {
-        color: #00c5ff;
-      }
-    }
+// ---
 
-    &.focused {
-      .gm-style-iw-a.#{$custom-info-window-class} {
-        .gm-style-iw-t {
-          .gm-style-iw-c.gm-style-iw {
-            box-shadow: 0 0 5px #00c5ff, 0 0 30px -3px #6be8ff;
-          }
-        }
-      }
-    }
+@import "../marker-with-info/BaseMarkerStyle.scss";
+
+@mixin customStyle {
+  .marker__title {
+    color: #00c5ff;
   }
 }
-          
+
+@include markerStyle($custom-class, $window-width, $window-height, $color, $shadow);
