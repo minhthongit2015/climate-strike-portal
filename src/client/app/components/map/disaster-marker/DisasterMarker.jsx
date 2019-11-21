@@ -28,7 +28,7 @@ export default class DisasterMarker extends MarkerWithInfo {
         <div className="marker__header mx-3 mt-3">
           <div className="marker__title">{name || title}</div>
           {video ? (
-            <Video title={title} src={video} />
+            <Video title={title} preview={preview} src={video} />
           ) : (
             <img className="marker__banner" src={preview} alt="" />
           )}

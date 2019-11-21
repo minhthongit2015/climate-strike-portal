@@ -10,19 +10,24 @@ export default class StrikeDialog extends BaseEditingDialog {
   get place() {
     const originPlace = super.place;
     const { place } = this.state;
-    const { prev, next } = place;
+    const {
+      prev, next, datez, timez
+    } = place;
     return {
       ...originPlace,
       prev: prev && prev._id,
-      next: next && next._id
+      next: next && next._id,
+      time: new Date(`${datez} ${timez}`)
     };
   }
 
   renderContent() {
     const { place = {} } = this.state;
     const {
-      name, description, address, cover, next
+      name, description, address, cover, next, time, datez, timez
     } = place;
+    const datez1 = datez || (time && time.split('T')[0]);
+    const timez1 = timez || (time && time.split('T')[1].slice(0, -1));
 
     return (
       <React.Fragment>
@@ -59,6 +64,30 @@ export default class StrikeDialog extends BaseEditingDialog {
           autoComplete="off"
           autofill="off"
         />
+        <div className="row d-flex">
+          <div className="col">
+            <MDBInput
+              label="Ngày"
+              name="datez"
+              type="date"
+              value={datez1}
+              onChange={this.handleInputChange}
+              autoComplete="off"
+              autofill="off"
+            />
+          </div>
+          <div className="col">
+            <MDBInput
+              label="Giờ"
+              name="timez"
+              type="time"
+              value={timez1}
+              onChange={this.handleInputChange}
+              autoComplete="off"
+              autofill="off"
+            />
+          </div>
+        </div>
         <MDBInput
           label="Địa điểm tiếp theo (url hoặc id)"
           name="next"

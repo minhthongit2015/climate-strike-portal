@@ -5,6 +5,7 @@ import MarkerWithInfo from '../marker-with-info/MarkerWithInfo';
 import './StrikeMarker.scss';
 import { FlagSrc } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
+import TimeAgo from '../../utils/time-ago/TimeAgo';
 
 
 export default class StrikeMarker extends MarkerWithInfo {
@@ -41,7 +42,7 @@ export default class StrikeMarker extends MarkerWithInfo {
       description,
       avatar,
       name,
-      address,
+      address, time,
       prev, next
     } = place;
     const defaultDescription = 'Cuộc diễu hành kêu gọi chống biến đổi khí hậu';
@@ -65,6 +66,9 @@ export default class StrikeMarker extends MarkerWithInfo {
         <div className="px-3 pb-3">
           <div className="marker__address">
             <i className="fas fa-map-marker-alt" /> Địa điểm: {address || 'Đang lên lịch trình.'}
+          </div>
+          <div className="marker__address" title={TimeAgo.fromNow(time)}>
+            <i className="fas fa-map-marker-alt" /> Thời gian: {TimeAgo.format(time) || 'Đang lên lịch.'}
           </div>
           <div className="my-2 d-flex justify-content-between">
             <div

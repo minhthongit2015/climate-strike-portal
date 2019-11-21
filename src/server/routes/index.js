@@ -51,7 +51,7 @@ router.get('*', (req, res) => {
 
     const titleByCategory = getTitleByUrl(req.path);
     model = buildModel({
-      url,
+      ...model,
       title: titleByCategory ? `${titleByCategory} | ${model.title}` : model.title
     });
     return res.render('index', model);

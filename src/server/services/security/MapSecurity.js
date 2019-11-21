@@ -17,6 +17,7 @@ module.exports = class extends SecurityService {
       'images',
       'description',
       'address',
+      'time',
       'link',
       'position',
       'path',

@@ -8,6 +8,7 @@ const Place = require('./_Place');
 const StrikeSchema = new mongoose.Schema({
   type: { type: String, default: 'Strike' },
   time: Date,
+  contact: String,
   next: { type: ObjectId, ref: 'Strike' },
   prev: { type: ObjectId, ref: 'Strike' }
 });

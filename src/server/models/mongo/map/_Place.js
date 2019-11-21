@@ -16,6 +16,7 @@ const PlaceSchema = new mongoose.Schema({
   address: String,
   link: String,
   position: { lat: Number, lng: Number },
+  zoom: Number,
   path: [{ lat: Number, lng: Number }], // Render Polyline
   radius: Number, // Render Circle
   createdAt: { type: Date, default: Date.now },
