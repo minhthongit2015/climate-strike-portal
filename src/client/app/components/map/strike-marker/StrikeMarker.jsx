@@ -67,8 +67,8 @@ export default class StrikeMarker extends MarkerWithInfo {
           <div className="marker__address">
             <i className="fas fa-map-marker-alt" /> Địa điểm: {address || 'Đang lên lịch trình.'}
           </div>
-          <div className="marker__address" title={TimeAgo.fromNow(time)}>
-            <i className="fas fa-map-marker-alt" /> Thời gian: {TimeAgo.format(time) || 'Đang lên lịch.'}
+          <div className="marker__address" title={time && TimeAgo.fromNow(time)}>
+            <i className="fas fa-map-marker-alt" /> Thời gian: {(time && TimeAgo.format(time)) || 'Đang lên lịch.'}
           </div>
           <div className="my-2 d-flex justify-content-between">
             <div
