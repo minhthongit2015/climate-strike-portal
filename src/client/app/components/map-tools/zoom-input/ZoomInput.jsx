@@ -1,12 +1,12 @@
 import React from 'react';
-import { InputGroup } from 'mdbreact';
+import { MDBInputGroup } from 'mdbreact';
 
 export default React.memo((props) => {
   const {
     onClickRecommend, onClickZoom, value, onChange, ...restProps
   } = props;
   return (
-    <InputGroup
+    <MDBInputGroup
       material
       inputs={(
         <input
@@ -17,7 +17,7 @@ export default React.memo((props) => {
           min="0"
           step="1"
           max="20"
-          value={value}
+          value={value || ''}
           onChange={onChange}
           autoComplete="off"
           autofill="off"

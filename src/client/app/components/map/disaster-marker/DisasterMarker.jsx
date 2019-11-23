@@ -7,6 +7,7 @@ import { ForestFireSrc as DisasterIconSrc } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 import PostService from '../../../services/PostService';
 import Video from '../../utils/video/Video';
+import ZoomTool from '../../map-tools/zoom-tool/ZoomTool';
 
 
 export default class DisasterMarker extends MarkerWithInfo {
@@ -18,7 +19,7 @@ export default class DisasterMarker extends MarkerWithInfo {
     const {
       name, entity: place = {}, events
     } = this.props;
-    const { post = {} } = place;
+    const { post = {}, zoom } = place;
     const {
       title, summary, preview, video
     } = post;
@@ -32,6 +33,7 @@ export default class DisasterMarker extends MarkerWithInfo {
           ) : (
             <img className="marker__banner" src={preview} alt="" />
           )}
+          <ZoomTool zoom={zoom} zoomTo={this.zoomTo} />
         </div>
         <div className="marker__body mb-3">
           <section className="marker__section marker__post">

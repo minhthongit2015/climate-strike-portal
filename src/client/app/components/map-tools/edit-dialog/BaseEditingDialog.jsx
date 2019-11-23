@@ -145,8 +145,14 @@ export default class extends React.Component {
   zoomToMap(event) {
     if (!window.map) return;
     const { dataset: { zoom } } = event.currentTarget;
+    const { place, marker } = this.state;
     if (zoom != null && zoom !== '') {
       window.map.setZoom(+zoom);
+      window.map.panTo(place.position);
+      marker.close();
+      setTimeout(() => {
+        marker.open();
+      }, 500);
     }
   }
 

@@ -8,6 +8,9 @@ import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 import TimeAgo from '../../utils/time-ago/TimeAgo';
 import MapService from '../../../services/MapService';
 import UserService from '../../../services/UserService';
+import LoginDialogService from '../../../services/LoginDialogService';
+import t from '../../../languages';
+import ZoomTool from '../../map-tools/zoom-tool/ZoomTool';
 
 
 export default class StrikeMarker extends MarkerWithInfo {
@@ -41,8 +44,13 @@ export default class StrikeMarker extends MarkerWithInfo {
   }
 
   handleJoin() {
+    if (!UserService.isLoggedIn) {
+      LoginDialogService.show(t('components.loginDialog.loginToRiseYourVoice'));
+      return;
+    }
     const { entity: place = {} } = this.props;
     place.joined = true;
+    place.rightAfterJoined = true;
     MapService.joinStrike(place).then(this.updatePlace);
     this.addPath();
   }
@@ -59,6 +67,10 @@ export default class StrikeMarker extends MarkerWithInfo {
   }
 
   handleLeave() {
+    if (!UserService.isLoggedIn) {
+      LoginDialogService.show(t('components.loginDialog.loginToRiseYourVoice'));
+      return;
+    }
     const { entity: place = {}, mainMap } = this.props;
     place.joined = false;
     MapService.leaveStrike(place).then(this.updatePlace);
@@ -80,19 +92,26 @@ export default class StrikeMarker extends MarkerWithInfo {
       description,
       avatar,
       name,
+      zoom,
       address, time,
       prev, next,
-      joined
+      joined, members
     } = place;
     const defaultDescription = 'Cuộc diễu hành kêu gọi chống biến đổi khí hậu';
     const defaultCover = '/images/cover-photo.jpg';
     const defaultAvatar = 'https://cms.frontpagemag.com/sites/default/files/styles/article_full/public/uploads/2019/11/gt.jpg?itok=wsbc5NVv';
+    let rightAfterJoined = false;
+    if (place.rightAfterJoined) {
+      rightAfterJoined = true;
+      place.rightAfterJoined = false;
+    }
 
     return (
       <div>
         <div className="marker__header">
           <div className="marker__cover-photo" style={{ backgroundImage: `url(${cover || defaultCover})` }}>
             <img alt="" src={cover || defaultCover} />
+            <ZoomTool zoom={zoom} zoomTo={this.zoomTo} />
           </div>
           <div className="marker__avatar">
             <img alt="" src={avatar || defaultAvatar} />
@@ -106,8 +125,11 @@ export default class StrikeMarker extends MarkerWithInfo {
           <div className="marker__address">
             <i className="fas fa-map-marker-alt" /> Địa điểm: {address || 'Đang lên lịch trình.'}
           </div>
-          <div className="marker__address my-1" title={time && TimeAgo.fromNow(time)}>
+          <div className="marker__time my-1" title={time && TimeAgo.fromNow(time)}>
             <i className="far fa-clock" /> Thời gian: {(time && TimeAgo.format(time)) || 'Đang lên lịch.'}
+          </div>
+          <div className={`marker__members text-center my-2 ${!members || !members.length ? 'd-none' : ''}`}>
+            <i className="far fa-laugh-wink" /> <b>{members && members.length}</b> người tham gia
           </div>
           <div className="my-2 d-flex justify-content-between">
             <div
@@ -129,13 +151,16 @@ export default class StrikeMarker extends MarkerWithInfo {
               className={`btn btn-lg py-2 px-4 sunny-morning-gradient text-white ${joined ? 'd-none' : ''}`}
               onClick={this.handleJoin}
             >
-              <i className="far fa-laugh-wink" /> Tham gia
+              <i className="far fa-laugh-wink" /> {members && members.length ? 'Tham gia' : 'Hãy là người tham gia đầu tiên'}
             </div>
             <div
-              className={`btn btn-sm py-1 px-3 ${!joined ? 'd-none' : ''}`}
+              className={`btn btn-sm py-1 px-3 ${!joined || rightAfterJoined ? 'd-none' : ''}`}
               onClick={this.handleLeave}
             >
               <i className="far fa-frown" /> Hoãn tham gia
+            </div>
+            <div className={`${rightAfterJoined ? '' : 'd-none'}`}>
+              <i className="far fa-heart red-text" /> Cảm ơn bạn đã tham gia cùng mọi người! <i className="far fa-laugh-wink orange-text" />
             </div>
           </div>
           <hr className="my-2" />

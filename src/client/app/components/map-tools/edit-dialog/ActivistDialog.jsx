@@ -2,6 +2,7 @@ import React from 'react';
 import { MDBInput } from 'mdbreact';
 import BaseEditingDialog from './BaseEditingDialog';
 import DropUploader from '../../utils/drop-uploader/DropUploader';
+import ZoomInput from '../zoom-input/ZoomInput';
 
 
 export default class ActivistDialog extends BaseEditingDialog {
@@ -20,7 +21,7 @@ export default class ActivistDialog extends BaseEditingDialog {
   renderContent() {
     const { place = {} } = this.state;
     const {
-      user, author, description, cover
+      user, author, description, cover, zoom
     } = place;
     const { name } = user || author || {};
 
@@ -51,6 +52,14 @@ export default class ActivistDialog extends BaseEditingDialog {
           onChange={this.handleInputChange}
           autoComplete="off"
           autofill="off"
+        />
+        <ZoomInput
+          hint="Độ thu phóng"
+          name="zoom"
+          value={zoom}
+          onChange={this.handleInputChange}
+          onClickRecommend={this.setZoomToRecommeded}
+          onClickZoom={this.zoomToMap}
         />
       </React.Fragment>
     );

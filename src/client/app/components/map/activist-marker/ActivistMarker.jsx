@@ -7,6 +7,7 @@ import './ActivistMarker.scss';
 import { PlantPot1Src } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 import UserService from '../../../services/UserService';
+import ZoomTool from '../../map-tools/zoom-tool/ZoomTool';
 
 export default class ActivistMarker extends MarkerWithInfo {
   static get customClass() {
@@ -19,10 +20,12 @@ export default class ActivistMarker extends MarkerWithInfo {
       cover,
       description,
       user,
-      author
+      author,
+      zoom = 17
     } = place;
     const {
       name = UserService.user.name,
+      socialPoint,
       socials: { facebook } = {}
     } = user || author || {};
     const avatar = facebook && `https://graph.facebook.com/${facebook}/picture?type=square&width=200&height=200`;
@@ -35,14 +38,16 @@ export default class ActivistMarker extends MarkerWithInfo {
         <div className="marker__header">
           <div className="marker__cover-photo" style={{ backgroundImage: `url(${cover || defaultCover})` }}>
             <img alt="" src={cover || defaultCover} />
+            <ZoomTool zoom={zoom} zoomTo={this.zoomTo} />
           </div>
           <div className="marker__avatar">
             <img alt="" src={avatar || defaultAvatar} />
           </div>
         </div>
         <div className="marker__profile px-3 pb-3">
-          <div className="marker__profile__name">{name}</div>
+          <div className="marker__profile__name my-2">{name}</div>
           <div className="marker__profile__description">{description || defaultDescription}</div>
+          <div className="marker__profile__social-point my-2">Điểm cộng đồng: <b>{socialPoint}</b></div>
           <hr className="my-2 mx-5" />
           <PlaceActions place={place} marker={this} />
         </div>

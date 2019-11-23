@@ -49,7 +49,9 @@ export default class MapService {
       if (place.__t === 'Strike') {
         place.prev = places.find(pl => pl._id === place.prev);
         place.next = places.find(pl => pl._id === place.next);
-        place.joined = place.members.some(member => member._id === UserService.user._id);
+        if (UserService.isLoggedIn) {
+          place.joined = place.members.some(member => member._id === UserService.user._id);
+        }
       }
       if (place.__t === 'Garden') {
         place.picture = `https://graph.facebook.com/${place.socials.fb}`
@@ -160,7 +162,7 @@ export default class MapService {
       const selectedPlace = places.find(place => place.baseOrder === placeOrder);
       if (selectedPlace) {
         if (selectedPlace.zoom != null && selectedPlace.zoom !== '') {
-          window.map.setZoom(selectedPlace.zoom);
+          selectedPlace.ref.zoomTo();
         }
         selectedPlace.ref.open();
       }

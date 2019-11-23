@@ -13,6 +13,9 @@ $shadow: #6be8ff;
   .marker__title {
     color: #00c5ff;
   }
+  .zoom-tool {
+    width: 30%;
+  }
 }
 
 @include markerStyle($custom-class, $window-width, $window-height, $color, $shadow);

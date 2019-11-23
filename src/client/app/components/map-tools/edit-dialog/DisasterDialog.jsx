@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDBInput } from 'mdbreact';
 import BaseEditingDialog from './BaseEditingDialog';
+import ZoomInput from '../zoom-input/ZoomInput';
 
 
 export default class DisasterDialog extends BaseEditingDialog {
@@ -18,7 +19,7 @@ export default class DisasterDialog extends BaseEditingDialog {
 
   renderContent() {
     const { place = {}, link = '' } = this.state;
-    const { post = {}, radius } = place;
+    const { post = {}, radius, zoom } = place;
     const { title = '' } = post;
 
     return (
@@ -47,6 +48,14 @@ export default class DisasterDialog extends BaseEditingDialog {
           value={radius}
           onChange={this.handleInputChange}
           type="number"
+        />
+        <ZoomInput
+          hint="Độ thu phóng"
+          name="zoom"
+          value={zoom}
+          onChange={this.handleInputChange}
+          onClickRecommend={this.setZoomToRecommeded}
+          onClickZoom={this.zoomToMap}
         />
       </React.Fragment>
     );

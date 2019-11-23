@@ -10,6 +10,7 @@ export default class MarkerWithInfo extends BaseMarker {
   constructor(props) {
     super(props);
     this.handleGoToPost = this.handleGoToPost.bind(this);
+    this.zoomTo = this.zoomTo.bind(this);
   }
 
   handleGoToPost(event) {
@@ -21,6 +22,21 @@ export default class MarkerWithInfo extends BaseMarker {
     const { post } = this.props.entity;
     const url = PostService.buildPostUrl(post, { relative: true });
     window.realWorldHistory.push(url);
+  }
+
+  zoomTo(zoomz) {
+    if (!window.map) return;
+    const { entity: place = {} } = this.props;
+    const { zoom, position } = place;
+    const zoomLevel = zoomz || zoom;
+    if (zoomLevel != null && zoomLevel !== '') {
+      window.map.setZoom(+zoomLevel);
+      window.map.panTo(position);
+      this.close();
+      setTimeout(() => {
+        this.open();
+      }, 500);
+    }
   }
 }
 

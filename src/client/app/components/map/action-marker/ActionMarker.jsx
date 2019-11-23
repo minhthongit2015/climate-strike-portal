@@ -6,6 +6,8 @@ import './ActionMarker.scss';
 import { FarmSrc as FarmIconSrc } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 import PostService from '../../../services/PostService';
+import Video from '../../utils/video/Video';
+import ZoomTool from '../../map-tools/zoom-tool/ZoomTool';
 
 
 export default class ActionMarker extends MarkerWithInfo {
@@ -17,14 +19,21 @@ export default class ActionMarker extends MarkerWithInfo {
     const {
       name, entity: place = {}, events
     } = this.props;
-    const { post = {} } = place;
-    const { title, summary, preview } = post;
+    const { post = {}, zoom } = place;
+    const {
+      title, summary, preview, video
+    } = post;
 
     return (
       <div>
         <div className="marker__header mx-3 mt-3">
           <div className="marker__title">{name || title}</div>
-          <img className="marker__banner" src={preview} alt="" />
+          {video ? (
+            <Video title={title} preview={preview} src={video} />
+          ) : (
+            <img className="marker__banner" src={preview} alt="" />
+          )}
+          <ZoomTool zoom={zoom} zoomTo={this.zoomTo} />
         </div>
         <div className="marker__body mb-3">
           <section className="marker__section marker__post">

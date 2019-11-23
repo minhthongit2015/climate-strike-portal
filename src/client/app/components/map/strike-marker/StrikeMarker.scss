@@ -20,8 +20,19 @@ $shadow: #ff8b8b;
     font-size: 1rem;
     color: #e6a40d;
   }
+  .marker__time {
+    font-size: 1rem;
+    color: #e6a40d;
+  }
+  .marker__members {
+    font-size: 1rem;
+    color: #ff912a;
+  }
   .marker__cover-photo {
     padding-top: 40%;
+  }
+  .zoom-tool {
+    width: 30%;
   }
 }
 
