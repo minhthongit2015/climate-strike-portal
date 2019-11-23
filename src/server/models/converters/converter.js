@@ -6,6 +6,6 @@ module.exports = class Converter {
   }
 
   static convertCollection(collection) {
-    return collection.map(object => this.convert(object));
+    return (collection || []).map(object => this.convert(object));
   }
 };

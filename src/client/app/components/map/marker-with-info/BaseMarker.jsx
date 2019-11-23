@@ -30,6 +30,10 @@ export default class MarkerWithInfo extends Component {
     return !!this.state.marker;
   }
 
+  get isReallyOpen() {
+    return this.isOpen && !this.isClosing && this.infoWindowTopMost.length > 0;
+  }
+
   get infoWindowTopMost() {
     return this.infoWindowWrapper.parent();
   }
@@ -108,7 +112,7 @@ export default class MarkerWithInfo extends Component {
   }
 
   open() {
-    if (this.isOpen && !this.isClosing) return;
+    if (this.isReallyOpen) return;
     this.isClosing = false;
     this.setState({
       marker: this.markerRef.marker
@@ -129,7 +133,7 @@ export default class MarkerWithInfo extends Component {
   }
 
   toggle() {
-    if (this.isOpen && !this.isClosing) {
+    if (this.isReallyOpen) {
       if (this.isFocused) {
         this.close();
       } else {
@@ -228,7 +232,7 @@ export default class MarkerWithInfo extends Component {
     this.openByHover = false;
     if (this.props.enableToggle) {
       this.toggle();
-    } else if (!this.isOpen) {
+    } else if (!this.isReallyOpen) {
       this.open();
     }
     if (this.props.onClick) {
@@ -291,6 +295,11 @@ export default class MarkerWithInfo extends Component {
     if (!this.baseProps) return null;
     const { windowProps } = this.props;
     this.content = this.renderContent();
+    if (this.windowRef.current && this.state.marker
+      && this.windowRef.current.infowindow.map === null) {
+      this.windowRef.current.infowindow.marker = this.state.marker;
+      this.windowRef.current.infowindow.setMap(this.baseProps.map);
+    }
 
     return (
       <InfoWindow

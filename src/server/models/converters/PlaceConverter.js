@@ -8,7 +8,8 @@ module.exports = class PlaceConverter extends Converter {
     const place = {
       ...rawPlace,
       author: UserConverter.convert(rawPlace.author),
-      user: UserConverter.convert(rawPlace.user)
+      user: UserConverter.convert(rawPlace.user),
+      members: UserConverter.convertCollection(rawPlace.members)
     };
     return place;
   }

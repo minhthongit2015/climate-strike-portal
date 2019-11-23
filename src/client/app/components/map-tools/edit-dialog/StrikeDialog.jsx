@@ -2,6 +2,7 @@ import React from 'react';
 import { MDBInput } from 'mdbreact';
 import BaseEditingDialog from './BaseEditingDialog';
 import DropUploader from '../../utils/drop-uploader/DropUploader';
+import ZoomInput from '../zoom-input/ZoomInput';
 
 
 export default class StrikeDialog extends BaseEditingDialog {
@@ -24,7 +25,7 @@ export default class StrikeDialog extends BaseEditingDialog {
   renderContent() {
     const { place = {} } = this.state;
     const {
-      name, description, address, cover, next, time, datez, timez
+      cover, name, description, address, time, next, zoom, datez, timez
     } = place;
     const datez1 = datez || (time && time.split('T')[0]);
     const timez1 = timez || (time && time.split('T')[1].slice(0, -1));
@@ -96,6 +97,14 @@ export default class StrikeDialog extends BaseEditingDialog {
           onChange={this.handleLinkChange}
           autoComplete="off"
           autofill="off"
+        />
+        <ZoomInput
+          hint="Độ thu phóng"
+          name="zoom"
+          value={zoom}
+          onChange={this.handleInputChange}
+          onClickRecommend={this.setZoomToRecommeded}
+          onClickZoom={this.zoomToMap}
         />
       </React.Fragment>
     );

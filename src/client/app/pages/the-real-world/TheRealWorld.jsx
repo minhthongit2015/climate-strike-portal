@@ -75,6 +75,7 @@ export default class TheRealWorld extends BasePage {
       // CategoryService.fetchCategories();
       MapService.checkOpenCurrentPlace(places);
     });
+    window.map = this.map;
   }
 
   onMarkerRef(ref) {
@@ -117,7 +118,8 @@ export default class TheRealWorld extends BasePage {
   }
 
   handleRightClick(mapProps, map, event) {
-    this.mapCtxMenuRef.current.open(event.wa, {
+    const originEvent = Object.values(event).find(prop => prop instanceof Event);
+    this.mapCtxMenuRef.current.open(originEvent, {
       lat: event.latLng.lat(),
       lng: event.latLng.lng()
     });
@@ -145,24 +147,57 @@ export default class TheRealWorld extends BasePage {
         MapService.updatePlace(existedPlace);
         return;
       }
+      this.addPlace(newPlace);
+    }
+  }
 
+  addPlace(newPlace) {
+    const newMarker = {
+      ...newPlace,
+      marker: MapUtils.getMarkerByType(newPlace.__t)
+    };
+    this.setState(prevState => ({
+      dirty: true,
+      places: [newMarker, ...prevState.places]
+    }));
+    MapService.createPlace(newPlace)
+      .then((res) => {
+        if (!res || !res.data) {
+          // rollback
+        }
+        Object.assign(newMarker, res.data);
+        this.refresh();
+      });
+  }
+
+  addPath(newPath) {
+    return new Promise((resolve) => {
       const newMarker = {
-        ...newPlace,
-        marker: MapUtils.getMarkerByType(newPlace.__t)
+        ...newPath,
+        marker: MapUtils.getMarkerByType(newPath.__t)
       };
       this.setState(prevState => ({
         dirty: true,
         places: [newMarker, ...prevState.places]
-      }));
-      MapService.createPlace(newPlace)
-        .then((res) => {
-          if (!res || !res.data) {
-            // rollback
-          }
-          Object.assign(newMarker, res.data);
-          this.refresh();
-        });
-    }
+      }), resolve);
+    });
+  }
+
+  removePath(userId, placeId) {
+    return new Promise((resolve) => {
+      const pathEntity = this.state.places.find(
+        place => place.__t === 'Path'
+          && place.user && place.user._id === userId
+          && place.target && place.target._id === placeId
+      );
+      if (!pathEntity) {
+        return;
+      }
+      this.setState(prevState => ({
+        dirty: true,
+        places: prevState.places.filter(place => place._id !== pathEntity._id)
+      }), resolve);
+    });
   }
 
   handleHotkeys(event) {
@@ -248,6 +283,7 @@ export default class TheRealWorld extends BasePage {
             return (
               <place.marker
                 {...baseProps}
+                mainMap={this}
                 key={place._id || Math.random()}
                 ref={(ref) => { this.onMarkerRef(ref); place.ref = ref; }}
                 entity={place}
@@ -269,11 +305,12 @@ export default class TheRealWorld extends BasePage {
             return (
               <Polyline
                 {...baseProps}
+                mainMap={this}
                 key={place._id || Math.random()}
                 path={place.path}
-                color="#00ffff"
                 opacity={0.8}
                 width={2}
+                {...MapUtils.getPathStyleByType(place.type)}
               />
             );
           }

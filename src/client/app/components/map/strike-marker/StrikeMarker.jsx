@@ -6,6 +6,8 @@ import './StrikeMarker.scss';
 import { FlagSrc } from '../../../../assets/icons';
 import PlaceActions from '../../map-tools/place-actions/PlaceActions';
 import TimeAgo from '../../utils/time-ago/TimeAgo';
+import MapService from '../../../services/MapService';
+import UserService from '../../../services/UserService';
 
 
 export default class StrikeMarker extends MarkerWithInfo {
@@ -17,6 +19,9 @@ export default class StrikeMarker extends MarkerWithInfo {
     super(props);
     this.handleGoToPrev = this.handleGoToPrev.bind(this);
     this.handleGoToNext = this.handleGoToNext.bind(this);
+    this.handleJoin = this.handleJoin.bind(this);
+    this.handleLeave = this.handleLeave.bind(this);
+    this.updatePlace = this.updatePlace.bind(this);
   }
 
   handleGoToNext() {
@@ -35,6 +40,39 @@ export default class StrikeMarker extends MarkerWithInfo {
     }
   }
 
+  handleJoin() {
+    const { entity: place = {} } = this.props;
+    place.joined = true;
+    MapService.joinStrike(place).then(this.updatePlace);
+    this.addPath();
+  }
+
+  addPath() {
+    const { entity: place = {}, mainMap } = this.props;
+    const strikerPathEntity = MapService.generateStrikerPath(
+      mainMap.state.places, UserService.user._id, place
+    );
+    if (!strikerPathEntity) {
+      return;
+    }
+    mainMap.addPath(strikerPathEntity);
+  }
+
+  handleLeave() {
+    const { entity: place = {}, mainMap } = this.props;
+    place.joined = false;
+    MapService.leaveStrike(place).then(this.updatePlace);
+    mainMap.removePath(UserService.user._id, place._id);
+  }
+
+  updatePlace(res) {
+    if (!res || !res.data) {
+      return;
+    }
+    const { entity: place = {} } = this.props;
+    Object.assign(place, res.data);
+  }
+
   renderContent() {
     const { entity: place = {} } = this.props;
     const {
@@ -43,7 +81,8 @@ export default class StrikeMarker extends MarkerWithInfo {
       avatar,
       name,
       address, time,
-      prev, next
+      prev, next,
+      joined
     } = place;
     const defaultDescription = 'Cuộc diễu hành kêu gọi chống biến đổi khí hậu';
     const defaultCover = '/images/cover-photo.jpg';
@@ -67,21 +106,36 @@ export default class StrikeMarker extends MarkerWithInfo {
           <div className="marker__address">
             <i className="fas fa-map-marker-alt" /> Địa điểm: {address || 'Đang lên lịch trình.'}
           </div>
-          <div className="marker__address" title={time && TimeAgo.fromNow(time)}>
-            <i className="fas fa-map-marker-alt" /> Thời gian: {(time && TimeAgo.format(time)) || 'Đang lên lịch.'}
+          <div className="marker__address my-1" title={time && TimeAgo.fromNow(time)}>
+            <i className="far fa-clock" /> Thời gian: {(time && TimeAgo.format(time)) || 'Đang lên lịch.'}
           </div>
           <div className="my-2 d-flex justify-content-between">
             <div
-              className={`btn btn-sm py-1 px-3 ${prev ? 'btn-default' : 'grey lighten-1 text-white disabled'}`}
+              className={`btn btn-sm py-1 px-3 ${prev ? 'btn-none' : 'grey lighten-1 text-white disabled'}`}
               onClick={this.handleGoToPrev}
             >
               <i className="fas fa-chevron-left" /> Điểm Trước
             </div>
             <div
-              className={`btn btn-sm py-1 px-3 ${next ? 'btn-default' : 'grey lighten-1 text-white disabled'}`}
+              className={`btn btn-sm py-1 px-3 ${next ? 'btn-none' : 'grey lighten-1 text-white disabled'}`}
               onClick={this.handleGoToNext}
             >
               Điểm Tiếp Theo <i className="fas fa-chevron-right" />
+            </div>
+          </div>
+          <hr className="my-2" />
+          <div className="text-center">
+            <div
+              className={`btn btn-lg py-2 px-4 sunny-morning-gradient text-white ${joined ? 'd-none' : ''}`}
+              onClick={this.handleJoin}
+            >
+              <i className="far fa-laugh-wink" /> Tham gia
+            </div>
+            <div
+              className={`btn btn-sm py-1 px-3 ${!joined ? 'd-none' : ''}`}
+              onClick={this.handleLeave}
+            >
+              <i className="far fa-frown" /> Hoãn tham gia
             </div>
           </div>
           <hr className="my-2" />

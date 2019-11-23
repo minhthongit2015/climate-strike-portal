@@ -21,6 +21,7 @@ export default class extends React.Component {
       __t: place.__t,
       events: place.events,
       position: place.position,
+      zoom: place.zoom,
       description: place.description,
       address: place.address,
       time: place.time,
@@ -41,6 +42,8 @@ export default class extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDiscard = this.handleDiscard.bind(this);
     this.handleLinkChange = this.handleLinkChange.bind(this);
+    this.setZoomToRecommeded = this.setZoomToRecommeded.bind(this);
+    this.zoomToMap = this.zoomToMap.bind(this);
 
     this.state = {
       // eslint-disable-next-line react/no-unused-state
@@ -131,6 +134,20 @@ export default class extends React.Component {
         place: prevState.place
       };
     });
+  }
+
+  setZoomToRecommeded() {
+    if (!window.map) return;
+    this.setPlaceState('zoom', window.map.getZoom());
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  zoomToMap(event) {
+    if (!window.map) return;
+    const { dataset: { zoom } } = event.currentTarget;
+    if (zoom != null && zoom !== '') {
+      window.map.setZoom(+zoom);
+    }
   }
 
   handleSubmit(event) {

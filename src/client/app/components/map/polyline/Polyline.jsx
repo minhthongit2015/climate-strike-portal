@@ -20,6 +20,7 @@ export default class Polyline extends Component {
     const {
       google, map, path,
       color, opacity, width,
+      icons,
       ...rest
     } = this.props;
     if (!google || !map) return null;
@@ -34,6 +35,7 @@ export default class Polyline extends Component {
         strokeColor={color}
         strokeOpacity={opacity}
         strokeWeight={width}
+        icons={icons}
         geodesic
       />
     );
