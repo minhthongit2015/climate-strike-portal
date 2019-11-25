@@ -9,14 +9,11 @@ export default class {
   }
 
   static get categoryArray() {
-    return Object.entries(this._categories).map(entry => ({
-      label: entry[1].name,
-      value: entry[0]
-    }));
+    return Object.values(this.categories);
   }
 
-  static getCategoriesAsOptions(categoryKeys = []) {
-    return categoryKeys.map(key => (
+  static getCategoriesAsOptions(categoryKeys) {
+    return (categoryKeys || Object.keys(this.categories)).map(key => (
       this.categories[key]
         ? {
           label: this.categories[key].name,
@@ -48,6 +45,7 @@ export default class {
 
   static useCategoriesState(component) {
     GlobalState.useState(CategoriesStateName, null, component);
+    this._categories = GlobalState[CategoriesStateName];
     if (!this._categories) {
       this.fetchCategories();
     }

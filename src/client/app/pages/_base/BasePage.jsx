@@ -6,6 +6,7 @@ export default class extends Component {
     super(props);
     this.title = title;
     this.noBaseTitle = noBaseTitle;
+    window.historyz = props.history || window.historyz;
   }
 
   componentDidMount() {

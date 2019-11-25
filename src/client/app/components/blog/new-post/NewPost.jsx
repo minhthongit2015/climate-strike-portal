@@ -132,7 +132,7 @@ export default class extends React.Component {
 
   setPost(post) {
     const postCategories = post.categories.map(cat => cat.type);
-    const category = CategoryService.categoryArray
+    const category = CategoryService.getCategoriesAsOptions()
       .filter(cat => postCategories.includes(cat.value));
     this.setState({
       expanded: true

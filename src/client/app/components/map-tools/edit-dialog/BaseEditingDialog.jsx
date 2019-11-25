@@ -19,16 +19,17 @@ export default class extends React.Component {
     return {
       _id: place._id,
       __t: place.__t,
-      events: place.events,
-      position: place.position,
-      zoom: place.zoom,
+      name: place.name,
+      avatar: place.avatar,
+      cover: place.cover,
       description: place.description,
       address: place.address,
       time: place.time,
-      name: place.name,
-      cover: place.cover,
+      position: place.position,
+      zoom: place.zoom,
       path: place.path,
-      radius: place.radius
+      radius: place.radius,
+      events: place.events
     };
   }
 

@@ -21,7 +21,7 @@ export default class ActivistDialog extends BaseEditingDialog {
   renderContent() {
     const { place = {} } = this.state;
     const {
-      user, author, description, cover, zoom
+      user, author, name: placeName, description, cover, zoom, avatar
     } = place;
     const { name } = user || author || {};
 
@@ -35,15 +35,22 @@ export default class ActivistDialog extends BaseEditingDialog {
           onChange={this.handleInputChange}
           className="px-2 pb-4 pt-1"
         />
+        <DropUploader
+          label="Tải ảnh đại diện"
+          name="avatar"
+          value={avatar}
+          useVideo={false}
+          onChange={this.handleInputChange}
+          className="px-2 pb-4 pt-1"
+        />
         <MDBInput
           label="Tên"
           name="name"
-          value={name}
+          value={placeName || name}
           onChange={this.handleInputChange}
           autoComplete="off"
           autofill="off"
           required
-          disabled
         />
         <MDBInput
           label="Giới thiệu"

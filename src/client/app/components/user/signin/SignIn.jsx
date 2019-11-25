@@ -67,6 +67,8 @@ export default class SignIn extends Component {
   static handleContextAction(event) {
     const option = event.currentTarget.name;
     switch (option) {
+    case 'dashboard':
+      return window.historyz.push('/admin/dashboard');
     case 'saved-posts':
       return SavedPostsDialogService.openSavedPostsInNewHistory();
     case 'i-will-do-this':
@@ -78,7 +80,7 @@ export default class SignIn extends Component {
 
   renderAvatar() {
     const { disabled } = this.state;
-    const { fbProfile, user } = UserService;
+    const { fbProfile, user, isAdmin } = UserService;
     const nextLevel = 100;
     const socialPoint = user
       ? user.socialPoint || 0
@@ -137,6 +139,15 @@ export default class SignIn extends Component {
               </MDBDropdownItem>
               <MDBDropdownItem divider />
             </React.Fragment>
+          )}
+          {isAdmin && (
+            <MDBDropdownItem
+              disabled={disabled}
+              className="text-default"
+              name="dashboard"
+              onClick={SignIn.handleContextAction}
+            >Bảng điều khiển
+            </MDBDropdownItem>
           )}
           <MDBDropdownItem
             disabled={disabled}

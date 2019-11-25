@@ -13,6 +13,7 @@ module.exports = class extends SecurityService {
       '__t',
       'name',
       'post',
+      'avatar',
       'cover',
       'images',
       'description',
@@ -24,7 +25,7 @@ module.exports = class extends SecurityService {
       'path',
       'radius',
       'type',
-      'events',
+      // 'events',
       'prev',
       'next'
     ];

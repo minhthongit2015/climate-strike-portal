@@ -10,6 +10,7 @@ const PlaceSchema = new mongoose.Schema({
   author: { type: ObjectId, ref: 'User' },
   post: { type: ObjectId, ref: 'Post' },
   name: String,
+  avatar: String,
   cover: String,
   images: [String],
   description: String,

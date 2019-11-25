@@ -2,6 +2,13 @@
 const homePath = '/';
 const homeLink = '/';
 
+const adminPath = '/admin';
+const adminLink = '/admin';
+const dashboardPath = `${adminPath}/dashboard`;
+const dashboardLink = `${adminLink}/dashboard`;
+const categoriesPath = `${adminPath}/categories`;
+const categoriesLink = `${adminLink}/categories`;
+
 const earthPicturePath = '/buc-tranh-trai-dat';
 const earthPictureLink = '/buc-tranh-trai-dat';
 const epOrganismsPath = `${earthPicturePath}/sinh-vat`;
@@ -48,6 +55,13 @@ const askForOthersLink = `${yourQuestionLink}/chu-de-khac`;
 export default {
   homePath,
   homeLink,
+
+  adminPath,
+  adminLink,
+  dashboardPath,
+  dashboardLink,
+  categoriesPath,
+  categoriesLink,
 
   earthPicturePath,
   earthPictureLink,

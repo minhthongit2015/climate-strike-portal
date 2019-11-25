@@ -42,6 +42,11 @@ module.exports = class extends CRUDService {
         title: place.name
       });
     }
+    if (place.avatar) {
+      place.avatar = await ImgurService.create(place.avatar, {
+        title: place.name
+      });
+    }
     return super.createOrUpdate.call(this, place, where);
   }
 

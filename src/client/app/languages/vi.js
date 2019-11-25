@@ -15,6 +15,16 @@ export default {
         yourQuestion: 'Điều Bạn\r\nMuốn Biết?'
       }
     },
+    admin: {
+      title: {
+        dashboard: 'Bảng Điều Khiển',
+        categories: 'Quản Lý Chuyên Mục'
+      },
+      nav: {
+        dashboard: 'Bảng điều khiển',
+        categories: 'Quản lý chuyên mục'
+      }
+    },
     earthPicture: {
       title: {
         main: 'Bức Tranh Trái Đất',

@@ -286,6 +286,7 @@ export default class Globe extends React.PureComponent {
 
   enter(country) {
     country = Globe.countryList.find(c => c.id === country.id);
+    if (!country) return;
     this.label.text(country && (country.name || ''));
     this.wrapperRef.current.title = country.name || '';
   }

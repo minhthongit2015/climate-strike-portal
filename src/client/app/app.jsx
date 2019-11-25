@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -44,6 +45,7 @@ import StrikeDialog from './components/map-tools/edit-dialog/StrikeDialog';
 import ActionDialog from './components/map-tools/edit-dialog/ActionDialog';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
+const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'));
 const EarthPicturePage = React.lazy(() => import('./pages/earth-picture/EarthPicture'));
 const WhatYouCanDoPage = React.lazy(() => import('./pages/what-you-can-do/WhatYouCanDo'));
 const YourQuestionPage = React.lazy(() => import('./pages/your-question/YourQuestion'));
@@ -98,7 +100,8 @@ class App extends Component {
     const routes = (
       <React.Suspense fallback={<LeafLoading overlaping text="Climate Strike Vietnam" />}>
         <Switch>
-          <Route exact path={RouteConstants.homePath}><HomePage /></Route>
+          <Route exact path={RouteConstants.homePath} component={props => <HomePage {...props} />} />
+          <Route path={RouteConstants.adminPath}><Dashboard /></Route>
           <Route path={RouteConstants.earthPicturePath}><EarthPicturePage /></Route>
           <Route exact path={RouteConstants.theRealWorldPath} component={DummyTheRealWorldPage} />
           <Route path={RouteConstants.whatYouCanDoPath}><WhatYouCanDoPage /></Route>

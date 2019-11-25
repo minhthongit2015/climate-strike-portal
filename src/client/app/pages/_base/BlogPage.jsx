@@ -6,6 +6,11 @@ import PostDetailsDialogService from '../../services/PostDetailsDialogService';
 
 
 export default class extends BasePage {
+  constructor(props) {
+    super(props);
+    window.historyz = props.history || window.historyz;
+  }
+
   componentDidMount() {
     super.componentDidMount();
     const params = new URLSearchParams(window.location.search);

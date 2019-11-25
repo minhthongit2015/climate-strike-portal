@@ -17,6 +17,8 @@ export default class ActivistMarker extends MarkerWithInfo {
   renderContent() {
     const { entity: place = {} } = this.props;
     const {
+      name: placeName,
+      avatar,
       cover,
       description,
       user,
@@ -28,7 +30,7 @@ export default class ActivistMarker extends MarkerWithInfo {
       socialPoint,
       socials: { facebook } = {}
     } = user || author || {};
-    const avatar = facebook && `https://graph.facebook.com/${facebook}/picture?type=square&width=200&height=200`;
+    const fbAvatar = facebook && `https://graph.facebook.com/${facebook}/picture?type=square&width=200&height=200`;
     const defaultDescription = 'cá nhân hoạt động vì môi trường';
     const defaultCover = '/images/cover-photo.jpg';
     const defaultAvatar = UserService.fbAvatarSrc;
@@ -41,11 +43,11 @@ export default class ActivistMarker extends MarkerWithInfo {
             <ZoomTool zoom={zoom} zoomTo={this.zoomTo} />
           </div>
           <div className="marker__avatar">
-            <img alt="" src={avatar || defaultAvatar} />
+            <img alt="" src={avatar || fbAvatar || defaultAvatar} />
           </div>
         </div>
         <div className="marker__profile px-3 pb-3">
-          <div className="marker__profile__name my-2">{name}</div>
+          <div className="marker__profile__name my-2">{placeName || name}</div>
           <div className="marker__profile__description">{description || defaultDescription}</div>
           <div className="marker__profile__social-point my-2">Điểm cộng đồng: <b>{socialPoint}</b></div>
           <hr className="my-2 mx-5" />
