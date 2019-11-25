@@ -9,7 +9,7 @@ import MultiDragableTree from '../../../components/utils/multi-dragable-tree/Mul
 
 export default class extends AdminPage {
   constructor(props) {
-    super(props, t('pages.admin.title.dashboard'));
+    super(props, t('pages.admin.title.categories'));
     this.state = {
       items: null
     };
@@ -53,7 +53,7 @@ export default class extends AdminPage {
     return (
       <Section>
         <SectionHeader>
-          <DeepMessage>{t('pages.admin.message.dashboard')}</DeepMessage>
+          <DeepMessage>{t('pages.admin.message.categories')}</DeepMessage>
         </SectionHeader>
         <SectionBody>
           <MultiDragableTree

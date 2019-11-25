@@ -6,9 +6,9 @@ import PostDetailsDialogService from '../../services/PostDetailsDialogService';
 
 
 export default class extends BasePage {
-  constructor(props) {
-    super(props);
-    window.historyz = props.history || window.historyz;
+  constructor(...args) {
+    super(...args);
+    window.historyz = args[0].history || window.historyz;
   }
 
   componentDidMount() {

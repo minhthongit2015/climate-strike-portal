@@ -23,6 +23,10 @@ export default {
       nav: {
         dashboard: 'Bảng điều khiển',
         categories: 'Quản lý chuyên mục'
+      },
+      message: {
+        dashboard: 'Bảng điều khiển',
+        categories: 'Quản lý danh sách chuyên mục bài viết'
       }
     },
     earthPicture: {

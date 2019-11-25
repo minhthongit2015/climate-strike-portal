@@ -251,7 +251,11 @@ export default class TheRealWorld extends BasePage {
   // eslint-disable-next-line class-methods-use-this
   handleRightToolbarAction(event, place) {
     this.closeAll();
-    place.ref.zoomTo();
+    if (place.zoom) {
+      place.ref.zoomTo();
+    } else {
+      place.ref.open();
+    }
     this.mapRef.current.refs.map.focus();
   }
 
