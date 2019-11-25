@@ -43,6 +43,7 @@ import DisasterDialog from './components/map-tools/edit-dialog/DisasterDialog';
 import ExtinctionDialog from './components/map-tools/edit-dialog/ExtinctionDialog';
 import StrikeDialog from './components/map-tools/edit-dialog/StrikeDialog';
 import ActionDialog from './components/map-tools/edit-dialog/ActionDialog';
+import ErrorBoundary from './components/error-boundary/ErrorBoundary';
 
 const HomePage = React.lazy(() => import('./pages/home/Home'));
 const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'));
@@ -125,7 +126,9 @@ class App extends Component {
       </React.Suspense>
     );
     return (
-      <SimplestLayout routes={routes} />
+      <ErrorBoundary>
+        <SimplestLayout routes={routes} />
+      </ErrorBoundary>
     );
   }
 }

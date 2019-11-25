@@ -43,10 +43,8 @@ $text-color: #add9f3;
   }
 
   .loading-text {
-    position: absolute;
     width: 100%;
-    bottom: calc(50% - 90px);
-    left: 0;
+    margin-top: 40px;
 
     span {
       opacity: .5;
@@ -56,5 +54,11 @@ $text-color: #add9f3;
         animation: fadeIn 1s ease-in-out ($i * 50ms) infinite alternate both;
       }
     }
+  }
+  
+  .reloading-text {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #de8dff;
   }
 }

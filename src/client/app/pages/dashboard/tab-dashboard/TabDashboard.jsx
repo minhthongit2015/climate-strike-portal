@@ -10,7 +10,20 @@ export default class extends AdminPage {
     super(props, t('pages.admin.title.dashboard'));
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
   render() {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.error = true;
+      this.forceUpdate();
+    }, 4000);
+    if (this.error) {
+      throw new Error('heee');
+    }
+
     return (
       <Section>
         <SectionHeader>
