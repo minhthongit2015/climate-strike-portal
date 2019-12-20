@@ -1,7 +1,7 @@
 
 const color = require('colors');
 const db = require('./db');
-const testData = require('./test/test');
+const testData = require('./test');
 const Debugger = require('../../services/Debugger');
 
 async function setup() {

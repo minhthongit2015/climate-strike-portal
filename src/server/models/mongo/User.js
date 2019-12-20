@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema({
   picture: String,
   cover: String,
   description: String,
-  entities: [{ type: ObjectId, ref: 'Entity' }],
   age: Number,
   married: Boolean,
   childs: Number,

@@ -3,6 +3,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 module.exports = {
   publicFolder: 'public',
   viewsFolder: 'src/server/views',
+  logsFolder: process.env.LOGS_FOLDER || 'src/server/logs',
   port: process.env.PORT || 5000,
   facebook: {
     CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,

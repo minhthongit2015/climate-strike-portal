@@ -3,10 +3,11 @@ const path = require('path');
 const colors = require('colors');
 const Debugger = require('./Debugger');
 const ApiResponse = require('../models/api-models');
+const Config = require('../config');
 
 const { createLogger, transports } = winston;
 
-const logDir = path.resolve('src/server/logs');
+const logDir = path.resolve(Config.logsFolder);
 
 const Logger = createLogger({
   transports: [
