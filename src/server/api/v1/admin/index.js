@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Logger = require('../../../services/Logger');
 // const APIResponse = require('../../../models/api-models');
-const GoogleService = require('../../../services/google/Google');
+const GoogleService = require('../../../services/thirt-party/google/Google');
 const ImgUrService = require('../../../services/thirt-party/imgur');
 
 router.get('/google/auth', (req, res) => {

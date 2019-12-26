@@ -2,7 +2,7 @@ const { google } = require('googleapis');
 const Photos = require('googlephotos');
 const fs = require('fs');
 const superagent = require('superagent');
-const Config = require('../../config');
+const Config = require('../../../config');
 
 const oauth2Client = new google.auth.OAuth2(
   Config.google.photo.CLIENT_ID,
