@@ -122,7 +122,7 @@ export default class StrikeMarker extends MarkerWithInfo {
           <div className="marker__profile__name my-2">{name || 'Greta Thunberg'}</div>
           <div className="marker__profile__description">{description || defaultDescription}</div>
           {link && (
-            <div className="marker__profile__link my-1">
+            <div className="marker__profile__link my-1 text-center">
               <a href={link} target="_blank" rel="noopener noreferrer">xem chi tiết</a>
             </div>
           )}
