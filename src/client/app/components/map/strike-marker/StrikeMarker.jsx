@@ -89,8 +89,9 @@ export default class StrikeMarker extends MarkerWithInfo {
     const { entity: place = {} } = this.props;
     const {
       cover,
-      description,
       avatar,
+      description,
+      link,
       name,
       zoom,
       address, time,
@@ -113,13 +114,20 @@ export default class StrikeMarker extends MarkerWithInfo {
             <img alt="" src={cover || defaultCover} />
             <ZoomTool zoom={zoom} zoomTo={this.zoomTo} />
           </div>
-          <div className="marker__avatar">
-            <img alt="" src={avatar || defaultAvatar} />
-          </div>
+          {avatar && (
+            <div className="marker__avatar">
+              <img alt="" src={avatar === 'Greta' ? defaultAvatar : avatar} />
+            </div>
+          )}
         </div>
         <div className="marker__profile px-3 pb-3">
           <div className="marker__profile__name my-2">{name || 'Greta Thunberg'}</div>
           <div className="marker__profile__description">{description || defaultDescription}</div>
+          {link && (
+            <div className="marker__profile__link">
+              {link}
+            </div>
+          )}
         </div>
         <div className="px-3 pb-3">
           <div className="marker__address">

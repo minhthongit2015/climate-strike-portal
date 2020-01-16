@@ -23,6 +23,7 @@ export default class extends React.Component {
       avatar: place.avatar,
       cover: place.cover,
       description: place.description,
+      link: place.link,
       address: place.address,
       time: place.time,
       position: place.position,

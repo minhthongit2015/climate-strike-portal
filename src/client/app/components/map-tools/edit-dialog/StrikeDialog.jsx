@@ -25,7 +25,7 @@ export default class StrikeDialog extends BaseEditingDialog {
   renderContent() {
     const { place = {} } = this.state;
     const {
-      cover, name, description, address, time, next, zoom, datez, timez
+      avatar, cover, name, description, link, address, time, next, zoom, datez, timez
     } = place;
     const datez1 = datez || (time && time.split('T')[0]);
     const timez1 = timez || (time && time.split('T')[1].slice(0, -1));
@@ -36,6 +36,14 @@ export default class StrikeDialog extends BaseEditingDialog {
           label="Tải ảnh bìa"
           name="cover"
           value={cover}
+          useVideo={false}
+          onChange={this.handleInputChange}
+          className="px-2 pb-4 pt-1"
+        />
+        <DropUploader
+          label="Tải ảnh đại diện"
+          name="avatar"
+          value={avatar}
           useVideo={false}
           onChange={this.handleInputChange}
           className="px-2 pb-4 pt-1"
@@ -53,6 +61,14 @@ export default class StrikeDialog extends BaseEditingDialog {
           label="Giới thiệu"
           name="description"
           value={description}
+          onChange={this.handleInputChange}
+          autoComplete="off"
+          autofill="off"
+        />
+        <MDBInput
+          label="Link xem chi tiết"
+          name="link"
+          value={link}
           onChange={this.handleInputChange}
           autoComplete="off"
           autofill="off"
