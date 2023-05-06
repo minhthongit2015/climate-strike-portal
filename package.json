@@ -86,7 +86,7 @@
     "react-markdown": "^4.2.2",
     "react-motion": "^0.5.2",
     "semver": "^6.3.0",
-    "sequelize": "^6.0.0",
+    "sequelize": "^6.29.0",
     "shufflejs": "^5.2.3",
     "simple-peer": "^9.4.0",
     "socket.io": "^2.2.0",
